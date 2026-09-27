@@ -40,7 +40,7 @@ public class UtilNumero {
 		return obtenerValorDefecto(numeroUno).doubleValue() != obtenerValorDefecto(numeroDos).doubleValue();
 	}
 	
-	public static <N extends Number> boolean estaEntreXyY(N numero, N limiteInferior, N limiteSuperior) {
+	public static <N extends Number> boolean estaEntreXyY (N numero, N limiteInferior, N limiteSuperior) {
 	    return obtenerValorDefecto(numero).doubleValue() >= obtenerValorDefecto(limiteInferior).doubleValue()
 	        && obtenerValorDefecto(numero).doubleValue() <= obtenerValorDefecto(limiteSuperior).doubleValue();
 	}
