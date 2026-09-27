@@ -1,5 +1,5 @@
-package co.com.sar.gestionsaraitel.dominio;
+package co.com.saraitel.gestionsaraitel.dominio;
 
-public class PaisDominio { "hola"
+public class PaisDominio {
 
 }
