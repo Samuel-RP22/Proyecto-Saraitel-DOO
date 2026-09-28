@@ -4,7 +4,15 @@ public final class UtilObjeto {
 
     private UtilObjeto() {
     }
-
+    public static boolean conexionEstaAbierta(Conecction conexion) {
+    try {
+    	return (!conexionEstaVacia(conexion) && !conexion.getConexion().isClosed());
+    } catch
+    }
+    public static boolean conexionEstaVacia(Conecction conexion) {
+    	return UtilObjeto.esNulo(conexion);
+        
+    }
     public static <O> boolean esNulo(final O objeto) {
         return objeto == null;
     }

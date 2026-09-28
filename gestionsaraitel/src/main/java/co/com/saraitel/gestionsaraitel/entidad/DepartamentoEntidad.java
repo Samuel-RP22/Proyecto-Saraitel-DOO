@@ -1,21 +1,21 @@
-package co.com.saraitel.gestionsaraitel.dto;
+package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class PaisDTO {
+public class DepartamentoEntidad {
 
     private UUID id;
     private String nombre;
 
-    public PaisDTO() {
+    public DepartamentoEntidad() {
         setId(UtilUUID.obtenerUUIDDefecto());
         setNombre(UtilTexto.VACIA);
     }
 
-    public PaisDTO(final UUID id, final String nombre) {
+    public DepartamentoEntidad(final UUID id, final String nombre) {
         setId(id);
         setNombre(nombre);
     }

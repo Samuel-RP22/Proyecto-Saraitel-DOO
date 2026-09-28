@@ -1,4 +1,4 @@
-package co.com.sar.gestionsaraitel;
+package co.com.saraitel.gestionsaraitel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

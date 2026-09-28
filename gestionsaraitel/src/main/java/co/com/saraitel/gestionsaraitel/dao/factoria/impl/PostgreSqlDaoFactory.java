@@ -1,11 +1,12 @@
 package co.com.saraitel.gestionsaraitel.dao.factoria.impl;
 
 import java.sql.Connection;
-import co.edu.uco.libreriauco.dao.datos.entidad.DepartamentoDao;
-import co.edu.uco.libreriauco.dao.datos.entidad.PaisDao;
-import co.edu.uco.libreriauco.dao.datos.entidad.postgresql.PaisPostgreSqlDao;
-import co.edu.uco.libreriauco.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDao;
-import co.edu.uco.libreriauco.dao.factoria.DaoFactory;
+
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDao;
+import co.com.saraitel.gestionsaraitel.dao.factoria.DaoFactory;
 
 public class PostgreSqlDaoFactory extends DaoFactory {
 

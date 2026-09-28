@@ -2,7 +2,9 @@ package co.com.saraitel.gestionsaraitel.dao.factoria;
 
 import java.sql.Connection;
 
-import co.edu.uco.libreriauco.dao.datos.entidad.*;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDao;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
 public abstract class DaoFactory {
 	
@@ -28,19 +30,19 @@ public abstract class DaoFactory {
 	protected abstract void abrirConexion();
 	
 	public void cerrarConexion() {
-		// Tarea: ¿Como se cierra la conexión de forma segura?
+		UtilSQL.cerrarConexion(conexion);
 	}
 	
 	public void iniciarTransaccion() {
-		// Tarea: ¿Como se inicia una transacción de forma segura?
+		UtilSQL.iniciarTransaccion(conexion);
 	}
 	
 	public void confirmarTransaccion() {
-		// Tarea: ¿Como se confirma una transacción de forma segura?
+		UtilSQL.confirmarTransaccion(conexion);
 	}
 	
 	public void cancelarTransaccion() {
-		// Tarea: ¿Como se cancela una transacción de forma segura?
+		UtilSQL.cancelarTransaccion(conexion);
 	}
 	
 	public abstract PaisDao obtenerPaisDao();

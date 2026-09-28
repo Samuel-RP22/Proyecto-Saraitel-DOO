@@ -1,8 +1,9 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
-import co.edu.uco.libreriauco.transversal.utilitarios.UtilTexto;
-import co.edu.uco.libreriauco.transversal.utilitarios.UtilUUID;
+
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class PaisEntidad {
 

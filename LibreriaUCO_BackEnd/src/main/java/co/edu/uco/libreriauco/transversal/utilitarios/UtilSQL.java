@@ -14,7 +14,7 @@ public class UtilSQL {
 		}	catch (SQLException excepcion) {
 			var mensajeUsuario = "";
 			
-			throw LibreriaUCOTransversalException.crear(mensajeUsuario, excepcion.getMessage(), )
+			throw LibreriaUCOTransversalException.crear(mensajeUsuario, excepcion.getMessage(), );
 			
 		} catch	(Exception excepcion) {
 			excepcion.printStackTrace();
