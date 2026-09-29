@@ -6,8 +6,8 @@ public final class UtilObjeto {
     }
     public static boolean conexionEstaAbierta(Conecction conexion) {
     try {
-    	return (!conexionEstaVacia(conexion) && !conexion.getConexion().isClosed());
-    } catch
+    	return(!conexionEstaVacia(conexion) && !conexion.isClosed());}
+     catch
     }
     public static boolean conexionEstaVacia(Conecction conexion) {
     	return UtilObjeto.esNulo(conexion);
