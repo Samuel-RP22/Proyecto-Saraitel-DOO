@@ -12,7 +12,7 @@ public final class UtilUUID {
     public static UUID generar() {
         return UUID.randomUUID();
     }
-
+    
     public static UUID obtenerUUIDDefecto() {
         return UUID.fromString(UUID_DEFECTO_TEXTO);
     }
@@ -22,11 +22,11 @@ public final class UtilUUID {
                 ? UUID_DEFECTO_TEXTO 
                 : UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(UUIDTexto);
     }
-
+    
     public static UUID convertirAUUID(final String UUIDTexto) {
         try {
             return UUID.fromString(obtenerValorDefectoComoTexto(UUIDTexto));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException _) {
             return obtenerUUIDDefecto();
         }
     }

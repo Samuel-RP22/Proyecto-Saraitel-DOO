@@ -3,6 +3,7 @@ package co.com.saraitel.gestionsaraitel.transversal.catalogo;
 public class CatalogoMensajes {
 	
 	public static class UtilSQL{
+		
 		private UtilSQL() {
 		}
 		

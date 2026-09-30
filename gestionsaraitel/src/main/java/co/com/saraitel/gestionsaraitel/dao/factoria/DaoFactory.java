@@ -23,7 +23,6 @@ public abstract class DaoFactory {
 	}
 	
 	protected void setConexion(Connection conexion) {
-		// Tarea: Asegurar que la conexión esté abierta y sea válida
 		this.conexion = conexion;
 	}
 	
