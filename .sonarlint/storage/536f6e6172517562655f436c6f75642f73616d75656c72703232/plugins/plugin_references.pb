@@ -25,18 +25,13 @@ S
 tsql 98dbd8f7cfd7a5a7822a87b101a995d2!sonar-tsql-plugin-1.20.0.9447.jar
 ^
 dreapexS
-dreapex ea14e62011f699cbe0e7fce0c142303c&sonar-dre-apex-plugin-2.13.1.21718.jar
+dreapex 379b692db946f7c82931a7a4339be163&sonar-dre-apex-plugin-2.14.0.22921.jar
 ^
 drerubyS
-dreruby eb06ed98a88bff9e66837883e244b9fd&sonar-dre-ruby-plugin-2.13.1.21718.jar
+dreruby 27856bf01440674d98a6c1f8401ecebf&sonar-dre-ruby-plugin-2.14.0.22921.jar
 V
 plsqlM
 plsql 49352c76277bb297f40ef1eaa0e22116"sonar-plsql-plugin-3.24.0.9611.jar
-`
-
-sonarscalaR
-
-sonarscala 52a9c4db84edb660c85e623c49c80fe5"sonar-scala-plugin-1.25.0.2697.jar
 s
 textenterprisea
 textenterprise 0020ea70522f0cd87a7d37173f47d6e6-sonar-text-enterprise-plugin-2.51.0.13430.jar
@@ -49,6 +44,9 @@ T
 W
 cobolN
 cobol d1d5dfd5cb2a7e9f426655215be78123#sonar-cobol-plugin-5.15.0.11578.jar
+a
+drescalaU
+drescala 0e16bb55ad820f5af790698494ddc0af'sonar-dre-scala-plugin-2.14.0.22921.jar
 P
 phpI
 php 1de319a3bf7c670ec3829ffaba4fffc1 sonar-php-plugin-4.1.0.16998.jar

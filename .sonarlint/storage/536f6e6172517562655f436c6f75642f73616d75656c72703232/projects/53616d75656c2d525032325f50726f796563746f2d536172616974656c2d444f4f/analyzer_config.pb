@@ -50,6 +50,8 @@ $
 sonar.forceAuthenticationfalse
 f
 sonar.cpp.file.suffixesK.cc,.cpp,.cxx,.c++,.hh,.hpp,.hxx,.h++,.ipp,.ixx,.mxx,.cppm,.ccm,.cxxm,.c++m
+ 
+sonar.dre.scala.activatetrue
 +
 "sonar.secrets.disableEntropyFilterfalse
 
@@ -60,10 +62,10 @@ A
 sonaranalyzer-cs.ruleNamespaceSonarAnalyzer.Enterprise.CSharp
 '
  sonar.pli.extralingualCharacters#@$
-&
-sonar.cs.analyzeGeneratedCodefalse
 †
 *sonar.azureresourcemanager.file.identifierXhttps://schema.management.azure.com/schemas/,http://schema.management.azure.com/schemas/
+&
+sonar.cs.analyzeGeneratedCodefalse
 Ÿ
 +sonar.java.jvmframeworkconfig.file.patternsp**/src/main/resources/**/*app*.properties,**/src/main/resources/**/*app*.yaml,**/src/main/resources/**/*app*.yml
 A
@@ -140,10 +142,10 @@ e
 sonar.sensor.cache.baseUrl"https://api.sonarcloud.io/analysis
 /
 &sonar.secrets.disableTestFileDetectionfalse
-&
-sonar.pli.ignoreHeaderCommentstrue
 +
 sonar.jsp.file.suffixes.jsp,.jspf,.jspx
+&
+sonar.pli.ignoreHeaderCommentstrue
 $
 sonar.javascript.maxFileSize1000
 ü
@@ -195,16 +197,16 @@ $
 .cs,.razor
 U
 sonar.json.exclusions<**/package-lock.json,**/packages.lock.json,**/deno.lock.json
-(
-sonar.plsql.file.suffixessql,tab,pkb
 H
 'sonaranalyzer.security.cs.ruleNamespaceSonarAnalyzer.Security.CSharp
+(
+sonar.plsql.file.suffixessql,tab,pkb
 
 sonar.cobol.tab.width8
-&
-sonar.text.inclusions.activatetrue
 X
 &sonaranalyzer-vbnet.staticResourceName.SonarAnalyzer-vbnetenterprise-10.35.0.4138.zip
+&
+sonar.text.inclusions.activatetrue
 $
 sonar.githubactions.activatetrue
 &
@@ -423,7 +425,7 @@ Automatic Analysis will not be available between 07:00 CET and 09:00 CET
 !
 sonar.tsql.file.suffixes.tsql
 0
-sonar.core.startTime2026-09-29T13:33:08+0000õ
+sonar.core.startTime2026-09-30T16:34:51+0000õ
 cssí
 ,
 	css:S4647BLOCKER*

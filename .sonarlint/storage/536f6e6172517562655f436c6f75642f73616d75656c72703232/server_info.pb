@@ -1,5 +1,5 @@
 
-8.0.0.108909"
+8.0.0.109249"
 sonar.secrets.demoModefalse"'
 sonar.project.monorepo.enabledfalse"7
 'sonaranalyzer.security.cs.pluginVersion12.5.0.49666"%
@@ -25,14 +25,15 @@ SonarCloud"8
 +sonar.issues.issueResolution.global.enabledfalse"$
 sonar.terraform.file.suffixes.tf""
 sonar.forceAuthenticationfalse"f
-sonar.cpp.file.suffixesK.cc,.cpp,.cxx,.c++,.hh,.hpp,.hxx,.h++,.ipp,.ixx,.mxx,.cppm,.ccm,.cxxm,.c++m"+
+sonar.cpp.file.suffixesK.cc,.cpp,.cxx,.c++,.hh,.hpp,.hxx,.h++,.ipp,.ixx,.mxx,.cppm,.ccm,.cxxm,.c++m" 
+sonar.dre.scala.activatetrue"+
 "sonar.secrets.disableEntropyFilterfalse"
 sonar.jcl.file.suffixes.jcl"
 sonar.rust.file.suffixes.rs"A
 sonaranalyzer-cs.ruleNamespaceSonarAnalyzer.Enterprise.CSharp"'
- sonar.pli.extralingualCharacters#@$"&
-sonar.cs.analyzeGeneratedCodefalse"†
-*sonar.azureresourcemanager.file.identifierXhttps://schema.management.azure.com/schemas/,http://schema.management.azure.com/schemas/"Ÿ
+ sonar.pli.extralingualCharacters#@$"†
+*sonar.azureresourcemanager.file.identifierXhttps://schema.management.azure.com/schemas/,http://schema.management.azure.com/schemas/"&
+sonar.cs.analyzeGeneratedCodefalse"Ÿ
 +sonar.java.jvmframeworkconfig.file.patternsp**/src/main/resources/**/*app*.properties,**/src/main/resources/**/*app*.yaml,**/src/main/resources/**/*app*.yml"A
 8sonar.builtInQualityProfiles.disableNotificationOnUpdatefalse"5
 ,sonar.security.secretSourceRedaction.enabledfalse"1
@@ -70,9 +71,9 @@ $sonar.cloudformation.file.identifierAWSTemplateFormatVersion"
 publish_data_eventstrue"!
 sonar.cobol.sourceFormatfixed"@
 sonar.sensor.cache.baseUrl"https://api.sonarcloud.io/analysis"/
-&sonar.secrets.disableTestFileDetectionfalse"&
-sonar.pli.ignoreHeaderCommentstrue"+
-sonar.jsp.file.suffixes.jsp,.jspf,.jspx"$
+&sonar.secrets.disableTestFileDetectionfalse"+
+sonar.jsp.file.suffixes.jsp,.jspf,.jspx"&
+sonar.pli.ignoreHeaderCommentstrue"$
 sonar.javascript.maxFileSize1000"ü
 sonar.javascript.environmentsÚamd,applescript,atomtest,browser,commonjs,embertest,greasemonkey,jasmine,jest,jquery,meteor,mocha,mongo,nashorn,node,phantomjs,prototypejs,protractor,qunit,serviceworker,shared-node-browser,shelljs,webextensions,worker")
  sonar.scanner.autoconfig.enabledfalse"6
@@ -99,12 +100,12 @@ $sonar.cloudformation.file.identifierAWSTemplateFormatVersion"
 sonar.python.file.suffixespy"$
 sonar.cs.file.suffixes
 .cs,.razor"U
-sonar.json.exclusions<**/package-lock.json,**/packages.lock.json,**/deno.lock.json"(
-sonar.plsql.file.suffixessql,tab,pkb"H
-'sonaranalyzer.security.cs.ruleNamespaceSonarAnalyzer.Security.CSharp"
-sonar.cobol.tab.width8"&
-sonar.text.inclusions.activatetrue"X
-&sonaranalyzer-vbnet.staticResourceName.SonarAnalyzer-vbnetenterprise-10.35.0.4138.zip"$
+sonar.json.exclusions<**/package-lock.json,**/packages.lock.json,**/deno.lock.json"H
+'sonaranalyzer.security.cs.ruleNamespaceSonarAnalyzer.Security.CSharp"(
+sonar.plsql.file.suffixessql,tab,pkb"
+sonar.cobol.tab.width8"X
+&sonaranalyzer-vbnet.staticResourceName.SonarAnalyzer-vbnetenterprise-10.35.0.4138.zip"&
+sonar.text.inclusions.activatetrue"$
 sonar.githubactions.activatetrue"&
 sonar.java.file.suffixes
 .java,.jav"&
@@ -217,4 +218,4 @@ Automatic Analysis will not be available between 07:00 CET and 09:00 CET"&
 sonar.dre.mulesoft.activatetrue"&
 sonar.maxLinesOfCodePerFile2000000"!
 sonar.tsql.file.suffixes.tsql"0
-sonar.core.startTime2026-09-29T13:33:08+000021BD809FA-AWHW8ct9-T_TB3XqouNu
+sonar.core.startTime2026-09-30T16:34:51+000021BD809FA-AWHW8ct9-T_TB3XqouNu
