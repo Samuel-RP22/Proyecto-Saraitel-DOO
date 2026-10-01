@@ -5,18 +5,20 @@ import java.util.UUID;
 public class EmpleadoEntidad {
 
 	private UUID id;
-	private String nombre;
-	private String apellido;
-	private TipoDocumentoEntidad tipodocumento;
-	private PrefijoEntidad prefijo;
-	private String numerodocumento;
-	private String telefono;
-	private String correo;
-	private boolean telefonoconfirmado;
-	private boolean correoconfirmado;
+	private SedeEntidad sede;
+	private PersonaEntidad persona;
+	private boolean esactivo;
 
 	public EmpleadoEntidad() {
 		super();
+	}
+
+	public EmpleadoEntidad(final UUID id, final SedeEntidad sede, final PersonaEntidad persona, final boolean esactivo) {
+		super();
+		setId(id);
+		setSede(sede);
+		setPersona(persona);
+		setEsactivo(esactivo);
 	}
 
 	public UUID getId() {
@@ -27,75 +29,27 @@ public class EmpleadoEntidad {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public SedeEntidad getSede() {
+		return sede;
 	}
 
-	public void setNombre(final String nombre) {
-		this.nombre = nombre;
+	public void setSede(final SedeEntidad sede) {
+		this.sede = sede;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public PersonaEntidad getPersona() {
+		return persona;
 	}
 
-	public void setApellido(final String apellido) {
-		this.apellido = apellido;
+	public void setPersona(final PersonaEntidad persona) {
+		this.persona = persona;
 	}
 
-	public TipoDocumentoEntidad getTipoDocumento() {
-		return tipodocumento;
+	public boolean isEsactivo() {
+		return esactivo;
 	}
 
-	public void setTipoDocumento(final TipoDocumentoEntidad tipodocumento) {
-		this.tipodocumento = tipodocumento;
-	}
-
-	public PrefijoEntidad getPrefijo() {
-		return prefijo;
-	}
-
-	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = prefijo;
-	}
-
-	public String getNumeroDocumento() {
-		return numerodocumento;
-	}
-
-	public void setNumeroDocumento(final String numerodocumento) {
-		this.numerodocumento = numerodocumento;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(final String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(final String correo) {
-		this.correo = correo;
-	}
-
-	public boolean isTelefonoConfirmado() {
-		return telefonoconfirmado;
-	}
-
-	public void setTelefonoConfirmado(final boolean telefonoconfirmado) {
-		this.telefonoconfirmado = telefonoconfirmado;
-	}
-
-	public boolean isCorreoConfirmado() {
-		return correoconfirmado;
-	}
-
-	public void setCorreoConfirmado(final boolean correoconfirmado) {
-		this.correoconfirmado = correoconfirmado;
+	public void setEsactivo(final boolean esactivo) {
+		this.esactivo = esactivo;
 	}
 }
