@@ -33,6 +33,6 @@ public class PaisDTO {
     }
 
     public void setNombre(final String nombre) {
-        this.nombre = UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre);
+        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
     }
 }

@@ -12,11 +12,20 @@ public class CiudadEntidad {
         super();
     }
 
-    public CiudadEntidad(final UUID id, final String nombre, final DepartamentoEntidad departamento) {
+    public CiudadEntidad(final UUID id, final String nombre, final DepartamentoEntidad departamento, final UUID id2, final UUID id3, 
+    		final UUID id4, final UUID id5, final UUID id6, final UUID id7) {
         super();
         setId(id);
         setNombre(nombre);
         setDepartamento(departamento);
+        setId(id2);
+        setId(id3);
+        setId(id4);
+        setId(id5);
+        setId(id6);
+        setId(id7);
+        setId(id2);
+   
     }
 
     public UUID getId() {

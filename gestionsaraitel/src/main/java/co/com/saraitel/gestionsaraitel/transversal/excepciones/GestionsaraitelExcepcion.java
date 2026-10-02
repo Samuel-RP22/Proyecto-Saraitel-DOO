@@ -47,11 +47,11 @@ public class GestionsaraitelExcepcion extends RuntimeException {
 	}
 
 	private void setMensajeUsuario(String mensajeUsuario) {
-		this.mensajeUsuario = UtilTexto.getUtilTexto().obtenerValorDefecto(mensajeUsuario);
+		this.mensajeUsuario = UtilTexto.obtenerValorDefecto(mensajeUsuario);
 	}
 
 	private void setMensajeTecnico(String mensajeTecnico) {
-		this.mensajeTecnico = UtilTexto.getUtilTexto().obtenerValorDefecto(mensajeTecnico, getMensajeUsuario());
+		this.mensajeTecnico = UtilTexto.obtenerValorDefecto(mensajeTecnico, getMensajeUsuario());
 	}
 
 	private void setExcepcionRaiz(Exception excepcionRaiz) {

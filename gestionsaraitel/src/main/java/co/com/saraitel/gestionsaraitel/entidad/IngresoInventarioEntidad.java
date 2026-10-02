@@ -1,6 +1,6 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
-import java.util.Date;
+import java.time.*;
 import java.util.UUID;
 
 public class IngresoInventarioEntidad {
@@ -8,14 +8,14 @@ public class IngresoInventarioEntidad {
 	private UUID id;
 	private String estado;
 	private SedeEntidad sede;
-	private Date fechallegada;
+	private LocalDateTime fechallegada;
 	private Double total;
 
 	public IngresoInventarioEntidad() {
 		super();
 	}
 
-	public IngresoInventarioEntidad(final UUID id, final String estado, final SedeEntidad sede, final Date fechallegada, final Double total) {
+	public IngresoInventarioEntidad(final UUID id, final String estado, final SedeEntidad sede, final LocalDateTime fechallegada, final Double total) {
 		super();
 		setId(id);
 		setEstado(estado);
@@ -48,11 +48,11 @@ public class IngresoInventarioEntidad {
 		this.sede = sede;
 	}
 
-	public Date getFechallegada() {
+	public LocalDateTime getFechallegada() {
 		return fechallegada;
 	}
 
-	public void setFechallegada(final Date fechallegada) {
+	public void setFechallegada(final LocalDateTime fechallegada) {
 		this.fechallegada = fechallegada;
 	}
 

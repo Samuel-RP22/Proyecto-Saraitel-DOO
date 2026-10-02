@@ -37,7 +37,7 @@ public class DepartamentoDTO {
     }
 
     public void setNombre(final String nombre) {
-        this.nombre = UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre);
+        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
     }
 
     public PaisDTO getPais() {

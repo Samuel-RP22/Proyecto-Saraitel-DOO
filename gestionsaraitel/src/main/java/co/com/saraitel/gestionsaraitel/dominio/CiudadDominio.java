@@ -45,7 +45,7 @@ public class CiudadDominio {
 		}
 
 		public Builder nombre(String nombre) {
-			this.nombre = UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre);
+			this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 			return this;
 		}
 
