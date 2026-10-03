@@ -10,10 +10,10 @@ public class ProductoSedeEntidad {
 	private SedeEntidad sede;
 	private BigDecimal precio;
 	private Boolean tieneOferta;
-	private BigDecimal oferta;
+	private int oferta;
 	private BigDecimal precioTrasOferta;
-	private Integer stock;
-	private Integer stockGarantia;
+	private int stock;
+	private int stockGarantia;
 
 	public ProductoSedeEntidad() {
 		super();
@@ -68,19 +68,19 @@ public class ProductoSedeEntidad {
 		this.precio = precio;
 	}
 
-	public Boolean getTieneOferta() {
+	public boolean getTieneOferta() {
 		return tieneOferta;
 	}
 
-	public void setTieneOferta(final Boolean tieneOferta) {
+	public void setTieneOferta(final boolean tieneOferta) {
 		this.tieneOferta = tieneOferta;
 	}
 
-	public BigDecimal getOferta() {
+	public int getOferta() {
 		return oferta;
 	}
 
-	public void setOferta(final BigDecimal oferta) {
+	public void setOferta(final int oferta) {
 		this.oferta = oferta;
 	}
 
@@ -92,19 +92,19 @@ public class ProductoSedeEntidad {
 		this.precioTrasOferta = precioTrasOferta;
 	}
 
-	public Integer getStock() {
+	public int getStock() {
 		return stock;
 	}
 
-	public void setStock(final Integer stock) {
+	public void setStock(final int stock) {
 		this.stock = stock;
 	}
 
-	public Integer getStockGarantia() {
+	public int getStockGarantia() {
 		return stockGarantia;
 	}
 
-	public void setStockGarantia(final Integer stockGarantia) {
+	public void setStockGarantia(final int stockGarantia) {
 		this.stockGarantia = stockGarantia;
 	}
 
@@ -114,11 +114,11 @@ public class ProductoSedeEntidad {
 		private ProductoEntidad producto;
 		private SedeEntidad sede;
 		private BigDecimal precio;
-		private Boolean tieneOferta;
-		private BigDecimal oferta;
+		private boolean tieneOferta;
+		private int oferta;
 		private BigDecimal precioTrasOferta;
-		private Integer stock;
-		private Integer stockGarantia;
+		private int stock;
+		private int stockGarantia;
 
 		private Builder() {
 			super();
@@ -144,12 +144,12 @@ public class ProductoSedeEntidad {
 			return this;
 		}
 
-		public Builder tieneOferta(final Boolean tieneOferta) {
+		public Builder tieneOferta(final boolean tieneOferta) {
 			this.tieneOferta = tieneOferta;
 			return this;
 		}
 
-		public Builder oferta(final BigDecimal oferta) {
+		public Builder oferta(final int oferta) {
 			this.oferta = oferta;
 			return this;
 		}
@@ -159,12 +159,12 @@ public class ProductoSedeEntidad {
 			return this;
 		}
 
-		public Builder stock(final Integer stock) {
+		public Builder stock(final int stock) {
 			this.stock = stock;
 			return this;
 		}
 
-		public Builder stockGarantia(final Integer stockGarantia) {
+		public Builder stockGarantia(final int stockGarantia) {
 			this.stockGarantia = stockGarantia;
 			return this;
 		}

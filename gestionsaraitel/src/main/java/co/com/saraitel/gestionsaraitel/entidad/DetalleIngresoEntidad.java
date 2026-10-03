@@ -1,5 +1,6 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class DetalleIngresoEntidad {
@@ -8,23 +9,25 @@ public class DetalleIngresoEntidad {
 	private IngresoInventarioEntidad ingresoInventario;
 	private ProductoSedeEntidad productoSede;
 	private int cantidad;
-	private Double costoUnitario;
-	private Double subtotal;
+	private BigDecimal costoUnitario;
+	private BigDecimal subtotal;
 
 	public DetalleIngresoEntidad() {
 		super();
 	}
 
-	public DetalleIngresoEntidad(final UUID id, final IngresoInventarioEntidad ingresoInventario,
-			final ProductoSedeEntidad productoSede, final int cantidad, final Double costoUnitario,
-			final Double subtotal) {
+	private DetalleIngresoEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setIngresoInventario(ingresoInventario);
-		setProductoSede(productoSede);
-		setCantidad(cantidad);
-		setCostoUnitario(costoUnitario);
-		setSubtotal(subtotal);
+		setId(builder.id);
+		setIngresoInventario(builder.ingresoInventario);
+		setProductoSede(builder.productoSede);
+		setCantidad(builder.cantidad);
+		setCostoUnitario(builder.costoUnitario);
+		setSubtotal(builder.subtotal);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -59,19 +62,67 @@ public class DetalleIngresoEntidad {
 		this.cantidad = cantidad;
 	}
 
-	public Double getCostoUnitario() {
+	public BigDecimal getCostoUnitario() {
 		return costoUnitario;
 	}
 
-	public void setCostoUnitario(final Double costoUnitario) {
+	public void setCostoUnitario(final BigDecimal costoUnitario) {
 		this.costoUnitario = costoUnitario;
 	}
 
-	public Double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(final Double subtotal) {
+	public void setSubtotal(final BigDecimal subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private IngresoInventarioEntidad ingresoInventario;
+		private ProductoSedeEntidad productoSede;
+		private int cantidad;
+		private BigDecimal costoUnitario;
+		private BigDecimal subtotal;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder ingresoInventario(final IngresoInventarioEntidad ingresoInventario) {
+			this.ingresoInventario = ingresoInventario;
+			return this;
+		}
+
+		public Builder productoSede(final ProductoSedeEntidad productoSede) {
+			this.productoSede = productoSede;
+			return this;
+		}
+
+		public Builder cantidad(final int cantidad) {
+			this.cantidad = cantidad;
+			return this;
+		}
+
+		public Builder costoUnitario(final BigDecimal costoUnitario) {
+			this.costoUnitario = costoUnitario;
+			return this;
+		}
+
+		public Builder subtotal(final BigDecimal subtotal) {
+			this.subtotal = subtotal;
+			return this;
+		}
+
+		public DetalleIngresoEntidad build() {
+			return new DetalleIngresoEntidad(this);
+		}
 	}
 }

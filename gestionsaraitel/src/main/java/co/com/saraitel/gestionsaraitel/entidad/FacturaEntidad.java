@@ -1,23 +1,27 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FacturaEntidad {
 
 	private UUID id;
 	private ProcesoCompraEntidad compra;
-	private Date fechaemision;
+	private LocalDateTime fechaemision;
 
 	public FacturaEntidad() {
 		super();
 	}
 
-	public FacturaEntidad(final UUID id, final ProcesoCompraEntidad compra, final Date fechaemision) {
+	private FacturaEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setCompra(compra);
-		setFechaemision(fechaemision);
+		setId(builder.id);
+		setCompra(builder.compra);
+		setFechaemision(builder.fechaemision);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -36,11 +40,41 @@ public class FacturaEntidad {
 		this.compra = compra;
 	}
 
-	public Date getFechaemision() {
+	public LocalDateTime getFechaemision() {
 		return fechaemision;
 	}
 
-	public void setFechaemision(final Date fechaemision) {
+	public void setFechaemision(final LocalDateTime fechaemision) {
 		this.fechaemision = fechaemision;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private ProcesoCompraEntidad compra;
+		private LocalDateTime fechaemision;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder compra(final ProcesoCompraEntidad compra) {
+			this.compra = compra;
+			return this;
+		}
+
+		public Builder fechaemision(final LocalDateTime fechaemision) {
+			this.fechaemision = fechaemision;
+			return this;
+		}
+
+		public FacturaEntidad build() {
+			return new FacturaEntidad(this);
+		}
 	}
 }

@@ -3,35 +3,61 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.util.UUID;
 
 public class TipoDocumentoEntidad {
-    
-    private UUID id;
-    private String tipo;
 
-    public TipoDocumentoEntidad() {
-        super();
-    }
+	private UUID id;
+	private String tipo;
 
-    public TipoDocumentoEntidad(final UUID id, final String tipo) {
-        super();
-        setId(id);
-        setTipo(tipo);
-       
-    }
+	public TipoDocumentoEntidad() {
+		super();
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	private TipoDocumentoEntidad(final Builder builder) {
+		super();
+		setId(builder.id);
+		setTipo(builder.tipo);
+	}
 
-    public void setId(final UUID id) {
-        this.id = id;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public String getTipo() {
-        return tipo;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public void setTipo(final String tipo) {
-        this.tipo = tipo;
-    }
+	public void setId(final UUID id) {
+		this.id = id;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(final String tipo) {
+		this.tipo = tipo;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private String tipo;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder tipo(final String tipo) {
+			this.tipo = tipo;
+			return this;
+		}
+
+		public TipoDocumentoEntidad build() {
+			return new TipoDocumentoEntidad(this);
+		}
+	}
 }
-   

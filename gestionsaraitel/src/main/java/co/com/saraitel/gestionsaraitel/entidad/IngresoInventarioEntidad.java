@@ -1,6 +1,7 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
-import java.time.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class IngresoInventarioEntidad {
@@ -9,19 +10,23 @@ public class IngresoInventarioEntidad {
 	private String estado;
 	private SedeEntidad sede;
 	private LocalDateTime fechallegada;
-	private Double total;
+	private BigDecimal total;
 
 	public IngresoInventarioEntidad() {
 		super();
 	}
 
-	public IngresoInventarioEntidad(final UUID id, final String estado, final SedeEntidad sede, final LocalDateTime fechallegada, final Double total) {
+	private IngresoInventarioEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setEstado(estado);
-		setSede(sede);
-		setFechallegada(fechallegada);
-		setTotal(total);
+		setId(builder.id);
+		setEstado(builder.estado);
+		setSede(builder.sede);
+		setFechallegada(builder.fechallegada);
+		setTotal(builder.total);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -56,11 +61,53 @@ public class IngresoInventarioEntidad {
 		this.fechallegada = fechallegada;
 	}
 
-	public Double getTotal() {
+	public BigDecimal getTotal() {
 		return total;
 	}
 
-	public void setTotal(final Double total) {
+	public void setTotal(final BigDecimal total) {
 		this.total = total;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private String estado;
+		private SedeEntidad sede;
+		private LocalDateTime fechallegada;
+		private BigDecimal total;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder estado(final String estado) {
+			this.estado = estado;
+			return this;
+		}
+
+		public Builder sede(final SedeEntidad sede) {
+			this.sede = sede;
+			return this;
+		}
+
+		public Builder fechallegada(final LocalDateTime fechallegada) {
+			this.fechallegada = fechallegada;
+			return this;
+		}
+
+		public Builder total(final BigDecimal total) {
+			this.total = total;
+			return this;
+		}
+
+		public IngresoInventarioEntidad build() {
+			return new IngresoInventarioEntidad(this);
+		}
 	}
 }

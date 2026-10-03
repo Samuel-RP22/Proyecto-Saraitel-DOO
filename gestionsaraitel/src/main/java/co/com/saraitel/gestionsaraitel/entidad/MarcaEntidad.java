@@ -12,11 +12,15 @@ public class MarcaEntidad {
 		super();
 	}
 
-	public MarcaEntidad(final UUID id, final String nombre, final boolean esactivo) {
+	private MarcaEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setNombre(nombre);
-		setEsActivo(esactivo);
+		setId(builder.id);
+		setNombre(builder.nombre);
+		setEsActivo(builder.esactivo);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -41,5 +45,35 @@ public class MarcaEntidad {
 
 	public void setEsActivo(final boolean esactivo) {
 		this.esactivo = esactivo;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private String nombre;
+		private boolean esactivo;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+
+		public Builder esactivo(final boolean esactivo) {
+			this.esactivo = esactivo;
+			return this;
+		}
+
+		public MarcaEntidad build() {
+			return new MarcaEntidad(this);
+		}
 	}
 }
