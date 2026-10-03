@@ -1,5 +1,6 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import java.util.UUID;
