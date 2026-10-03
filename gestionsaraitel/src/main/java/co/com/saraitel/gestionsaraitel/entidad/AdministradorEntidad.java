@@ -2,23 +2,22 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class AdministradorEntidad {
 
 	private UUID id;
 	private EmpleadoEntidad empleado;
 
 	public AdministradorEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setEmpleado(new EmpleadoEntidad());
 	}
 
-	public AdministradorEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setEmpleado(builder.empleado);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public AdministradorEntidad(final UUID id, final EmpleadoEntidad empleado) {
+		setId(id);
+		setEmpleado(empleado);
 	}
 
 	public UUID getId() {
@@ -26,7 +25,7 @@ public class AdministradorEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public EmpleadoEntidad getEmpleado() {
@@ -34,30 +33,6 @@ public class AdministradorEntidad {
 	}
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
-		this.empleado = empleado;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private EmpleadoEntidad empleado;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder empleado(final EmpleadoEntidad empleado) {
-			this.empleado = empleado;
-			return this;
-		}
-
-		public AdministradorEntidad build() {
-			return new AdministradorEntidad(this);
-		}
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, EmpleadoEntidad.);
 	}
 }

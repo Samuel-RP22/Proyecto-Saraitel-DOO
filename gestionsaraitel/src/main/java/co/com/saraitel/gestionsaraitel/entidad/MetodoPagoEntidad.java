@@ -2,25 +2,26 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class MetodoPagoEntidad {
 
 	private UUID id;
 	private String nombre;
-	private boolean esactivo;
+	private Boolean esactivo;
 
 	public MetodoPagoEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setNombre(UtilTexto.VACIA);
+		setEsActivo();
+
 	}
 
-	private MetodoPagoEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setNombre(builder.nombre);
-		setEsActivo(builder.esactivo);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public MetodoPagoEntidad(final UUID id, final String nombre, final boolean esactivo) {
+		setId(id);
+		setNombre(nombre);
+		setEsActivo(esactivo);
 	}
 
 	public UUID getId() {
@@ -28,52 +29,22 @@ public class MetodoPagoEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(final String nombre) {
-		this.nombre = nombre;
-	}
+	 public void setNombre(final String nombre) {
+	        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	    }
 
-	public boolean isEsActivo() {
+	public boolean getEsActivo() {
 		return esactivo;
 	}
 
-	public void setEsActivo(final boolean esactivo) {
+	public void setEsActivo(final Boolean esactivo) {
 		this.esactivo = esactivo;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String nombre;
-		private boolean esactivo;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder nombre(final String nombre) {
-			this.nombre = nombre;
-			return this;
-		}
-
-		public Builder esactivo(final boolean esactivo) {
-			this.esactivo = esactivo;
-			return this;
-		}
-
-		public MetodoPagoEntidad build() {
-			return new MetodoPagoEntidad(this);
-		}
 	}
 }
