@@ -4,33 +4,43 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class DevolucionEntidad {
 
 	private UUID id;
 	private DetalleCompraEntidad detalleCompra;
-	private String motivo;
+	private MotivoEntidad motivo;
 	private LocalDateTime fechaDevolucion;
 	private int cantidad;
 	private BigDecimal montoDevolucion;
 	private String estado;
 
 	public DevolucionEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setDetalleCompra(new DetalleCompraEntidad());
+		setMotivo(new MotivoEntidad());
+		setFechaDevolucion(UtilFecha.FECHA_DEFECTO);
+		setCantidad(UtilNumero.CERO);
+		setMontoDevolucion(UtilNumero.);
+		setEstado(UtilNumero.);
 	}
 
-	private DevolucionEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setDetalleCompra(builder.detalleCompra);
-		setMotivo(builder.motivo);
-		setFechaDevolucion(builder.fechaDevolucion);
-		setCantidad(builder.cantidad);
-		setMontoDevolucion(builder.montoDevolucion);
-		setEstado(builder.estado);
-	}
+	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra, final MotivoEntidad motivo,
+			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
+			final String estado) {
 
-	public static Builder builder() {
-		return new Builder();
+		setId(id);
+		setDetalleCompra(detalleCompra);
+		setMotivo(motivo);
+		setFechaDevolucion(fechaDevolucion);
+		setCantidad(cantidad);
+		setMontoDevolucion(montoDevolucion);
+		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -38,7 +48,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public DetalleCompraEntidad getDetalleCompra() {
@@ -46,15 +56,15 @@ public class DevolucionEntidad {
 	}
 
 	public void setDetalleCompra(final DetalleCompraEntidad detalleCompra) {
-		this.detalleCompra = detalleCompra;
+		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(detalleCompra, new DetalleCompraEntidad());
 	}
 
-	public String getMotivo() {
+	public MotivoEntidad getMotivo() {
 		return motivo;
 	}
 
-	public void setMotivo(final String motivo) {
-		this.motivo = motivo;
+	public void setMotivo(final MotivoEntidad motivo) {
+		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, new MotivoEntidad());
 	}
 
 	public LocalDateTime getFechaDevolucion() {
@@ -62,15 +72,15 @@ public class DevolucionEntidad {
 	}
 
 	public void setFechaDevolucion(final LocalDateTime fechaDevolucion) {
-		this.fechaDevolucion = fechaDevolucion;
+		this.fechaDevolucion = UtilFecha;
 	}
 
 	public int getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(final Integer cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidad(final int cantidad) {
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad).intValue();
 	}
 
 	public BigDecimal getMontoDevolucion() {
@@ -78,7 +88,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setMontoDevolucion(final BigDecimal montoDevolucion) {
-		this.montoDevolucion = montoDevolucion;
+		this.montoDevolucion = UtilNumero;
 	}
 
 	public String getEstado() {
@@ -86,60 +96,6 @@ public class DevolucionEntidad {
 	}
 
 	public void setEstado(final String estado) {
-		this.estado = estado;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private DetalleCompraEntidad detalleCompra;
-		private String motivo;
-		private LocalDateTime fechaDevolucion;
-		private int cantidad;
-		private BigDecimal montoDevolucion;
-		private String estado;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder detalleCompra(final DetalleCompraEntidad detalleCompra) {
-			this.detalleCompra = detalleCompra;
-			return this;
-		}
-
-		public Builder motivo(final String motivo) {
-			this.motivo = motivo;
-			return this;
-		}
-
-		public Builder fechaDevolucion(final LocalDateTime fechaDevolucion) {
-			this.fechaDevolucion = fechaDevolucion;
-			return this;
-		}
-
-		public Builder cantidad(final int cantidad) {
-			this.cantidad = cantidad;
-			return this;
-		}
-
-		public Builder montoDevolucion(final BigDecimal montoDevolucion) {
-			this.montoDevolucion = montoDevolucion;
-			return this;
-		}
-
-		public Builder estado(final String estado) {
-			this.estado = estado;
-			return this;
-		}
-
-		public DevolucionEntidad build() {
-			return new DevolucionEntidad(this);
-		}
+		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }

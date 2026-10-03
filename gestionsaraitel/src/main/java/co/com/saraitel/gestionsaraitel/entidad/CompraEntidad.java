@@ -1,20 +1,20 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
-import java.time.LocalDateTime;
+import java.util.LocalDateTime;
 import java.util.UUID;
 
 public class CompraEntidad {
-	
+
 	private UUID id;
 	private ProcesoCompraEntidad procesocompra;
-	private LocalDateTime fechacompra;
+	private Date fechacompra;
 	private String estado;
 
 	public CompraEntidad() {
 		super();
 	}
 
-	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesocompra, final LocalDateTime fechacompra, final String estado) {
+	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesocompra, final Date fechacompra, final String estado) {
 		super();
 		setId(id);
 		setProcesocompra(procesocompra);
@@ -38,11 +38,11 @@ public class CompraEntidad {
 		this.procesocompra = procesocompra;
 	}
 
-	public LocalDateTime getFechacompra() {
+	public Date getFechacompra() {
 		return fechacompra;
 	}
 
-	public void setFechacompra(final LocalDateTime fechacompra) {
+	public void setFechacompra(final Date fechacompra) {
 		this.fechacompra = fechacompra;
 	}
 

@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class IngresoInventarioEntidad {
 
 	private UUID id;
@@ -13,20 +19,19 @@ public class IngresoInventarioEntidad {
 	private BigDecimal total;
 
 	public IngresoInventarioEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setEstado(UtilTexto.VACIA);
+		setSede(new SedeEntidad());
+		setFechallegada(UtilFecha.FECHA_DEFECTO);
+		setTotal(UtilNumero.);
 	}
 
-	private IngresoInventarioEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setEstado(builder.estado);
-		setSede(builder.sede);
-		setFechallegada(builder.fechallegada);
-		setTotal(builder.total);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public IngresoInventarioEntidad(final UUID id, final String estado, final SedeEntidad sede, final LocalDateTime fechallegada, final Double total) {
+		setId(id);
+		setEstado(estado);
+		setSede(sede);
+		setFechallegada(fechallegada);
+		setTotal(total);
 	}
 
 	public UUID getId() {
@@ -34,7 +39,7 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public String getEstado() {
@@ -42,7 +47,7 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setEstado(final String estado) {
-		this.estado = estado;
+		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 
 	public SedeEntidad getSede() {
@@ -50,7 +55,7 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
 	}
 
 	public LocalDateTime getFechallegada() {
@@ -58,56 +63,14 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setFechallegada(final LocalDateTime fechallegada) {
-		this.fechallegada = fechallegada;
+		this.fechallegada = UtilFecha.;
 	}
 
-	public BigDecimal getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(final BigDecimal total) {
-		this.total = total;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String estado;
-		private SedeEntidad sede;
-		private LocalDateTime fechallegada;
-		private BigDecimal total;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder estado(final String estado) {
-			this.estado = estado;
-			return this;
-		}
-
-		public Builder sede(final SedeEntidad sede) {
-			this.sede = sede;
-			return this;
-		}
-
-		public Builder fechallegada(final LocalDateTime fechallegada) {
-			this.fechallegada = fechallegada;
-			return this;
-		}
-
-		public Builder total(final BigDecimal total) {
-			this.total = total;
-			return this;
-		}
-
-		public IngresoInventarioEntidad build() {
-			return new IngresoInventarioEntidad(this);
-		}
+	public void setTotal(final Double total) {
+		this.total = UtilNumero.;
 	}
 }

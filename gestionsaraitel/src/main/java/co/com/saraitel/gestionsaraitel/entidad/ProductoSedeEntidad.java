@@ -3,6 +3,8 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ProductoSedeEntidad {
@@ -11,7 +13,7 @@ public class ProductoSedeEntidad {
 	private ProductoEntidad producto;
 	private SedeEntidad sede;
 	private BigDecimal precio;
-	private Boolean tieneOferta;
+	private boolean tieneOferta;
 	private int oferta;
 	private BigDecimal precioTrasOferta;
 	private int stock;
@@ -19,18 +21,20 @@ public class ProductoSedeEntidad {
 
 	public ProductoSedeEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setProducto(producto);
-		setSede(sede);
-		setPrecio(precio);
-		setTieneOferta(tieneOferta);
-		setOferta(oferta);
-		setPrecioTrasOferta(precioTrasOferta);
-		setStock(stock);
-		setStockGarantia(stockGarantia);
+		setProducto(new ProductoEntidad());
+		setSede(new SedeEntidad());
+		setPrecio(UtilNumero.);
+		setTieneOferta(false);
+		setOferta(UtilNumero.CERO);
+		setPrecioTrasOferta(UtilNumero.);
+		setStock(UtilNumero.CERO);
+		setStockGarantia(UtilNumero.CERO);
 		
 	}
 
-	private ProductoSedeEntidad(final UUID id, ) {
+	public ProductoSedeEntidad(final UUID id, final ProductoEntidad producto, final SedeEntidad sede, final BigDecimal precio,
+			final boolean tieneOferta, final int oferta, final BigDecimal precioTrasOferta, final int stock,
+			final int stockGarantia) {
 		setId(id);
 		setProducto(producto);
 		setSede(sede);
@@ -49,7 +53,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public ProductoEntidad getProducto() {
@@ -57,7 +61,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setProducto(final ProductoEntidad producto) {
-		this.producto = producto;
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(producto, new ProductoEntidad());
 	}
 
 	public SedeEntidad getSede() {
@@ -65,7 +69,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
 	}
 
 	public BigDecimal getPrecio() {
@@ -73,7 +77,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setPrecio(final BigDecimal precio) {
-		this.precio = precio;
+		this.precio = ;
 	}
 
 	public boolean getTieneOferta() {
@@ -105,7 +109,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setStock(final int stock) {
-		this.stock = stock;
+		this.stock = UtilNumero.obtenerValorDefecto(stock).intValue();
 	}
 
 	public int getStockGarantia() {
@@ -113,7 +117,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setStockGarantia(final int stockGarantia) {
-		this.stockGarantia = stockGarantia;
+		this.stockGarantia = UtilNumero.obtenerValorDefecto(stockGarantia).intValue();
 	}
 
 }

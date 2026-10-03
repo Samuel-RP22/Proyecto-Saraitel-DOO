@@ -3,6 +3,10 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class DetalleIngresoEntidad {
 
 	private UUID id;
@@ -13,21 +17,23 @@ public class DetalleIngresoEntidad {
 	private BigDecimal subtotal;
 
 	public DetalleIngresoEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setIngresoInventario(new IngresoInventarioEntidad() );
+		setProductoSede(new ProductoSedeEntidad());
+		setCantidad(UtilNumero.CERO);
+		setCostoUnitario(UtilNumero.CERO_DECIMAL);
+		setSubtotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	private DetalleIngresoEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setIngresoInventario(builder.ingresoInventario);
-		setProductoSede(builder.productoSede);
-		setCantidad(builder.cantidad);
-		setCostoUnitario(builder.costoUnitario);
-		setSubtotal(builder.subtotal);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public DetalleIngresoEntidad(final UUID id, final IngresoInventarioEntidad ingresoInventario,
+			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal costoUnitario,
+			final BigDecimal subtotal) {
+		setId(id);
+		setIngresoInventario(ingresoInventario);
+		setProductoSede(productoSede);
+		setCantidad(cantidad);
+		setCostoUnitario(costoUnitario);
+		setSubtotal(subtotal);
 	}
 
 	public UUID getId() {
@@ -35,7 +41,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public IngresoInventarioEntidad getIngresoInventario() {
@@ -43,7 +49,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioEntidad ingresoInventario) {
-		this.ingresoInventario = ingresoInventario;
+		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ingresoInventario, new IngresoInventarioEntidad());
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -51,7 +57,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = productoSede;
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede, new ProductoSedeEntidad());
 	}
 
 	public int getCantidad() {
@@ -59,7 +65,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setCantidad(final int cantidad) {
-		this.cantidad = cantidad;
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad).intValue();
 	}
 
 	public BigDecimal getCostoUnitario() {
@@ -67,7 +73,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setCostoUnitario(final BigDecimal costoUnitario) {
-		this.costoUnitario = costoUnitario;
+		this.costoUnitario = UtilNumero.;
 	}
 
 	public BigDecimal getSubtotal() {
@@ -75,54 +81,6 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setSubtotal(final BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private IngresoInventarioEntidad ingresoInventario;
-		private ProductoSedeEntidad productoSede;
-		private int cantidad;
-		private BigDecimal costoUnitario;
-		private BigDecimal subtotal;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder ingresoInventario(final IngresoInventarioEntidad ingresoInventario) {
-			this.ingresoInventario = ingresoInventario;
-			return this;
-		}
-
-		public Builder productoSede(final ProductoSedeEntidad productoSede) {
-			this.productoSede = productoSede;
-			return this;
-		}
-
-		public Builder cantidad(final int cantidad) {
-			this.cantidad = cantidad;
-			return this;
-		}
-
-		public Builder costoUnitario(final BigDecimal costoUnitario) {
-			this.costoUnitario = costoUnitario;
-			return this;
-		}
-
-		public Builder subtotal(final BigDecimal subtotal) {
-			this.subtotal = subtotal;
-			return this;
-		}
-
-		public DetalleIngresoEntidad build() {
-			return new DetalleIngresoEntidad(this);
-		}
+		this.subtotal = UtilNumero.;
 	}
 }
