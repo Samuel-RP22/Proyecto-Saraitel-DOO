@@ -2,6 +2,9 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class ClienteRegistradoNEntidad {
 
 	private UUID id;
@@ -9,18 +12,15 @@ public class ClienteRegistradoNEntidad {
 	private PersonaEntidad persona;
 
 	public ClienteRegistradoNEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setClienteregistrado(new ClienteRegistradoEntidad());
+		setPersona(new PersonaEntidad());
 	}
 
-	private ClienteRegistradoNEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setClienteregistrado(builder.clienteregistrado);
-		setPersona(builder.persona);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public ClienteRegistradoNEntidad(final UUID id, final ClienteRegistradoEntidad clienteregistrado, final PersonaEntidad persona) {
+		setId(id);
+		setClienteregistrado(clienteregistrado);
+		setPersona(persona);
 	}
 
 	public UUID getId() {
@@ -28,7 +28,7 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public ClienteRegistradoEntidad getClienteregistrado() {
@@ -36,7 +36,7 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setClienteregistrado(final ClienteRegistradoEntidad clienteregistrado) {
-		this.clienteregistrado = clienteregistrado;
+		this.clienteregistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteregistrado, new ClienteRegistradoEntidad());
 	}
 
 	public PersonaEntidad getPersona() {
@@ -44,36 +44,6 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = persona;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private ClienteRegistradoEntidad clienteregistrado;
-		private PersonaEntidad persona;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder clienteregistrado(final ClienteRegistradoEntidad clienteregistrado) {
-			this.clienteregistrado = clienteregistrado;
-			return this;
-		}
-
-		public Builder persona(final PersonaEntidad persona) {
-			this.persona = persona;
-			return this;
-		}
-
-		public ClienteRegistradoNEntidad build() {
-			return new ClienteRegistradoNEntidad(this);
-		}
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaEntidad());
 	}
 }

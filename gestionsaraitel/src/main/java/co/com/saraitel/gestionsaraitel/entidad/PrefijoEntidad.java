@@ -2,62 +2,38 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class PrefijoEntidad {
+    
+    private UUID id;
+    private String codigo;
 
-	private UUID id;
-	private String codigo;
+    public PrefijoEntidad() {
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setCodigo(UtilTexto.VACIA);
+    }
 
-	public PrefijoEntidad() {
-		super();
-	}
+    public PrefijoEntidad(final UUID id, final String codigo) {
+        setId(id);
+        setCodigo(codigo);
+    }
 
-	private PrefijoEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setCodigo(builder.codigo);
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public static Builder builder() {
-		return new Builder();
-	}
+    public void setId(final UUID id) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public void setId(final UUID id) {
-		this.id = id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(final String codigo) {
-		this.codigo = codigo;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String codigo;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder codigo(final String codigo) {
-			this.codigo = codigo;
-			return this;
-		}
-
-		public PrefijoEntidad build() {
-			return new PrefijoEntidad(this);
-		}
-	}
+    public void setCodigo(final String codigo) {
+        this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
+    }
 }
+   

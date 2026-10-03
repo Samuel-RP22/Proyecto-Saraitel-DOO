@@ -14,7 +14,7 @@ public class MetodoPagoEntidad {
 	public MetodoPagoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
-		setEsActivo(false);
+		setEsActivo(true);
 
 	}
 

@@ -2,6 +2,10 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class ClienteRegistradoJEntidad {
 
 	private UUID id;
@@ -15,25 +19,31 @@ public class ClienteRegistradoJEntidad {
 	private boolean telefonoconfirmado;
 
 	public ClienteRegistradoJEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setClienteRegistrado(new ClienteRegistradoEntidad());
+		setPrefijo(new PrefijoEntidad());
+		setTelefono(UtilTexto.VACIA);
+		setNit(UtilTexto.VACIA);
+		setRazonSocial(UtilTexto.VACIA);
+		setCorreo(UtilTexto.VACIA);
+		setCorreoConfirmado(true);
+		setTelefonoConfirmado(true);
 	}
 
-	private ClienteRegistradoJEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setClienteRegistrado(builder.clienteregistrado);
-		setPrefijo(builder.prefijo);
-		setTelefono(builder.telefono);
-		setNit(builder.nit);
-		setRazonSocial(builder.razonsocial);
-		setCorreo(builder.correo);
-		setCorreoConfirmado(builder.correoconfirmado);
-		setTelefonoConfirmado(builder.telefonoconfirmado);
+	public ClienteRegistradoJEntidad(final UUID id, final ClienteRegistradoEntidad clienteregistrado,
+			final PrefijoEntidad prefijo, final String telefono, final String nit, final String razonsocial,
+			final String correo, final boolean correoconfirmado, final boolean telefonoconfirmado) {
+		setId(id);
+		setClienteRegistrado(clienteregistrado);
+		setPrefijo(prefijo);
+		setTelefono(telefono);
+		setNit(nit);
+		setRazonSocial(razonsocial);
+		setCorreo(correo);
+		setCorreoConfirmado(correoconfirmado);
+		setTelefonoConfirmado(telefonoconfirmado);
 	}
 
-	public static Builder builder() {
-		return new Builder();
-	}
 
 	public UUID getId() {
 		return id;
@@ -48,7 +58,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteregistrado) {
-		this.clienteregistrado = clienteregistrado;
+		this.clienteregistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteregistrado, new ClienteRegistradoEntidad());
 	}
 
 	public PrefijoEntidad getPrefijo() {
@@ -56,7 +66,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = prefijo;
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoEntidad());
 	}
 
 	public String getTelefono() {
@@ -64,7 +74,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setTelefono(final String telefono) {
-		this.telefono = telefono;
+		this.telefono = UtilTexto.quitarEspaciosEnBlanco(telefono);
 	}
 
 	public String getNit() {
@@ -72,7 +82,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setNit(final String nit) {
-		this.nit = nit;
+		this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
 	}
 
 	public String getRazonSocial() {
@@ -80,7 +90,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setRazonSocial(final String razonsocial) {
-		this.razonsocial = razonsocial;
+		this.razonsocial = UtilTexto.quitarEspaciosEnBlanco(razonsocial);
 	}
 
 	public String getCorreo() {
@@ -88,10 +98,10 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setCorreo(final String correo) {
-		this.correo = correo;
+		this.correo = UtilTexto.quitarEspaciosEnBlanco(correo);
 	}
 
-	public Boolean isCorreoConfirmado() {
+	public Boolean getCorreoConfirmado() {
 		return correoconfirmado;
 	}
 
@@ -99,7 +109,7 @@ public class ClienteRegistradoJEntidad {
 		this.correoconfirmado = correoconfirmado;
 	}
 
-	public Boolean isTelefonoConfirmado() {
+	public Boolean getTelefonoConfirmado() {
 		return telefonoconfirmado;
 	}
 
@@ -107,69 +117,4 @@ public class ClienteRegistradoJEntidad {
 		this.telefonoconfirmado = telefonoconfirmado;
 	}
 
-	public static class Builder {
-
-		private UUID id;
-		private ClienteRegistradoEntidad clienteregistrado;
-		private PrefijoEntidad prefijo;
-		private String telefono;
-		private String nit;
-		private String razonsocial;
-		private String correo;
-		private boolean correoconfirmado;
-		private boolean telefonoconfirmado;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder clienteregistrado(final ClienteRegistradoEntidad clienteregistrado) {
-			this.clienteregistrado = clienteregistrado;
-			return this;
-		}
-
-		public Builder prefijo(final PrefijoEntidad prefijo) {
-			this.prefijo = prefijo;
-			return this;
-		}
-
-		public Builder telefono(final String telefono) {
-			this.telefono = telefono;
-			return this;
-		}
-
-		public Builder nit(final String nit) {
-			this.nit = nit;
-			return this;
-		}
-
-		public Builder razonsocial(final String razonsocial) {
-			this.razonsocial = razonsocial;
-			return this;
-		}
-
-		public Builder correo(final String correo) {
-			this.correo = correo;
-			return this;
-		}
-
-		public Builder correoconfirmado(final boolean correoconfirmado) {
-			this.correoconfirmado = correoconfirmado; 
-			return this;
-		}
-
-		public Builder telefonoconfirmado(final boolean telefonoconfirmado) {
-			this.telefonoconfirmado = telefonoconfirmado;
-			return this;
-		}
-
-		public ClienteRegistradoJEntidad build() {
-			return new ClienteRegistradoJEntidad(this);
-		}
-	}
 }

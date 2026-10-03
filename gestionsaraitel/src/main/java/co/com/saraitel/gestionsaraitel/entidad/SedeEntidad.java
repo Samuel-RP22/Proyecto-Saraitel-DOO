@@ -2,126 +2,83 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class SedeEntidad {
+    
+    private UUID id;
+    private String nombre;
+    private CiudadEntidad ciudad;
+    private String nit;
+    private String direccion;
+    private boolean esactiva;
+    
+    public SedeEntidad() {
+    	setId(UtilUUID.obtenerUUIDDefecto());
+        setNombre(UtilTexto.VACIA);
+        setCiudad(new CiudadEntidad());
+        setNit(UtilTexto.VACIA);
+        setDireccion(UtilTexto.VACIA);
+        setEsActiva(true);
+    }
 
-	private UUID id;
-	private String nombre;
-	private CiudadEntidad ciudad;
-	private String nit;
-	private String direccion;
-	private boolean esactiva;
+    public SedeEntidad(final UUID id, final String nombre, final CiudadEntidad ciudad, final String nit,
+    		final String direccion, final boolean esactiva) {
+        setId(id);
+        setNombre(nombre);
+        setCiudad(ciudad);
+        setNit(nit);
+        setDireccion(direccion);
+        setEsActiva(esactiva);
+        
+        
+    }
 
-	public SedeEntidad() {
-		super();
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	private SedeEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setNombre(builder.nombre);
-		setCiudad(builder.ciudad);
-		setNit(builder.nit);
-		setDireccion(builder.direccion);
-		setEsActiva(builder.esactiva);
-	}
+    public void setId(final UUID id) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+    }
 
-	public static Builder builder() {
-		return new Builder();
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public void setNombre(final String nombre) {
+        this.nombre = UtilTexto.obtenerValorDefecto(nombre);
+    }
 
-	public void setId(final UUID id) {
-		this.id = id;
-	}
+    public CiudadEntidad getCiudad() {
+        return ciudad;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setCiudad(final CiudadEntidad ciudad) {
+        this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ciudad, new CiudadEntidad());
+    }
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public void setNombre(final String nombre) {
-		this.nombre = nombre;
-	}
+    public void setDireccion(final String direccion) {
+        this.direccion = UtilTexto.obtenerValorDefecto(direccion);
+    }
+    
+    public String getNit() {
+        return nit;
+    }
 
-	public CiudadEntidad getCiudad() {
-		return ciudad;
-	}
+    public void setNit(final String nit) {
+        this.nit = UtilTexto.obtenerValorDefecto(nit);
+    }
+    public Boolean getEsActiva() {
+        return esactiva;
+    }
 
-	public void setCiudad(final CiudadEntidad ciudad) {
-		this.ciudad = ciudad;
-	}
-
-	public String getNit() {
-		return nit;
-	}
-
-	public void setNit(final String nit) {
-		this.nit = nit;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(final String direccion) {
-		this.direccion = direccion;
-	}
-
-	public boolean isEsActiva() {
-		return esactiva;
-	}
-
-	public void setEsActiva(final boolean esactiva) {
-		this.esactiva = esactiva;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String nombre;
-		private CiudadEntidad ciudad;
-		private String nit;
-		private String direccion;
-		private boolean esactiva;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder nombre(final String nombre) {
-			this.nombre = nombre;
-			return this;
-		}
-
-		public Builder ciudad(final CiudadEntidad ciudad) {
-			this.ciudad = ciudad;
-			return this;
-		}
-
-		public Builder nit(final String nit) {
-			this.nit = nit;
-			return this;
-		}
-
-		public Builder direccion(final String direccion) {
-			this.direccion = direccion;
-			return this;
-		}
-
-		public Builder esactiva(final boolean esactiva) {
-			this.esactiva = esactiva;
-			return this;
-		}
-
-		public SedeEntidad build() {
-			return new SedeEntidad(this);
-		}
-	}
+    public void setEsActiva(final Boolean esactiva) {
+        this.esactiva = esactiva;
+    }
 }
