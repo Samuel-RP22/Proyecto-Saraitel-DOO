@@ -8,7 +8,7 @@ public class DetalleCompraEntidad {
 	private UUID id;
 	private ProcesoCompraEntidad procesoCompra;
 	private ProductoSedeEntidad productoSede;
-	private Integer cantidad;
+	private int cantidad;
 	private BigDecimal precioUnitario;
 	private BigDecimal subtotal;
 

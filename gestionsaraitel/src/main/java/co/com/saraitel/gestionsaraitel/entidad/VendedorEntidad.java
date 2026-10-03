@@ -11,10 +11,14 @@ public class VendedorEntidad {
 		super();
 	}
 
-	public VendedorEntidad(final UUID id, final EmpleadoEntidad empleado) {
+	private VendedorEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setEmpleado(empleado);
+		setId(builder.id);
+		setEmpleado(builder.empleado);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -31,5 +35,29 @@ public class VendedorEntidad {
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
 		this.empleado = empleado;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private EmpleadoEntidad empleado;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder empleado(final EmpleadoEntidad empleado) {
+			this.empleado = empleado;
+			return this;
+		}
+
+		public VendedorEntidad build() {
+			return new VendedorEntidad(this);
+		}
 	}
 }

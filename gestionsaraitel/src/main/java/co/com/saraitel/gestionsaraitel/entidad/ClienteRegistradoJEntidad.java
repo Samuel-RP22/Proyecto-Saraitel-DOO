@@ -11,11 +11,28 @@ public class ClienteRegistradoJEntidad {
 	private String nit;
 	private String razonsocial;
 	private String correo;
-	private Boolean correoconfirmado;
-	private Boolean telefonoconfirmado;
+	private boolean correoconfirmado;
+	private boolean telefonoconfirmado;
 
 	public ClienteRegistradoJEntidad() {
 		super();
+	}
+
+	private ClienteRegistradoJEntidad(final Builder builder) {
+		super();
+		setId(builder.id);
+		setClienteRegistrado(builder.clienteregistrado);
+		setPrefijo(builder.prefijo);
+		setTelefono(builder.telefono);
+		setNit(builder.nit);
+		setRazonSocial(builder.razonsocial);
+		setCorreo(builder.correo);
+		setCorreoConfirmado(builder.correoconfirmado);
+		setTelefonoConfirmado(builder.telefonoconfirmado);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -88,5 +105,71 @@ public class ClienteRegistradoJEntidad {
 
 	public void setTelefonoConfirmado(final boolean telefonoconfirmado) {
 		this.telefonoconfirmado = telefonoconfirmado;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private ClienteRegistradoEntidad clienteregistrado;
+		private PrefijoEntidad prefijo;
+		private String telefono;
+		private String nit;
+		private String razonsocial;
+		private String correo;
+		private boolean correoconfirmado;
+		private boolean telefonoconfirmado;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder clienteregistrado(final ClienteRegistradoEntidad clienteregistrado) {
+			this.clienteregistrado = clienteregistrado;
+			return this;
+		}
+
+		public Builder prefijo(final PrefijoEntidad prefijo) {
+			this.prefijo = prefijo;
+			return this;
+		}
+
+		public Builder telefono(final String telefono) {
+			this.telefono = telefono;
+			return this;
+		}
+
+		public Builder nit(final String nit) {
+			this.nit = nit;
+			return this;
+		}
+
+		public Builder razonsocial(final String razonsocial) {
+			this.razonsocial = razonsocial;
+			return this;
+		}
+
+		public Builder correo(final String correo) {
+			this.correo = correo;
+			return this;
+		}
+
+		public Builder correoconfirmado(final boolean correoconfirmado) {
+			this.correoconfirmado = correoconfirmado; 
+			return this;
+		}
+
+		public Builder telefonoconfirmado(final boolean telefonoconfirmado) {
+			this.telefonoconfirmado = telefonoconfirmado;
+			return this;
+		}
+
+		public ClienteRegistradoJEntidad build() {
+			return new ClienteRegistradoJEntidad(this);
+		}
 	}
 }

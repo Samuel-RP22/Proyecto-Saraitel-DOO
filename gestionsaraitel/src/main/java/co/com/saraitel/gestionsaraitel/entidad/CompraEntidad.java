@@ -1,13 +1,14 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.Date;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import java.util.UUID;
 
 public class CompraEntidad {
 
 	private UUID id;
 	private ProcesoCompraEntidad procesocompra;
-	private Date fechacompra;
+	private LocalDateTime fechacompra;
 	private String estado;
 
 	public CompraEntidad() {

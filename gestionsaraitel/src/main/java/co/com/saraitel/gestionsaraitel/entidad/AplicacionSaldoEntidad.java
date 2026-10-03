@@ -14,13 +14,16 @@ public class AplicacionSaldoEntidad {
 		super();
 	}
 
-	public AplicacionSaldoEntidad(final UUID id, final SaldoFavorEntidad saldoFavor, final PagoEntidad pago,
-			final BigDecimal valorAplicado) {
+	private AplicacionSaldoEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setSaldoFavor(saldoFavor);
-		setPago(pago);
-		setValorAplicado(valorAplicado);
+		setId(builder.id);
+		setSaldoFavor(builder.saldoFavor);
+		setPago(builder.pago);
+		setValorAplicado(builder.valorAplicado);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -53,5 +56,41 @@ public class AplicacionSaldoEntidad {
 
 	public void setValorAplicado(final BigDecimal valorAplicado) {
 		this.valorAplicado = valorAplicado;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private SaldoFavorEntidad saldoFavor;
+		private PagoEntidad pago;
+		private BigDecimal valorAplicado;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder saldoFavor(final SaldoFavorEntidad saldoFavor) {
+			this.saldoFavor = saldoFavor;
+			return this;
+		}
+
+		public Builder pago(final PagoEntidad pago) {
+			this.pago = pago;
+			return this;
+		}
+
+		public Builder valorAplicado(final BigDecimal valorAplicado) {
+			this.valorAplicado = valorAplicado;
+			return this;
+		}
+
+		public AplicacionSaldoEntidad build() {
+			return new AplicacionSaldoEntidad(this);
+		}
 	}
 }

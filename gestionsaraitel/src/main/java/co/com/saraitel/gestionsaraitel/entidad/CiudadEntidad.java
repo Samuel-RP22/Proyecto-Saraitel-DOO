@@ -3,52 +3,77 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.util.UUID;
 
 public class CiudadEntidad {
-    
-    private UUID id;
-    private String nombre;
-    private DepartamentoEntidad departamento;
 
-    public CiudadEntidad() {
-        super();
-    }
+	private UUID id;
+	private String nombre;
+	private DepartamentoEntidad departamento;
 
-    public CiudadEntidad(final UUID id, final String nombre, final DepartamentoEntidad departamento, final UUID id2, final UUID id3, 
-    		final UUID id4, final UUID id5, final UUID id6, final UUID id7) {
-        super();
-        setId(id);
-        setNombre(nombre);
-        setDepartamento(departamento);
-        setId(id2);
-        setId(id3);
-        setId(id4);
-        setId(id5);
-        setId(id6);
-        setId(id7);
-        setId(id2);
-   
-    }
+	public CiudadEntidad() {
+		super();
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	private CiudadEntidad(final Builder builder) {
+		super();
+		setId(builder.id);
+		setNombre(builder.nombre);
+		setDepartamento(builder.departamento);
+	}
 
-    public void setId(final UUID id) {
-        this.id = id;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public void setNombre(final String nombre) {
-        this.nombre = nombre;
-    }
+	public void setId(final UUID id) {
+		this.id = id;
+	}
 
-    public DepartamentoEntidad getDepartamento() {
-        return departamento;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setDepartamento(final DepartamentoEntidad departamento) {
-        this.departamento = departamento;
-    }
+	public void setNombre(final String nombre) {
+		this.nombre = nombre;
+	}
+
+	public DepartamentoEntidad getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(final DepartamentoEntidad departamento) {
+		this.departamento = departamento;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private String nombre;
+		private DepartamentoEntidad departamento;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+
+		public Builder departamento(final DepartamentoEntidad departamento) {
+			this.departamento = departamento;
+			return this;
+		}
+
+		public CiudadEntidad build() {
+			return new CiudadEntidad(this);
+		}
+	}
 }

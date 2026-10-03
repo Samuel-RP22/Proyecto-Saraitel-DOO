@@ -5,16 +5,20 @@ import java.util.UUID;
 public class ClienteEntidad {
 
 	private UUID id;
-	private Boolean clientepordefecto;
-
+	private boolean esActivo;
+	
 	public ClienteEntidad() {
 		super();
 	}
 
-	public ClienteEntidad(final UUID id, final Boolean clientepordefecto) {
+	private ClienteEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setClientepordefecto(clientepordefecto);
+		setId(builder.id);
+		setEsActivo(builder.esActivo);
+		}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -25,11 +29,35 @@ public class ClienteEntidad {
 		this.id = id;
 	}
 
-	public Boolean getClientepordefecto() {
-		return clientepordefecto;
+	public boolean getNombre() {
+		return esActivo;
 	}
 
-	public void setClientepordefecto(final Boolean clientepordefecto) {
-		this.clientepordefecto = clientepordefecto;
+	public void setEsActivo(final boolean esActivo) {
+		this.esActivo = esActivo;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private boolean esActivo;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder nombre(final boolean esActivo) {
+			this.esActivo = esActivo;
+			return this;
+		}
+
+		public ClienteEntidad build() {
+			return new ClienteEntidad(this);
+		}
 	}
 }

@@ -12,8 +12,8 @@ public class PersonaEntidad {
 	private String nombre;
 	private String apellido;
 	private String correo;
-	private Boolean telefonoConfirmado;
-	private Boolean correoConfirmado;
+	private boolean telefonoConfirmado;
+	private boolean correoConfirmado;
 
 	public PersonaEntidad() {
 		super();
