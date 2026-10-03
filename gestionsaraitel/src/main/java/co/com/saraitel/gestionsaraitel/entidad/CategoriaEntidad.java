@@ -5,7 +5,7 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
-//holaas
+
 public class CategoriaEntidad {
 
 	private UUID id;
