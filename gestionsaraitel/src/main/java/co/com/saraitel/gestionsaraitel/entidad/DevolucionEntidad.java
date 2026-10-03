@@ -1,7 +1,7 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class DevolucionEntidad {
@@ -9,8 +9,8 @@ public class DevolucionEntidad {
 	private UUID id;
 	private DetalleCompraEntidad detalleCompra;
 	private String motivo;
-	private LocalDate fechaDevolucion;
-	private Integer cantidad;
+	private LocalDateTime fechaDevolucion;
+	private int cantidad;
 	private BigDecimal montoDevolucion;
 	private String estado;
 
@@ -18,17 +18,19 @@ public class DevolucionEntidad {
 		super();
 	}
 
-	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra, final String motivo,
-			final LocalDate fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
-			final String estado) {
+	private DevolucionEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setDetalleCompra(detalleCompra);
-		setMotivo(motivo);
-		setFechaDevolucion(fechaDevolucion);
-		setCantidad(cantidad);
-		setMontoDevolucion(montoDevolucion);
-		setEstado(estado);
+		setId(builder.id);
+		setDetalleCompra(builder.detalleCompra);
+		setMotivo(builder.motivo);
+		setFechaDevolucion(builder.fechaDevolucion);
+		setCantidad(builder.cantidad);
+		setMontoDevolucion(builder.montoDevolucion);
+		setEstado(builder.estado);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -55,11 +57,11 @@ public class DevolucionEntidad {
 		this.motivo = motivo;
 	}
 
-	public LocalDate getFechaDevolucion() {
+	public LocalDateTime getFechaDevolucion() {
 		return fechaDevolucion;
 	}
 
-	public void setFechaDevolucion(final LocalDate fechaDevolucion) {
+	public void setFechaDevolucion(final LocalDateTime fechaDevolucion) {
 		this.fechaDevolucion = fechaDevolucion;
 	}
 
@@ -67,7 +69,7 @@ public class DevolucionEntidad {
 		return cantidad;
 	}
 
-	public void setCantidad(final int cantidad) {
+	public void setCantidad(final Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -85,5 +87,59 @@ public class DevolucionEntidad {
 
 	public void setEstado(final String estado) {
 		this.estado = estado;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private DetalleCompraEntidad detalleCompra;
+		private String motivo;
+		private LocalDateTime fechaDevolucion;
+		private int cantidad;
+		private BigDecimal montoDevolucion;
+		private String estado;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder detalleCompra(final DetalleCompraEntidad detalleCompra) {
+			this.detalleCompra = detalleCompra;
+			return this;
+		}
+
+		public Builder motivo(final String motivo) {
+			this.motivo = motivo;
+			return this;
+		}
+
+		public Builder fechaDevolucion(final LocalDateTime fechaDevolucion) {
+			this.fechaDevolucion = fechaDevolucion;
+			return this;
+		}
+
+		public Builder cantidad(final int cantidad) {
+			this.cantidad = cantidad;
+			return this;
+		}
+
+		public Builder montoDevolucion(final BigDecimal montoDevolucion) {
+			this.montoDevolucion = montoDevolucion;
+			return this;
+		}
+
+		public Builder estado(final String estado) {
+			this.estado = estado;
+			return this;
+		}
+
+		public DevolucionEntidad build() {
+			return new DevolucionEntidad(this);
+		}
 	}
 }

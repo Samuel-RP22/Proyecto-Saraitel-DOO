@@ -16,16 +16,18 @@ public class DetalleCompraEntidad {
 		super();
 	}
 
-	public DetalleCompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra,
-			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal precioUnitario,
-			final BigDecimal subtotal) {
+	private DetalleCompraEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setProcesoCompra(procesoCompra);
-		setProductoSede(productoSede);
-		setCantidad(cantidad);
-		setPrecioUnitario(precioUnitario);
-		setSubtotal(subtotal);
+		setId(builder.id);
+		setProcesoCompra(builder.procesoCompra);
+		setProductoSede(builder.productoSede);
+		setCantidad(builder.cantidad);
+		setPrecioUnitario(builder.precioUnitario);
+		setSubtotal(builder.subtotal);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -74,5 +76,53 @@ public class DetalleCompraEntidad {
 
 	public void setSubtotal(final BigDecimal subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private ProcesoCompraEntidad procesoCompra;
+		private ProductoSedeEntidad productoSede;
+		private int cantidad;
+		private BigDecimal precioUnitario;
+		private BigDecimal subtotal;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder procesoCompra(final ProcesoCompraEntidad procesoCompra) {
+			this.procesoCompra = procesoCompra;
+			return this;
+		}
+
+		public Builder productoSede(final ProductoSedeEntidad productoSede) {
+			this.productoSede = productoSede;
+			return this;
+		}
+
+		public Builder cantidad(final int cantidad) {
+			this.cantidad = cantidad;
+			return this;
+		}
+
+		public Builder precioUnitario(final BigDecimal precioUnitario) {
+			this.precioUnitario = precioUnitario;
+			return this;
+		}
+
+		public Builder subtotal(final BigDecimal subtotal) {
+			this.subtotal = subtotal;
+			return this;
+		}
+
+		public DetalleCompraEntidad build() {
+			return new DetalleCompraEntidad(this);
+		}
 	}
 }

@@ -1,8 +1,6 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import java.util.UUID;
 
 public class CompraEntidad {
@@ -16,7 +14,7 @@ public class CompraEntidad {
 		super();
 	}
 
-	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesocompra, final Date fechacompra, final String estado) {
+	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesocompra, final LocalDateTime fechacompra, final String estado) {
 		super();
 		setId(id);
 		setProcesocompra(procesocompra);
@@ -40,11 +38,11 @@ public class CompraEntidad {
 		this.procesocompra = procesocompra;
 	}
 
-	public Date getFechacompra() {
+	public LocalDateTime getFechacompra() {
 		return fechacompra;
 	}
 
-	public void setFechacompra(final Date fechacompra) {
+	public void setFechacompra(final LocalDateTime fechacompra) {
 		this.fechacompra = fechacompra;
 	}
 

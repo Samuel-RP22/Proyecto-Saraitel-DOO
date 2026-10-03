@@ -6,7 +6,7 @@ public class ClienteEntidad {
 
 	private UUID id;
 	private boolean esActivo;
-	
+
 	public ClienteEntidad() {
 		super();
 	}
@@ -15,7 +15,7 @@ public class ClienteEntidad {
 		super();
 		setId(builder.id);
 		setEsActivo(builder.esActivo);
-		}
+	}
 
 	public static Builder builder() {
 		return new Builder();
@@ -29,7 +29,7 @@ public class ClienteEntidad {
 		this.id = id;
 	}
 
-	public boolean getNombre() {
+	public boolean isEsActivo() {
 		return esActivo;
 	}
 
@@ -51,7 +51,7 @@ public class ClienteEntidad {
 			return this;
 		}
 
-		public Builder nombre(final boolean esActivo) {
+		public Builder esActivo(final boolean esActivo) {
 			this.esActivo = esActivo;
 			return this;
 		}

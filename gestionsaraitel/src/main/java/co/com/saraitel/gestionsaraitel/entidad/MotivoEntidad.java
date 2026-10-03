@@ -11,10 +11,14 @@ public class MotivoEntidad {
 		super();
 	}
 
-	public MotivoEntidad(final UUID id, final String nombre) {
+	private MotivoEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setNombre(nombre);
+		setId(builder.id);
+		setNombre(builder.nombre);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -31,5 +35,29 @@ public class MotivoEntidad {
 
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private String nombre;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+
+		public MotivoEntidad build() {
+			return new MotivoEntidad(this);
+		}
 	}
 }

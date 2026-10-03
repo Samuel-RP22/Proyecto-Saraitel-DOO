@@ -1,25 +1,30 @@
 package co.com.saraitel.gestionsaraitel.entidad;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class PagoEntidad {
 
 	private UUID id;
 	private ProcesoCompraEntidad compra;
-	private Double montopendiente;
-	private Date fechapago;
+	private BigDecimal montopendiente;
+	private LocalDateTime fechapago;
 
 	public PagoEntidad() {
 		super();
 	}
 
-	public PagoEntidad(final UUID id, final ProcesoCompraEntidad compra, final Double montopendiente, final Date fechapago) {
+	private PagoEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setCompra(compra);
-		setMontopendiente(montopendiente);
-		setFechapago(fechapago);
+		setId(builder.id);
+		setCompra(builder.compra);
+		setMontopendiente(builder.montopendiente);
+		setFechapago(builder.fechapago);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -38,19 +43,55 @@ public class PagoEntidad {
 		this.compra = compra;
 	}
 
-	public Double getMontopendiente() {
+	public BigDecimal getMontopendiente() {
 		return montopendiente;
 	}
 
-	public void setMontopendiente(final Double montopendiente) {
+	public void setMontopendiente(final BigDecimal montopendiente) {
 		this.montopendiente = montopendiente;
 	}
 
-	public Date getFechapago() {
+	public LocalDateTime getFechapago() {
 		return fechapago;
 	}
 
-	public void setFechapago(final Date fechapago) {
+	public void setFechapago(final LocalDateTime fechapago) {
 		this.fechapago = fechapago;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private ProcesoCompraEntidad compra;
+		private BigDecimal montopendiente;
+		private LocalDateTime fechapago;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder compra(final ProcesoCompraEntidad compra) {
+			this.compra = compra;
+			return this;
+		}
+
+		public Builder montopendiente(final BigDecimal montopendiente) {
+			this.montopendiente = montopendiente;
+			return this;
+		}
+
+		public Builder fechapago(final LocalDateTime fechapago) {
+			this.fechapago = fechapago;
+			return this;
+		}
+
+		public PagoEntidad build() {
+			return new PagoEntidad(this);
+		}
 	}
 }

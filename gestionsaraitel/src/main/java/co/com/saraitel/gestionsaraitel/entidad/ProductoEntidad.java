@@ -15,15 +15,18 @@ public class ProductoEntidad {
 		super();
 	}
 
-	public ProductoEntidad(final UUID id, final MarcaEntidad marca, final CategoriaEntidad categoria,
-			final String modelo, final String nombre, final String descripcion) {
+	private ProductoEntidad(final Builder builder) {
 		super();
-		setId(id);
-		setMarca(marca);
-		setCategoria(categoria);
-		setModelo(modelo);
-		setNombre(nombre);
-		setDescripcion(descripcion);
+		setId(builder.id);
+		setMarca(builder.marca);
+		setCategoria(builder.categoria);
+		setModelo(builder.modelo);
+		setNombre(builder.nombre);
+		setDescripcion(builder.descripcion);
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public UUID getId() {
@@ -72,5 +75,53 @@ public class ProductoEntidad {
 
 	public void setDescripcion(final String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public static class Builder {
+
+		private UUID id;
+		private MarcaEntidad marca;
+		private CategoriaEntidad categoria;
+		private String modelo;
+		private String nombre;
+		private String descripcion;
+
+		private Builder() {
+			super();
+		}
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder marca(final MarcaEntidad marca) {
+			this.marca = marca;
+			return this;
+		}
+
+		public Builder categoria(final CategoriaEntidad categoria) {
+			this.categoria = categoria;
+			return this;
+		}
+
+		public Builder modelo(final String modelo) {
+			this.modelo = modelo;
+			return this;
+		}
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+
+		public Builder descripcion(final String descripcion) {
+			this.descripcion = descripcion;
+			return this;
+		}
+
+		public ProductoEntidad build() {
+			return new ProductoEntidad(this);
+		}
 	}
 }
