@@ -2,6 +2,9 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class MarcaEntidad {
 
 	private UUID id;
@@ -9,18 +12,15 @@ public class MarcaEntidad {
 	private boolean esactivo;
 
 	public MarcaEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setNombre(UtilTexto.VACIA);
+		setEsActivo(false);
 	}
 
-	private MarcaEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setNombre(builder.nombre);
-		setEsActivo(builder.esactivo);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public MarcaEntidad(final UUID id, final String nombre, final boolean esactivo) {
+		setId(id);
+		setNombre(nombre);
+		setEsActivo(esactivo);
 	}
 
 	public UUID getId() {
@@ -28,7 +28,7 @@ public class MarcaEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public String getNombre() {
@@ -36,44 +36,14 @@ public class MarcaEntidad {
 	}
 
 	public void setNombre(final String nombre) {
-		this.nombre = nombre;
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 	}
 
-	public boolean isEsActivo() {
+	public boolean getEsActivo() {
 		return esactivo;
 	}
 
 	public void setEsActivo(final boolean esactivo) {
 		this.esactivo = esactivo;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String nombre;
-		private boolean esactivo;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder nombre(final String nombre) {
-			this.nombre = nombre;
-			return this;
-		}
-
-		public Builder esactivo(final boolean esactivo) {
-			this.esactivo = esactivo;
-			return this;
-		}
-
-		public MarcaEntidad build() {
-			return new MarcaEntidad(this);
-		}
 	}
 }

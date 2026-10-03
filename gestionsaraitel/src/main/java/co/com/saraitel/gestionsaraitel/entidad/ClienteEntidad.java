@@ -2,23 +2,21 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class ClienteEntidad {
 
 	private UUID id;
-	private boolean esActivo;
+	private boolean clientepordefecto;
 
 	public ClienteEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setClientepordefecto(true);
 	}
 
-	private ClienteEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setEsActivo(builder.esActivo);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public ClienteEntidad(final UUID id, final boolean clientepordefecto) {
+		setId(id);
+		setClientepordefecto(clientepordefecto);
 	}
 
 	public UUID getId() {
@@ -26,38 +24,14 @@ public class ClienteEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
-	public boolean isEsActivo() {
-		return esActivo;
+	public boolean getClientepordefecto() {
+		return clientepordefecto;
 	}
 
-	public void setEsActivo(final boolean esActivo) {
-		this.esActivo = esActivo;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private boolean esActivo;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder esActivo(final boolean esActivo) {
-			this.esActivo = esActivo;
-			return this;
-		}
-
-		public ClienteEntidad build() {
-			return new ClienteEntidad(this);
-		}
+	public void setClientepordefecto(final boolean clientepordefecto) {
+		this.clientepordefecto = clientepordefecto;
 	}
 }
