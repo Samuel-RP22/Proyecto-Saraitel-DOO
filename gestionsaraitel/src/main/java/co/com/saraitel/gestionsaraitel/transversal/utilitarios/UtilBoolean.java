@@ -22,7 +22,7 @@ public final class UtilBoolean {
         return valor == null ? valorDefecto : valor;
     }
 
-    // Comprobaciones null-safe
+    // Comprobaciones null-safesi
     public static boolean esNulo(final Boolean valor) {
         return valor == null;
     }
