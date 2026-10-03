@@ -1,12 +1,11 @@
 package co.com.saraitel.gestionsaraitel.transversal.utilitarios;
 
-public class UtilNumero {
+public final class UtilNumero {
 	
-	public static int CERO = 0;
+	public static final int CERO = 0;
 	
 	private UtilNumero () {
 	}
-	
 	
 	public static <N extends Number> N obtenerValorDefecto (N valor, N valorDefecto){
 		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, valorDefecto);

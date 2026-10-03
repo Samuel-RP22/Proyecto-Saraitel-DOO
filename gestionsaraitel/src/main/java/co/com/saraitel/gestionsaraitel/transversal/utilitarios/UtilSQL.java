@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionsaraitelTransversalException;
 
-public class UtilSQL {
+public final class UtilSQL {
 	
 	private UtilSQL() {
 	}

@@ -1,8 +1,14 @@
 package co.com.saraitel.gestionsaraitel.transversal.utilitarios;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public final class UtilTexto {
 	
     public static final String VACIA = "";
+    public static final DecimalFormatSymbols simbolos = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
 
     private UtilTexto() {
     }
@@ -44,5 +50,14 @@ public final class UtilTexto {
         var longitud = obtenerLongitudCadena(valorSanitizado);
         
         return longitud >= longitudInicial && longitud <= longitudFinal;
+    }
+    
+    public static String formatearDinero(final BigDecimal valor) {
+        var formato = new DecimalFormat("$ #,##0.00", simbolos);
+        return formato.format(UtilObjeto.esNulo(valor) ? BigDecimal.ZERO : valor);
+    }
+
+    public static String formatearPorcentaje(final int valor) {
+        return UtilNumero.obtenerValorDefecto(valor) + "%";
     }
 }
