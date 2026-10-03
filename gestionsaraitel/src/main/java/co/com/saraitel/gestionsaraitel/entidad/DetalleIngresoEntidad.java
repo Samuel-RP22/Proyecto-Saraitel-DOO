@@ -21,8 +21,8 @@ public class DetalleIngresoEntidad {
 		setIngresoInventario(new IngresoInventarioEntidad() );
 		setProductoSede(new ProductoSedeEntidad());
 		setCantidad(UtilNumero.CERO);
-		setCostoUnitario(UtilNumero.CERO_DECIMAL);
-		setSubtotal(UtilNumero.CERO_DECIMAL);
+		setCostoUnitario(UtilNumero.);
+		setSubtotal(UtilNumero.C);
 	}
 
 	public DetalleIngresoEntidad(final UUID id, final IngresoInventarioEntidad ingresoInventario,
