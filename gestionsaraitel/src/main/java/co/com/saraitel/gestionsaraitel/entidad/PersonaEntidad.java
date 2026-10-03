@@ -35,7 +35,6 @@ public class PersonaEntidad {
 	public PersonaEntidad(final UUID id, final TipoDocumentoEntidad tipoDocumento, final PrefijoEntidad prefijo,
 			final String numeroDocumento, final String telefono, final String nombre, final String apellido, 
 			final String correo, final boolean telefonoConfirmado, final boolean correoConfirmado) {
-	
 		setId(id);
 		setTipoDocumento(tipoDocumento);
 		setPrefijo(prefijo);

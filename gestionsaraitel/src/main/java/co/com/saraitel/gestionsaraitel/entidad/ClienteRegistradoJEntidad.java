@@ -50,7 +50,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public ClienteRegistradoEntidad getClienteRegistrado() {
