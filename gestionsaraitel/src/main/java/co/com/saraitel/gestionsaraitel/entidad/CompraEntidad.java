@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CompraEntidad {
-
+/*HOla*/
 	private UUID id;
 	private ProcesoCompraEntidad procesocompra;
 	private LocalDateTime fechacompra;
