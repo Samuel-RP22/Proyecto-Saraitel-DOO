@@ -5,26 +5,12 @@ import java.time.temporal.ChronoUnit;
 
 public final class UtilFecha {
 
-    private static volatile UtilFecha INSTANCIA;
-
-    public static final LocalDate FECHA_DEFECTO = LocalDate.of(1900, 1, 1);
-    public static final LocalDateTime FECHA_HORA_DEFECTO = LocalDateTime.of(1900, 1, 1, 0, 0, 0);
+    public static final LocalDate FECHA_DEFECTO = LocalDate.of(1800, Month.JANUARY, 1);
+    public static final LocalDateTime FECHA_HORA_DEFECTO = LocalDateTime.of(1800, Month.JANUARY, 1, 0, 0, 0);
 
     private UtilFecha() {
     }
 
-    public static UtilFecha getUtilFecha() {
-        if (UtilObjeto.esNulo(INSTANCIA)) {
-            synchronized (UtilFecha.class) {
-                if (UtilObjeto.esNulo(INSTANCIA)) {
-                    INSTANCIA = new UtilFecha();
-                }
-            }
-        }
-        return INSTANCIA;
-    }
-
-    // ---------- Validación de nulos ----------
 
     public boolean esNula(final LocalDate fecha) {
         return UtilObjeto.esNulo(fecha);
@@ -33,8 +19,6 @@ public final class UtilFecha {
     public boolean esNula(final LocalDateTime fechaHora) {
         return UtilObjeto.esNulo(fechaHora);
     }
-
-    // ---------- Valores por defecto ----------
 
     public LocalDate obtenerValorDefecto(final LocalDate fecha, final LocalDate valorDefecto) {
         return esNula(fecha) ? valorDefecto : fecha;
@@ -52,28 +36,18 @@ public final class UtilFecha {
         return obtenerValorDefecto(fechaHora, FECHA_HORA_DEFECTO);
     }
 
-    // ---------- Fecha y hora actual ----------
-
     public LocalDate obtenerFechaActual() {
-        return LocalDate.now();
+        return LocalDate.now(ZoneId.of("America/Bogota"));
     }
 
     public LocalDateTime obtenerFechaHoraActual() {
-        return LocalDateTime.now();
+        return LocalDateTime.now(ZoneId.of("America/Bogota"));
     }
-
-    // ---------- Conversiones ----------
 
     public LocalDate obtenerSoloFecha(final LocalDateTime fechaHora) {
         return obtenerValorDefecto(fechaHora).toLocalDate();
     }
-
-    public LocalDateTime obtenerInicioDelDia(final LocalDate fecha) {
-        return obtenerValorDefecto(fecha).atStartOfDay();
-    }
-
-    // ---------- Comparaciones ----------
-
+    
     public boolean esAnterior(final LocalDate fecha, final LocalDate fechaReferencia) {
         return obtenerValorDefecto(fecha).isBefore(obtenerValorDefecto(fechaReferencia));
     }
@@ -106,21 +80,15 @@ public final class UtilFecha {
                 : fechaSegura.isAfter(inicio) && fechaSegura.isBefore(fin);
     }
 
-    // ---------- Cálculos ----------
-
     public long obtenerDiasEntre(final LocalDate fechaInicial, final LocalDate fechaFinal) {
         return ChronoUnit.DAYS.between(obtenerValorDefecto(fechaInicial), obtenerValorDefecto(fechaFinal));
     }
 
-    public int obtenerEdad(final LocalDate fechaNacimiento) {
-        return Period.between(obtenerValorDefecto(fechaNacimiento), obtenerFechaActual()).getYears();
-    }
-
-    public LocalDate sumarDias(final LocalDate fecha, final long dias) {
+    public LocalDate sumarDias(final LocalDate fecha, final int dias) {
         return obtenerValorDefecto(fecha).plusDays(dias);
     }
 
-    public LocalDate restarDias(final LocalDate fecha, final long dias) {
+    public LocalDate restarDias(final LocalDate fecha, final int dias) {
         return obtenerValorDefecto(fecha).minusDays(dias);
     }
 }
