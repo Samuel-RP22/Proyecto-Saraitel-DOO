@@ -47,10 +47,10 @@ public class EmpleadoEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = persona;
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaEntidad());
 	}
 
-	public boolean isEsactivo() {
+	public boolean getEsactivo() {
 		return esactivo;
 	}
 

@@ -26,8 +26,8 @@ public class ClienteRegistradoJEntidad {
 		setNit(UtilTexto.VACIA);
 		setRazonSocial(UtilTexto.VACIA);
 		setCorreo(UtilTexto.VACIA);
-		setCorreoConfirmado(true);
-		setTelefonoConfirmado(true);
+		setCorreoConfirmado(false);
+		setTelefonoConfirmado(false);
 	}
 
 	public ClienteRegistradoJEntidad(final UUID id, final ClienteRegistradoEntidad clienteregistrado,
