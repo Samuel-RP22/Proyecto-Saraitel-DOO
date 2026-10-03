@@ -14,7 +14,7 @@ public class MarcaEntidad {
 	public MarcaEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
-		setEsActivo(false);
+		setEsActivo(true);
 	}
 
 	public MarcaEntidad(final UUID id, final String nombre, final boolean esactivo) {
