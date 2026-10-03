@@ -9,12 +9,12 @@ public class MetodoPagoEntidad {
 
 	private UUID id;
 	private String nombre;
-	private Boolean esactivo;
+	private boolean esactivo;
 
 	public MetodoPagoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
-		setEsActivo();
+		setEsActivo(false);
 
 	}
 
@@ -44,7 +44,7 @@ public class MetodoPagoEntidad {
 		return esactivo;
 	}
 
-	public void setEsActivo(final Boolean esactivo) {
+	public void setEsActivo(final boolean esactivo) {
 		this.esactivo = esactivo;
 	}
 }

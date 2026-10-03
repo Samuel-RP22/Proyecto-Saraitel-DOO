@@ -2,62 +2,39 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class TipoDocumentoEntidad {
+    
+    private UUID id;
+    private String tipo;
 
-	private UUID id;
-	private String tipo;
+    public TipoDocumentoEntidad() {
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setTipo(UtilTexto.VACIA);
+    }
 
-	public TipoDocumentoEntidad() {
-		super();
-	}
+    public TipoDocumentoEntidad(final UUID id, final String tipo) {
+        setId(id);
+        setTipo(tipo);
+       
+    }
 
-	private TipoDocumentoEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setTipo(builder.tipo);
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public static Builder builder() {
-		return new Builder();
-	}
+    public void setId(final UUID id) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setId(final UUID id) {
-		this.id = id;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(final String tipo) {
-		this.tipo = tipo;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private String tipo;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder tipo(final String tipo) {
-			this.tipo = tipo;
-			return this;
-		}
-
-		public TipoDocumentoEntidad build() {
-			return new TipoDocumentoEntidad(this);
-		}
-	}
+    public void setTipo(final String tipo) {
+        this.tipo = UtilTexto.obtenerValorDefecto(tipo);
+    }
 }
+   
