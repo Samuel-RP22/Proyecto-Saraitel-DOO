@@ -17,7 +17,7 @@ public class CategoriaEntidad {
 		setId(UtilUUID.obtenerUUIDDefecto());
 	    setNombre(UtilTexto.VACIA);
 	    setCategoriapadre(UtilTexto.VACIA);
-	    setNivel(UtilNumero.CERO);
+	    setNivel(UtilNumero.UNO);
 	}
 
 	public CategoriaEntidad(final UUID id, final String nombre, final String categoriapadre, final int nivel) {
@@ -56,6 +56,6 @@ public class CategoriaEntidad {
 	}
 
 	public void setNivel(final int nivel) {
-		this.nivel = UtilNumero.obtenerValorDefecto(nivel).intValue();
+		this.nivel = (int) UtilNumero.obtenerValorDefectoNivel(nivel);
 	}
 }

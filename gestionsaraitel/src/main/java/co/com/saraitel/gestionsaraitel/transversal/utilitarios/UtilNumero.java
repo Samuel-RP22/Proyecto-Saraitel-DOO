@@ -5,25 +5,22 @@ import java.math.BigDecimal;
 public final class UtilNumero {
 	
 	public static final int CERO = 0;
+	public static final int UNO = 1;
 	public static final BigDecimal CERO_DECIMAL = BigDecimal.ZERO;
 	
 	private UtilNumero () {
 	}
 	
-	public static <N extends Number> N obtenerValorDefecto (N valor, N valorDefecto){
+	public static <N extends Number> N obtenerValorDefecto(N valor, N valorDefecto){
 		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, valorDefecto);
 	}
 	
-	public static <N extends Number> Number obtenerValorDefecto (N valor){
+	public static <N extends Number> Number obtenerValorDefecto(N valor){
 		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, CERO);
 	}
 	
-	public static BigDecimal obtenerValorDefecto(final BigDecimal valor, final BigDecimal valorDefecto){
-		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, valorDefecto);
-	}
-	
-	public static BigDecimal obtenerValorDefecto (final BigDecimal valor){
-		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, CERO_DECIMAL);
+	public static <N extends Number> Number obtenerValorDefectoNivel(N valor){
+		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, UNO);
 	}
 	
 	public static <N extends Number > boolean mayorQue (N numeroUno, N numeroDos) {

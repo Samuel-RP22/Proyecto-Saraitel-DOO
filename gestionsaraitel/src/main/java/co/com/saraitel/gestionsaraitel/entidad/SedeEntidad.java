@@ -24,16 +24,14 @@ public class SedeEntidad {
         setEsActiva(true);
     }
 
-    public SedeEntidad(final UUID id, final String nombre, final CiudadEntidad ciudad, final String nit,
-    		final String direccion, final boolean esactiva) {
+    public SedeEntidad(final UUID id, final String nombre, final CiudadEntidad ciudad, 
+    		final String nit, final String direccion, final boolean esactiva) {
         setId(id);
         setNombre(nombre);
         setCiudad(ciudad);
         setNit(nit);
         setDireccion(direccion);
         setEsActiva(esactiva);
-        
-        
     }
 
     public UUID getId() {
@@ -49,7 +47,7 @@ public class SedeEntidad {
     }
 
     public void setNombre(final String nombre) {
-        this.nombre = UtilTexto.obtenerValorDefecto(nombre);
+        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
     }
 
     public CiudadEntidad getCiudad() {
@@ -64,7 +62,7 @@ public class SedeEntidad {
     }
 
     public void setDireccion(final String direccion) {
-        this.direccion = UtilTexto.obtenerValorDefecto(direccion);
+        this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
     }
     
     public String getNit() {
@@ -72,13 +70,13 @@ public class SedeEntidad {
     }
 
     public void setNit(final String nit) {
-        this.nit = UtilTexto.obtenerValorDefecto(nit);
+        this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
     }
-    public Boolean getEsActiva() {
+    public boolean getEsActiva() {
         return esactiva;
     }
 
-    public void setEsActiva(final Boolean esactiva) {
+    public void setEsActiva(final boolean esactiva) {
         this.esactiva = esactiva;
     }
 }

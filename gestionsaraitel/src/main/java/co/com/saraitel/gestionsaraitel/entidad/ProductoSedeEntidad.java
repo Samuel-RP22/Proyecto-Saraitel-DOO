@@ -2,7 +2,6 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
@@ -23,13 +22,12 @@ public class ProductoSedeEntidad {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setProducto(new ProductoEntidad());
 		setSede(new SedeEntidad());
-		setPrecio(UtilNumero.);
+		setPrecio(new BigDecimal(UtilNumero.CERO));
 		setTieneOferta(false);
 		setOferta(UtilNumero.CERO);
-		setPrecioTrasOferta(UtilNumero.);
+		setPrecioTrasOferta(new BigDecimal(UtilNumero.CERO));
 		setStock(UtilNumero.CERO);
 		setStockGarantia(UtilNumero.CERO);
-		
 	}
 
 	public ProductoSedeEntidad(final UUID id, final ProductoEntidad producto, final SedeEntidad sede, final BigDecimal precio,
@@ -77,7 +75,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setPrecio(final BigDecimal precio) {
-		this.precio = ;
+		this.precio = (BigDecimal) UtilNumero.obtenerValorDefecto(precio);
 	}
 
 	public boolean getTieneOferta() {
@@ -93,7 +91,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setOferta(final int oferta) {
-		this.oferta = oferta;
+		this.oferta = (int) UtilNumero.obtenerValorDefecto(oferta);
 	}
 
 	public BigDecimal getPrecioTrasOferta() {
@@ -101,7 +99,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setPrecioTrasOferta(final BigDecimal precioTrasOferta) {
-		this.precioTrasOferta = precioTrasOferta;
+		this.precioTrasOferta = (BigDecimal) UtilNumero.obtenerValorDefecto(precioTrasOferta);
 	}
 
 	public int getStock() {
@@ -109,7 +107,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setStock(final int stock) {
-		this.stock = UtilNumero.obtenerValorDefecto(stock).intValue();
+		this.stock = (int) UtilNumero.obtenerValorDefecto(stock);
 	}
 
 	public int getStockGarantia() {
@@ -117,7 +115,6 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setStockGarantia(final int stockGarantia) {
-		this.stockGarantia = UtilNumero.obtenerValorDefecto(stockGarantia).intValue();
+		this.stockGarantia = (int) UtilNumero.obtenerValorDefecto(stockGarantia);
 	}
-
 }
