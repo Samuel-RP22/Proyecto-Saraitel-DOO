@@ -11,7 +11,7 @@ public class CategoriaEntidad {
 	private UUID id;
 	private String nombre;
 	private String categoriapadre;
-	private Number nivel;
+	private int nivel;
 
 	public CategoriaEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -20,7 +20,7 @@ public class CategoriaEntidad {
 	    setNivel(UtilNumero.CERO);
 	}
 
-	public CategoriaEntidad(final UUID id, final String nombre, final String categoriapadre, final Number nivel) {
+	public CategoriaEntidad(final UUID id, final String nombre, final String categoriapadre, final int nivel) {
 		setId(id);
 		setNombre(nombre);
 		setCategoriapadre(categoriapadre);
@@ -51,11 +51,11 @@ public class CategoriaEntidad {
 		this.categoriapadre = UtilTexto.quitarEspaciosEnBlanco(categoriapadre);
 	}
 
-	public Number getNivel() {
+	public int getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(final Number nivel) {
-		this.nivel = UtilNumero.obtenerValorDefecto(nivel);
+	public void setNivel(final int nivel) {
+		this.nivel = UtilNumero.obtenerValorDefecto(nivel).intValue();
 	}
 }
