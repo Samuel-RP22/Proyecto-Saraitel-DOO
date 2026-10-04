@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -50,7 +51,7 @@ public class CiudadDominio {
 		}
 
 		public Builder departamento(DepartamentoDominio departamento) {
-			this.departamento = (departamento == null) ? new DepartamentoDominio.Builder().build() : departamento;
+			this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento, new DepartamentoDominio.Builder().build());
 			return this;
 		}
 
