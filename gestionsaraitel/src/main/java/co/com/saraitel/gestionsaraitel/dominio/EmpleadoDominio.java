@@ -42,11 +42,13 @@ public class EmpleadoDominio {
 		private UUID id;
 		private SedeDominio sede;
 		private PersonaDomino persona;
+		
 		private boolean esActiva;
 
 		public Builder() {
 			id = UtilUUID.obtenerUUIDDefecto();
-			nombre = UtilTexto.VACIA;
+			nombre = UtilTexto.VACIA;¨
+			sede = ;
 		}
 
 		public Builder id(UUID id) {
