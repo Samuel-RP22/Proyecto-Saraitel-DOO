@@ -42,8 +42,8 @@ public class PagoNormalDTO {
 	}
 
 	public void setMetodoPago(final MetodoPagoDTO metodoPago) {
-		this.metodoPago = UtilObjeto.esNulo(metodoPago) ?
-				new MetodoPagoDTO() : metodoPago;
+		this.metodoPago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(metodoPago, new MetodoPagoDTO());
 	}
 
 	public PagoDTO getPago() {
@@ -51,8 +51,8 @@ public class PagoNormalDTO {
 	}
 
 	public void setPago(final PagoDTO pago) {
-		this.pago = UtilObjeto.esNulo(pago) ?
-				new PagoDTO() : pago;
+		this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(pago, new PagoDTO());
 	}
 
 	public BigDecimal getMontoPagar() {

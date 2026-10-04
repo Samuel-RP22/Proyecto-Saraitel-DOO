@@ -45,6 +45,7 @@ public class DepartamentoEntidad {
     }
 
     public void setPais(final PaisEntidad pais) {
-        this.pais = UtilObjeto.esNulo(pais) ? new PaisEntidad() : pais;
+        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(pais, new PaisEntidad());
     }
 }

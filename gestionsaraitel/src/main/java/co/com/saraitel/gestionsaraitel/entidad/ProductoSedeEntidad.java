@@ -122,8 +122,8 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setProducto(final ProductoEntidad producto) {
-		this.producto = UtilObjeto.esNulo(producto) ?
-				new ProductoEntidad() : producto;
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(producto, new ProductoEntidad());
 	}
 
 	public SedeEntidad getSede() {
@@ -131,8 +131,8 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.esNulo(sede) ?
-				new SedeEntidad() : sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(sede, new SedeEntidad());
 	}
 
 	public BigDecimal getPrecio() {

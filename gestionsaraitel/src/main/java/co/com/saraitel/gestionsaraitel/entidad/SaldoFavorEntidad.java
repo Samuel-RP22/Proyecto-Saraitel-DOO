@@ -43,8 +43,8 @@ public class SaldoFavorEntidad {
 	}
 
 	public void setDevolucion(final DevolucionEntidad devolucion) {
-		this.devolucion = UtilObjeto.esNulo(devolucion) ? 
-				new DevolucionEntidad() : devolucion;
+		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(devolucion, new DevolucionEntidad());
 	}
 
 	public BigDecimal getMontoUsado() {

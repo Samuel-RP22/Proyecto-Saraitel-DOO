@@ -121,8 +121,8 @@ public class ClienteRegistradoJDTO {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoDTO clienteRegistrado) {
-		this.clienteRegistrado = UtilObjeto.esNulo(clienteRegistrado) ? 
-				new ClienteRegistradoDTO() : clienteRegistrado;
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(clienteRegistrado, new ClienteRegistradoDTO());
 	}
 
 	public PrefijoDTO getPrefijo() {
@@ -130,8 +130,8 @@ public class ClienteRegistradoJDTO {
 	}
 
 	public void setPrefijo(final PrefijoDTO prefijo) {
-		this.prefijo = UtilObjeto.esNulo(prefijo) ? 
-				new PrefijoDTO() : prefijo;
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(prefijo, new PrefijoDTO());
 	}
 
 	public String getTelefono() {

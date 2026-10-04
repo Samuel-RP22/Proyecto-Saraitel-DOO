@@ -48,7 +48,8 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.esNulo(sede) ? new SedeEntidad() : sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(sede, new SedeEntidad());
 	}
 
 	public LocalDateTime getFechaLlegada() {

@@ -49,8 +49,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraEntidad procesoCompra) {
-		this.procesoCompra = UtilObjeto.esNulo(procesoCompra) ?
-				new ProcesoCompraEntidad() : procesoCompra;
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(procesoCompra, new ProcesoCompraEntidad());
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -58,8 +58,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = UtilObjeto.esNulo(productoSede) ?
-				new ProductoSedeEntidad() : productoSede;
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(productoSede, new ProductoSedeEntidad());
 	}
 
 	public int getCantidad() {

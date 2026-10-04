@@ -43,8 +43,8 @@ public class CompraEntidad {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraEntidad procesoCompra) {
-		this.procesoCompra = UtilObjeto.esNulo(procesoCompra) ?
-				new ProcesoCompraEntidad() : procesoCompra;
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(procesoCompra, new ProcesoCompraEntidad());
 	}
 
 	public LocalDateTime getFechaCompra() {

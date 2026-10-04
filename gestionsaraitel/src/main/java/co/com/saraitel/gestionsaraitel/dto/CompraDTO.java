@@ -43,8 +43,8 @@ public class CompraDTO {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraDTO procesoCompra) {
-		this.procesoCompra = UtilObjeto.esNulo(procesoCompra) ?
-				new ProcesoCompraDTO() : procesoCompra;
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(procesoCompra, new ProcesoCompraDTO());
 	}
 
 	public LocalDateTime getFechaCompra() {

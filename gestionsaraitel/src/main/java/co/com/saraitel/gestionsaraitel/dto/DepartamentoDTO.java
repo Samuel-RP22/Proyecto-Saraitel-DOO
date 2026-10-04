@@ -45,6 +45,7 @@ public class DepartamentoDTO {
 	}
 
 	public void setPais(final PaisDTO pais) {
-		this.pais = UtilObjeto.esNulo(pais) ? new PaisDTO() : pais;
+		this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(pais, new PaisDTO());
 	}
 }

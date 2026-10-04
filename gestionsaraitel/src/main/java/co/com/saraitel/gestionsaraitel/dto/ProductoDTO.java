@@ -48,8 +48,8 @@ public class ProductoDTO {
 	}
 
 	public void setMarca(final MarcaDTO marca) {
-		this.marca = UtilObjeto.esNulo(marca) ? 
-				new MarcaDTO() : marca;
+		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(marca, new MarcaDTO());
 	}
 
 	public CategoriaDTO getCategoria() {
@@ -57,8 +57,8 @@ public class ProductoDTO {
 	}
 
 	public void setCategoria(final CategoriaDTO categoria) {
-		this.categoria = UtilObjeto.esNulo(categoria) ? 
-				new CategoriaDTO() : categoria;
+		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(categoria, new CategoriaDTO());
 	}
 
 	public String getModelo() {

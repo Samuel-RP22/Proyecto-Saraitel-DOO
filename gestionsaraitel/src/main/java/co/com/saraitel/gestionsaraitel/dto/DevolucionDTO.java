@@ -55,8 +55,8 @@ public class DevolucionDTO {
 	}
 
 	public void setDetalleCompra(final DetalleCompraDTO detalleCompra) {
-		this.detalleCompra = UtilObjeto.esNulo(detalleCompra) ?
-				new DetalleCompraDTO() : detalleCompra;
+		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(detalleCompra, new DetalleCompraDTO());
 	}
 
 	public MotivoDTO getMotivo() {
@@ -64,8 +64,8 @@ public class DevolucionDTO {
 	}
 
 	public void setMotivo(final MotivoDTO motivo) {
-		this.motivo = UtilObjeto.esNulo(motivo) ?
-				new MotivoDTO() : motivo;
+		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(motivo, new MotivoDTO());
 	}
 
 	public LocalDateTime getFechaDevolucion() {

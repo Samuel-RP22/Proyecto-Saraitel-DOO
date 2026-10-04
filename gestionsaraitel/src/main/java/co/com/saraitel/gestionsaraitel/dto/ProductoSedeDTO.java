@@ -122,8 +122,8 @@ public class ProductoSedeDTO {
 	}
 
 	public void setProducto(final ProductoDTO producto) {
-		this.producto = UtilObjeto.esNulo(producto) ?
-				new ProductoDTO() : producto;
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(producto, new ProductoDTO());
 	}
 
 	public SedeDTO getSede() {
@@ -131,8 +131,8 @@ public class ProductoSedeDTO {
 	}
 
 	public void setSede(final SedeDTO sede) {
-		this.sede = UtilObjeto.esNulo(sede) ?
-				new SedeDTO() : sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(sede, new SedeDTO());
 	}
 
 	public BigDecimal getPrecio() {

@@ -48,8 +48,8 @@ public class ProductoEntidad {
 	}
 
 	public void setMarca(final MarcaEntidad marca) {
-		this.marca = UtilObjeto.esNulo(marca) ? 
-				new MarcaEntidad() : marca;
+		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(marca, new MarcaEntidad());
 	}
 
 	public CategoriaEntidad getCategoria() {
@@ -57,8 +57,8 @@ public class ProductoEntidad {
 	}
 
 	public void setCategoria(final CategoriaEntidad categoria) {
-		this.categoria = UtilObjeto.esNulo(categoria) ? 
-				new CategoriaEntidad() : categoria;
+		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(categoria, new CategoriaEntidad());
 	}
 
 	public String getModelo() {

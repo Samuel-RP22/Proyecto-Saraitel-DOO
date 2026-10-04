@@ -44,8 +44,8 @@ public class PagoDTO {
 	}
 
 	public void setCompra(final CompraDTO compra) {
-		this.compra = UtilObjeto.esNulo(compra) ?
-				new CompraDTO() : compra;
+		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(compra, new CompraDTO());
 	}
 
 	public BigDecimal getMontoPagado() {
