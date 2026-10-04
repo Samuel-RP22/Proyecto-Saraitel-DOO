@@ -3,27 +3,31 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class SaldoFavorEntidad {
 
 	private UUID id;
 	private DevolucionEntidad devolucion;
-	private BigDecimal montoDisponible;
+	private BigDecimal montoUsado;
 	private String estado;
 
 	public SaldoFavorEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setDevolucion(new DevolucionEntidad());
+		setMontoUsado(UtilNumero.CERO_DECIMAL);
+		setEstado(UtilTexto.VACIA);
 	}
 
-	private SaldoFavorEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setDevolucion(builder.devolucion);
-		setMontoDisponible(builder.montoDisponible);
-		setEstado(builder.estado);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public SaldoFavorEntidad(final UUID id, final DevolucionEntidad devolucion,
+			final BigDecimal montoUsado, final String estado) {
+		setId(id);
+		setDevolucion(devolucion);
+		setMontoUsado(montoUsado);
+		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -31,7 +35,7 @@ public class SaldoFavorEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public DevolucionEntidad getDevolucion() {
@@ -39,15 +43,16 @@ public class SaldoFavorEntidad {
 	}
 
 	public void setDevolucion(final DevolucionEntidad devolucion) {
-		this.devolucion = devolucion;
+		this.devolucion = UtilObjeto.esNulo(devolucion) ? 
+				new DevolucionEntidad() : devolucion;
 	}
 
-	public BigDecimal getMontoDisponible() {
-		return montoDisponible;
+	public BigDecimal getMontoUsado() {
+		return montoUsado;
 	}
 
-	public void setMontoDisponible(final BigDecimal montoDisponible) {
-		this.montoDisponible = montoDisponible;
+	public void setMontoUsado(final BigDecimal montoUsado) {
+		this.montoUsado = UtilNumero.obtenerValorDefecto(montoUsado);
 	}
 
 	public String getEstado() {
@@ -55,42 +60,6 @@ public class SaldoFavorEntidad {
 	}
 
 	public void setEstado(final String estado) {
-		this.estado = estado;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private DevolucionEntidad devolucion;
-		private BigDecimal montoDisponible;
-		private String estado;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder devolucion(final DevolucionEntidad devolucion) {
-			this.devolucion = devolucion;
-			return this;
-		}
-
-		public Builder montoDisponible(final BigDecimal montoDisponible) {
-			this.montoDisponible = montoDisponible;
-			return this;
-		}
-
-		public Builder estado(final String estado) {
-			this.estado = estado;
-			return this;
-		}
-
-		public SaldoFavorEntidad build() {
-			return new SaldoFavorEntidad(this);
-		}
+		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }

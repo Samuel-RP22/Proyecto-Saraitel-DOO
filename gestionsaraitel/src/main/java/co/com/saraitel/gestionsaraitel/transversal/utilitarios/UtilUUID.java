@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public final class UtilUUID {
 
-	private static final String UUID_DEFECTO_TEXTO = "00000000-0000-0000-0000-000000000000";
+	private static final UUID UUID_DEFECTO = new UUID(0L, 0L);
 
     private UtilUUID() {
     }
@@ -14,12 +14,12 @@ public final class UtilUUID {
     }
     
     public static UUID obtenerUUIDDefecto() {
-        return UUID.fromString(UUID_DEFECTO_TEXTO);
+        return UUID_DEFECTO;
     }
 
     public static String obtenerValorDefectoComoTexto(final String UUIDTexto) {
         return UtilTexto.esVacia(UUIDTexto) 
-                ? UUID_DEFECTO_TEXTO 
+                ? UUID_DEFECTO.toString()
                 : UtilTexto.quitarEspaciosEnBlanco(UUIDTexto);
     }
     

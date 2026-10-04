@@ -9,7 +9,7 @@ public class MarcaEntidad {
 
 	private UUID id;
 	private String nombre;
-	private boolean esactivo;
+	private boolean esActivo;
 
 	public MarcaEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -17,10 +17,10 @@ public class MarcaEntidad {
 		setEsActivo(true);
 	}
 
-	public MarcaEntidad(final UUID id, final String nombre, final boolean esactivo) {
+	public MarcaEntidad(final UUID id, final String nombre, final boolean esActivo) {
 		setId(id);
 		setNombre(nombre);
-		setEsActivo(esactivo);
+		setEsActivo(esActivo);
 	}
 
 	public UUID getId() {
@@ -40,10 +40,10 @@ public class MarcaEntidad {
 	}
 
 	public boolean getEsActivo() {
-		return esactivo;
+		return esActivo;
 	}
 
-	public void setEsActivo(final boolean esactivo) {
-		this.esactivo = esactivo;
+	public void setEsActivo(final boolean esActivo) {
+		this.esActivo = esActivo;
 	}
 }

@@ -9,19 +9,18 @@ public class MetodoPagoEntidad {
 
 	private UUID id;
 	private String nombre;
-	private boolean esactivo;
+	private boolean esActivo;
 
 	public MetodoPagoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
 		setEsActivo(true);
-
 	}
 
-	public MetodoPagoEntidad(final UUID id, final String nombre, final boolean esactivo) {
+	public MetodoPagoEntidad(final UUID id, final String nombre, final boolean esActivo) {
 		setId(id);
 		setNombre(nombre);
-		setEsActivo(esactivo);
+		setEsActivo(esActivo);
 	}
 
 	public UUID getId() {
@@ -31,20 +30,20 @@ public class MetodoPagoEntidad {
 	public void setId(final UUID id) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
 
-	 public void setNombre(final String nombre) {
-	        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-	    }
-
-	public boolean getEsActivo() {
-		return esactivo;
+	public void setNombre(final String nombre) {
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 	}
 
-	public void setEsActivo(final boolean esactivo) {
-		this.esactivo = esactivo;
+	public boolean getEsActivo() {
+		return esActivo;
+	}
+
+	public void setEsActivo(final boolean esActivo) {
+		this.esActivo = esActivo;
 	}
 }

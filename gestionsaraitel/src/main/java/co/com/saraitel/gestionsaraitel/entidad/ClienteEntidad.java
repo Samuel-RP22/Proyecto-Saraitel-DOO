@@ -7,16 +7,16 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class ClienteEntidad {
 
 	private UUID id;
-	private boolean clientepordefecto;
+	private boolean esClienteRegistrado;
 
 	public ClienteEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setClientepordefecto(true);
+		setEsClienteRegistrado(true);
 	}
 
-	public ClienteEntidad(final UUID id, final boolean clientepordefecto) {
+	public ClienteEntidad(final UUID id, final boolean esClienteRegistrado) {
 		setId(id);
-		setClientepordefecto(clientepordefecto);
+		setEsClienteRegistrado(esClienteRegistrado);
 	}
 
 	public UUID getId() {
@@ -27,11 +27,11 @@ public class ClienteEntidad {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
-	public boolean getClientepordefecto() {
-		return clientepordefecto;
+	public boolean getEsClienteRegistrado() {
+		return esClienteRegistrado;
 	}
 
-	public void setClientepordefecto(final boolean clientepordefecto) {
-		this.clientepordefecto = clientepordefecto;
+	public void setEsClienteRegistrado(final boolean esClienteRegistrado) {
+		this.esClienteRegistrado = esClienteRegistrado;
 	}
 }

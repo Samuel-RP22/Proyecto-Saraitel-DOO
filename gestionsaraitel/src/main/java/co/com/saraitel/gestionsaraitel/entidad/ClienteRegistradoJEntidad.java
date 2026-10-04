@@ -9,14 +9,14 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class ClienteRegistradoJEntidad {
 
 	private UUID id;
-	private ClienteRegistradoEntidad clienteregistrado;
+	private ClienteRegistradoEntidad clienteRegistrado;
 	private PrefijoEntidad prefijo;
 	private String telefono;
 	private String nit;
-	private String razonsocial;
+	private String razonSocial;
 	private String correo;
-	private boolean correoconfirmado;
-	private boolean telefonoconfirmado;
+	private boolean correoConfirmado;
+	private boolean telefonoConfirmado;
 
 	public ClienteRegistradoJEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -30,20 +30,19 @@ public class ClienteRegistradoJEntidad {
 		setTelefonoConfirmado(false);
 	}
 
-	public ClienteRegistradoJEntidad(final UUID id, final ClienteRegistradoEntidad clienteregistrado,
-			final PrefijoEntidad prefijo, final String telefono, final String nit, final String razonsocial,
-			final String correo, final boolean correoconfirmado, final boolean telefonoconfirmado) {
+	public ClienteRegistradoJEntidad(final UUID id, final ClienteRegistradoEntidad clienteRegistrado,
+			final PrefijoEntidad prefijo, final String telefono, final String nit, final String razonSocial,
+			final String correo, final boolean correoConfirmado, final boolean telefonoConfirmado) {
 		setId(id);
-		setClienteRegistrado(clienteregistrado);
+		setClienteRegistrado(clienteRegistrado);
 		setPrefijo(prefijo);
 		setTelefono(telefono);
 		setNit(nit);
-		setRazonSocial(razonsocial);
+		setRazonSocial(razonSocial);
 		setCorreo(correo);
-		setCorreoConfirmado(correoconfirmado);
-		setTelefonoConfirmado(telefonoconfirmado);
+		setCorreoConfirmado(correoConfirmado);
+		setTelefonoConfirmado(telefonoConfirmado);
 	}
-
 
 	public UUID getId() {
 		return id;
@@ -54,11 +53,12 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public ClienteRegistradoEntidad getClienteRegistrado() {
-		return clienteregistrado;
+		return clienteRegistrado;
 	}
 
-	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteregistrado) {
-		this.clienteregistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteregistrado, new ClienteRegistradoEntidad());
+	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
+		this.clienteRegistrado = UtilObjeto.esNulo(clienteRegistrado) ? 
+				new ClienteRegistradoEntidad() : clienteRegistrado;
 	}
 
 	public PrefijoEntidad getPrefijo() {
@@ -66,7 +66,8 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoEntidad());
+		this.prefijo = UtilObjeto.esNulo(prefijo) ? 
+				new PrefijoEntidad() : prefijo;
 	}
 
 	public String getTelefono() {
@@ -86,11 +87,11 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public String getRazonSocial() {
-		return razonsocial;
+		return razonSocial;
 	}
 
-	public void setRazonSocial(final String razonsocial) {
-		this.razonsocial = UtilTexto.quitarEspaciosEnBlanco(razonsocial);
+	public void setRazonSocial(final String razonSocial) {
+		this.razonSocial = UtilTexto.quitarEspaciosEnBlanco(razonSocial);
 	}
 
 	public String getCorreo() {
@@ -101,20 +102,19 @@ public class ClienteRegistradoJEntidad {
 		this.correo = UtilTexto.quitarEspaciosEnBlanco(correo);
 	}
 
-	public Boolean getCorreoConfirmado() {
-		return correoconfirmado;
+	public boolean getCorreoConfirmado() {
+		return correoConfirmado;
 	}
 
-	public void setCorreoConfirmado(final boolean correoconfirmado) {
-		this.correoconfirmado = correoconfirmado;
+	public void setCorreoConfirmado(final boolean correoConfirmado) {
+		this.correoConfirmado = correoConfirmado;
 	}
 
-	public Boolean getTelefonoConfirmado() {
-		return telefonoconfirmado;
+	public boolean getTelefonoConfirmado() {
+		return telefonoConfirmado;
 	}
 
-	public void setTelefonoConfirmado(final boolean telefonoconfirmado) {
-		this.telefonoconfirmado = telefonoconfirmado;
+	public void setTelefonoConfirmado(final boolean telefonoConfirmado) {
+		this.telefonoConfirmado = telefonoConfirmado;
 	}
-
 }

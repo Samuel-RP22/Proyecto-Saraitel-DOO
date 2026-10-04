@@ -3,6 +3,10 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class DetalleCompraEntidad {
 
 	private UUID id;
@@ -13,21 +17,23 @@ public class DetalleCompraEntidad {
 	private BigDecimal subtotal;
 
 	public DetalleCompraEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setProcesoCompra(new ProcesoCompraEntidad());
+		setProductoSede(new ProductoSedeEntidad());
+		setCantidad(1);
+		setPrecioUnitario(UtilNumero.CERO_DECIMAL);
+		setSubtotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	private DetalleCompraEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setProcesoCompra(builder.procesoCompra);
-		setProductoSede(builder.productoSede);
-		setCantidad(builder.cantidad);
-		setPrecioUnitario(builder.precioUnitario);
-		setSubtotal(builder.subtotal);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public DetalleCompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra,
+			final ProductoSedeEntidad productoSede, final int cantidad, 
+			final BigDecimal precioUnitario, final BigDecimal subtotal) {
+		setId(id);
+		setProcesoCompra(procesoCompra);
+		setProductoSede(productoSede);
+		setCantidad(cantidad);
+		setPrecioUnitario(precioUnitario);
+		setSubtotal(subtotal);
 	}
 
 	public UUID getId() {
@@ -35,7 +41,7 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public ProcesoCompraEntidad getProcesoCompra() {
@@ -43,7 +49,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraEntidad procesoCompra) {
-		this.procesoCompra = procesoCompra;
+		this.procesoCompra = UtilObjeto.esNulo(procesoCompra) ?
+				new ProcesoCompraEntidad() : procesoCompra;
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -51,7 +58,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = productoSede;
+		this.productoSede = UtilObjeto.esNulo(productoSede) ?
+				new ProductoSedeEntidad() : productoSede;
 	}
 
 	public int getCantidad() {
@@ -67,7 +75,7 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setPrecioUnitario(final BigDecimal precioUnitario) {
-		this.precioUnitario = precioUnitario;
+		this.precioUnitario = UtilNumero.obtenerValorDefecto(precioUnitario);
 	}
 
 	public BigDecimal getSubtotal() {
@@ -75,54 +83,6 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setSubtotal(final BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private ProcesoCompraEntidad procesoCompra;
-		private ProductoSedeEntidad productoSede;
-		private int cantidad;
-		private BigDecimal precioUnitario;
-		private BigDecimal subtotal;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder procesoCompra(final ProcesoCompraEntidad procesoCompra) {
-			this.procesoCompra = procesoCompra;
-			return this;
-		}
-
-		public Builder productoSede(final ProductoSedeEntidad productoSede) {
-			this.productoSede = productoSede;
-			return this;
-		}
-
-		public Builder cantidad(final int cantidad) {
-			this.cantidad = cantidad;
-			return this;
-		}
-
-		public Builder precioUnitario(final BigDecimal precioUnitario) {
-			this.precioUnitario = precioUnitario;
-			return this;
-		}
-
-		public Builder subtotal(final BigDecimal subtotal) {
-			this.subtotal = subtotal;
-			return this;
-		}
-
-		public DetalleCompraEntidad build() {
-			return new DetalleCompraEntidad(this);
-		}
+		this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
 	}
 }

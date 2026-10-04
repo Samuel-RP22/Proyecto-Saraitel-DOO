@@ -12,7 +12,6 @@ public class DepartamentoEntidad {
     private String nombre;
     private PaisEntidad pais;
     
-
     public DepartamentoEntidad() {
         setId(UtilUUID.obtenerUUIDDefecto());
         setNombre(UtilTexto.VACIA);
@@ -46,6 +45,6 @@ public class DepartamentoEntidad {
     }
 
     public void setPais(final PaisEntidad pais) {
-        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad());
+        this.pais = UtilObjeto.esNulo(pais) ? new PaisEntidad() : pais;
     }
 }

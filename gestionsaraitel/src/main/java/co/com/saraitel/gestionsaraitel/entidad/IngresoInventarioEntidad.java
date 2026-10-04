@@ -13,25 +13,26 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class IngresoInventarioEntidad {
 
 	private UUID id;
-	private String estado;
 	private SedeEntidad sede;
-	private LocalDateTime fechallegada;
+	private LocalDateTime fechaLlegada;
 	private BigDecimal total;
+	private String estado;
 
 	public IngresoInventarioEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setEstado(UtilTexto.VACIA);
 		setSede(new SedeEntidad());
-		setFechallegada(UtilFecha.FECHA_DEFECTO);
-		setTotal(UtilNumero.);
+		setFechaLlegada(UtilFecha.FECHA_HORA_DEFECTO);
+		setTotal(UtilNumero.CERO_DECIMAL);
+		setEstado(UtilTexto.VACIA);
 	}
 
-	public IngresoInventarioEntidad(final UUID id, final String estado, final SedeEntidad sede, final LocalDateTime fechallegada, final Double total) {
+	public IngresoInventarioEntidad(final UUID id, final SedeEntidad sede, 
+			final LocalDateTime fechaLlegada, final BigDecimal total, final String estado) {
 		setId(id);
-		setEstado(estado);
 		setSede(sede);
-		setFechallegada(fechallegada);
+		setFechaLlegada(fechaLlegada);
 		setTotal(total);
+		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -42,35 +43,35 @@ public class IngresoInventarioEntidad {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
+	public SedeEntidad getSede() {
+		return sede;
+	}
+
+	public void setSede(final SedeEntidad sede) {
+		this.sede = UtilObjeto.esNulo(sede) ? new SedeEntidad() : sede;
+	}
+
+	public LocalDateTime getFechaLlegada() {
+		return fechaLlegada;
+	}
+
+	public void setFechaLlegada(final LocalDateTime fechaLlegada) {
+		this.fechaLlegada = UtilFecha.obtenerValorDefecto(fechaLlegada);
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(final BigDecimal total) {
+		this.total = UtilNumero.obtenerValorDefecto(total);
+	}
+
 	public String getEstado() {
 		return estado;
 	}
 
 	public void setEstado(final String estado) {
 		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
-	}
-
-	public SedeEntidad getSede() {
-		return sede;
-	}
-
-	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
-	}
-
-	public LocalDateTime getFechallegada() {
-		return fechallegada;
-	}
-
-	public void setFechallegada(final LocalDateTime fechallegada) {
-		this.fechallegada = UtilFecha.;
-	}
-
-	public Double getTotal() {
-		return total;
-	}
-
-	public void setTotal(final Double total) {
-		this.total = UtilNumero.;
 	}
 }

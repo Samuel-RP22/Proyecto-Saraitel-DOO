@@ -10,20 +10,21 @@ public class EmpleadoEntidad {
 	private UUID id;
 	private SedeEntidad sede;
 	private PersonaEntidad persona;
-	private boolean esactivo;
+	private boolean esActivo;
 
 	public EmpleadoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setSede(new SedeEntidad());
 		setPersona(new PersonaEntidad());
-		setEsactivo(true);
+		setEsActivo(true);
 	}
 
-	public EmpleadoEntidad(final UUID id, final SedeEntidad sede, final PersonaEntidad persona, final boolean esactivo) {
+	public EmpleadoEntidad(final UUID id, final SedeEntidad sede, 
+			final PersonaEntidad persona, final boolean esActivo) {
 		setId(id);
 		setSede(sede);
 		setPersona(persona);
-		setEsactivo(esactivo);
+		setEsActivo(esActivo);
 	}
 
 	public UUID getId() {
@@ -39,7 +40,7 @@ public class EmpleadoEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
+		this.sede = UtilObjeto.esNulo(sede) ? new SedeEntidad() : sede;
 	}
 
 	public PersonaEntidad getPersona() {
@@ -47,14 +48,15 @@ public class EmpleadoEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaEntidad());
+		this.persona = UtilObjeto.esNulo(persona) ? 
+				new PersonaEntidad() : persona;
 	}
 
-	public boolean getEsactivo() {
-		return esactivo;
+	public boolean getEsActivo() {
+		return esActivo;
 	}
 
-	public void setEsactivo(final boolean esactivo) {
-		this.esactivo = esactivo;
+	public void setEsActivo(final boolean esActivo) {
+		this.esActivo = esActivo;
 	}
 }

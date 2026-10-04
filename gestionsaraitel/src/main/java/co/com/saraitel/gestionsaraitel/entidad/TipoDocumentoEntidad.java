@@ -18,7 +18,6 @@ public class TipoDocumentoEntidad {
     public TipoDocumentoEntidad(final UUID id, final String tipo) {
         setId(id);
         setTipo(tipo);
-       
     }
 
     public UUID getId() {
@@ -34,7 +33,6 @@ public class TipoDocumentoEntidad {
     }
 
     public void setTipo(final String tipo) {
-        this.tipo = UtilTexto.obtenerValorDefecto(tipo);
+        this.tipo = UtilTexto.quitarEspaciosEnBlanco(tipo);
     }
 }
-   

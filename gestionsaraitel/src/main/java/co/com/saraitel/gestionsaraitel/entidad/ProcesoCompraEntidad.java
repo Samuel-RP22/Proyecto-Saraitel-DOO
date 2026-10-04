@@ -4,33 +4,43 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class ProcesoCompraEntidad {
 
 	private UUID id;
 	private ClienteEntidad cliente;
 	private EmpleadoEntidad empleado;
-	private LocalDateTime fechainicio;
-	private LocalDateTime fechaactualizacion;
-	private BigDecimal totalcompra;
+	private LocalDateTime fechaInicio;
+	private LocalDateTime fechaActualizacion;
+	private BigDecimal total;
 	private String estado;
 
 	public ProcesoCompraEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setCliente(new ClienteEntidad());
+		setEmpleado(new EmpleadoEntidad());
+		setFechaInicio(UtilFecha.FECHA_HORA_DEFECTO);
+		setFechaActualizacion(UtilFecha.FECHA_HORA_DEFECTO);
+		setTotal(UtilNumero.CERO_DECIMAL);
+		setEstado(UtilTexto.VACIA);
 	}
 
-	private ProcesoCompraEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setCliente(builder.cliente);
-		setEmpleado(builder.empleado);
-		setFechainicio(builder.fechainicio);
-		setFechaactualizacion(builder.fechaactualizacion);
-		setTotalcompra(builder.totalcompra);
-		setEstado(builder.estado);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public ProcesoCompraEntidad(final UUID id, final ClienteEntidad cliente, 
+			final EmpleadoEntidad empleado, final LocalDateTime fechaInicio, 
+			final LocalDateTime fechaActualizacion, 
+			final BigDecimal total, final String estado) {
+		setId(id);
+		setCliente(cliente);
+		setEmpleado(empleado);
+		setFechaInicio(fechaInicio);
+		setFechaActualizacion(fechaActualizacion);
+		setTotal(total);
+		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -38,7 +48,7 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public ClienteEntidad getCliente() {
@@ -46,7 +56,8 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setCliente(final ClienteEntidad cliente) {
-		this.cliente = cliente;
+		this.cliente = UtilObjeto.esNulo(cliente) ? 
+				new ClienteEntidad() : cliente;
 	}
 
 	public EmpleadoEntidad getEmpleado() {
@@ -54,31 +65,32 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
-		this.empleado = empleado;
+		this.empleado = UtilObjeto.esNulo(empleado) ? 
+				new EmpleadoEntidad() : empleado;
 	}
 
-	public LocalDateTime getFechainicio() {
-		return fechainicio;
+	public LocalDateTime getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public void setFechainicio(final LocalDateTime fechainicio) {
-		this.fechainicio = fechainicio;
+	public void setFechaInicio(final LocalDateTime fechaInicio) {
+		this.fechaInicio = UtilFecha.obtenerValorDefecto(fechaInicio);
 	}
 
-	public LocalDateTime getFechaactualizacion() {
-		return fechaactualizacion;
+	public LocalDateTime getFechaActualizacion() {
+		return fechaActualizacion;
 	}
 
-	public void setFechaactualizacion(final LocalDateTime fechaactualizacion) {
-		this.fechaactualizacion = fechaactualizacion;
+	public void setFechaActualizacion(final LocalDateTime fechaActualizacion) {
+		this.fechaActualizacion = UtilFecha.obtenerValorDefecto(fechaActualizacion);
 	}
 
-	public BigDecimal getTotalcompra() {
-		return totalcompra;
+	public BigDecimal getTotal() {
+		return total;
 	}
 
-	public void setTotalcompra(final BigDecimal totalcompra) {
-		this.totalcompra = totalcompra;
+	public void setTotal(final BigDecimal total) {
+		this.total = UtilNumero.obtenerValorDefecto(total);
 	}
 
 	public String getEstado() {
@@ -86,60 +98,6 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setEstado(final String estado) {
-		this.estado = estado;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private ClienteEntidad cliente;
-		private EmpleadoEntidad empleado;
-		private LocalDateTime fechainicio;
-		private LocalDateTime fechaactualizacion;
-		private BigDecimal totalcompra;
-		private String estado;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder cliente(final ClienteEntidad cliente) {
-			this.cliente = cliente;
-			return this;
-		}
-
-		public Builder empleado(final EmpleadoEntidad empleado) {
-			this.empleado = empleado;
-			return this;
-		}
-
-		public Builder fechainicio(final LocalDateTime fechainicio) {
-			this.fechainicio = fechainicio;
-			return this;
-		}
-
-		public Builder fechaactualizacion(final LocalDateTime fechaactualizacion) {
-			this.fechaactualizacion = fechaactualizacion;
-			return this;
-		}
-
-		public Builder totalcompra(final BigDecimal totalcompra) {
-			this.totalcompra = totalcompra;
-			return this;
-		}
-
-		public Builder estado(final String estado) {
-			this.estado = estado;
-			return this;
-		}
-
-		public ProcesoCompraEntidad build() {
-			return new ProcesoCompraEntidad(this);
-		}
+		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }

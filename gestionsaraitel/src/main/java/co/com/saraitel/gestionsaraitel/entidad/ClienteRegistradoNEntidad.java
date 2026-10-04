@@ -8,18 +8,19 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class ClienteRegistradoNEntidad {
 
 	private UUID id;
-	private ClienteRegistradoEntidad clienteregistrado;
+	private ClienteRegistradoEntidad clienteRegistrado;
 	private PersonaEntidad persona;
 
 	public ClienteRegistradoNEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setClienteregistrado(new ClienteRegistradoEntidad());
+		setClienteRegistrado(new ClienteRegistradoEntidad());
 		setPersona(new PersonaEntidad());
 	}
 
-	public ClienteRegistradoNEntidad(final UUID id, final ClienteRegistradoEntidad clienteregistrado, final PersonaEntidad persona) {
+	public ClienteRegistradoNEntidad(final UUID id, final ClienteRegistradoEntidad clienteRegistrado, 
+			final PersonaEntidad persona) {
 		setId(id);
-		setClienteregistrado(clienteregistrado);
+		setClienteRegistrado(clienteRegistrado);
 		setPersona(persona);
 	}
 
@@ -31,12 +32,13 @@ public class ClienteRegistradoNEntidad {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
-	public ClienteRegistradoEntidad getClienteregistrado() {
-		return clienteregistrado;
+	public ClienteRegistradoEntidad getClienteRegistrado() {
+		return clienteRegistrado;
 	}
 
-	public void setClienteregistrado(final ClienteRegistradoEntidad clienteregistrado) {
-		this.clienteregistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteregistrado, new ClienteRegistradoEntidad());
+	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
+		this.clienteRegistrado = UtilObjeto.esNulo(clienteRegistrado) ? 
+				new ClienteRegistradoEntidad() : clienteRegistrado;
 	}
 
 	public PersonaEntidad getPersona() {
@@ -44,6 +46,7 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaEntidad());
+		this.persona = UtilObjeto.esNulo(persona) ? 
+				new PersonaEntidad() : persona;
 	}
 }

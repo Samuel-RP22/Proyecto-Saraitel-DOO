@@ -33,6 +33,7 @@ public class AdministradorEntidad {
 	}
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, new EmpleadoEntidad());
+		this.empleado = UtilObjeto.esNulo(empleado) ? 
+				new EmpleadoEntidad() : empleado ;
 	}
 }

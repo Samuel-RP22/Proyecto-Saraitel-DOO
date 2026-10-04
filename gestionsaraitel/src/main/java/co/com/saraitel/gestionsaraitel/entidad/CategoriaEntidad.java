@@ -2,7 +2,6 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -10,20 +9,21 @@ public class CategoriaEntidad {
 
 	private UUID id;
 	private String nombre;
-	private String categoriapadre;
+	private UUID idCategoriaPadre;
 	private int nivel;
 
 	public CategoriaEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-	    setNombre(UtilTexto.VACIA);
-	    setCategoriapadre(UtilTexto.VACIA);
-	    setNivel(UtilNumero.UNO);
+		setNombre(UtilTexto.VACIA);
+		setIdCategoriaPadre(null);
+		setNivel(1);
 	}
 
-	public CategoriaEntidad(final UUID id, final String nombre, final String categoriapadre, final int nivel) {
+	public CategoriaEntidad(final UUID id, final String nombre, 
+			final UUID idCategoriaPadre, final int nivel) {
 		setId(id);
 		setNombre(nombre);
-		setCategoriapadre(categoriapadre);
+		setIdCategoriaPadre(idCategoriaPadre);
 		setNivel(nivel);
 	}
 
@@ -43,12 +43,12 @@ public class CategoriaEntidad {
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 	}
 
-	public String getCategoriapadre() {
-		return categoriapadre;
+	public UUID getIdCategoriaPadre() {
+		return idCategoriaPadre;
 	}
 
-	public void setCategoriapadre(final String categoriapadre) {
-		this.categoriapadre = UtilTexto.quitarEspaciosEnBlanco(categoriapadre);
+	public void setIdCategoriaPadre(final UUID idCategoriaPadre) {
+		this.idCategoriaPadre = idCategoriaPadre;
 	}
 
 	public int getNivel() {
@@ -56,6 +56,6 @@ public class CategoriaEntidad {
 	}
 
 	public void setNivel(final int nivel) {
-		this.nivel = (int) UtilNumero.obtenerValorDefectoNivel(nivel);
+		this.nivel = nivel;
 	}
 }

@@ -7,14 +7,11 @@ import java.util.Locale;
 
 public final class UtilTexto {
 	
-    public static final String VACIA = "";
-    public static final DecimalFormatSymbols simbolos = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
+	public static final String VACIA = "";
+    private static final DecimalFormatSymbols SIMBOLOS = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
+    private static final String FORMATO_DINERO = "$ #,##0.00";
 
     private UtilTexto() {
-    }
-
-    public static boolean esNula(final String cadena) {
-        return UtilObjeto.esNulo(cadena);
     }
 
     public static boolean esVacia(final String cadena) {
@@ -30,7 +27,7 @@ public final class UtilTexto {
     }
 
     public static String quitarEspaciosEnBlanco(final String valor) {
-        return obtenerValorDefecto(valor).trim();
+        return obtenerValorDefecto(valor).strip();
     }
 
     public static int obtenerLongitudCadena(final String valor) {
@@ -53,11 +50,11 @@ public final class UtilTexto {
     }
     
     public static String formatearDinero(final BigDecimal valor) {
-        var formato = new DecimalFormat("$ #,##0.00", simbolos);
-        return formato.format(UtilObjeto.esNulo(valor) ? BigDecimal.ZERO : valor);
+        var formato = new DecimalFormat(FORMATO_DINERO, SIMBOLOS);
+        return formato.format(UtilNumero.obtenerValorDefecto(valor));
     }
 
     public static String formatearPorcentaje(final int valor) {
-        return UtilNumero.obtenerValorDefecto(valor) + "%";
+        return valor + "%";
     }
 }

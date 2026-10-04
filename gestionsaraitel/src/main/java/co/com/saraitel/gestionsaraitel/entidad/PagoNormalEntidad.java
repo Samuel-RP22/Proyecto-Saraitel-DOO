@@ -3,6 +3,10 @@ package co.com.saraitel.gestionsaraitel.entidad;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+
 public class PagoNormalEntidad {
 
 	private UUID id;
@@ -11,19 +15,18 @@ public class PagoNormalEntidad {
 	private BigDecimal montoPagar;
 
 	public PagoNormalEntidad() {
-		super();
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setMetodoPago(new MetodoPagoEntidad());
+		setPago(new PagoEntidad());
+		setMontoPagar(UtilNumero.CERO_DECIMAL);
 	}
 
-	private PagoNormalEntidad(final Builder builder) {
-		super();
-		setId(builder.id);
-		setMetodoPago(builder.metodoPago);
-		setPago(builder.pago);
-		setMontoPagar(builder.montoPagar);
-	}
-
-	public static Builder builder() {
-		return new Builder();
+	public PagoNormalEntidad(final UUID id, final MetodoPagoEntidad metodoPago,
+			final PagoEntidad pago, final BigDecimal montoPagar) {
+		setId(id);
+		setMetodoPago(metodoPago);
+		setPago(pago);
+		setMontoPagar(montoPagar);
 	}
 
 	public UUID getId() {
@@ -31,7 +34,7 @@ public class PagoNormalEntidad {
 	}
 
 	public void setId(final UUID id) {
-		this.id = id;
+		this.id = UtilUUID.obtenerValorDefecto(id);
 	}
 
 	public MetodoPagoEntidad getMetodoPago() {
@@ -39,7 +42,8 @@ public class PagoNormalEntidad {
 	}
 
 	public void setMetodoPago(final MetodoPagoEntidad metodoPago) {
-		this.metodoPago = metodoPago;
+		this.metodoPago = UtilObjeto.esNulo(metodoPago) ?
+				new MetodoPagoEntidad() : metodoPago;
 	}
 
 	public PagoEntidad getPago() {
@@ -47,7 +51,8 @@ public class PagoNormalEntidad {
 	}
 
 	public void setPago(final PagoEntidad pago) {
-		this.pago = pago;
+		this.pago = UtilObjeto.esNulo(pago) ?
+				new PagoEntidad() : pago;
 	}
 
 	public BigDecimal getMontoPagar() {
@@ -55,42 +60,6 @@ public class PagoNormalEntidad {
 	}
 
 	public void setMontoPagar(final BigDecimal montoPagar) {
-		this.montoPagar = montoPagar;
-	}
-
-	public static class Builder {
-
-		private UUID id;
-		private MetodoPagoEntidad metodoPago;
-		private PagoEntidad pago;
-		private BigDecimal montoPagar;
-
-		private Builder() {
-			super();
-		}
-
-		public Builder id(final UUID id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder metodoPago(final MetodoPagoEntidad metodoPago) {
-			this.metodoPago = metodoPago;
-			return this;
-		}
-
-		public Builder pago(final PagoEntidad pago) {
-			this.pago = pago;
-			return this;
-		}
-
-		public Builder montoPagar(final BigDecimal montoPagar) {
-			this.montoPagar = montoPagar;
-			return this;
-		}
-
-		public PagoNormalEntidad build() {
-			return new PagoNormalEntidad(this);
-		}
+		this.montoPagar = UtilNumero.obtenerValorDefecto(montoPagar);
 	}
 }

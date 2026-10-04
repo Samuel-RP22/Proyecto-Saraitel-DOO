@@ -24,16 +24,15 @@ public class DevolucionEntidad {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setDetalleCompra(new DetalleCompraEntidad());
 		setMotivo(new MotivoEntidad());
-		setFechaDevolucion(UtilFecha.FECHA_DEFECTO);
-		setCantidad(UtilNumero.CERO);
-		setMontoDevolucion(UtilNumero.);
-		setEstado(UtilNumero.);
+		setFechaDevolucion(UtilFecha.FECHA_HORA_DEFECTO);
+		setCantidad(1);
+		setMontoDevolucion(UtilNumero.CERO_DECIMAL);
+		setEstado(UtilTexto.VACIA);
 	}
 
-	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra, final MotivoEntidad motivo,
-			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
-			final String estado) {
-
+	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra,
+			final MotivoEntidad motivo, final LocalDateTime fechaDevolucion,
+			final int cantidad, final BigDecimal montoDevolucion, final String estado) {
 		setId(id);
 		setDetalleCompra(detalleCompra);
 		setMotivo(motivo);
@@ -56,7 +55,8 @@ public class DevolucionEntidad {
 	}
 
 	public void setDetalleCompra(final DetalleCompraEntidad detalleCompra) {
-		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(detalleCompra, new DetalleCompraEntidad());
+		this.detalleCompra = UtilObjeto.esNulo(detalleCompra) ?
+				new DetalleCompraEntidad() : detalleCompra;
 	}
 
 	public MotivoEntidad getMotivo() {
@@ -64,7 +64,8 @@ public class DevolucionEntidad {
 	}
 
 	public void setMotivo(final MotivoEntidad motivo) {
-		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, new MotivoEntidad());
+		this.motivo = UtilObjeto.esNulo(motivo) ?
+				new MotivoEntidad() : motivo;
 	}
 
 	public LocalDateTime getFechaDevolucion() {
@@ -72,7 +73,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setFechaDevolucion(final LocalDateTime fechaDevolucion) {
-		this.fechaDevolucion = UtilFecha;
+		this.fechaDevolucion = UtilFecha.obtenerValorDefecto(fechaDevolucion);
 	}
 
 	public int getCantidad() {
@@ -80,7 +81,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setCantidad(final int cantidad) {
-		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad).intValue();
+		this.cantidad = cantidad;
 	}
 
 	public BigDecimal getMontoDevolucion() {
@@ -88,7 +89,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setMontoDevolucion(final BigDecimal montoDevolucion) {
-		this.montoDevolucion = UtilNumero;
+		this.montoDevolucion = UtilNumero.obtenerValorDefecto(montoDevolucion);
 	}
 
 	public String getEstado() {

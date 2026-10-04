@@ -18,7 +18,8 @@ public class CiudadEntidad {
         setDepartamento(new DepartamentoEntidad());
     }
 
-    public CiudadEntidad(final UUID id, final String nombre, final DepartamentoEntidad departamento) {
+    public CiudadEntidad(final UUID id, final String nombre, 
+    		final DepartamentoEntidad departamento) {
         setId(id);
         setNombre(nombre);
         setDepartamento(departamento);
@@ -45,6 +46,7 @@ public class CiudadEntidad {
     }
 
     public void setDepartamento(final DepartamentoEntidad departamento) {
-        this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento, new DepartamentoEntidad());
+        this.departamento = UtilObjeto.esNulo(departamento) ?
+        		new DepartamentoEntidad() : departamento;
     }
 }

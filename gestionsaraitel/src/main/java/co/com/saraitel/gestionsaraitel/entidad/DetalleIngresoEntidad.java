@@ -18,16 +18,16 @@ public class DetalleIngresoEntidad {
 
 	public DetalleIngresoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setIngresoInventario(new IngresoInventarioEntidad() );
+		setIngresoInventario(new IngresoInventarioEntidad());
 		setProductoSede(new ProductoSedeEntidad());
-		setCantidad(UtilNumero.CERO);
-		setCostoUnitario(UtilNumero.);
-		setSubtotal(UtilNumero.C);
+		setCantidad(1);
+		setCostoUnitario(UtilNumero.CERO_DECIMAL);
+		setSubtotal(UtilNumero.CERO_DECIMAL);
 	}
 
 	public DetalleIngresoEntidad(final UUID id, final IngresoInventarioEntidad ingresoInventario,
-			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal costoUnitario,
-			final BigDecimal subtotal) {
+			final ProductoSedeEntidad productoSede, final int cantidad, 
+			final BigDecimal costoUnitario, final BigDecimal subtotal) {
 		setId(id);
 		setIngresoInventario(ingresoInventario);
 		setProductoSede(productoSede);
@@ -49,7 +49,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioEntidad ingresoInventario) {
-		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ingresoInventario, new IngresoInventarioEntidad());
+		this.ingresoInventario = UtilObjeto.esNulo(ingresoInventario) ?
+				new IngresoInventarioEntidad() : ingresoInventario;
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -57,7 +58,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede, new ProductoSedeEntidad());
+		this.productoSede = UtilObjeto.esNulo(productoSede) ?
+				new ProductoSedeEntidad() : productoSede;
 	}
 
 	public int getCantidad() {
@@ -65,7 +67,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setCantidad(final int cantidad) {
-		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad).intValue();
+		this.cantidad = cantidad;
 	}
 
 	public BigDecimal getCostoUnitario() {
@@ -73,7 +75,7 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setCostoUnitario(final BigDecimal costoUnitario) {
-		this.costoUnitario = UtilNumero.;
+		this.costoUnitario = UtilNumero.obtenerValorDefecto(costoUnitario);
 	}
 
 	public BigDecimal getSubtotal() {
@@ -81,6 +83,6 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setSubtotal(final BigDecimal subtotal) {
-		this.subtotal = UtilNumero.;
+		this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
 	}
 }

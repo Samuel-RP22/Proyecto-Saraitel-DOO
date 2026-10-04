@@ -6,7 +6,7 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class PrefijoEntidad {
-    
+
     private UUID id;
     private String codigo;
 
@@ -36,4 +36,3 @@ public class PrefijoEntidad {
         this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
     }
 }
-   
