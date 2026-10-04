@@ -38,6 +38,7 @@ public class CiudadDominio {
 		public Builder() {
 			id = UtilUUID.obtenerUUIDDefecto();
 			nombre = UtilTexto.VACIA;
+			departamento = new DepartamentoDominio.Builder().build();
 		}
 
 		public Builder id(UUID id) {

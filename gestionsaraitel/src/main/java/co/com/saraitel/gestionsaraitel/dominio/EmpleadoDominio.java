@@ -6,21 +6,17 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class SedeDominio {
+public class EmpleadoDominio {
 
 	private UUID id;
-	private CiudadDominio ciudad;
-	private String nombre;
-	private String nit;
-	private String direccion;
+	private SedeDominio sede;
+	private PersonaDomino persona;
 	private boolean esActiva;
 	
-	private SedeDominio(Builder builder) {
+	private EmpleadoDominio(Builder builder) {
 		this.id = builder.id;
-		this.ciudad = builder.ciudad;
-		this.nombre = builder.nombre;
-		this.nit = builder.nit;
-		this.direccion = builder.direccion;
+		this.sede = builder.sede;
+		this.persona = builder.persona;
 		this.esActiva = builder.esActiva;
 
 	}
@@ -29,19 +25,11 @@ public class SedeDominio {
 		return id;
 	}
 	
-	public CiudadDominio getCiudad() {
-		return ciudad;
+	public SedeDominio getSede() {
+		return sede;
 	}
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public String getNit() {
-		return nit;
-	}
-	
-	public String getDireccion() {
-		return direccion;
+	public PersonaDomino getPersona() {
+		return persona;
 	}
 	
 	public boolean getEsActiva() {
@@ -52,19 +40,13 @@ public class SedeDominio {
 	
 	public static class Builder {
 		private UUID id;
-		private CiudadDominio ciudad;
-		private String nombre;
-		private String nit;
-		private String direccion;
+		private SedeDominio sede;
+		private PersonaDomino persona;
 		private boolean esActiva;
 
 		public Builder() {
 			id = UtilUUID.obtenerUUIDDefecto();
-			ciudad = new CiudadDominio.Builder().build();
 			nombre = UtilTexto.VACIA;
-			nit = UtilTexto.VACIA;
-			direccion = UtilTexto.VACIA;
-			esActiva = true;
 		}
 
 		public Builder id(UUID id) {
@@ -97,8 +79,8 @@ public class SedeDominio {
 			return this;
 		}
 
-		public SedeDominio build() {
-			return new SedeDominio(this);
+		public EmpleadoDominio build() {
+			return new EmpleadoDominio(this);
 		}
 	}
 }
