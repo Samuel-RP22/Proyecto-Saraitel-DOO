@@ -2,26 +2,25 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class DepartamentoDTO {
+public class MarcaDTO {
 
 	private UUID id;
 	private String nombre;
-	private PaisDTO pais;
+	private boolean esActivo;
 
-	public DepartamentoDTO() {
+	public MarcaDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
-		setPais(new PaisDTO());
+		setEsActivo(true);
 	}
 
-	public DepartamentoDTO(final UUID id, final String nombre, final PaisDTO pais) {
+	public MarcaDTO(final UUID id, final String nombre, final boolean esActivo) {
 		setId(id);
 		setNombre(nombre);
-		setPais(pais);
+		setEsActivo(esActivo);
 	}
 
 	public UUID getId() {
@@ -40,11 +39,11 @@ public class DepartamentoDTO {
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 	}
 
-	public PaisDTO getPais() {
-		return pais;
+	public boolean getEsActivo() {
+		return esActivo;
 	}
 
-	public void setPais(final PaisDTO pais) {
-		this.pais = UtilObjeto.esNulo(pais) ? new PaisDTO() : pais;
+	public void setEsActivo(final boolean esActivo) {
+		this.esActivo = esActivo;
 	}
 }

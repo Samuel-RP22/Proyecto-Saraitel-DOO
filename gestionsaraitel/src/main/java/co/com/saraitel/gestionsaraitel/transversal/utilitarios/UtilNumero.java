@@ -20,7 +20,7 @@ public final class UtilNumero {
 	public static boolean mayorQue(final int numeroUno, final int numeroDos) {
 	    return numeroUno > numeroDos;
 	}
-	
+
 	public static boolean menorQue(final int numeroUno, final int numeroDos) {
 	    return numeroUno < numeroDos;
 	}

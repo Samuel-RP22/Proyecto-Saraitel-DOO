@@ -31,18 +31,82 @@ public class ProductoSedeEntidad {
 		setStockGarantia(0);
 	}
 
-	public ProductoSedeEntidad(final UUID id, final ProductoEntidad producto, final SedeEntidad sede,
-			final BigDecimal precio, final boolean tieneOferta, final int oferta,
-			final BigDecimal precioTrasOferta, final int stock, final int stockGarantia) {
-		setId(id);
-		setProducto(producto);
-		setSede(sede);
-		setPrecio(precio);
-		setTieneOferta(tieneOferta);
-		setOferta(oferta);
-		setPrecioTrasOferta(precioTrasOferta);
-		setStock(stock);
-		setStockGarantia(stockGarantia);
+	private ProductoSedeEntidad(final Builder builder) {
+		setId(builder.id);
+		setProducto(builder.producto);
+		setSede(builder.sede);
+		setPrecio(builder.precio);
+		setTieneOferta(builder.tieneOferta);
+		setOferta(builder.oferta);
+		setPrecioTrasOferta(builder.precioTrasOferta);
+		setStock(builder.stock);
+		setStockGarantia(builder.stockGarantia);
+	}
+
+	public static Builder build() {
+		return new Builder();
+	}
+
+	public static final class Builder {
+
+		private UUID id = UtilUUID.obtenerUUIDDefecto();
+		private ProductoEntidad producto = new ProductoEntidad();
+		private SedeEntidad sede = new SedeEntidad();
+		private BigDecimal precio = UtilNumero.CERO_DECIMAL;
+		private boolean tieneOferta = false;
+		private int oferta = 0;
+		private BigDecimal precioTrasOferta = UtilNumero.CERO_DECIMAL;
+		private int stock = 0;
+		private int stockGarantia = 0;
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder producto(final ProductoEntidad producto) {
+			this.producto = producto;
+			return this;
+		}
+
+		public Builder sede(final SedeEntidad sede) {
+			this.sede = sede;
+			return this;
+		}
+
+		public Builder precio(final BigDecimal precio) {
+			this.precio = precio;
+			return this;
+		}
+
+		public Builder tieneOferta(final boolean tieneOferta) {
+			this.tieneOferta = tieneOferta;
+			return this;
+		}
+
+		public Builder oferta(final int oferta) {
+			this.oferta = oferta;
+			return this;
+		}
+
+		public Builder precioTrasOferta(final BigDecimal precioTrasOferta) {
+			this.precioTrasOferta = precioTrasOferta;
+			return this;
+		}
+
+		public Builder stock(final int stock) {
+			this.stock = stock;
+			return this;
+		}
+
+		public Builder stockGarantia(final int stockGarantia) {
+			this.stockGarantia = stockGarantia;
+			return this;
+		}
+
+		public ProductoSedeEntidad construir() {
+			return new ProductoSedeEntidad(this);
+		}
 	}
 
 	public UUID getId() {

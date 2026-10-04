@@ -32,19 +32,89 @@ public class PersonaEntidad {
 		setCorreoConfirmado(false);
 	}
 
-	public PersonaEntidad(final UUID id, final TipoDocumentoEntidad tipoDocumento, final PrefijoEntidad prefijo,
-			final String numeroDocumento, final String telefono, final String nombre, final String apellido,
-			final String correo, final boolean telefonoConfirmado, final boolean correoConfirmado) {
-		setId(id);
-		setTipoDocumento(tipoDocumento);
-		setPrefijo(prefijo);
-		setNumeroDocumento(numeroDocumento);
-		setTelefono(telefono);
-		setNombre(nombre);
-		setApellido(apellido);
-		setCorreo(correo);
-		setTelefonoConfirmado(telefonoConfirmado);
-		setCorreoConfirmado(correoConfirmado);
+	private PersonaEntidad(final Builder builder) {
+		setId(builder.id);
+		setTipoDocumento(builder.tipoDocumento);
+		setPrefijo(builder.prefijo);
+		setNumeroDocumento(builder.numeroDocumento);
+		setTelefono(builder.telefono);
+		setNombre(builder.nombre);
+		setApellido(builder.apellido);
+		setCorreo(builder.correo);
+		setTelefonoConfirmado(builder.telefonoConfirmado);
+		setCorreoConfirmado(builder.correoConfirmado);
+	}
+
+	public static  Builder build() {
+		return new Builder();
+	}
+
+	public static final class Builder {
+
+		private UUID id = UtilUUID.obtenerUUIDDefecto();
+		private TipoDocumentoEntidad tipoDocumento = new TipoDocumentoEntidad();
+		private PrefijoEntidad prefijo = new PrefijoEntidad();
+		private String numeroDocumento = UtilTexto.VACIA;
+		private String telefono = UtilTexto.VACIA;
+		private String nombre = UtilTexto.VACIA;
+		private String apellido = UtilTexto.VACIA;
+		private String correo = UtilTexto.VACIA;
+		private boolean telefonoConfirmado = false;
+		private boolean correoConfirmado = false;
+
+		public Builder id(final UUID id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder tipoDocumento(final TipoDocumentoEntidad tipoDocumento) {
+			this.tipoDocumento = tipoDocumento;
+			return this;
+		}
+
+		public Builder prefijo(final PrefijoEntidad prefijo) {
+			this.prefijo = prefijo;
+			return this;
+		}
+
+		public Builder numeroDocumento(final String numeroDocumento) {
+			this.numeroDocumento = numeroDocumento;
+			return this;
+		}
+
+		public Builder telefono(final String telefono) {
+			this.telefono = telefono;
+			return this;
+		}
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+
+		public Builder apellido(final String apellido) {
+			this.apellido = apellido;
+			return this;
+		}
+
+		public Builder correo(final String correo) {
+			this.correo = correo;
+			return this;
+		}
+
+		public Builder telefonoConfirmado(final boolean telefonoConfirmado) {
+			this.telefonoConfirmado = telefonoConfirmado;
+			return this;
+		}
+
+		public Builder correoConfirmado(final boolean correoConfirmado) {
+			this.correoConfirmado = correoConfirmado;
+			return this;
+		}
+
+		public PersonaEntidad construir() {
+			return new PersonaEntidad(this);
+		}
 	}
 
 	public UUID getId() {

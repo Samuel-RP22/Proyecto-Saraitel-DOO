@@ -9,19 +9,19 @@ public class ClienteRegistradoEntidad {
 
 	private UUID id;
 	private ClienteEntidad cliente;
-	private boolean clienteRegistradoNatural;
+	private boolean clienteNaturalDefecto;
 
 	public ClienteRegistradoEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setCliente(new ClienteEntidad());
-		setClienteRegistradoNatural(true);
+		setClienteNaturalDefecto(true);
 	}
 
 	public ClienteRegistradoEntidad(final UUID id, final ClienteEntidad cliente, 
-			final boolean clienteRegistradoNatural) {
+			final boolean clienteNaturalDefecto) {
 		setId(id);
 		setCliente(cliente);
-		setClienteRegistradoNatural(clienteRegistradoNatural);
+		setClienteNaturalDefecto(clienteNaturalDefecto);
 	}
 
 	public UUID getId() {
@@ -41,11 +41,11 @@ public class ClienteRegistradoEntidad {
 				new ClienteEntidad() : cliente;
 	}
 
-	public boolean getClienteRegistradoNatural() {
-		return clienteRegistradoNatural;
+	public boolean getClienteNaturalDefecto() {
+		return clienteNaturalDefecto;
 	}
 
-	public void setClienteRegistradoNatural(final boolean clienteRegistradoNatural) {
-		this.clienteRegistradoNatural = clienteRegistradoNatural;
+	public void setClienteNaturalDefecto(final boolean clienteNaturalDefecto) {
+		this.clienteNaturalDefecto = clienteNaturalDefecto;
 	}
 }

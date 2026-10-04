@@ -2,26 +2,29 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class DepartamentoDTO {
+public class CategoriaDTO {
 
 	private UUID id;
 	private String nombre;
-	private PaisDTO pais;
+	private UUID idCategoriaPadre;
+	private int nivel;
 
-	public DepartamentoDTO() {
+	public CategoriaDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setNombre(UtilTexto.VACIA);
-		setPais(new PaisDTO());
+		setIdCategoriaPadre(null);
+		setNivel(1);
 	}
 
-	public DepartamentoDTO(final UUID id, final String nombre, final PaisDTO pais) {
+	public CategoriaDTO(final UUID id, final String nombre,
+			final UUID idCategoriaPadre, final int nivel) {
 		setId(id);
 		setNombre(nombre);
-		setPais(pais);
+		setIdCategoriaPadre(idCategoriaPadre);
+		setNivel(nivel);
 	}
 
 	public UUID getId() {
@@ -40,11 +43,19 @@ public class DepartamentoDTO {
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 	}
 
-	public PaisDTO getPais() {
-		return pais;
+	public UUID getIdCategoriaPadre() {
+		return idCategoriaPadre;
 	}
 
-	public void setPais(final PaisDTO pais) {
-		this.pais = UtilObjeto.esNulo(pais) ? new PaisDTO() : pais;
+	public void setIdCategoriaPadre(final UUID idCategoriaPadre) {
+		this.idCategoriaPadre = idCategoriaPadre;
+	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(final int nivel) {
+		this.nivel = nivel;
 	}
 }
