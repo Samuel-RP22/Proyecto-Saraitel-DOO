@@ -49,8 +49,8 @@ public class DetalleIngresoDTO {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioDTO ingresoInventario) {
-		this.ingresoInventario = UtilObjeto.esNulo(ingresoInventario) ?
-				new IngresoInventarioDTO() : ingresoInventario;
+		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(ingresoInventario, new IngresoInventarioDTO());
 	}
 
 	public ProductoSedeDTO getProductoSede() {
@@ -58,8 +58,8 @@ public class DetalleIngresoDTO {
 	}
 
 	public void setProductoSede(final ProductoSedeDTO productoSede) {
-		this.productoSede = UtilObjeto.esNulo(productoSede) ?
-				new ProductoSedeDTO() : productoSede;
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(productoSede, new ProductoSedeDTO());
 	}
 
 	public int getCantidad() {

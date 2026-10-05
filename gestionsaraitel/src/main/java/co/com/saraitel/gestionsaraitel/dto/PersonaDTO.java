@@ -130,8 +130,8 @@ public class PersonaDTO {
 	}
 
 	public void setTipoDocumento(final TipoDocumentoDTO tipoDocumento) {
-		this.tipoDocumento = UtilObjeto.esNulo(tipoDocumento) ?
-				new TipoDocumentoDTO() : tipoDocumento;
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(tipoDocumento, new TipoDocumentoDTO());
 	}
 
 	public PrefijoDTO getPrefijo() {
@@ -139,8 +139,8 @@ public class PersonaDTO {
 	}
 
 	public void setPrefijo(final PrefijoDTO prefijo) {
-		this.prefijo = UtilObjeto.esNulo(prefijo) ?
-				new PrefijoDTO() : prefijo;
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(prefijo, new PrefijoDTO());
 	}
 
 	public String getNumeroDocumento() {

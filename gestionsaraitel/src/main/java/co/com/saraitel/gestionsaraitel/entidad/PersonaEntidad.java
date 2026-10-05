@@ -130,8 +130,8 @@ public class PersonaEntidad {
 	}
 
 	public void setTipoDocumento(final TipoDocumentoEntidad tipoDocumento) {
-		this.tipoDocumento = UtilObjeto.esNulo(tipoDocumento) ?
-				new TipoDocumentoEntidad() : tipoDocumento;
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(tipoDocumento, new TipoDocumentoEntidad());
 	}
 
 	public PrefijoEntidad getPrefijo() {
@@ -139,8 +139,8 @@ public class PersonaEntidad {
 	}
 
 	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = UtilObjeto.esNulo(prefijo) ?
-				new PrefijoEntidad() : prefijo;
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(prefijo, new PrefijoEntidad());
 	}
 
 	public String getNumeroDocumento() {

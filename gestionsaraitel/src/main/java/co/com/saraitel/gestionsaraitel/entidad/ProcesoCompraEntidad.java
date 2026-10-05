@@ -56,8 +56,8 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setCliente(final ClienteEntidad cliente) {
-		this.cliente = UtilObjeto.esNulo(cliente) ? 
-				new ClienteEntidad() : cliente;
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(cliente, new ClienteEntidad());
 	}
 
 	public EmpleadoEntidad getEmpleado() {
@@ -65,8 +65,8 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
-		this.empleado = UtilObjeto.esNulo(empleado) ? 
-				new EmpleadoEntidad() : empleado;
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(empleado, new EmpleadoEntidad());
 	}
 
 	public LocalDateTime getFechaInicio() {

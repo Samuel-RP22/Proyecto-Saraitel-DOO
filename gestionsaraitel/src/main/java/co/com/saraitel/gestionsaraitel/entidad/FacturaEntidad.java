@@ -39,8 +39,8 @@ public class FacturaEntidad {
 	}
 
 	public void setCompra(final CompraEntidad compra) {
-		this.compra = UtilObjeto.esNulo(compra) ? 
-				new CompraEntidad() : compra;
+		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(compra, new CompraEntidad());
 	}
 
 	public LocalDateTime getFechaEmision() {

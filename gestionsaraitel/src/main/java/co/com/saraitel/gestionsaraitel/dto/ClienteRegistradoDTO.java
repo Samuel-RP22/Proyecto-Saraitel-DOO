@@ -37,8 +37,8 @@ public class ClienteRegistradoDTO {
 	}
 
 	public void setCliente(final ClienteDTO cliente) {
-		this.cliente = UtilObjeto.esNulo(cliente) ? 
-				new ClienteDTO() : cliente;
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(cliente, new ClienteDTO());
 	}
 
 	public boolean getClienteNaturalDefecto() {

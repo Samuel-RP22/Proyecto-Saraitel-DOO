@@ -47,8 +47,8 @@ public class SedeDTO {
 	}
 
 	public void setCiudad(final CiudadDTO ciudad) {
-		this.ciudad = UtilObjeto.esNulo(ciudad) ?
-				new CiudadDTO() : ciudad;
+		this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(ciudad, new CiudadDTO());
 	}
 
 	public String getNombre() {

@@ -42,8 +42,8 @@ public class AplicacionSaldoDTO {
     }
 
     public void setSaldoFavor(final SaldoFavorDTO saldoFavor) {
-        this.saldoFavor = UtilObjeto.esNulo(saldoFavor) ? 
-        		new SaldoFavorDTO() : saldoFavor;
+        this.saldoFavor = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(saldoFavor, new SaldoFavorDTO());
     }
 
     public PagoDTO getPago() {
@@ -51,7 +51,8 @@ public class AplicacionSaldoDTO {
     }
 
     public void setPago(final PagoDTO pago) {
-        this.pago = UtilObjeto.esNulo(pago) ? new PagoDTO() : pago;
+        this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(pago, new PagoDTO());
     }
 
     public BigDecimal getValorAplicado() {

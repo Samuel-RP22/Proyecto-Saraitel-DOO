@@ -40,7 +40,8 @@ public class EmpleadoEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.esNulo(sede) ? new SedeEntidad() : sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(sede, new SedeEntidad());
 	}
 
 	public PersonaEntidad getPersona() {
@@ -48,8 +49,8 @@ public class EmpleadoEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = UtilObjeto.esNulo(persona) ? 
-				new PersonaEntidad() : persona;
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(persona, new PersonaEntidad());
 	}
 
 	public boolean getEsActivo() {

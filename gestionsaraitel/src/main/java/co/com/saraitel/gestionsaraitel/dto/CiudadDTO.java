@@ -46,7 +46,7 @@ public class CiudadDTO {
 	}
 
 	public void setDepartamento(final DepartamentoDTO departamento) {
-		this.departamento = UtilObjeto.esNulo(departamento) ?
-				new DepartamentoDTO() : departamento;
+		this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(departamento, new DepartamentoDTO());
 	}
 }

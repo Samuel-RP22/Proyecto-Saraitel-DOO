@@ -37,8 +37,8 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
-		this.clienteRegistrado = UtilObjeto.esNulo(clienteRegistrado) ? 
-				new ClienteRegistradoEntidad() : clienteRegistrado;
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(clienteRegistrado, new ClienteRegistradoEntidad());
 	}
 
 	public PersonaEntidad getPersona() {
@@ -46,7 +46,7 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = UtilObjeto.esNulo(persona) ? 
-				new PersonaEntidad() : persona;
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(persona, new PersonaEntidad());
 	}
 }

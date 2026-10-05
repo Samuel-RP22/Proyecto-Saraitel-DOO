@@ -46,7 +46,7 @@ public class CiudadEntidad {
     }
 
     public void setDepartamento(final DepartamentoEntidad departamento) {
-        this.departamento = UtilObjeto.esNulo(departamento) ?
-        		new DepartamentoEntidad() : departamento;
+        this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(departamento, new DepartamentoEntidad());
     }
 }

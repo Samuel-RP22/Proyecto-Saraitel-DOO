@@ -49,8 +49,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioEntidad ingresoInventario) {
-		this.ingresoInventario = UtilObjeto.esNulo(ingresoInventario) ?
-				new IngresoInventarioEntidad() : ingresoInventario;
+		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(ingresoInventario, new IngresoInventarioEntidad());
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -58,8 +58,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = UtilObjeto.esNulo(productoSede) ?
-				new ProductoSedeEntidad() : productoSede;
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(productoSede, new ProductoSedeEntidad());
 	}
 
 	public int getCantidad() {

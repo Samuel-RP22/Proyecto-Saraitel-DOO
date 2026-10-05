@@ -40,7 +40,8 @@ public class EmpleadoDTO {
 	}
 
 	public void setSede(final SedeDTO sede) {
-		this.sede = UtilObjeto.esNulo(sede) ? new SedeDTO() : sede;
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(sede, new SedeDTO());
 	}
 
 	public PersonaDTO getPersona() {
@@ -48,8 +49,8 @@ public class EmpleadoDTO {
 	}
 
 	public void setPersona(final PersonaDTO persona) {
-		this.persona = UtilObjeto.esNulo(persona) ? 
-				new PersonaDTO() : persona;
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(persona, new PersonaDTO());
 	}
 
 	public boolean getEsActivo() {

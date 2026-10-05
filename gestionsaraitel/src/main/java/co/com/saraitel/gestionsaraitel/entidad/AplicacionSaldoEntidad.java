@@ -42,8 +42,8 @@ public class AplicacionSaldoEntidad {
     }
 
     public void setSaldoFavor(final SaldoFavorEntidad saldoFavor) {
-        this.saldoFavor = UtilObjeto.esNulo(saldoFavor) ? 
-        		new SaldoFavorEntidad() : saldoFavor;
+        this.saldoFavor = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(saldoFavor, new SaldoFavorEntidad());
     }
 
     public PagoEntidad getPago() {
@@ -51,7 +51,8 @@ public class AplicacionSaldoEntidad {
     }
 
     public void setPago(final PagoEntidad pago) {
-        this.pago = UtilObjeto.esNulo(pago) ? new PagoEntidad() : pago;
+        this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(pago, new PagoEntidad());
     }
 
     public BigDecimal getValorAplicado() {

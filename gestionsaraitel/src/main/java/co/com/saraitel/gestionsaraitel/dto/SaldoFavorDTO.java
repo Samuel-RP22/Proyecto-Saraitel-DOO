@@ -43,8 +43,8 @@ public class SaldoFavorDTO {
 	}
 
 	public void setDevolucion(final DevolucionDTO devolucion) {
-		this.devolucion = UtilObjeto.esNulo(devolucion) ? 
-				new DevolucionDTO() : devolucion;
+		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(devolucion, new DevolucionDTO());
 	}
 
 	public BigDecimal getMontoUsado() {

@@ -47,8 +47,8 @@ public class SedeEntidad {
     }
 
     public void setCiudad(final CiudadEntidad ciudad) {
-        this.ciudad = UtilObjeto.esNulo(ciudad) ? 
-        		new CiudadEntidad() : ciudad;
+        this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+        		(ciudad, new CiudadEntidad());
     }
 
     public String getNombre() {

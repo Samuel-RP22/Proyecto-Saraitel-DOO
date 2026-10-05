@@ -56,8 +56,8 @@ public class ProcesoCompraDTO {
 	}
 
 	public void setCliente(final ClienteDTO cliente) {
-		this.cliente = UtilObjeto.esNulo(cliente) ? 
-				new ClienteDTO() : cliente;
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(cliente, new ClienteDTO());
 	}
 
 	public EmpleadoDTO getEmpleado() {
@@ -65,8 +65,8 @@ public class ProcesoCompraDTO {
 	}
 
 	public void setEmpleado(final EmpleadoDTO empleado) {
-		this.empleado = UtilObjeto.esNulo(empleado) ? 
-				new EmpleadoDTO() : empleado;
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(empleado, new EmpleadoDTO());
 	}
 
 	public LocalDateTime getFechaInicio() {
