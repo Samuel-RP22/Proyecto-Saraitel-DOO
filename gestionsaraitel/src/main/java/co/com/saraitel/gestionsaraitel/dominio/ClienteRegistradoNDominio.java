@@ -5,51 +5,40 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class EmpleadoDominio {
+public class ClienteRegistradoNDominio {
 
 	private UUID id;
-	private SedeDominio sede;
+	private ClienteRegistradoDominio clienteRegistrado;
 	private PersonaDominio persona;
-	private boolean esActiva;
-	
-	private EmpleadoDominio(Builder builder) {
-		this.id = builder.id;
-		this.sede = builder.sede;
-		this.persona = builder.persona;
-		this.esActiva = builder.esActiva;
 
+	private ClienteRegistradoNDominio(Builder builder) {
+		this.id = builder.id;
+		this.clienteRegistrado = builder.clienteRegistrado;
+		this.persona = builder.persona;
 	}
 
 	public UUID getId() {
 		return id;
 	}
-	
-	public SedeDominio getSede() {
-		return sede;
+
+	public ClienteRegistradoDominio getClienteRegistrado() {
+		return clienteRegistrado;
 	}
+	
 	public PersonaDominio getPersona() {
 		return persona;
 	}
 	
-	public boolean getEsActiva() {
-		return esActiva;
-	}
-	
 
-	
 	public static class Builder {
 		private UUID id;
-		private SedeDominio sede;
+		private ClienteRegistradoDominio clienteRegistrado;
 		private PersonaDominio persona;
-		
-		private boolean esActiva;
 
 		public Builder() {
 			id = UtilUUID.obtenerUUIDDefecto();
-			sede = new SedeDominio.Builder().build();
-			persona = new PersonaDominio.Builder().build();
-			esActiva = true;
-		
+			clienteRegistrado = new ClienteRegistradoDominio.Builder().build();
+			persona =  new PersonaDominio.Builder().build();
 		}
 
 		public Builder id(UUID id) {
@@ -57,23 +46,19 @@ public class EmpleadoDominio {
 			return this;
 		}
 
-		public Builder sede(SedeDominio sede) {
-			this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeDominio.Builder().build());
+		public Builder clienteRegistrado(ClienteRegistradoDominio clienteRegistrado) {
+			this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteRegistrado, new ClienteRegistradoDominio.Builder().build());
 			return this;
 		}
-
+		
 		public Builder persona(PersonaDominio persona) {
 			this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaDominio.Builder().build());
 			return this;
 		}
 		
-		public Builder esActiva(boolean esActiva) {
-			this.esActiva = esActiva;
-			return this;
-		}
-
-		public EmpleadoDominio build() {
-			return new EmpleadoDominio(this);
+		
+		public ClienteRegistradoNDominio build() {
+			return new ClienteRegistradoNDominio(this);
 		}
 	}
 }
