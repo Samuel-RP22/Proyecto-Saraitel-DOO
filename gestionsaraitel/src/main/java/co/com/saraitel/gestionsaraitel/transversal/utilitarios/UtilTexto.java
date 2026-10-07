@@ -8,9 +8,10 @@ import java.util.Locale;
 public final class UtilTexto {
 	
 	public static final String VACIA = "";
+	public static final String SOLO_LETRAS_Y_ESPACIOS = "^[a-zA-Z ñÑáÁéÉíÍóÓúÚ]*$";
     private static final DecimalFormatSymbols SIMBOLOS = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
     private static final String FORMATO_DINERO = "$ #,##0.00";
-
+    
     private UtilTexto() {
     }
 
@@ -47,6 +48,10 @@ public final class UtilTexto {
         var longitud = obtenerLongitudCadena(valorSanitizado);
         
         return longitud >= longitudInicial && longitud <= longitudFinal;
+    }
+    
+    public static boolean formatoEsValido(String valor, String patron) {
+    	return obtenerValorDefecto(valor).matches(obtenerValorDefecto(patron));
     }
     
     public static String formatearDinero(final BigDecimal valor) {

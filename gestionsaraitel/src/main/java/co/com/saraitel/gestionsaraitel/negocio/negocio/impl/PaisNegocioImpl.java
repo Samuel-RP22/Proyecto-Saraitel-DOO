@@ -2,12 +2,13 @@ package co.com.saraitel.gestionsaraitel.negocio.negocio.impl;
 
 import java.util.List;
 import java.util.UUID;
+
 import co.com.saraitel.gestionsaraitel.dao.factoria.DaoFactory;
 import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
-import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.PaisNegocio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.PaisEntidadAssembler;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.pais.AsegurarNombreNuevoPaisNoExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.pais.ValidarDatosRegistrarInformacionNuevoPaisRule;
 
 public class PaisNegocioImpl implements PaisNegocio {
 	
@@ -16,35 +17,23 @@ public class PaisNegocioImpl implements PaisNegocio {
 	protected PaisNegocioImpl(DaoFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
+	
 	@Override
 	public void registrarInformacionNuevoPais(PaisDominio datos) {
-		asegurarDatosRegistroNuevoPaisValidos(datos);
-		asegurarNombreNuevoPaisNoExista(datos.getNombre());
-		
+		ValidarDatosRegistrarInformacionNuevoPaisRule.obtenerInstancia().ejecutar(datos);
+		AsegurarNombreNuevoPaisNoExistaRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
 		var paisEntidad = PaisEntidadAssembler.getInstance().convertirAEntidad(datos);
 		paisEntidad.setId(generarIdPaisUnico());
-		
-		
 		daoFactory.obtenerPaisDao().crear(paisEntidad);
 	}
 	
-	private void asegurarDatosRegistroNuevoPaisValidos(PaisDominio datos) {
-		
-	}
 	
-	private void asegurarNombreNuevoPaisNoExista(String nombrePais) {
-		var entidadFiltro = new PaisEntidad();
-		entidadFiltro.setNombre(nombrePais);
-		
-		var resultados = daoFactory.obtenerPaisDao().consultarPorFiltro(entidadFiltro);
-		
-		if(!resultados.isEmpty()) {
-			var mensajeUsuario =  CatalogoMensajes.PaisNegocioImpl.PAIS_EXISTE_CON_EL_MISMO_NOMBRE_PAIS_CREAR;
-		}
-	}
-
-	private void generarIdPaisUnico() {
-		UUID.randomUUID();
+	private UUID generarIdPaisUnico() {
+	    UUID id;
+	    do {
+	        id = UUID.randomUUID();
+	    } while (!daoFactory.obtenerPaisDao().consultarPorId(id).equals(id));
+	    return id;
 	}
 
 

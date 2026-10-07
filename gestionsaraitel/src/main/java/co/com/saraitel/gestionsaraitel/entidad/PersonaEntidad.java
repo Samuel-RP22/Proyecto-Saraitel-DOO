@@ -20,16 +20,7 @@ public class PersonaEntidad {
 	private boolean correoConfirmado;
 
 	public PersonaEntidad() {
-		setId(UtilUUID.obtenerUUIDDefecto());
-		setTipoDocumento(new TipoDocumentoEntidad());
-		setPrefijo(new PrefijoEntidad());
-		setNumeroDocumento(UtilTexto.VACIA);
-		setTelefono(UtilTexto.VACIA);
-		setNombre(UtilTexto.VACIA);
-		setApellido(UtilTexto.VACIA);
-		setCorreo(UtilTexto.VACIA);
-		setTelefonoConfirmado(false);
-		setCorreoConfirmado(false);
+		this(new Builder());
 	}
 
 	private PersonaEntidad(final Builder builder) {
@@ -45,23 +36,32 @@ public class PersonaEntidad {
 		setCorreoConfirmado(builder.correoConfirmado);
 	}
 
-	public static  Builder build() {
-		return new Builder();
-	}
-
 	public static final class Builder {
 
-		private UUID id = UtilUUID.obtenerUUIDDefecto();
-		private TipoDocumentoEntidad tipoDocumento = new TipoDocumentoEntidad();
-		private PrefijoEntidad prefijo = new PrefijoEntidad();
-		private String numeroDocumento = UtilTexto.VACIA;
-		private String telefono = UtilTexto.VACIA;
-		private String nombre = UtilTexto.VACIA;
-		private String apellido = UtilTexto.VACIA;
-		private String correo = UtilTexto.VACIA;
-		private boolean telefonoConfirmado = false;
-		private boolean correoConfirmado = false;
+		private UUID id;
+		private TipoDocumentoEntidad tipoDocumento;
+		private PrefijoEntidad prefijo;
+		private String numeroDocumento;
+		private String telefono;
+		private String nombre;
+		private String apellido;
+		private String correo;
+		private boolean telefonoConfirmado;
+		private boolean correoConfirmado;
 
+		public Builder() {
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.tipoDocumento = new TipoDocumentoEntidad();
+			this.prefijo = new PrefijoEntidad();
+			this.numeroDocumento = UtilTexto.VACIA;
+			this.telefono = UtilTexto.VACIA;
+			this.nombre = UtilTexto.VACIA;
+			this.apellido = UtilTexto.VACIA;
+			this.correo = UtilTexto.VACIA;
+			this.telefonoConfirmado = false;
+			this.correoConfirmado = false;
+		}
+		
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;

@@ -19,15 +19,7 @@ public class ClienteRegistradoJDTO {
 	private boolean telefonoConfirmado;
 
 	public ClienteRegistradoJDTO() {
-		setId(UtilUUID.obtenerUUIDDefecto());
-		setClienteRegistrado(new ClienteRegistradoDTO());
-		setPrefijo(new PrefijoDTO());
-		setTelefono(UtilTexto.VACIA);
-		setNit(UtilTexto.VACIA);
-		setRazonSocial(UtilTexto.VACIA);
-		setCorreo(UtilTexto.VACIA);
-		setCorreoConfirmado(false);
-		setTelefonoConfirmado(false);
+		this(new Builder());
 	}
 
 	private ClienteRegistradoJDTO(final Builder builder) {
@@ -42,27 +34,35 @@ public class ClienteRegistradoJDTO {
 		setTelefonoConfirmado(builder.telefonoConfirmado);
 	}
 
-	public static Builder crear() {
-		return new Builder();
-	}
-
 	public static final class Builder {
 
-		private UUID id = UtilUUID.obtenerUUIDDefecto();
-		private ClienteRegistradoDTO clienteRegistrado = new ClienteRegistradoDTO();
-		private PrefijoDTO prefijo = new PrefijoDTO();
-		private String telefono = UtilTexto.VACIA;
-		private String nit = UtilTexto.VACIA;
-		private String razonSocial = UtilTexto.VACIA;
-		private String correo = UtilTexto.VACIA;
-		private boolean correoConfirmado = false;
-		private boolean telefonoConfirmado = false;
+		private UUID id;
+		private ClienteRegistradoDTO clienteRegistrado;
+		private PrefijoDTO prefijo;
+		private String telefono;
+		private String nit;
+		private String razonSocial;
+		private String correo;
+		private boolean correoConfirmado;
+		private boolean telefonoConfirmado;
+
+		public Builder() {
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.clienteRegistrado = new ClienteRegistradoDTO();
+			this.prefijo = new PrefijoDTO();
+			this.telefono = UtilTexto.VACIA;
+			this.nit = UtilTexto.VACIA;
+			this.razonSocial = UtilTexto.VACIA;
+			this.correo = UtilTexto.VACIA;
+			this.correoConfirmado = false;
+			this.telefonoConfirmado = false;
+		}
 
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;
 		}
-
+		
 		public Builder clienteRegistrado(final ClienteRegistradoDTO clienteRegistrado) {
 			this.clienteRegistrado = clienteRegistrado;
 			return this;

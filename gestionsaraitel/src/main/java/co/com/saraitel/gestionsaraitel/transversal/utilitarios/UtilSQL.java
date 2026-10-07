@@ -29,7 +29,6 @@ public final class UtilSQL {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
 		}
-		
 	}
 	
 	public static void confirmarTransaccion(Connection conexion) {

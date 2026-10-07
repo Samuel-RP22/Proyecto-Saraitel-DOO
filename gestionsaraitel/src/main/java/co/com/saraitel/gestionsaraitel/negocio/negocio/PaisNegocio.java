@@ -7,7 +7,9 @@ import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
 public interface PaisNegocio {
 	
 	void registrarInformacionNuevoPais(PaisDominio datos);
+	
 	void modificarInformacionPaisExistente(UUID id, PaisDominio datos);
+	
 	void darBajaInformacionPaisExistente(UUID id);
 	
 	List<PaisDominio> consultarPorFiltro(PaisDominio filtro);

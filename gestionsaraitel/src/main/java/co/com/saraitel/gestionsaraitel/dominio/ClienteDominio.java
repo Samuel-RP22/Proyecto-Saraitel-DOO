@@ -1,6 +1,7 @@
 package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
+
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteDominio {
@@ -8,7 +9,7 @@ public class ClienteDominio {
 	private UUID id;
 	private boolean esClienteRegistrado;
 
-	private ClienteDominio(Builder builder) {
+	private ClienteDominio(final Builder builder) {
 		this.id = builder.id;
 		this.esClienteRegistrado = builder.esClienteRegistrado;
 	}

@@ -20,15 +20,7 @@ public class ProductoSedeDTO {
 	private int stockGarantia;
 
 	public ProductoSedeDTO() {
-		setId(UtilUUID.obtenerUUIDDefecto());
-		setProducto(new ProductoDTO());
-		setSede(new SedeDTO());
-		setPrecio(UtilNumero.CERO_DECIMAL);
-		setTieneOferta(false);
-		setOferta(0);
-		setPrecioTrasOferta(UtilNumero.CERO_DECIMAL);
-		setStock(0);
-		setStockGarantia(0);
+		this(new Builder());
 	}
 
 	private ProductoSedeDTO(final Builder builder) {
@@ -43,27 +35,35 @@ public class ProductoSedeDTO {
 		setStockGarantia(builder.stockGarantia);
 	}
 
-	public static Builder build() {
-		return new Builder();
-	}
-
 	public static final class Builder {
 
-		private UUID id = UtilUUID.obtenerUUIDDefecto();
-		private ProductoDTO producto = new ProductoDTO();
-		private SedeDTO sede = new SedeDTO();
-		private BigDecimal precio = UtilNumero.CERO_DECIMAL;
-		private boolean tieneOferta = false;
+		private UUID id;
+		private ProductoDTO producto;
+		private SedeDTO sede;
+		private BigDecimal precio;
+		private boolean tieneOferta;
 		private int oferta = 0;
-		private BigDecimal precioTrasOferta = UtilNumero.CERO_DECIMAL;
-		private int stock = 0;
-		private int stockGarantia = 0;
+		private BigDecimal precioTrasOferta;
+		private int stock;
+		private int stockGarantia;
+
+		public Builder() {
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.producto = new ProductoDTO();
+			this.sede = new SedeDTO();
+			this.precio = UtilNumero.CERO_DECIMAL;
+			this.tieneOferta = false;
+			this.oferta = 0;
+			this.precioTrasOferta = UtilNumero.CERO_DECIMAL;
+			this.stock = 0;
+			this.stockGarantia = 0;
+		}
 
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;
 		}
-
+		
 		public Builder producto(final ProductoDTO producto) {
 			this.producto = producto;
 			return this;

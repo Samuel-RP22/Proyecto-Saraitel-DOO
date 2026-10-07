@@ -19,15 +19,7 @@ public class ClienteRegistradoJEntidad {
 	private boolean telefonoConfirmado;
 
 	public ClienteRegistradoJEntidad() {
-		setId(UtilUUID.obtenerUUIDDefecto());
-		setClienteRegistrado(new ClienteRegistradoEntidad());
-		setPrefijo(new PrefijoEntidad());
-		setTelefono(UtilTexto.VACIA);
-		setNit(UtilTexto.VACIA);
-		setRazonSocial(UtilTexto.VACIA);
-		setCorreo(UtilTexto.VACIA);
-		setCorreoConfirmado(false);
-		setTelefonoConfirmado(false);
+		this(new Builder());
 	}
 
 	private ClienteRegistradoJEntidad(final Builder builder) {
@@ -42,27 +34,35 @@ public class ClienteRegistradoJEntidad {
 		setTelefonoConfirmado(builder.telefonoConfirmado);
 	}
 
-	public static Builder build() {
-		return new Builder();
-	}
-
 	public static final class Builder {
 
-		private UUID id = UtilUUID.obtenerUUIDDefecto();
-		private ClienteRegistradoEntidad clienteRegistrado = new ClienteRegistradoEntidad();
-		private PrefijoEntidad prefijo = new PrefijoEntidad();
-		private String telefono = UtilTexto.VACIA;
-		private String nit = UtilTexto.VACIA;
-		private String razonSocial = UtilTexto.VACIA;
-		private String correo = UtilTexto.VACIA;
-		private boolean correoConfirmado = false;
-		private boolean telefonoConfirmado = false;
+		private UUID id;
+		private ClienteRegistradoEntidad clienteRegistrado;
+		private PrefijoEntidad prefijo;
+		private String telefono;
+		private String nit;
+		private String razonSocial;
+		private String correo;
+		private boolean correoConfirmado;
+		private boolean telefonoConfirmado;
+
+		public Builder() {
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.clienteRegistrado = new ClienteRegistradoEntidad();
+			this.prefijo = new PrefijoEntidad();
+			this.telefono = UtilTexto.VACIA;
+			this.nit = UtilTexto.VACIA;
+			this.razonSocial = UtilTexto.VACIA;
+			this.correo = UtilTexto.VACIA;
+			this.correoConfirmado = false;
+			this.telefonoConfirmado = false;
+		}
 
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;
 		}
-
+		
 		public Builder clienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
 			this.clienteRegistrado = clienteRegistrado;
 			return this;
