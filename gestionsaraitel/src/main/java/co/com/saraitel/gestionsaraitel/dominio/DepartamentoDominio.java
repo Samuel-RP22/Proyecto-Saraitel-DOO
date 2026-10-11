@@ -8,56 +8,33 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class DepartamentoDominio {
 
-	private UUID id;
-	private String nombre;
-	private PaisDominio pais;
+    private UUID id;
+    private String nombre;
+    private PaisDominio pais;
 
-	private DepartamentoDominio(Builder builder) {
-		this.id = builder.id;
-		this.nombre = builder.nombre;
-		this.pais = builder.pais;
-	}
+    public DepartamentoDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.nombre = UtilTexto.VACIA;
+        this.pais = new PaisDominio();
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public DepartamentoDominio(final UUID id, final String nombre,
+            final PaisDominio pais) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+                (pais, new PaisDominio());
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public PaisDominio getPais() {
-		return pais;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public static class Builder {
-		private UUID id;
-		private String nombre;
-		private PaisDominio pais;
-
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			nombre = UtilTexto.VACIA;
-			pais = new PaisDominio.Builder().build();
-		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
-
-		public Builder nombre(String nombre) {
-			this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-			return this;
-		}
-
-		public Builder pais(PaisDominio pais) {
-			this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisDominio.Builder().build());
-			return this;
-		}
-
-		public DepartamentoDominio build() {
-			return new DepartamentoDominio(this);
-		}
-	}
+    public PaisDominio getPais() {
+        return pais;
+    }
 }

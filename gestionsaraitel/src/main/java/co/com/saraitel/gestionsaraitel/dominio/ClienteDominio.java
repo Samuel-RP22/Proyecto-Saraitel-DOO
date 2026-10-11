@@ -6,43 +6,24 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteDominio {
 
-	private UUID id;
-	private boolean esClienteRegistrado;
+    private UUID id;
+    private boolean esClienteRegistrado;
 
-	private ClienteDominio(final Builder builder) {
-		this.id = builder.id;
-		this.esClienteRegistrado = builder.esClienteRegistrado;
-	}
+    public ClienteDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.esClienteRegistrado = true;
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public ClienteDominio(final UUID id, final boolean esClienteRegistrado) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.esClienteRegistrado = esClienteRegistrado;
+    }
 
-	public boolean getEsClienteRegistrado() {
-		return esClienteRegistrado;
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public static class Builder {
-		private UUID id;
-		private boolean esClienteRegistrado;
-
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			esClienteRegistrado = true;
-		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
-
-		public Builder esClienteRegistrado(boolean esClienteRegistrado) {
-			this.esClienteRegistrado = esClienteRegistrado ;
-			return this;
-		}
-
-		public ClienteDominio build() {
-			return new ClienteDominio(this);
-		}
-	}
+    public boolean getEsClienteRegistrado() {
+        return esClienteRegistrado;
+    }
 }

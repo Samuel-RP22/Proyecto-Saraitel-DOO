@@ -10,41 +10,22 @@ public class AdministradorDominio {
 	private UUID id;
 	private EmpleadoDominio empleado;
 
-	
-	private AdministradorDominio(Builder builder) {
-		this.id = builder.id;
-		this.empleado = builder.empleado;
+	public AdministradorDominio() {
+		this.id = UtilUUID.obtenerUUIDDefecto();
+		this.empleado = new EmpleadoDominio();
+	}
+
+	public AdministradorDominio(final UUID id, final EmpleadoDominio empleado) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(empleado, new EmpleadoDominio());
 	}
 
 	public UUID getId() {
 		return id;
 	}
-	
-	public EmpleadoDominio getSede() {
+
+	public EmpleadoDominio getEmpleado() {
 		return empleado;
-	}
-	
-	public static class Builder {
-		private UUID id;
-		private EmpleadoDominio empleado;
-		
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			empleado = new EmpleadoDominio.Builder().build();
-		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
-
-		public Builder empleado(EmpleadoDominio empleado) {
-			this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, new EmpleadoDominio.Builder().build());
-			return this;
-		}
-
-		public AdministradorDominio build() {
-			return new AdministradorDominio(this);
-		}
 	}
 }
