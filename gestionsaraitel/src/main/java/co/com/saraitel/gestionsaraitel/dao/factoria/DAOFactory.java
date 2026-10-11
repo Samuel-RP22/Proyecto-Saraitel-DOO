@@ -5,6 +5,7 @@ import java.sql.Connection;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDao;
 import co.com.saraitel.gestionsaraitel.dao.factoria.enums.FactoriaEnum;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
 public abstract class DAOFactory {
@@ -17,7 +18,7 @@ public abstract class DAOFactory {
 		case SQLSERVER:
 			return new SqlServerDAOFactory();
 		default:
-			var mensajeUsuario = "La fuente de información deseada que se solicitó para llevar a cabo la operación no está habilitada, por favor contacte el administrador de la aplicación";
+			CatalogoMensajes.DAOFactory.USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
 			throw GestionSaraitelException.crear()
 		}
 	}

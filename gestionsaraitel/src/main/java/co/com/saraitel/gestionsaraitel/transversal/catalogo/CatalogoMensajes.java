@@ -17,6 +17,12 @@ public class CatalogoMensajes {
 		 public static final String USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL = "No es posible continuar con la operación deseada, debido a que la conexión contra la fuente de información, se encuentra en un estado inconsistente, porque esta cerrada, esta vacia o porque la transacción ya fue iniciada, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
 	
+	public static class DAOFactory{
+		private DAOFactory() {
+		}
+		
+		public static final String USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA = "La fuente de información deseada que se solicitó para llevar a cabo la operación no está habilitada, por favor contacte el administrador de la aplicación";
+	}
 	public static class PaisFachadaImpl {
 		private  PaisFachadaImpl() {
 		}
