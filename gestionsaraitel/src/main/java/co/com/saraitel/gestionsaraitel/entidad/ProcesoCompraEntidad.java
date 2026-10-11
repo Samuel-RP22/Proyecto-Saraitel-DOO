@@ -7,7 +7,6 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ProcesoCompraEntidad {
@@ -100,6 +99,4 @@ public class ProcesoCompraEntidad {
 	public void setTotal(final BigDecimal total) {
 		this.total = UtilNumero.obtenerValorDefecto(total);
 	}
-
-
 }
