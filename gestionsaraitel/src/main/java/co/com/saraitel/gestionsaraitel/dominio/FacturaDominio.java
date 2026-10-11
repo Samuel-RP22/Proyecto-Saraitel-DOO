@@ -9,58 +9,33 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class FacturaDominio {
 
-	private UUID id;
-	private CompraDominio compra;
-	private LocalDateTime fechaEmision;
+    private UUID id;
+    private CompraDominio compra;
+    private LocalDateTime fechaEmision;
 
-	private FacturaDominio(Builder builder) {
-		this.id = builder.id;
-		this.compra = builder.compra;
-		this.fechaEmision = builder.fechaEmision;
-	}
+    public FacturaDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.compra = new CompraDominio();
+        this.fechaEmision = UtilFecha.FECHA_HORA_DEFECTO;
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public FacturaDominio(final UUID id, final CompraDominio compra,
+            final LocalDateTime fechaEmision) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                compra, new CompraDominio());
+        this.fechaEmision = UtilFecha.obtenerValorDefecto(fechaEmision);
+    }
 
-	public CompraDominio getCompra() {
-		return compra;
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public LocalDateTime getFechaEmision() {
-		return fechaEmision;
-	}
+    public CompraDominio getCompra() {
+        return compra;
+    }
 
-	public static class Builder {
-
-		private UUID id;
-		private CompraDominio compra;
-		private LocalDateTime fechaEmision;
-
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			compra = new CompraDominio.Builder().build();
-			fechaEmision = UtilFecha.FECHA_HORA_DEFECTO;
-		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
-
-		public Builder compra(CompraDominio compra) {
-			this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-					compra, new CompraDominio.Builder().build());
-			return this;
-		}
-
-		public Builder fechaEmision(LocalDateTime fechaEmision) {
-			this.fechaEmision = UtilFecha.obtenerValorDefecto(fechaEmision);
-			return this;
-		}
-
-		public FacturaDominio build() {
-			return new FacturaDominio(this);
-		}
-	}
+    public LocalDateTime getFechaEmision() {
+        return fechaEmision;
+    }
 }

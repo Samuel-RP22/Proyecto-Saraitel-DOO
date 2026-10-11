@@ -15,11 +15,20 @@ public class SaldoFavorDominio {
     private BigDecimal montoUsado;
     private String estado;
 
-    private SaldoFavorDominio(Builder builder) {
-        this.id = builder.id;
-        this.devolucion = builder.devolucion;
-        this.montoUsado = builder.montoUsado;
-        this.estado = builder.estado;
+    public SaldoFavorDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.devolucion = new DevolucionDominio();
+        this.montoUsado = UtilNumero.CERO_DECIMAL;
+        this.estado = UtilTexto.VACIA;
+    }
+
+    public SaldoFavorDominio(final UUID id, final DevolucionDominio devolucion,
+            final BigDecimal montoUsado, final String estado) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                devolucion, new DevolucionDominio());
+        this.montoUsado = UtilNumero.obtenerValorDefecto(montoUsado);
+        this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
     }
 
     public UUID getId() {
@@ -36,40 +45,5 @@ public class SaldoFavorDominio {
 
     public String getEstado() {
         return estado;
-    }
-
-    public static class Builder {
-
-        private UUID id;
-        private DevolucionDominio devolucion;
-        private BigDecimal montoUsado;
-        private String estado;
-
-        public Builder() {
-            id = UtilUUID.obtenerUUIDDefecto();
-            devolucion = new DevolucionDominio.Builder().build();
-            montoUsado = UtilNumero.CERO_DECIMAL;
-            estado = UtilTexto.VACIA;
-        }
-
-        public Builder id(UUID id) {
-            this.id = UtilUUID.obtenerValorDefecto(id);
-            return this;
-        }
-
-        public Builder devolucion(DevolucionDominio devolucion) {
-            this.devolucion =
-                UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(devolucion, new DevolucionDominio.Builder().build());
-            return this;
-        }
-
-        public Builder estado(String estado) {
-            this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
-            return this;
-        }
-
-        public SaldoFavorDominio build() {
-            return new SaldoFavorDominio(this);
-        }
     }
 }

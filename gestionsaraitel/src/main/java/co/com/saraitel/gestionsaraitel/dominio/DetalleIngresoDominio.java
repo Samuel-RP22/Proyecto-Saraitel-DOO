@@ -9,93 +9,59 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class DetalleIngresoDominio {
 
-	private UUID id;
-	private IngresoInventarioDominio ingresoInventario;
-	private ProductoSedeDominio productoSede;
-	private int cantidad;
-	private BigDecimal costoUnitario;
-	private BigDecimal subtotal;
+    private UUID id;
+    private IngresoInventarioDominio ingresoInventario;
+    private ProductoSedeDominio productoSede;
+    private int cantidad;
+    private BigDecimal costoUnitario;
+    private BigDecimal subtotal;
 
-	private DetalleIngresoDominio(Builder builder) {
-		this.id = builder.id;
-		this.ingresoInventario = builder.ingresoInventario;
-		this.productoSede = builder.productoSede;
-		this.cantidad = builder.cantidad;
-		this.costoUnitario = builder.costoUnitario;
-		this.subtotal = builder.subtotal;
-	}
+    public DetalleIngresoDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.ingresoInventario = new IngresoInventarioDominio();
+        this.productoSede = new ProductoSedeDominio();
+        this.cantidad = 1;
+        this.costoUnitario = UtilNumero.CERO_DECIMAL;
+        this.subtotal = UtilNumero.CERO_DECIMAL;
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public DetalleIngresoDominio(final UUID id,
+            final IngresoInventarioDominio ingresoInventario,
+            final ProductoSedeDominio productoSede,
+            final int cantidad,
+            final BigDecimal costoUnitario,
+            final BigDecimal subtotal) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                ingresoInventario, new IngresoInventarioDominio());
+        this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                productoSede, new ProductoSedeDominio());
+        this.cantidad = cantidad;
+        this.costoUnitario = UtilNumero.obtenerValorDefecto(costoUnitario);
+        this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
+    }
 
-	public IngresoInventarioDominio getIngresoInventario() {
-		return ingresoInventario;
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public ProductoSedeDominio getProductoSede() {
-		return productoSede;
-	}
+    public IngresoInventarioDominio getIngresoInventario() {
+        return ingresoInventario;
+    }
 
-	public int getCantidad() {
-		return cantidad;
-	}
+    public ProductoSedeDominio getProductoSede() {
+        return productoSede;
+    }
 
-	public BigDecimal getCostoUnitario() {
-		return costoUnitario;
-	}
+    public int getCantidad() {
+        return cantidad;
+    }
 
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
+    public BigDecimal getCostoUnitario() {
+        return costoUnitario;
+    }
 
-	public static class Builder {
-
-		private UUID id;
-		private IngresoInventarioDominio ingresoInventario;
-		private ProductoSedeDominio productoSede;
-		private int cantidad;
-		private BigDecimal costoUnitario;
-		private BigDecimal subtotal;
-
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			ingresoInventario = new IngresoInventarioDominio.Builder().build();
-			productoSede = new ProductoSedeDominio.Builder().build();
-			cantidad = 1;
-			costoUnitario = UtilNumero.CERO_DECIMAL;
-			subtotal = UtilNumero.CERO_DECIMAL;
-		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
-
-		public Builder ingresoInventario(IngresoInventarioDominio ingresoInventario) {
-			this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-					ingresoInventario, new IngresoInventarioDominio.Builder().build());
-			return this;
-		}
-
-		public Builder productoSede(ProductoSedeDominio productoSede) {
-			this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-					productoSede, new ProductoSedeDominio.Builder().build());
-			return this;
-		}
-
-		public Builder cantidad(int cantidad) {
-			this.cantidad = cantidad;
-			return this;
-		}
-
-		public Builder costoUnitario(BigDecimal costoUnitario) {
-			this.costoUnitario = UtilNumero.obtenerValorDefecto(costoUnitario);
-			return this;
-		}
-
-		public DetalleIngresoDominio build() {
-			return new DetalleIngresoDominio(this);
-		}
-	}
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
 }

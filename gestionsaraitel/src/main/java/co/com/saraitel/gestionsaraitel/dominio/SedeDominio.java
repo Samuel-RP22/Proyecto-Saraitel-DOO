@@ -8,97 +8,55 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class SedeDominio {
 
-	private UUID id;
-	private CiudadDominio ciudad;
-	private String nombre;
-	private String nit;
-	private String direccion;
-	private boolean esActiva;
-	
-	private SedeDominio(Builder builder) {
-		this.id = builder.id;
-		this.ciudad = builder.ciudad;
-		this.nombre = builder.nombre;
-		this.nit = builder.nit;
-		this.direccion = builder.direccion;
-		this.esActiva = builder.esActiva;
+    private UUID id;
+    private CiudadDominio ciudad;
+    private String nombre;
+    private String nit;
+    private String direccion;
+    private boolean esActiva;
 
-	}
+    public SedeDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.ciudad = new CiudadDominio();
+        this.nombre = UtilTexto.VACIA;
+        this.nit = UtilTexto.VACIA;
+        this.direccion = UtilTexto.VACIA;
+        this.esActiva = true;
+    }
 
-	public UUID getId() {
-		return id;
-	}
-	
-	public CiudadDominio getCiudad() {
-		return ciudad;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public String getNit() {
-		return nit;
-	}
-	
-	public String getDireccion() {
-		return direccion;
-	}
-	
-	public boolean getEsActiva() {
-		return esActiva;
-	}
-	
+    public SedeDominio(final UUID id, final CiudadDominio ciudad,
+            final String nombre, final String nit, final String direccion,
+            final boolean esActiva) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                ciudad, new CiudadDominio());
+        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+        this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
+        this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
+        this.esActiva = esActiva;
+    }
 
-	
-	public static class Builder {
-		private UUID id;
-		private CiudadDominio ciudad;
-		private String nombre;
-		private String nit;
-		private String direccion;
-		private boolean esActiva;
+    public UUID getId() {
+        return id;
+    }
 
-		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			ciudad = new CiudadDominio.Builder().build();
-			nombre = UtilTexto.VACIA;
-			nit = UtilTexto.VACIA;
-			direccion = UtilTexto.VACIA;
-			esActiva = true;
-		}
+    public CiudadDominio getCiudad() {
+        return ciudad;
+    }
 
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
-			return this;
-		}
+    public String getNombre() {
+        return nombre;
+    }
 
-		public Builder ciudad(CiudadDominio ciudad) {
-			this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ciudad, new CiudadDominio.Builder().build());
-			return this;
-		}
+    public String getNit() {
+        return nit;
+    }
 
-		public Builder nombre(String nombre) {
-			this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-			return this;
-		}
-		
-		public Builder nit(String nit) {
-			this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
-			return this;
-		}
-		
-		public Builder direccion(String direccion) {
-			this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
-			return this;
-		}
-		
-		public Builder esActiva(boolean esActiva) {
-			this.esActiva = esActiva;
-			return this;
-		}
+    public String getDireccion() {
+        return direccion;
+    }
 
-		public SedeDominio build() {
-			return new SedeDominio(this);
-		}
-	}
+    public boolean getEsActiva() {
+        return esActiva;
+    }
 }

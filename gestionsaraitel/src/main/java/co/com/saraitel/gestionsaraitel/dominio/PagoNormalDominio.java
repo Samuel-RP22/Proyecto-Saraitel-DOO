@@ -14,11 +14,21 @@ public class PagoNormalDominio {
     private PagoDominio pago;
     private BigDecimal montoPagar;
 
-    private PagoNormalDominio(Builder builder) {
-        this.id = builder.id;
-        this.metodoPago = builder.metodoPago;
-        this.pago = builder.pago;
-        this.montoPagar = builder.montoPagar;
+    public PagoNormalDominio() {
+        this.id = UtilUUID.obtenerUUIDDefecto();
+        this.metodoPago = new MetodoPagoDominio();
+        this.pago = new PagoDominio();
+        this.montoPagar = UtilNumero.CERO_DECIMAL;
+    }
+
+    public PagoNormalDominio(final UUID id, final MetodoPagoDominio metodoPago,
+            final PagoDominio pago, final BigDecimal montoPagar) {
+        this.id = UtilUUID.obtenerValorDefecto(id);
+        this.metodoPago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                metodoPago, new MetodoPagoDominio());
+        this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
+                pago, new PagoDominio());
+        this.montoPagar = UtilNumero.obtenerValorDefecto(montoPagar);
     }
 
     public UUID getId() {
@@ -35,48 +45,5 @@ public class PagoNormalDominio {
 
     public BigDecimal getMontoPagar() {
         return montoPagar;
-    }
-
-    public static class Builder {
-
-        private UUID id;
-        private MetodoPagoDominio metodoPago;
-        private PagoDominio pago;
-        private BigDecimal montoPagar;
-
-        public Builder() {
-            id = UtilUUID.obtenerUUIDDefecto();
-            metodoPago = new MetodoPagoDominio.Builder().build();
-            pago = new PagoDominio.Builder().build();
-            montoPagar = UtilNumero.CERO_DECIMAL;
-        }
-
-        public Builder id(UUID id) {
-            this.id = UtilUUID.obtenerValorDefecto(id);
-            return this;
-        }
-
-        public Builder metodoPago(MetodoPagoDominio metodoPago) {
-            this.metodoPago =
-                UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-                    metodoPago, new MetodoPagoDominio.Builder().build());
-            return this;
-        }
-
-        public Builder pago(PagoDominio pago) {
-            this.pago =
-                UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-                    pago, new PagoDominio.Builder().build());
-            return this;
-        }
-
-        public Builder montoPagar(BigDecimal montoPagar) {
-            this.montoPagar = UtilNumero.obtenerValorDefecto(montoPagar);
-            return this;
-        }
-
-        public PagoNormalDominio build() {
-            return new PagoNormalDominio(this);
-        }
     }
 }
