@@ -8,71 +8,38 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class PersonaDominio {
 
-	private UUID id;
-	private TipoDocumentoDominio tipoDocumento;
-	private PrefijoDominio prefijo;
-	private String numeroDocumento;
-	private String telefono;
-	private String nombre;
-	private String apellido;
-	private String correo;
-	private boolean telefonoConfirmado;
-	private boolean correoConfirmado;
-	
-	private PersonaDominio(Builder builder) {
-		this.id = builder.id;
-		this.tipoDocumento = builder.tipoDocumento;
-		this.prefijo = builder.prefijo;
-		this.numeroDocumento = builder.numeroDocumento;
-		this.telefono = builder.telefono;
-		this.nombre = builder.nombre;
-		this.apellido = builder.apellido;
-		this.correo = builder.correo;
+	private final UUID id;
+	private final TipoDocumentoDominio tipoDocumento;
+	private final PrefijoDominio prefijo;
+	private final String numeroDocumento;
+	private final String telefono;
+	private final String nombre;
+	private final String apellido;
+	private final String correo;
+	private final boolean telefonoConfirmado;
+	private final boolean correoConfirmado;
+
+	public PersonaDominio() {
+		this(new Builder());
+	}
+
+	private PersonaDominio(final Builder builder) {
+		this.id = UtilUUID.obtenerValorDefecto(builder.id);
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(builder.tipoDocumento, new TipoDocumentoDominio());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(builder.prefijo, new PrefijoDominio());
+		this.numeroDocumento = UtilTexto.quitarEspaciosEnBlanco(builder.numeroDocumento);
+		this.telefono = UtilTexto.quitarEspaciosEnBlanco(builder.telefono);
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(builder.nombre);
+		this.apellido = UtilTexto.quitarEspaciosEnBlanco(builder.apellido);
+		this.correo = UtilTexto.quitarEspaciosEnBlanco(builder.correo);
 		this.telefonoConfirmado = builder.telefonoConfirmado;
 		this.correoConfirmado = builder.correoConfirmado;
 	}
 
-	public UUID getId() {
-		return id;
-	}
+	public static final class Builder {
 
-	public TipoDocumentoDominio getTipoDocumento() {
-		return tipoDocumento;
-	}
-	
-	public PrefijoDominio getPrefijo() {
-		return prefijo;
-	}
-	
-	public String getNumeroDocumento() {
-		return numeroDocumento;
-	}
-	
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public String getApellido() {
-		return apellido;
-	}
-	
-	public String getCorreo() {
-		return correo;
-	}
-	
-	public boolean getTelefonoConfirmadoo() {
-		return telefonoConfirmado;
-	}
-	
-	public boolean getCorreoConfirmado() {
-		return correoConfirmado;
-	}
-
-	public static class Builder {
 		private UUID id;
 		private TipoDocumentoDominio tipoDocumento;
 		private PrefijoDominio prefijo;
@@ -85,72 +52,110 @@ public class PersonaDominio {
 		private boolean correoConfirmado;
 
 		public Builder() {
-			id = UtilUUID.obtenerUUIDDefecto();
-			tipoDocumento = new TipoDocumentoDominio.Builder().build();
-			prefijo = new PrefijoDominio.Builder().build();
-			numeroDocumento = UtilTexto.VACIA;
-			telefono = UtilTexto.VACIA;
-			nombre = UtilTexto.VACIA;
-			apellido = UtilTexto.VACIA;
-			correo = UtilTexto.VACIA;
-			telefonoConfirmado = false;
-			correoConfirmado = false; 
-		
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.tipoDocumento = new TipoDocumentoDominio();
+			this.prefijo = new PrefijoDominio();
+			this.numeroDocumento = UtilTexto.VACIA;
+			this.telefono = UtilTexto.VACIA;
+			this.nombre = UtilTexto.VACIA;
+			this.apellido = UtilTexto.VACIA;
+			this.correo = UtilTexto.VACIA;
+			this.telefonoConfirmado = false;
+			this.correoConfirmado = false;
 		}
-
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
+		
+		public Builder id(final UUID id) {
+			this.id = id;
 			return this;
 		}
 
-		public Builder tipoDocumento(TipoDocumentoDominio tipoDocumento) {
-			this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(tipoDocumento, new TipoDocumentoDominio.Builder().build()) ;
+		public Builder tipoDocumento(final TipoDocumentoDominio tipoDocumento) {
+			this.tipoDocumento = tipoDocumento;
 			return this;
 		}
-		
-		public Builder prefijo(PrefijoDominio prefijo) {
-			this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoDominio.Builder().build()) ;
+
+		public Builder prefijo(final PrefijoDominio prefijo) {
+			this.prefijo = prefijo;
 			return this;
 		}
-		
-		public Builder numeroDocumento(String numeroDocumento) {
-			this.numeroDocumento = UtilTexto.quitarEspaciosEnBlanco(numeroDocumento) ;
+
+		public Builder numeroDocumento(final String numeroDocumento) {
+			this.numeroDocumento = numeroDocumento;
 			return this;
 		}
-		
-		public Builder telefono(String telefono) {
-			this.telefono = UtilTexto.quitarEspaciosEnBlanco(telefono) ;
+
+		public Builder telefono(final String telefono) {
+			this.telefono = telefono;
 			return this;
 		}
-		
-		public Builder nombre(String nombre) {
-			this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre) ;
+
+		public Builder nombre(final String nombre) {
+			this.nombre = nombre;
 			return this;
 		}
-		
-		public Builder apellido(String apellido) {
-			this.apellido = UtilTexto.quitarEspaciosEnBlanco(apellido) ;
+
+		public Builder apellido(final String apellido) {
+			this.apellido = apellido;
 			return this;
 		}
-		
-		public Builder correo(String correo) {
-			this.correo = UtilTexto.quitarEspaciosEnBlanco(correo) ;
+
+		public Builder correo(final String correo) {
+			this.correo = correo;
 			return this;
 		}
-		
-		public Builder telefonoConfirmado(boolean telefonoConfirmado) {
+
+		public Builder telefonoConfirmado(final boolean telefonoConfirmado) {
 			this.telefonoConfirmado = telefonoConfirmado;
 			return this;
 		}
-		
-		public Builder correoConfirmado(boolean correoConfirmado) {
+
+		public Builder correoConfirmado(final boolean correoConfirmado) {
 			this.correoConfirmado = correoConfirmado;
 			return this;
 		}
-		
 
-		public PersonaDominio build() {
+		public PersonaDominio construir() {
 			return new PersonaDominio(this);
 		}
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public TipoDocumentoDominio getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public PrefijoDominio getPrefijo() {
+		return prefijo;
+	}
+
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public boolean getTelefonoConfirmado() {
+		return telefonoConfirmado;
+	}
+
+	public boolean getCorreoConfirmado() {
+		return correoConfirmado;
 	}
 }

@@ -8,138 +8,142 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ProductoSedeDominio {
-	
-	private UUID id;
-	private ProductoDominio producto;
-	private SedeDominio sede;
-	private BigDecimal precio;
-	private boolean tieneOferta;
-	private int oferta;
-	private BigDecimal precioTrasOferta;
-	private int stock;
-	private int stockGarantia;
-	
-	
-	private ProductoSedeDominio(Builder builder) {
-		this.id = builder.id;
-		this.producto = builder.producto;
-		this.sede = builder.sede;
-		this.precio = builder.precio;
+
+	private final UUID id;
+	private final ProductoDominio producto;
+	private final SedeDominio sede;
+	private final BigDecimal precio;
+	private final boolean tieneOferta;
+	private final int oferta;
+	private final BigDecimal precioTrasOferta;
+	private final int stock;
+	private final int stockGarantia;
+
+	public ProductoSedeDominio() {
+		this(new Builder());
+	}
+
+	private ProductoSedeDominio(final Builder builder) {
+		this.id = UtilUUID.obtenerValorDefecto(builder.id);
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(builder.producto, new ProductoDominio());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(builder.sede, new SedeDominio());
+		this.precio = UtilNumero.obtenerValorDefecto(builder.precio);
 		this.tieneOferta = builder.tieneOferta;
 		this.oferta = builder.oferta;
-		this.precioTrasOferta = builder.precioTrasOferta;
+		this.precioTrasOferta = UtilNumero.obtenerValorDefecto(builder.precioTrasOferta);
 		this.stock = builder.stock;
-		this.stock = builder.stockGarantia;
-	}
-	
-	public UUID getId() {
-	    return id;
+		this.stockGarantia = builder.stockGarantia;
 	}
 
-	public ProductoDominio getProducto() {
-	    return producto;
-	}
+	public static final class Builder {
 
-	public SedeDominio getSede() {
-	    return sede;
-	}
-
-	public BigDecimal getPrecio() {
-	    return precio;
-	}
-
-	public boolean getTieneOferta() {
-	    return tieneOferta;
-	}
-
-	public int getOferta() {
-	    return oferta;
-	}
-	public BigDecimal getPrecioTrasOferta() {
-	    return precioTrasOferta;
-	}
-
-	public int getStock() {
-	    return stock;
-	}
-
-	public int getStockGarantia() {
-	    return stockGarantia;
-	}
-	
-	public static class Builder {
 		private UUID id;
 		private ProductoDominio producto;
 		private SedeDominio sede;
 		private BigDecimal precio;
 		private boolean tieneOferta;
-		private int oferta;
+		private int oferta = 0;
 		private BigDecimal precioTrasOferta;
 		private int stock;
 		private int stockGarantia;
-		
+
 		public Builder() {
-		    id = UtilUUID.obtenerUUIDDefecto();
-		    producto = new ProductoDominio.Builder().build();
-		    sede = new SedeDominio.Builder().build();
-		    precio = UtilNumero.CERO_DECIMAL;
-		    tieneOferta = false;
-		    oferta = 0;
-		    precioTrasOferta = UtilNumero.CERO_DECIMAL;
-		    stock = 0;
-		    stockGarantia = 0;
+			this.id = UtilUUID.obtenerUUIDDefecto();
+			this.producto = new ProductoDominio();
+			this.sede = new SedeDominio();
+			this.precio = UtilNumero.CERO_DECIMAL;
+			this.tieneOferta = false;
+			this.oferta = 0;
+			this.precioTrasOferta = UtilNumero.CERO_DECIMAL;
+			this.stock = 0;
+			this.stockGarantia = 0;
 		}
-		
-		public Builder id(UUID id) {
-			this.id = UtilUUID.obtenerValorDefecto(id);
+
+		public Builder id(final UUID id) {
+			this.id = id;
 			return this;
 		}
 		
-		public Builder producto(ProductoDominio producto) {
-		    this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-		        producto,
-		        new ProductoDominio.Builder().build()
-		    );
-		    return this;
-		}
-		
-		public Builder sede(SedeDominio sede) {
-		    this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-		    			sede, new SedeDominio.Builder().build());
-		    return this;
-		}
-		
-		public Builder precio(BigDecimal precio) {
-		    this.precio = UtilNumero.obtenerValorDefecto(precio);
-		    return this;
-		}
-		
-		public Builder tieneOferta(boolean tieneOferta) {
-		    this.tieneOferta = tieneOferta;
-
-		    if (!tieneOferta) {
-		        this.oferta = 0;
-		    }
-
-		    return this;
+		public Builder producto(final ProductoDominio producto) {
+			this.producto = producto;
+			return this;
 		}
 
-		public Builder oferta(int oferta) {
-
-		    if (!UtilNumero.estaEntreXyY(oferta, 0, 100)) {
-		        throw new IllegalArgumentException(
-		            
-		        );
-		    }
-
-		    this.oferta = oferta;
-		    return this;
+		public Builder sede(final SedeDominio sede) {
+			this.sede = sede;
+			return this;
 		}
-		
-		
-		public ProductoSedeDominio build() {
+
+		public Builder precio(final BigDecimal precio) {
+			this.precio = precio;
+			return this;
+		}
+
+		public Builder tieneOferta(final boolean tieneOferta) {
+			this.tieneOferta = tieneOferta;
+			return this;
+		}
+
+		public Builder oferta(final int oferta) {
+			this.oferta = oferta;
+			return this;
+		}
+
+		public Builder precioTrasOferta(final BigDecimal precioTrasOferta) {
+			this.precioTrasOferta = precioTrasOferta;
+			return this;
+		}
+
+		public Builder stock(final int stock) {
+			this.stock = stock;
+			return this;
+		}
+
+		public Builder stockGarantia(final int stockGarantia) {
+			this.stockGarantia = stockGarantia;
+			return this;
+		}
+
+		public ProductoSedeDominio construir() {
 			return new ProductoSedeDominio(this);
 		}
 	}
-}
 
+	public UUID getId() {
+		return id;
+	}
+
+	public ProductoDominio getProducto() {
+		return producto;
+	}
+
+	public SedeDominio getSede() {
+		return sede;
+	}
+
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+
+	public boolean getTieneOferta() {
+		return tieneOferta;
+	}
+
+	public int getOferta() {
+		return oferta;
+	}
+
+	public BigDecimal getPrecioTrasOferta() {
+		return precioTrasOferta;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public int getStockGarantia() {
+		return stockGarantia;
+	}
+}
