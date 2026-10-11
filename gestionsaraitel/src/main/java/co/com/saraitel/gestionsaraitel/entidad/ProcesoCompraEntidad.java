@@ -15,32 +15,32 @@ public class ProcesoCompraEntidad {
 	private UUID id;
 	private ClienteEntidad cliente;
 	private EmpleadoEntidad empleado;
+	private EstadoProcesoCompraEntidad estado;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaActualizacion;
 	private BigDecimal total;
-	private String estado;
 
 	public ProcesoCompraEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setCliente(new ClienteEntidad());
 		setEmpleado(new EmpleadoEntidad());
+		setEstado(new EstadoProcesoCompraEntidad());
 		setFechaInicio(UtilFecha.FECHA_HORA_DEFECTO);
 		setFechaActualizacion(UtilFecha.FECHA_HORA_DEFECTO);
 		setTotal(UtilNumero.CERO_DECIMAL);
-		setEstado(UtilTexto.VACIA);
 	}
 
 	public ProcesoCompraEntidad(final UUID id, final ClienteEntidad cliente, 
-			final EmpleadoEntidad empleado, final LocalDateTime fechaInicio, 
-			final LocalDateTime fechaActualizacion, 
-			final BigDecimal total, final String estado) {
+			final EmpleadoEntidad empleado, final EstadoProcesoCompraEntidad estado,
+			final LocalDateTime fechaInicio, final LocalDateTime fechaActualizacion, 
+			final BigDecimal total) {
 		setId(id);
 		setCliente(cliente);
 		setEmpleado(empleado);
+		setEstado(estado);
 		setFechaInicio(fechaInicio);
 		setFechaActualizacion(fechaActualizacion);
 		setTotal(total);
-		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -69,6 +69,14 @@ public class ProcesoCompraEntidad {
 				(empleado, new EmpleadoEntidad());
 	}
 
+	public EstadoProcesoCompraEntidad getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final EstadoProcesoCompraEntidad estado) {
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoProcesoCompraEntidad());
+	}
+
 	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
 	}
@@ -93,11 +101,5 @@ public class ProcesoCompraEntidad {
 		this.total = UtilNumero.obtenerValorDefecto(total);
 	}
 
-	public String getEstado() {
-		return estado;
-	}
 
-	public void setEstado(final String estado) {
-		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
-	}
 }
