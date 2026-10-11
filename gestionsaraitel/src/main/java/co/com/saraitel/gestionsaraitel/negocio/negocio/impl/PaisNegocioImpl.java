@@ -3,7 +3,7 @@ package co.com.saraitel.gestionsaraitel.negocio.negocio.impl;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.factoria.DaoFactory;
+import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.PaisNegocio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.PaisEntidadAssembler;
@@ -12,9 +12,9 @@ import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.pais.ValidarD
 
 public class PaisNegocioImpl implements PaisNegocio {
 	
-	private DaoFactory daoFactory;
+	private DAOFactory daoFactory;
 
-	protected PaisNegocioImpl(DaoFactory daoFactory) {
+	public PaisNegocioImpl(DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
 	

@@ -3,7 +3,7 @@ import co.com.saraitel.gestionsaraitel.transversal.excepciones.enums.Capa;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 
-public class GestionsaraitelExcepcion extends RuntimeException {
+public class GestionSaraitelException extends RuntimeException {
 	
 	private static final long serialVersionUID = 5239576382867557534L;
 	private Capa capa;
@@ -11,7 +11,7 @@ public class GestionsaraitelExcepcion extends RuntimeException {
 	private String mensajeTecnico;
 	private Exception excepcionRaiz;
 	
-	protected GestionsaraitelExcepcion(Capa capa, 
+	protected GestionSaraitelException(Capa capa, 
 			String mensajeUsuario, 
 			String mensajeTecnico, 
 			Exception excepcionRaiz) {

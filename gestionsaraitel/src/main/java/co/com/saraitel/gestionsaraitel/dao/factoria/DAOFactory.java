@@ -4,17 +4,28 @@ import java.sql.Connection;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDao;
+import co.com.saraitel.gestionsaraitel.dao.factoria.enums.FactoriaEnum;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
-public abstract class DaoFactory {
+public abstract class DAOFactory {
 	
 	private Connection conexion;
+	private static FactoriaEnum factoria = FactoriaEnum.POSTGRESQL;
 	
-	protected DaoFactory() {
+	public static DAOFactory obtenerFactoria() {
+		switch (factoria) {
+		case SQLSERVER:
+			return new SqlServerDAOFactory();
+		default:
+			var mensajeUsuario = "La fuente de información deseada que se solicitó para llevar a cabo la operación no está habilitada, por favor contacte el administrador de la aplicación";
+			throw GestionSaraitelException.crear()
+		}
+	}
+	protected DAOFactory() {
 		abrirConexion();
 	}
 	
-	protected DaoFactory(Connection conexion) {
+	protected DAOFactory(Connection conexion) {
 		setConexion(conexion);
 	}
 	

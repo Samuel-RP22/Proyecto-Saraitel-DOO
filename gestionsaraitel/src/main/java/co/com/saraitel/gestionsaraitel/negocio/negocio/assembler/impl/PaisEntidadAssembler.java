@@ -9,12 +9,13 @@ public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisE
 
 	private static final EntidadAssembler<PaisDominio, PaisEntidad> instancia = new PaisEntidadAssembler();
 	
+	private PaisEntidadAssembler() {	
+	}
+	
 	public static EntidadAssembler<PaisDominio, PaisEntidad> getInstance() {
 		return instancia;
 	}
-
-	private PaisEntidadAssembler() {	
-	}
+	
 	
 	@Override
 	public PaisEntidad convertirAEntidad(PaisDominio dominio) {
