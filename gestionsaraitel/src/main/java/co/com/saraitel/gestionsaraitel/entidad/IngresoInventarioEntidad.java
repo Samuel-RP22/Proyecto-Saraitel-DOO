@@ -7,32 +7,33 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class IngresoInventarioEntidad {
 
 	private UUID id;
 	private SedeEntidad sede;
+	private EstadoInventarioEntidad estado;
 	private LocalDateTime fechaLlegada;
 	private BigDecimal total;
-	private String estado;
+	
 
 	public IngresoInventarioEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setSede(new SedeEntidad());
+		setEstado(new EstadoInventarioEntidad());
 		setFechaLlegada(UtilFecha.FECHA_HORA_DEFECTO);
 		setTotal(UtilNumero.CERO_DECIMAL);
-		setEstado(UtilTexto.VACIA);
 	}
 
 	public IngresoInventarioEntidad(final UUID id, final SedeEntidad sede, 
-			final LocalDateTime fechaLlegada, final BigDecimal total, final String estado) {
+			final EstadoInventarioEntidad estado, 
+			final LocalDateTime fechaLlegada, final BigDecimal total) {
 		setId(id);
 		setSede(sede);
+		setEstado(estado);
 		setFechaLlegada(fechaLlegada);
 		setTotal(total);
-		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -51,6 +52,15 @@ public class IngresoInventarioEntidad {
 		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
 				(sede, new SedeEntidad());
 	}
+	
+	public EstadoInventarioEntidad getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final EstadoInventarioEntidad estado) {
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(estado, new EstadoInventarioEntidad());
+	}
 
 	public LocalDateTime getFechaLlegada() {
 		return fechaLlegada;
@@ -66,13 +76,5 @@ public class IngresoInventarioEntidad {
 
 	public void setTotal(final BigDecimal total) {
 		this.total = UtilNumero.obtenerValorDefecto(total);
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(final String estado) {
-		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }
