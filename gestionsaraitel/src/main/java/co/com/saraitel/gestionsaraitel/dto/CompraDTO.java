@@ -5,29 +5,31 @@ import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class CompraDTO {
 
 	private UUID id;
 	private ProcesoCompraDTO procesoCompra;
+	private EstadoCompraDTO estado;
 	private LocalDateTime fechaCompra;
-	private String estado;
+	
 
 	public CompraDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setProcesoCompra(new ProcesoCompraDTO());
+		setEstado(new EstadoCompraDTO());
 		setFechaCompra(UtilFecha.FECHA_HORA_DEFECTO);
-		setEstado(UtilTexto.VACIA);
+		
 	}
 
 	public CompraDTO(final UUID id, final ProcesoCompraDTO procesoCompra,
-			final LocalDateTime fechaCompra, final String estado) {
+			final EstadoCompraDTO estado, final LocalDateTime fechaCompra) {
 		setId(id);
 		setProcesoCompra(procesoCompra);
-		setFechaCompra(fechaCompra);
 		setEstado(estado);
+		setFechaCompra(fechaCompra);
+	
 	}
 
 	public UUID getId() {
@@ -46,6 +48,15 @@ public class CompraDTO {
 		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
 				(procesoCompra, new ProcesoCompraDTO());
 	}
+	
+	public EstadoCompraDTO getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(final EstadoCompraDTO estado) {
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(estado, new EstadoCompraDTO());
+	}
 
 	public LocalDateTime getFechaCompra() {
 		return fechaCompra;
@@ -55,11 +66,5 @@ public class CompraDTO {
 		this.fechaCompra = UtilFecha.obtenerValorDefecto(fechaCompra);
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(final String estado) {
-		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
-	}
+	
 }

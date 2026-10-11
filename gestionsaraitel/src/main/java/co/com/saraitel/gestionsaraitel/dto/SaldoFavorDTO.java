@@ -5,29 +5,29 @@ import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class SaldoFavorDTO {
 
 	private UUID id;
 	private DevolucionDTO devolucion;
+	private EstadoSaldoFavorDTO estado;
 	private BigDecimal montoUsado;
-	private String estado;
+	
 
 	public SaldoFavorDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setDevolucion(new DevolucionDTO());
+		setEstado(new EstadoSaldoFavorDTO());
 		setMontoUsado(UtilNumero.CERO_DECIMAL);
-		setEstado(UtilTexto.VACIA);
 	}
 
 	public SaldoFavorDTO(final UUID id, final DevolucionDTO devolucion,
-			final BigDecimal montoUsado, final String estado) {
+			final EstadoSaldoFavorDTO estado, final BigDecimal montoUsado) {
 		setId(id);
 		setDevolucion(devolucion);
-		setMontoUsado(montoUsado);
 		setEstado(estado);
+		setMontoUsado(montoUsado);
 	}
 
 	public UUID getId() {
@@ -46,6 +46,15 @@ public class SaldoFavorDTO {
 		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
 				(devolucion, new DevolucionDTO());
 	}
+	
+	public EstadoSaldoFavorDTO getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final EstadoSaldoFavorDTO estado) {
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
+				(estado, new EstadoSaldoFavorDTO());
+	}
 
 	public BigDecimal getMontoUsado() {
 		return montoUsado;
@@ -53,13 +62,5 @@ public class SaldoFavorDTO {
 
 	public void setMontoUsado(final BigDecimal montoUsado) {
 		this.montoUsado = UtilNumero.obtenerValorDefecto(montoUsado);
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(final String estado) {
-		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }

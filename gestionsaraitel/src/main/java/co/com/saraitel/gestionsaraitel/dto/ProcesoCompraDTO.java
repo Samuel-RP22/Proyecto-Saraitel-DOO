@@ -7,7 +7,6 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ProcesoCompraDTO {
@@ -15,32 +14,32 @@ public class ProcesoCompraDTO {
 	private UUID id;
 	private ClienteDTO cliente;
 	private EmpleadoDTO empleado;
+	private EstadoProcesoCompraDTO estado;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaActualizacion;
 	private BigDecimal total;
-	private String estado;
 
 	public ProcesoCompraDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setCliente(new ClienteDTO());
 		setEmpleado(new EmpleadoDTO());
+		setEstado(new EstadoProcesoCompraDTO());
 		setFechaInicio(UtilFecha.FECHA_HORA_DEFECTO);
 		setFechaActualizacion(UtilFecha.FECHA_HORA_DEFECTO);
 		setTotal(UtilNumero.CERO_DECIMAL);
-		setEstado(UtilTexto.VACIA);
 	}
 
 	public ProcesoCompraDTO(final UUID id, final ClienteDTO cliente, 
-			final EmpleadoDTO empleado, final LocalDateTime fechaInicio, 
-			final LocalDateTime fechaActualizacion, 
-			final BigDecimal total, final String estado) {
+			final EmpleadoDTO empleado, final EstadoProcesoCompraDTO estado,
+			final LocalDateTime fechaInicio, final LocalDateTime fechaActualizacion, 
+			final BigDecimal total) {
 		setId(id);
 		setCliente(cliente);
 		setEmpleado(empleado);
+		setEstado(estado);
 		setFechaInicio(fechaInicio);
 		setFechaActualizacion(fechaActualizacion);
 		setTotal(total);
-		setEstado(estado);
 	}
 
 	public UUID getId() {
@@ -69,6 +68,14 @@ public class ProcesoCompraDTO {
 				(empleado, new EmpleadoDTO());
 	}
 
+	public EstadoProcesoCompraDTO getEstado() {
+		return estado;
+	}
+
+	public void setEstado(final EstadoProcesoCompraDTO estado) {
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoProcesoCompraDTO());
+	}
+
 	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
 	}
@@ -91,13 +98,5 @@ public class ProcesoCompraDTO {
 
 	public void setTotal(final BigDecimal total) {
 		this.total = UtilNumero.obtenerValorDefecto(total);
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(final String estado) {
-		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}
 }
