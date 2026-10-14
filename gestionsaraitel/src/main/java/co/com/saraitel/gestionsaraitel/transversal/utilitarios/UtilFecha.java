@@ -27,6 +27,8 @@ public final class UtilFecha {
         return LocalDateTime.now(ZONA_HORARIA_COLOMBIA);
     }
     
+    //OBTENER CON EL EPOCH MILLI
+    ASDASDASDASD
     public static LocalDate obtenerSoloFecha(final LocalDateTime fechaHora) {
         return obtenerValorDefecto(fechaHora).toLocalDate();
     }

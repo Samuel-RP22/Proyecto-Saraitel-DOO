@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
-import co.com.saraitel.gestionsaraitel.dto.PaisDTO;
 
 public interface PaisNegocio {
 	
-	void registrarInformacionNuevoPais(PaisDTO datos);
+	void registrarInformacionNuevoPais(PaisDominio datos);
 	
 	void modificarInformacionPaisExistente(UUID id, PaisDominio datos);
 	

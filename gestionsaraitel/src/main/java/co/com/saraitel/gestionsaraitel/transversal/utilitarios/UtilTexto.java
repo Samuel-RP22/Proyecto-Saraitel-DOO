@@ -12,6 +12,8 @@ public final class UtilTexto {
     private static final DecimalFormatSymbols SIMBOLOS = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
     private static final String FORMATO_DINERO = "$ #,##0.00";
     
+    //CONCATENAR TEXTO 
+    CONCAAAT
     private UtilTexto() {
     }
 

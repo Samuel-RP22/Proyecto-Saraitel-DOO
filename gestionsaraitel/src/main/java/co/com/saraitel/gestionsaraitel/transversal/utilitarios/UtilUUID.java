@@ -8,9 +8,10 @@ public final class UtilUUID {
 
     private UtilUUID() {
     }
-
+    //CONVERTIR A VERSION 7 
+    SIETEEE
     public static UUID generar() {
-        return UUID.randomUUID();
+        return UUID.ofEpochMillis(UtilFecha.obtenerFechaHoraActual());
     }
     
     public static UUID obtenerUUIDDefecto() {
