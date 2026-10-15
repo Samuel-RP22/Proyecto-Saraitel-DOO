@@ -17,7 +17,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
         Connection conexion = null;
 
         try {
-            String url = "";
+            String url = "";6
             String usuario = "";
             String contrasena = "";
 

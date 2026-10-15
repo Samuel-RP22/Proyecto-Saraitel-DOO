@@ -22,7 +22,7 @@ public abstract class AbstractRestController {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<RespuestaError<String>> controlarExcepcionNoControlada(Exception excepcion) {
 		var mensajeRespuesta = "Se ha presentado un problema inesperado tratando de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación y entréguele el código que se muestra a continuación"
-								.concat(correlationId);
+								.concat();
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(respuesta);
 		//logger.printException(excepcion);
 	}
