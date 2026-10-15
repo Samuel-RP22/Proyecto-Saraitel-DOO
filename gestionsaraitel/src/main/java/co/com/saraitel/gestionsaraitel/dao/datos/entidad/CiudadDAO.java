@@ -8,5 +8,5 @@ import co.com.saraitel.gestionsaraitel.dao.datos.ConsultarDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.EliminarDao;
 import co.com.saraitel.gestionsaraitel.entidad.CiudadEntidad;
 
-public interface CiudadDao extends CrearDao<CiudadEntidad>, ConsultarDao<CiudadEntidad, UUID>, ActualizarDao<CiudadEntidad, UUID>, EliminarDao<CiudadEntidad> {
+public interface CiudadDAO extends CrearDao<CiudadEntidad>, ConsultarDao<CiudadEntidad, UUID>, ActualizarDao<CiudadEntidad, UUID>, EliminarDao<CiudadEntidad> {
 }

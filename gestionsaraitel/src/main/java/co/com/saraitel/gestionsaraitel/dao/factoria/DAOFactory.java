@@ -1,9 +1,43 @@
-
 package co.com.saraitel.gestionsaraitel.dao.factoria;
 
 import java.sql.Connection;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.*;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AdministradorDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AplicacionSaldoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CategoriaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CiudadDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteNoRegistradoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoJDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoNDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DetalleCompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DetalleIngresoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DevolucionDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EmpleadoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoCompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoInventarioDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoProcesoCompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoSaldoFavorDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FacturaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.IngresoInventarioDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MarcaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MetodoPagoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MotivoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PagoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PagoNormalDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PersonaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PrefijoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProcesoCompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProductoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProductoSedeDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SaldoFavorDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SedeDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
 import co.com.saraitel.gestionsaraitel.dao.factoria.enums.FactoriaEnum;
 import co.com.saraitel.gestionsaraitel.dao.factoria.impl.PostgreSqlDaoFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
@@ -21,9 +55,8 @@ public abstract class DAOFactory {
             return new PostgreSqlDaoFactory();
         default:
             var mensajeUsuario = CatalogoMensajes.DAOFactory
-                .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
-            throw GestionsaraitelTransversalException
-                .crear(mensajeUsuario);
+                    .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
+            throw GestionsaraitelTransversalException.crear(mensajeUsuario);
         }
     }
 
@@ -60,75 +93,75 @@ public abstract class DAOFactory {
         UtilSQL.cancelarTransaccion(conexion);
     }
 
-    public abstract AdministradorDao obtenerAdministradorDao();
+    public abstract AdministradorDAO obtenerAdministradorDao();
 
-    public abstract AplicacionSaldoDao obtenerAplicacionSaldoDao();
+    public abstract AplicacionSaldoDAO obtenerAplicacionSaldoDao();
 
-    public abstract CategoriaDao obtenerCategoriaDao();
+    public abstract CategoriaDAO obtenerCategoriaDao();
 
-    public abstract CiudadDao obtenerCiudadDao();
+    public abstract CiudadDAO obtenerCiudadDao();
 
-    public abstract ClienteDao obtenerClienteDao();
+    public abstract ClienteDAO obtenerClienteDao();
 
-    public abstract ClienteNoRegistradoDao obtenerClienteNoRegistradoDao();
+    public abstract ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao();
 
-    public abstract ClienteRegistradoDao obtenerClienteRegistradoDao();
+    public abstract ClienteRegistradoDAO obtenerClienteRegistradoDao();
 
-    public abstract ClienteRegistradoJDao obtenerClienteRegistradoJDao();
+    public abstract ClienteRegistradoJDAO obtenerClienteRegistradoJDao();
 
-    public abstract ClienteRegistradoNDao obtenerClienteRegistradoNDao();
+    public abstract ClienteRegistradoNDAO obtenerClienteRegistradoNDao();
 
-    public abstract CompraDao obtenerCompraDao();
+    public abstract CompraDAO obtenerCompraDao();
 
-    public abstract DepartamentoDao obtenerDepartamentoDao();
+    public abstract DepartamentoDAO obtenerDepartamentoDao();
 
-    public abstract DetalleCompraDao obtenerDetalleCompraDao();
+    public abstract DetalleCompraDAO obtenerDetalleCompraDao();
 
-    public abstract DetalleIngresoDao obtenerDetalleIngresoDao();
+    public abstract DetalleIngresoDAO obtenerDetalleIngresoDao();
 
-    public abstract DevolucionDao obtenerDevolucionDao();
+    public abstract DevolucionDAO obtenerDevolucionDao();
 
-    public abstract EmpleadoDao obtenerEmpleadoDao();
+    public abstract EmpleadoDAO obtenerEmpleadoDao();
 
-    public abstract EstadoCompraDao obtenerEstadoCompraDao();
+    public abstract EstadoCompraDAO obtenerEstadoCompraDao();
 
-    public abstract EstadoInventarioDao obtenerEstadoInventarioDao();
+    public abstract EstadoInventarioDAO obtenerEstadoInventarioDao();
 
-    public abstract EstadoProcesoCompraDao obtenerEstadoProcesoCompraDao();
+    public abstract EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao();
 
-    public abstract EstadoSaldoFavorDao obtenerEstadoSaldoFavorDao();
+    public abstract EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao();
 
-    public abstract FacturaDao obtenerFacturaDao();
+    public abstract FacturaDAO obtenerFacturaDao();
 
-    public abstract IngresoInventarioDao obtenerIngresoInventarioDao();
+    public abstract IngresoInventarioDAO obtenerIngresoInventarioDao();
 
-    public abstract MarcaDao obtenerMarcaDao();
+    public abstract MarcaDAO obtenerMarcaDao();
 
-    public abstract MetodoPagoDao obtenerMetodoPagoDao();
+    public abstract MetodoPagoDAO obtenerMetodoPagoDao();
 
-    public abstract MotivoDao obtenerMotivoDao();
+    public abstract MotivoDAO obtenerMotivoDao();
 
-    public abstract PagoDao obtenerPagoDao();
+    public abstract PagoDAO obtenerPagoDao();
 
-    public abstract PagoNormalDao obtenerPagoNormalDao();
+    public abstract PagoNormalDAO obtenerPagoNormalDao();
 
-    public abstract PaisDao obtenerPaisDao();
+    public abstract PaisDAO obtenerPaisDao();
 
-    public abstract PersonaDao obtenerPersonaDao();
+    public abstract PersonaDAO obtenerPersonaDao();
 
-    public abstract PrefijoDao obtenerPrefijoDao();
+    public abstract PrefijoDAO obtenerPrefijoDao();
 
-    public abstract ProcesoCompraDao obtenerProcesoCompraDao();
+    public abstract ProcesoCompraDAO obtenerProcesoCompraDao();
 
-    public abstract ProductoDao obtenerProductoDao();
+    public abstract ProductoDAO obtenerProductoDao();
 
-    public abstract ProductoSedeDao obtenerProductoSedeDao();
+    public abstract ProductoSedeDAO obtenerProductoSedeDao();
 
-    public abstract SaldoFavorDao obtenerSaldoFavorDao();
+    public abstract SaldoFavorDAO obtenerSaldoFavorDao();
 
-    public abstract SedeDao obtenerSedeDao();
+    public abstract SedeDAO obtenerSedeDao();
 
-    public abstract TipoDocumentoDao obtenerTipoDocumentoDao();
+    public abstract TipoDocumentoDAO obtenerTipoDocumentoDao();
 
-    public abstract VendedorDao obtenerVendedorDao();
+    public abstract VendedorDAO obtenerVendedorDao();
 }

@@ -8,6 +8,6 @@ import co.com.saraitel.gestionsaraitel.dao.datos.EliminarDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.CrearDao;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
 
-public interface PaisDao extends CrearDao<PaisEntidad>, ConsultarDao<PaisEntidad, UUID>, ActualizarDao<PaisEntidad, UUID>, EliminarDao<UUID> {
+public interface PaisDAO extends CrearDao<PaisEntidad>, ConsultarDao<PaisEntidad, UUID>, ActualizarDao<PaisEntidad, UUID>, EliminarDao<UUID> {
 
 }

@@ -1,12 +1,17 @@
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DepartamentoEntidad;
 
-public class DepartamentoPostgreSqlDao	implements DepartamentoDao {
+public class DepartamentoPostgreSqlDao	implements DepartamentoDAO {
+
+	public DepartamentoPostgreSqlDao(Connection conexion) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void crear(DepartamentoEntidad entidad) {
