@@ -43,6 +43,7 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDao;
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
 
 public class PostgreSqlDaoFactory extends DAOFactory {
@@ -62,7 +63,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 			setConexion(conexion);
 
 		} catch (SQLException excepcion) {
-			String mensajeUsuario = "No fue posible conectar con la base de datos PostgreSQL";
+			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}

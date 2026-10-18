@@ -18,16 +18,12 @@ public class ClienteRegistradoJDominio {
 	private final boolean correoConfirmado;
 	private final boolean telefonoConfirmado;
 
-	public ClienteRegistradoJDominio() {
-		this(new Builder());
-	}
-
 	private ClienteRegistradoJDominio(final Builder builder) {
 		this.id = UtilUUID.obtenerValorDefecto(builder.id);
-		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.clienteRegistrado, new ClienteRegistradoDominio());
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.prefijo, new PrefijoDominio());
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.clienteRegistrado,
+				ClienteRegistradoDominio.obtenerValorDefecto());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.prefijo,
+				PrefijoDominio.obtenerValorDefecto());
 		this.telefono = UtilTexto.quitarEspaciosEnBlanco(builder.telefono);
 		this.nit = UtilTexto.quitarEspaciosEnBlanco(builder.nit);
 		this.razonSocial = UtilTexto.quitarEspaciosEnBlanco(builder.razonSocial);
@@ -50,8 +46,8 @@ public class ClienteRegistradoJDominio {
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
-			this.clienteRegistrado = new ClienteRegistradoDominio();
-			this.prefijo = new PrefijoDominio();
+			this.clienteRegistrado = ClienteRegistradoDominio.obtenerValorDefecto();
+			this.prefijo = PrefijoDominio.obtenerValorDefecto();
 			this.telefono = UtilTexto.VACIA;
 			this.nit = UtilTexto.VACIA;
 			this.razonSocial = UtilTexto.VACIA;
@@ -64,7 +60,7 @@ public class ClienteRegistradoJDominio {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder clienteRegistrado(final ClienteRegistradoDominio clienteRegistrado) {
 			this.clienteRegistrado = clienteRegistrado;
 			return this;

@@ -19,22 +19,22 @@ public class ProductoSedeDominio {
 	private final int stock;
 	private final int stockGarantia;
 
-	public ProductoSedeDominio() {
-		this(new Builder());
-	}
-
 	private ProductoSedeDominio(final Builder builder) {
 		this.id = UtilUUID.obtenerValorDefecto(builder.id);
-		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.producto, new ProductoDominio());
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.sede, new SedeDominio());
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.producto,
+				ProductoDominio.obtenerValorDefecto());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.sede,
+				SedeDominio.obtenerValorDefecto());
 		this.precio = UtilNumero.obtenerValorDefecto(builder.precio);
 		this.tieneOferta = builder.tieneOferta;
 		this.oferta = builder.oferta;
 		this.precioTrasOferta = UtilNumero.obtenerValorDefecto(builder.precioTrasOferta);
 		this.stock = builder.stock;
 		this.stockGarantia = builder.stockGarantia;
+	}
+
+	public static ProductoSedeDominio obtenerValorDefecto() {
+		return new Builder().construir();
 	}
 
 	public static final class Builder {
@@ -51,8 +51,8 @@ public class ProductoSedeDominio {
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
-			this.producto = new ProductoDominio();
-			this.sede = new SedeDominio();
+			this.producto = ProductoDominio.obtenerValorDefecto();
+			this.sede = SedeDominio.obtenerValorDefecto();
 			this.precio = UtilNumero.CERO_DECIMAL;
 			this.tieneOferta = false;
 			this.oferta = 0;
@@ -65,7 +65,7 @@ public class ProductoSedeDominio {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder producto(final ProductoDominio producto) {
 			this.producto = producto;
 			return this;

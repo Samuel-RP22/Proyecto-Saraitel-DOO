@@ -19,8 +19,7 @@ public class CategoriaDTO {
 		setNivel(1);
 	}
 
-	public CategoriaDTO(final UUID id, final String nombre,
-			final UUID idCategoriaPadre, final int nivel) {
+	public CategoriaDTO(final UUID id, final String nombre, final UUID idCategoriaPadre, final int nivel) {
 		setId(id);
 		setNombre(nombre);
 		setIdCategoriaPadre(idCategoriaPadre);

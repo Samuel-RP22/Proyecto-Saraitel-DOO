@@ -16,7 +16,6 @@ public class IngresoInventarioEntidad {
 	private EstadoInventarioEntidad estado;
 	private LocalDateTime fechaLlegada;
 	private BigDecimal total;
-	
 
 	public IngresoInventarioEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -26,8 +25,7 @@ public class IngresoInventarioEntidad {
 		setTotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	public IngresoInventarioEntidad(final UUID id, final SedeEntidad sede, 
-			final EstadoInventarioEntidad estado, 
+	public IngresoInventarioEntidad(final UUID id, final SedeEntidad sede, final EstadoInventarioEntidad estado,
 			final LocalDateTime fechaLlegada, final BigDecimal total) {
 		setId(id);
 		setSede(sede);
@@ -49,17 +47,15 @@ public class IngresoInventarioEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeEntidad());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
 	}
-	
+
 	public EstadoInventarioEntidad getEstado() {
 		return estado;
 	}
 
 	public void setEstado(final EstadoInventarioEntidad estado) {
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoInventarioEntidad());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoInventarioEntidad());
 	}
 
 	public LocalDateTime getFechaLlegada() {

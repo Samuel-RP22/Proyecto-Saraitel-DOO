@@ -21,8 +21,8 @@ public class PagoNormalEntidad {
 		setMontoPagar(UtilNumero.CERO_DECIMAL);
 	}
 
-	public PagoNormalEntidad(final UUID id, final MetodoPagoEntidad metodoPago,
-			final PagoEntidad pago, final BigDecimal montoPagar) {
+	public PagoNormalEntidad(final UUID id, final MetodoPagoEntidad metodoPago, final PagoEntidad pago,
+			final BigDecimal montoPagar) {
 		setId(id);
 		setMetodoPago(metodoPago);
 		setPago(pago);
@@ -42,8 +42,7 @@ public class PagoNormalEntidad {
 	}
 
 	public void setMetodoPago(final MetodoPagoEntidad metodoPago) {
-		this.metodoPago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(metodoPago, new MetodoPagoEntidad());
+		this.metodoPago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(metodoPago, new MetodoPagoEntidad());
 	}
 
 	public PagoEntidad getPago() {
@@ -51,8 +50,7 @@ public class PagoNormalEntidad {
 	}
 
 	public void setPago(final PagoEntidad pago) {
-		this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(pago, new PagoEntidad());
+		this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pago, new PagoEntidad());
 	}
 
 	public BigDecimal getMontoPagar() {

@@ -38,7 +38,7 @@ public class EstadoCompraDTO {
 	public void setCodigo(final String codigo) {
 		this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}

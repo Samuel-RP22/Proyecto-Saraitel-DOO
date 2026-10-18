@@ -24,8 +24,7 @@ public class ProductoDTO {
 		setDescripcion(UtilTexto.VACIA);
 	}
 
-	public ProductoDTO(final UUID id, final MarcaDTO marca, 
-			final CategoriaDTO categoria, final String modelo, 
+	public ProductoDTO(final UUID id, final MarcaDTO marca, final CategoriaDTO categoria, final String modelo,
 			final String nombre, final String descripcion) {
 		setId(id);
 		setMarca(marca);
@@ -48,8 +47,7 @@ public class ProductoDTO {
 	}
 
 	public void setMarca(final MarcaDTO marca) {
-		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(marca, new MarcaDTO());
+		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(marca, new MarcaDTO());
 	}
 
 	public CategoriaDTO getCategoria() {
@@ -57,8 +55,7 @@ public class ProductoDTO {
 	}
 
 	public void setCategoria(final CategoriaDTO categoria) {
-		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(categoria, new CategoriaDTO());
+		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(categoria, new CategoriaDTO());
 	}
 
 	public String getModelo() {

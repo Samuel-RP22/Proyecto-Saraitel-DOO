@@ -17,24 +17,19 @@ public class IngresoInventarioDominio {
 	private final LocalDateTime fechaLlegada;
 	private final BigDecimal total;
 
-	public IngresoInventarioDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.sede = new SedeDominio();
-		this.estado = new EstadoInventarioDominio();
-		this.fechaLlegada = UtilFecha.FECHA_HORA_DEFECTO;
-		this.total = UtilNumero.CERO_DECIMAL;
-	}
-
-	public IngresoInventarioDominio(final UUID id, final SedeDominio sede,
-			final EstadoInventarioDominio estado,
+	public IngresoInventarioDominio(final UUID id, final SedeDominio sede, final EstadoInventarioDominio estado,
 			final LocalDateTime fechaLlegada, final BigDecimal total) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeDominio());
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoInventarioDominio());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, SedeDominio.obtenerValorDefecto());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado,
+				EstadoInventarioDominio.obtenerValorDefecto());
 		this.fechaLlegada = UtilFecha.obtenerValorDefecto(fechaLlegada);
 		this.total = UtilNumero.obtenerValorDefecto(total);
+	}
+
+	public static IngresoInventarioDominio obtenerValorDefecto() {
+		return new IngresoInventarioDominio(UtilUUID.obtenerUUIDDefecto(), SedeDominio.obtenerValorDefecto(),
+				EstadoInventarioDominio.obtenerValorDefecto(), UtilFecha.FECHA_HORA_DEFECTO, UtilNumero.CERO_DECIMAL);
 	}
 
 	public UUID getId() {

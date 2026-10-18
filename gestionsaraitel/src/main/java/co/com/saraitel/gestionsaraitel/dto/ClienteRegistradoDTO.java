@@ -17,8 +17,7 @@ public class ClienteRegistradoDTO {
 		setClienteNaturalDefecto(true);
 	}
 
-	public ClienteRegistradoDTO(final UUID id, final ClienteDTO cliente, 
-			final boolean clienteNaturalDefecto) {
+	public ClienteRegistradoDTO(final UUID id, final ClienteDTO cliente, final boolean clienteNaturalDefecto) {
 		setId(id);
 		setCliente(cliente);
 		setClienteNaturalDefecto(clienteNaturalDefecto);
@@ -37,8 +36,7 @@ public class ClienteRegistradoDTO {
 	}
 
 	public void setCliente(final ClienteDTO cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteDTO());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteDTO());
 	}
 
 	public boolean getClienteNaturalDefecto() {

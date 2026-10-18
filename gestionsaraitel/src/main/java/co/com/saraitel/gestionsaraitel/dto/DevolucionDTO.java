@@ -30,9 +30,9 @@ public class DevolucionDTO {
 		setEstado(UtilTexto.VACIA);
 	}
 
-	public DevolucionDTO(final UUID id, final DetalleCompraDTO detalleCompra,
-			final MotivoDTO motivo, final LocalDateTime fechaDevolucion,
-			final int cantidad, final BigDecimal montoDevolucion, final String estado) {
+	public DevolucionDTO(final UUID id, final DetalleCompraDTO detalleCompra, final MotivoDTO motivo,
+			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
+			final String estado) {
 		setId(id);
 		setDetalleCompra(detalleCompra);
 		setMotivo(motivo);
@@ -55,8 +55,7 @@ public class DevolucionDTO {
 	}
 
 	public void setDetalleCompra(final DetalleCompraDTO detalleCompra) {
-		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(detalleCompra, new DetalleCompraDTO());
+		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(detalleCompra, new DetalleCompraDTO());
 	}
 
 	public MotivoDTO getMotivo() {
@@ -64,8 +63,7 @@ public class DevolucionDTO {
 	}
 
 	public void setMotivo(final MotivoDTO motivo) {
-		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(motivo, new MotivoDTO());
+		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, new MotivoDTO());
 	}
 
 	public LocalDateTime getFechaDevolucion() {

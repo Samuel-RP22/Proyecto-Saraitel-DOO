@@ -26,8 +26,8 @@ public class DetalleIngresoDTO {
 	}
 
 	public DetalleIngresoDTO(final UUID id, final IngresoInventarioDTO ingresoInventario,
-			final ProductoSedeDTO productoSede, final int cantidad, 
-			final BigDecimal costoUnitario, final BigDecimal subtotal) {
+			final ProductoSedeDTO productoSede, final int cantidad, final BigDecimal costoUnitario,
+			final BigDecimal subtotal) {
 		setId(id);
 		setIngresoInventario(ingresoInventario);
 		setProductoSede(productoSede);
@@ -49,8 +49,8 @@ public class DetalleIngresoDTO {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioDTO ingresoInventario) {
-		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(ingresoInventario, new IngresoInventarioDTO());
+		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ingresoInventario,
+				new IngresoInventarioDTO());
 	}
 
 	public ProductoSedeDTO getProductoSede() {
@@ -58,8 +58,7 @@ public class DetalleIngresoDTO {
 	}
 
 	public void setProductoSede(final ProductoSedeDTO productoSede) {
-		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(productoSede, new ProductoSedeDTO());
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede, new ProductoSedeDTO());
 	}
 
 	public int getCantidad() {

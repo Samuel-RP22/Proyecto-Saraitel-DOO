@@ -10,15 +10,10 @@ public class VendedorDominio {
 	private final UUID id;
 	private final EmpleadoDominio empleado;
 
-	public VendedorDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.empleado = new EmpleadoDominio();
-	}
-
 	public VendedorDominio(final UUID id, final EmpleadoDominio empleado) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoDominio());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado,
+				EmpleadoDominio.obtenerValorDefecto());
 	}
 
 	public UUID getId() {

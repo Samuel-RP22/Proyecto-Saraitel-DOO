@@ -19,8 +19,7 @@ public class FacturaEntidad {
 		setFechaEmision(UtilFecha.FECHA_HORA_DEFECTO);
 	}
 
-	public FacturaEntidad(final UUID id, final CompraEntidad compra,
-			final LocalDateTime fechaEmision) {
+	public FacturaEntidad(final UUID id, final CompraEntidad compra, final LocalDateTime fechaEmision) {
 		setId(id);
 		setCompra(compra);
 		setFechaEmision(fechaEmision);
@@ -39,8 +38,7 @@ public class FacturaEntidad {
 	}
 
 	public void setCompra(final CompraEntidad compra) {
-		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(compra, new CompraEntidad());
+		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(compra, new CompraEntidad());
 	}
 
 	public LocalDateTime getFechaEmision() {

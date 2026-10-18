@@ -63,7 +63,7 @@ public class ProductoSedeEntidad {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder producto(final ProductoEntidad producto) {
 			this.producto = producto;
 			return this;
@@ -122,8 +122,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setProducto(final ProductoEntidad producto) {
-		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(producto, new ProductoEntidad());
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(producto, new ProductoEntidad());
 	}
 
 	public SedeEntidad getSede() {
@@ -131,8 +130,7 @@ public class ProductoSedeEntidad {
 	}
 
 	public void setSede(final SedeEntidad sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeEntidad());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeEntidad());
 	}
 
 	public BigDecimal getPrecio() {

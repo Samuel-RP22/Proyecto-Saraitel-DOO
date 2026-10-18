@@ -8,33 +8,31 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class CiudadDominio {
 
-    private UUID id;
-    private String nombre;
-    private DepartamentoDominio departamento;
+	private final UUID id;
+	private final String nombre;
+	private final DepartamentoDominio departamento;
 
-    public CiudadDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.nombre = UtilTexto.VACIA;
-        this.departamento = new DepartamentoDominio();
-    }
+	public CiudadDominio(final UUID id, final String nombre, final DepartamentoDominio departamento) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+		this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento,
+				DepartamentoDominio.obtenerValorDefecto());
+	}
 
-    public CiudadDominio(final UUID id, final String nombre,
-            final DepartamentoDominio departamento) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-        this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-                (departamento, new DepartamentoDominio());
-    }
+	public static CiudadDominio obtenerValorDefecto() {
+		return new CiudadDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA,
+				DepartamentoDominio.obtenerValorDefecto());
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public DepartamentoDominio getDepartamento() {
-        return departamento;
-    }
+	public DepartamentoDominio getDepartamento() {
+		return departamento;
+	}
 }

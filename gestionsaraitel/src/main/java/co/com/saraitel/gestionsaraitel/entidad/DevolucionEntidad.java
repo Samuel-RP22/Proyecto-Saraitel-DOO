@@ -30,9 +30,9 @@ public class DevolucionEntidad {
 		setEstado(UtilTexto.VACIA);
 	}
 
-	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra,
-			final MotivoEntidad motivo, final LocalDateTime fechaDevolucion,
-			final int cantidad, final BigDecimal montoDevolucion, final String estado) {
+	public DevolucionEntidad(final UUID id, final DetalleCompraEntidad detalleCompra, final MotivoEntidad motivo,
+			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
+			final String estado) {
 		setId(id);
 		setDetalleCompra(detalleCompra);
 		setMotivo(motivo);
@@ -55,8 +55,8 @@ public class DevolucionEntidad {
 	}
 
 	public void setDetalleCompra(final DetalleCompraEntidad detalleCompra) {
-		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(detalleCompra, new DetalleCompraEntidad());
+		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(detalleCompra,
+				new DetalleCompraEntidad());
 	}
 
 	public MotivoEntidad getMotivo() {
@@ -64,8 +64,7 @@ public class DevolucionEntidad {
 	}
 
 	public void setMotivo(final MotivoEntidad motivo) {
-		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(motivo, new MotivoEntidad());
+		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, new MotivoEntidad());
 	}
 
 	public LocalDateTime getFechaDevolucion() {

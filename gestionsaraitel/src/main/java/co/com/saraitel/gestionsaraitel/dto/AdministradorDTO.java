@@ -33,7 +33,6 @@ public class AdministradorDTO {
 	}
 
 	public void setEmpleado(final EmpleadoDTO empleado) {
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoDTO());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, new EmpleadoDTO());
 	}
 }

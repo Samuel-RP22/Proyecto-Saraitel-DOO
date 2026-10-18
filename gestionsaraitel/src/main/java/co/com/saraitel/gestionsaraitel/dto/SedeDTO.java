@@ -24,8 +24,8 @@ public class SedeDTO {
 		setEsActiva(true);
 	}
 
-	public SedeDTO(final UUID id, final CiudadDTO ciudad, final String nombre,
-			final String nit, final String direccion, final boolean esActiva) {
+	public SedeDTO(final UUID id, final CiudadDTO ciudad, final String nombre, final String nit, final String direccion,
+			final boolean esActiva) {
 		setId(id);
 		setCiudad(ciudad);
 		setNombre(nombre);
@@ -47,8 +47,7 @@ public class SedeDTO {
 	}
 
 	public void setCiudad(final CiudadDTO ciudad) {
-		this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-        		(ciudad, new CiudadDTO());
+		this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ciudad, new CiudadDTO());
 	}
 
 	public String getNombre() {

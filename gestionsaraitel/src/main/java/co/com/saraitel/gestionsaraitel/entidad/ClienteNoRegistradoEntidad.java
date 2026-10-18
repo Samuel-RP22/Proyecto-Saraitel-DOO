@@ -33,7 +33,6 @@ public class ClienteNoRegistradoEntidad {
 	}
 
 	public void setCliente(final ClienteEntidad cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteEntidad());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteEntidad());
 	}
 }

@@ -13,7 +13,6 @@ public class SaldoFavorDTO {
 	private DevolucionDTO devolucion;
 	private EstadoSaldoFavorDTO estado;
 	private BigDecimal montoUsado;
-	
 
 	public SaldoFavorDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -22,8 +21,8 @@ public class SaldoFavorDTO {
 		setMontoUsado(UtilNumero.CERO_DECIMAL);
 	}
 
-	public SaldoFavorDTO(final UUID id, final DevolucionDTO devolucion,
-			final EstadoSaldoFavorDTO estado, final BigDecimal montoUsado) {
+	public SaldoFavorDTO(final UUID id, final DevolucionDTO devolucion, final EstadoSaldoFavorDTO estado,
+			final BigDecimal montoUsado) {
 		setId(id);
 		setDevolucion(devolucion);
 		setEstado(estado);
@@ -43,17 +42,15 @@ public class SaldoFavorDTO {
 	}
 
 	public void setDevolucion(final DevolucionDTO devolucion) {
-		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(devolucion, new DevolucionDTO());
+		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(devolucion, new DevolucionDTO());
 	}
-	
+
 	public EstadoSaldoFavorDTO getEstado() {
 		return estado;
 	}
 
 	public void setEstado(final EstadoSaldoFavorDTO estado) {
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoSaldoFavorDTO());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoSaldoFavorDTO());
 	}
 
 	public BigDecimal getMontoUsado() {

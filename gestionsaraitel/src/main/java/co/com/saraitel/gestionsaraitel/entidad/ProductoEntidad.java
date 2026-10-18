@@ -24,9 +24,8 @@ public class ProductoEntidad {
 		setDescripcion(UtilTexto.VACIA);
 	}
 
-	public ProductoEntidad(final UUID id, final MarcaEntidad marca, 
-			final CategoriaEntidad categoria, final String modelo, 
-			final String nombre, final String descripcion) {
+	public ProductoEntidad(final UUID id, final MarcaEntidad marca, final CategoriaEntidad categoria,
+			final String modelo, final String nombre, final String descripcion) {
 		setId(id);
 		setMarca(marca);
 		setCategoria(categoria);
@@ -48,8 +47,7 @@ public class ProductoEntidad {
 	}
 
 	public void setMarca(final MarcaEntidad marca) {
-		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(marca, new MarcaEntidad());
+		this.marca = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(marca, new MarcaEntidad());
 	}
 
 	public CategoriaEntidad getCategoria() {
@@ -57,8 +55,7 @@ public class ProductoEntidad {
 	}
 
 	public void setCategoria(final CategoriaEntidad categoria) {
-		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(categoria, new CategoriaEntidad());
+		this.categoria = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(categoria, new CategoriaEntidad());
 	}
 
 	public String getModelo() {

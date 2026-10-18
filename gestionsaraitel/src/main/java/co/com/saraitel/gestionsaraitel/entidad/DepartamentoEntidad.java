@@ -8,44 +8,43 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class DepartamentoEntidad {
 
-    private UUID id;
-    private String nombre;
-    private PaisEntidad pais;
-    
-    public DepartamentoEntidad() {
-        setId(UtilUUID.obtenerUUIDDefecto());
-        setNombre(UtilTexto.VACIA);
-        setPais(new PaisEntidad());
-    }
+	private UUID id;
+	private String nombre;
+	private PaisEntidad pais;
 
-    public DepartamentoEntidad(final UUID id, final String nombre, final PaisEntidad pais) {
-        setId(id);
-        setNombre(nombre);
-        setPais(pais);
-    }
+	public DepartamentoEntidad() {
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setNombre(UtilTexto.VACIA);
+		setPais(new PaisEntidad());
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public DepartamentoEntidad(final UUID id, final String nombre, final PaisEntidad pais) {
+		setId(id);
+		setNombre(nombre);
+		setPais(pais);
+	}
 
-    public void setId(final UUID id) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public void setId(final UUID id) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+	}
 
-    public void setNombre(final String nombre) {
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public PaisEntidad getPais() {
-        return pais;
-    }
+	public void setNombre(final String nombre) {
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
 
-    public void setPais(final PaisEntidad pais) {
-        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(pais, new PaisEntidad());
-    }
+	public PaisEntidad getPais() {
+		return pais;
+	}
+
+	public void setPais(final PaisEntidad pais) {
+		this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad());
+	}
 }

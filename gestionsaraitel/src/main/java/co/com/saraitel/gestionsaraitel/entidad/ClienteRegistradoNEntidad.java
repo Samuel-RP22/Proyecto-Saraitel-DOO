@@ -17,7 +17,7 @@ public class ClienteRegistradoNEntidad {
 		setPersona(new PersonaEntidad());
 	}
 
-	public ClienteRegistradoNEntidad(final UUID id, final ClienteRegistradoEntidad clienteRegistrado, 
+	public ClienteRegistradoNEntidad(final UUID id, final ClienteRegistradoEntidad clienteRegistrado,
 			final PersonaEntidad persona) {
 		setId(id);
 		setClienteRegistrado(clienteRegistrado);
@@ -37,8 +37,8 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
-		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(clienteRegistrado, new ClienteRegistradoEntidad());
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteRegistrado,
+				new ClienteRegistradoEntidad());
 	}
 
 	public PersonaEntidad getPersona() {
@@ -46,7 +46,6 @@ public class ClienteRegistradoNEntidad {
 	}
 
 	public void setPersona(final PersonaEntidad persona) {
-		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(persona, new PersonaEntidad());
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaEntidad());
 	}
 }

@@ -7,24 +7,23 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class MotivoDominio {
 
-    private UUID id;
-    private String nombre;
+	private final UUID id;
+	private final String nombre;
 
-    public MotivoDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.nombre = UtilTexto.VACIA;
-    }
+	public MotivoDominio(final UUID id, final String nombre) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
 
-    public MotivoDominio(final UUID id, final String nombre) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-    }
+	public static MotivoDominio obtenerValorDefecto() {
+		return new MotivoDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 }

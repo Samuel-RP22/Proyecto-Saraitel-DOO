@@ -8,33 +8,30 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class DepartamentoDominio {
 
-    private UUID id;
-    private String nombre;
-    private PaisDominio pais;
+	private final UUID id;
+	private final String nombre;
+	private final PaisDominio pais;
 
-    public DepartamentoDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.nombre = UtilTexto.VACIA;
-        this.pais = new PaisDominio();
-    }
+	public DepartamentoDominio(final UUID id, final String nombre, final PaisDominio pais) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+		this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, PaisDominio.obtenerValorDefecto());
+	}
 
-    public DepartamentoDominio(final UUID id, final String nombre,
-            final PaisDominio pais) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-                (pais, new PaisDominio());
-    }
+	public static DepartamentoDominio obtenerValorDefecto() {
+		return new DepartamentoDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA,
+				PaisDominio.obtenerValorDefecto());
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public PaisDominio getPais() {
-        return pais;
-    }
+	public PaisDominio getPais() {
+		return pais;
+	}
 }

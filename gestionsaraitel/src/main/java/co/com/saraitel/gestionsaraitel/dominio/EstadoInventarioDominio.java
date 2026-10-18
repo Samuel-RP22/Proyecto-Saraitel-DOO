@@ -11,16 +11,14 @@ public class EstadoInventarioDominio {
 	private final String codigo;
 	private final String nombre;
 
-	public EstadoInventarioDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.codigo = UtilTexto.VACIA;
-		this.nombre = UtilTexto.VACIA;
-	}
-
 	public EstadoInventarioDominio(final UUID id, final String codigo, final String nombre) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
+
+	public static EstadoInventarioDominio obtenerValorDefecto() {
+		return new EstadoInventarioDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA, UtilTexto.VACIA);
 	}
 
 	public UUID getId() {

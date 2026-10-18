@@ -11,16 +11,14 @@ public class EstadoCompraDominio {
 	private final String codigo;
 	private final String nombre;
 
-	public EstadoCompraDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.codigo = UtilTexto.VACIA;
-		this.nombre = UtilTexto.VACIA;
-	}
-
 	public EstadoCompraDominio(final UUID id, final String codigo, final String nombre) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
+
+	public static EstadoCompraDominio obtenerValorDefecto() {
+		return new EstadoCompraDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA, UtilTexto.VACIA);
 	}
 
 	public UUID getId() {

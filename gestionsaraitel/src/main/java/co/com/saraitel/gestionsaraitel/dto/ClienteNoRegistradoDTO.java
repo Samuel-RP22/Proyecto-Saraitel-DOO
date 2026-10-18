@@ -33,7 +33,6 @@ public class ClienteNoRegistradoDTO {
 	}
 
 	public void setCliente(final ClienteDTO cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteDTO());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteDTO());
 	}
 }

@@ -61,7 +61,7 @@ public class PersonaDTO {
 			this.telefonoConfirmado = false;
 			this.correoConfirmado = false;
 		}
-		
+
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;
@@ -130,8 +130,7 @@ public class PersonaDTO {
 	}
 
 	public void setTipoDocumento(final TipoDocumentoDTO tipoDocumento) {
-		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(tipoDocumento, new TipoDocumentoDTO());
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(tipoDocumento, new TipoDocumentoDTO());
 	}
 
 	public PrefijoDTO getPrefijo() {
@@ -139,8 +138,7 @@ public class PersonaDTO {
 	}
 
 	public void setPrefijo(final PrefijoDTO prefijo) {
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(prefijo, new PrefijoDTO());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoDTO());
 	}
 
 	public String getNumeroDocumento() {

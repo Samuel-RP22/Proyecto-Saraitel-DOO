@@ -29,10 +29,9 @@ public class ProcesoCompraDTO {
 		setTotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	public ProcesoCompraDTO(final UUID id, final ClienteDTO cliente, 
-			final EmpleadoDTO empleado, final EstadoProcesoCompraDTO estado,
-			final LocalDateTime fechaInicio, final LocalDateTime fechaActualizacion, 
-			final BigDecimal total) {
+	public ProcesoCompraDTO(final UUID id, final ClienteDTO cliente, final EmpleadoDTO empleado,
+			final EstadoProcesoCompraDTO estado, final LocalDateTime fechaInicio,
+			final LocalDateTime fechaActualizacion, final BigDecimal total) {
 		setId(id);
 		setCliente(cliente);
 		setEmpleado(empleado);
@@ -55,8 +54,7 @@ public class ProcesoCompraDTO {
 	}
 
 	public void setCliente(final ClienteDTO cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteDTO());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteDTO());
 	}
 
 	public EmpleadoDTO getEmpleado() {
@@ -64,8 +62,7 @@ public class ProcesoCompraDTO {
 	}
 
 	public void setEmpleado(final EmpleadoDTO empleado) {
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoDTO());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, new EmpleadoDTO());
 	}
 
 	public EstadoProcesoCompraDTO getEstado() {

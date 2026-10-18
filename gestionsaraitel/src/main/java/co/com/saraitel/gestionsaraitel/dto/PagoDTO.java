@@ -23,8 +23,7 @@ public class PagoDTO {
 		setFechaPago(UtilFecha.FECHA_HORA_DEFECTO);
 	}
 
-	public PagoDTO(final UUID id, final CompraDTO compra,
-			final BigDecimal montoPagado, final LocalDateTime fechaPago) {
+	public PagoDTO(final UUID id, final CompraDTO compra, final BigDecimal montoPagado, final LocalDateTime fechaPago) {
 		setId(id);
 		setCompra(compra);
 		setMontoPagado(montoPagado);
@@ -44,8 +43,7 @@ public class PagoDTO {
 	}
 
 	public void setCompra(final CompraDTO compra) {
-		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(compra, new CompraDTO());
+		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(compra, new CompraDTO());
 	}
 
 	public BigDecimal getMontoPagado() {

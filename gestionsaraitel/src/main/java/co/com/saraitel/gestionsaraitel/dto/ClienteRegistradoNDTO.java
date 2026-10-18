@@ -17,7 +17,7 @@ public class ClienteRegistradoNDTO {
 		setPersona(new PersonaDTO());
 	}
 
-	public ClienteRegistradoNDTO(final UUID id, final ClienteRegistradoDTO clienteRegistrado, 
+	public ClienteRegistradoNDTO(final UUID id, final ClienteRegistradoDTO clienteRegistrado,
 			final PersonaDTO persona) {
 		setId(id);
 		setClienteRegistrado(clienteRegistrado);
@@ -37,8 +37,8 @@ public class ClienteRegistradoNDTO {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoDTO clienteRegistrado) {
-		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(clienteRegistrado, new ClienteRegistradoDTO());
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteRegistrado,
+				new ClienteRegistradoDTO());
 	}
 
 	public PersonaDTO getPersona() {
@@ -46,7 +46,6 @@ public class ClienteRegistradoNDTO {
 	}
 
 	public void setPersona(final PersonaDTO persona) {
-		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(persona, new PersonaDTO());
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaDTO());
 	}
 }

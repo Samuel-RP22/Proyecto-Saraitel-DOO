@@ -11,16 +11,14 @@ public class EstadoSaldoFavorDominio {
 	private final String codigo;
 	private final String nombre;
 
-	public EstadoSaldoFavorDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.codigo = UtilTexto.VACIA;
-		this.nombre = UtilTexto.VACIA;
-	}
-
 	public EstadoSaldoFavorDominio(final UUID id, final String codigo, final String nombre) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
+
+	public static EstadoSaldoFavorDominio obtenerValorDefecto() {
+		return new EstadoSaldoFavorDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA, UtilTexto.VACIA);
 	}
 
 	public UUID getId() {

@@ -61,7 +61,7 @@ public class PersonaEntidad {
 			this.telefonoConfirmado = false;
 			this.correoConfirmado = false;
 		}
-		
+
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;
@@ -130,8 +130,8 @@ public class PersonaEntidad {
 	}
 
 	public void setTipoDocumento(final TipoDocumentoEntidad tipoDocumento) {
-		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(tipoDocumento, new TipoDocumentoEntidad());
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(tipoDocumento,
+				new TipoDocumentoEntidad());
 	}
 
 	public PrefijoEntidad getPrefijo() {
@@ -139,8 +139,7 @@ public class PersonaEntidad {
 	}
 
 	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(prefijo, new PrefijoEntidad());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoEntidad());
 	}
 
 	public String getNumeroDocumento() {

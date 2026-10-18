@@ -6,24 +6,23 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteDominio {
 
-    private UUID id;
-    private boolean esClienteRegistrado;
+	private final UUID id;
+	private final boolean esClienteRegistrado;
 
-    public ClienteDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.esClienteRegistrado = true;
-    }
+	public ClienteDominio(final UUID id, final boolean esClienteRegistrado) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.esClienteRegistrado = esClienteRegistrado;
+	}
 
-    public ClienteDominio(final UUID id, final boolean esClienteRegistrado) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.esClienteRegistrado = esClienteRegistrado;
-    }
+	public static ClienteDominio obtenerValorDefecto() {
+		return new ClienteDominio(UtilUUID.obtenerUUIDDefecto(), false);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public boolean getEsClienteRegistrado() {
-        return esClienteRegistrado;
-    }
+	public boolean getEsClienteRegistrado() {
+		return esClienteRegistrado;
+	}
 }

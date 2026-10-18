@@ -7,18 +7,13 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class AdministradorDominio {
 
-	private UUID id;
-	private EmpleadoDominio empleado;
-
-	public AdministradorDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.empleado = new EmpleadoDominio();
-	}
+	private final UUID id;
+	private final EmpleadoDominio empleado;
 
 	public AdministradorDominio(final UUID id, final EmpleadoDominio empleado) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoDominio());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado,
+				EmpleadoDominio.obtenerValorDefecto());
 	}
 
 	public UUID getId() {

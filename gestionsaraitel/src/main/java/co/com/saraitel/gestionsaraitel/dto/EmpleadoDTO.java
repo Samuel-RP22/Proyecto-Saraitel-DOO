@@ -19,8 +19,7 @@ public class EmpleadoDTO {
 		setEsActivo(true);
 	}
 
-	public EmpleadoDTO(final UUID id, final SedeDTO sede, 
-			final PersonaDTO persona, final boolean esActivo) {
+	public EmpleadoDTO(final UUID id, final SedeDTO sede, final PersonaDTO persona, final boolean esActivo) {
 		setId(id);
 		setSede(sede);
 		setPersona(persona);
@@ -40,8 +39,7 @@ public class EmpleadoDTO {
 	}
 
 	public void setSede(final SedeDTO sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeDTO());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeDTO());
 	}
 
 	public PersonaDTO getPersona() {
@@ -49,8 +47,7 @@ public class EmpleadoDTO {
 	}
 
 	public void setPersona(final PersonaDTO persona) {
-		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(persona, new PersonaDTO());
+		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona, new PersonaDTO());
 	}
 
 	public boolean getEsActivo() {

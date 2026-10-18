@@ -13,23 +13,22 @@ public class CompraEntidad {
 	private ProcesoCompraEntidad procesoCompra;
 	private EstadoCompraEntidad estado;
 	private LocalDateTime fechaCompra;
-	
 
 	public CompraEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
 		setProcesoCompra(new ProcesoCompraEntidad());
 		setEstado(new EstadoCompraEntidad());
 		setFechaCompra(UtilFecha.FECHA_HORA_DEFECTO);
-		
+
 	}
 
-	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra,
-			final EstadoCompraEntidad estado, final LocalDateTime fechaCompra) {
+	public CompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra, final EstadoCompraEntidad estado,
+			final LocalDateTime fechaCompra) {
 		setId(id);
 		setProcesoCompra(procesoCompra);
 		setEstado(estado);
 		setFechaCompra(fechaCompra);
-	
+
 	}
 
 	public UUID getId() {
@@ -45,17 +44,16 @@ public class CompraEntidad {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraEntidad procesoCompra) {
-		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(procesoCompra, new ProcesoCompraEntidad());
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(procesoCompra,
+				new ProcesoCompraEntidad());
 	}
-	
+
 	public EstadoCompraEntidad getEstado() {
 		return estado;
 	}
-	
+
 	public void setEstado(final EstadoCompraEntidad estado) {
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoCompraEntidad());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoCompraEntidad());
 	}
 
 	public LocalDateTime getFechaCompra() {
@@ -66,5 +64,4 @@ public class CompraEntidad {
 		this.fechaCompra = UtilFecha.obtenerValorDefecto(fechaCompra);
 	}
 
-	
 }

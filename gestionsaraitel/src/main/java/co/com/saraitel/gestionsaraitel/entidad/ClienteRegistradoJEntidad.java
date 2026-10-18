@@ -62,7 +62,7 @@ public class ClienteRegistradoJEntidad {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder clienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
 			this.clienteRegistrado = clienteRegistrado;
 			return this;
@@ -121,8 +121,8 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setClienteRegistrado(final ClienteRegistradoEntidad clienteRegistrado) {
-		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(clienteRegistrado, new ClienteRegistradoEntidad());
+		this.clienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteRegistrado,
+				new ClienteRegistradoEntidad());
 	}
 
 	public PrefijoEntidad getPrefijo() {
@@ -130,8 +130,7 @@ public class ClienteRegistradoJEntidad {
 	}
 
 	public void setPrefijo(final PrefijoEntidad prefijo) {
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(prefijo, new PrefijoEntidad());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(prefijo, new PrefijoEntidad());
 	}
 
 	public String getTelefono() {

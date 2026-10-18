@@ -26,8 +26,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public DetalleIngresoEntidad(final UUID id, final IngresoInventarioEntidad ingresoInventario,
-			final ProductoSedeEntidad productoSede, final int cantidad, 
-			final BigDecimal costoUnitario, final BigDecimal subtotal) {
+			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal costoUnitario,
+			final BigDecimal subtotal) {
 		setId(id);
 		setIngresoInventario(ingresoInventario);
 		setProductoSede(productoSede);
@@ -49,8 +49,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setIngresoInventario(final IngresoInventarioEntidad ingresoInventario) {
-		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(ingresoInventario, new IngresoInventarioEntidad());
+		this.ingresoInventario = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ingresoInventario,
+				new IngresoInventarioEntidad());
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -58,8 +58,8 @@ public class DetalleIngresoEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(productoSede, new ProductoSedeEntidad());
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede,
+				new ProductoSedeEntidad());
 	}
 
 	public int getCantidad() {

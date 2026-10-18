@@ -26,8 +26,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public DetalleCompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra,
-			final ProductoSedeEntidad productoSede, final int cantidad, 
-			final BigDecimal precioUnitario, final BigDecimal subtotal) {
+			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal precioUnitario,
+			final BigDecimal subtotal) {
 		setId(id);
 		setProcesoCompra(procesoCompra);
 		setProductoSede(productoSede);
@@ -49,8 +49,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraEntidad procesoCompra) {
-		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(procesoCompra, new ProcesoCompraEntidad());
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(procesoCompra,
+				new ProcesoCompraEntidad());
 	}
 
 	public ProductoSedeEntidad getProductoSede() {
@@ -58,8 +58,8 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setProductoSede(final ProductoSedeEntidad productoSede) {
-		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(productoSede, new ProductoSedeEntidad());
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede,
+				new ProductoSedeEntidad());
 	}
 
 	public int getCantidad() {

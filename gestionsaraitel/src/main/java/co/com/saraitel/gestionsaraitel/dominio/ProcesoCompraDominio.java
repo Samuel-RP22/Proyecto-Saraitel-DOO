@@ -19,29 +19,25 @@ public class ProcesoCompraDominio {
 	private final LocalDateTime fechaActualizacion;
 	private final BigDecimal total;
 
-	public ProcesoCompraDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.cliente = new ClienteDominio();
-		this.empleado = new EmpleadoDominio();
-		this.estado = new EstadoProcesoCompraDominio();
-		this.fechaInicio = UtilFecha.FECHA_HORA_DEFECTO;
-		this.fechaActualizacion = UtilFecha.FECHA_HORA_DEFECTO;
-		this.total = UtilNumero.CERO_DECIMAL;
-	}
-
-	public ProcesoCompraDominio(final UUID id, final ClienteDominio cliente,
-			final EmpleadoDominio empleado, final EstadoProcesoCompraDominio estado,
-			final LocalDateTime fechaInicio, final LocalDateTime fechaActualizacion,
-			final BigDecimal total) {
+	public ProcesoCompraDominio(final UUID id, final ClienteDominio cliente, final EmpleadoDominio empleado,
+			final EstadoProcesoCompraDominio estado, final LocalDateTime fechaInicio,
+			final LocalDateTime fechaActualizacion, final BigDecimal total) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteDominio());
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoDominio());
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoProcesoCompraDominio());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente,
+				ClienteDominio.obtenerValorDefecto());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado,
+				EmpleadoDominio.obtenerValorDefecto());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado,
+				EstadoProcesoCompraDominio.obtenerValorDefecto());
 		this.fechaInicio = UtilFecha.obtenerValorDefecto(fechaInicio);
 		this.fechaActualizacion = UtilFecha.obtenerValorDefecto(fechaActualizacion);
 		this.total = UtilNumero.obtenerValorDefecto(total);
+	}
+
+	public static ProcesoCompraDominio obtenerValorDefecto() {
+		return new ProcesoCompraDominio(UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(),
+				EmpleadoDominio.obtenerValorDefecto(), EstadoProcesoCompraDominio.obtenerValorDefecto(),
+				UtilFecha.FECHA_HORA_DEFECTO, UtilFecha.FECHA_HORA_DEFECTO, UtilNumero.CERO_DECIMAL);
 	}
 
 	public UUID getId() {

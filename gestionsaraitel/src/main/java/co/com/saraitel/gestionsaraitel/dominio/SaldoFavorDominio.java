@@ -14,21 +14,19 @@ public class SaldoFavorDominio {
 	private final EstadoSaldoFavorDominio estado;
 	private final BigDecimal montoUsado;
 
-	public SaldoFavorDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.devolucion = new DevolucionDominio();
-		this.estado = new EstadoSaldoFavorDominio();
-		this.montoUsado = UtilNumero.CERO_DECIMAL;
+	public SaldoFavorDominio(final UUID id, final DevolucionDominio devolucion, final EstadoSaldoFavorDominio estado,
+			final BigDecimal montoUsado) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(devolucion,
+				DevolucionDominio.obtenerValorDefecto());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado,
+				EstadoSaldoFavorDominio.obtenerValorDefecto());
+		this.montoUsado = UtilNumero.obtenerValorDefecto(montoUsado);
 	}
 
-	public SaldoFavorDominio(final UUID id, final DevolucionDominio devolucion,
-			final EstadoSaldoFavorDominio estado, final BigDecimal montoUsado) {
-		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(devolucion, new DevolucionDominio());
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoSaldoFavorDominio());
-		this.montoUsado = UtilNumero.obtenerValorDefecto(montoUsado);
+	public static SaldoFavorDominio obtenerValorDefecto() {
+		return new SaldoFavorDominio(UtilUUID.obtenerUUIDDefecto(), DevolucionDominio.obtenerValorDefecto(),
+				EstadoSaldoFavorDominio.obtenerValorDefecto(), UtilNumero.CERO_DECIMAL);
 	}
 
 	public UUID getId() {

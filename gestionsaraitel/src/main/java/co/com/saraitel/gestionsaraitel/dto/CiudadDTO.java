@@ -18,8 +18,7 @@ public class CiudadDTO {
 		setDepartamento(new DepartamentoDTO());
 	}
 
-	public CiudadDTO(final UUID id, final String nombre, 
-			final DepartamentoDTO departamento) {
+	public CiudadDTO(final UUID id, final String nombre, final DepartamentoDTO departamento) {
 		setId(id);
 		setNombre(nombre);
 		setDepartamento(departamento);
@@ -46,7 +45,6 @@ public class CiudadDTO {
 	}
 
 	public void setDepartamento(final DepartamentoDTO departamento) {
-		this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(departamento, new DepartamentoDTO());
+		this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento, new DepartamentoDTO());
 	}
 }

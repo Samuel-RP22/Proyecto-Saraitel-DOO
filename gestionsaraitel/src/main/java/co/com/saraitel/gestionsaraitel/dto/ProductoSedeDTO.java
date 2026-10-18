@@ -63,7 +63,7 @@ public class ProductoSedeDTO {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder producto(final ProductoDTO producto) {
 			this.producto = producto;
 			return this;
@@ -122,8 +122,7 @@ public class ProductoSedeDTO {
 	}
 
 	public void setProducto(final ProductoDTO producto) {
-		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(producto, new ProductoDTO());
+		this.producto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(producto, new ProductoDTO());
 	}
 
 	public SedeDTO getSede() {
@@ -131,8 +130,7 @@ public class ProductoSedeDTO {
 	}
 
 	public void setSede(final SedeDTO sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeDTO());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeDTO());
 	}
 
 	public BigDecimal getPrecio() {

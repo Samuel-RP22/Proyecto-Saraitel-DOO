@@ -16,7 +16,6 @@ public class IngresoInventarioDTO {
 	private EstadoInventarioDTO estado;
 	private LocalDateTime fechaLlegada;
 	private BigDecimal total;
-	
 
 	public IngresoInventarioDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -26,8 +25,7 @@ public class IngresoInventarioDTO {
 		setTotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	public IngresoInventarioDTO(final UUID id, final SedeDTO sede, 
-			final EstadoInventarioDTO estado, 
+	public IngresoInventarioDTO(final UUID id, final SedeDTO sede, final EstadoInventarioDTO estado,
 			final LocalDateTime fechaLlegada, final BigDecimal total) {
 		setId(id);
 		setSede(sede);
@@ -49,17 +47,15 @@ public class IngresoInventarioDTO {
 	}
 
 	public void setSede(final SedeDTO sede) {
-		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(sede, new SedeDTO());
+		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, new SedeDTO());
 	}
-	
+
 	public EstadoInventarioDTO getEstado() {
 		return estado;
 	}
 
 	public void setEstado(final EstadoInventarioDTO estado) {
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoInventarioDTO());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoInventarioDTO());
 	}
 
 	public LocalDateTime getFechaLlegada() {

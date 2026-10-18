@@ -25,9 +25,8 @@ public class DetalleCompraDTO {
 		setSubtotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	public DetalleCompraDTO(final UUID id, final ProcesoCompraDTO procesoCompra,
-			final ProductoSedeDTO productoSede, final int cantidad, 
-			final BigDecimal precioUnitario, final BigDecimal subtotal) {
+	public DetalleCompraDTO(final UUID id, final ProcesoCompraDTO procesoCompra, final ProductoSedeDTO productoSede,
+			final int cantidad, final BigDecimal precioUnitario, final BigDecimal subtotal) {
 		setId(id);
 		setProcesoCompra(procesoCompra);
 		setProductoSede(productoSede);
@@ -49,8 +48,7 @@ public class DetalleCompraDTO {
 	}
 
 	public void setProcesoCompra(final ProcesoCompraDTO procesoCompra) {
-		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(procesoCompra, new ProcesoCompraDTO());
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(procesoCompra, new ProcesoCompraDTO());
 	}
 
 	public ProductoSedeDTO getProductoSede() {
@@ -58,8 +56,7 @@ public class DetalleCompraDTO {
 	}
 
 	public void setProductoSede(final ProductoSedeDTO productoSede) {
-		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(productoSede, new ProductoSedeDTO());
+		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede, new ProductoSedeDTO());
 	}
 
 	public int getCantidad() {

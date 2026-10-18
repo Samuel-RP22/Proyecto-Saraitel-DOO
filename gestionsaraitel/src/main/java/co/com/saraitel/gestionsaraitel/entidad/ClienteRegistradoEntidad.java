@@ -17,8 +17,7 @@ public class ClienteRegistradoEntidad {
 		setClienteNaturalDefecto(true);
 	}
 
-	public ClienteRegistradoEntidad(final UUID id, final ClienteEntidad cliente, 
-			final boolean clienteNaturalDefecto) {
+	public ClienteRegistradoEntidad(final UUID id, final ClienteEntidad cliente, final boolean clienteNaturalDefecto) {
 		setId(id);
 		setCliente(cliente);
 		setClienteNaturalDefecto(clienteNaturalDefecto);
@@ -37,8 +36,7 @@ public class ClienteRegistradoEntidad {
 	}
 
 	public void setCliente(final ClienteEntidad cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteEntidad());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteEntidad());
 	}
 
 	public boolean getClienteNaturalDefecto() {

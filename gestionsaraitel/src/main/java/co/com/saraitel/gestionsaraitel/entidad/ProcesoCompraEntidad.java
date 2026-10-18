@@ -29,10 +29,9 @@ public class ProcesoCompraEntidad {
 		setTotal(UtilNumero.CERO_DECIMAL);
 	}
 
-	public ProcesoCompraEntidad(final UUID id, final ClienteEntidad cliente, 
-			final EmpleadoEntidad empleado, final EstadoProcesoCompraEntidad estado,
-			final LocalDateTime fechaInicio, final LocalDateTime fechaActualizacion, 
-			final BigDecimal total) {
+	public ProcesoCompraEntidad(final UUID id, final ClienteEntidad cliente, final EmpleadoEntidad empleado,
+			final EstadoProcesoCompraEntidad estado, final LocalDateTime fechaInicio,
+			final LocalDateTime fechaActualizacion, final BigDecimal total) {
 		setId(id);
 		setCliente(cliente);
 		setEmpleado(empleado);
@@ -55,8 +54,7 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setCliente(final ClienteEntidad cliente) {
-		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(cliente, new ClienteEntidad());
+		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente, new ClienteEntidad());
 	}
 
 	public EmpleadoEntidad getEmpleado() {
@@ -64,8 +62,7 @@ public class ProcesoCompraEntidad {
 	}
 
 	public void setEmpleado(final EmpleadoEntidad empleado) {
-		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(empleado, new EmpleadoEntidad());
+		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado, new EmpleadoEntidad());
 	}
 
 	public EstadoProcesoCompraEntidad getEstado() {

@@ -7,32 +7,29 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class MarcaDominio {
 
-    private UUID id;
-    private String nombre;
-    private boolean esActivo;
+	private final UUID id;
+	private final String nombre;
+	private final boolean esActivo;
 
-    public MarcaDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.nombre = UtilTexto.VACIA;
-        this.esActivo = true;
-    }
+	public MarcaDominio(final UUID id, final String nombre, final boolean esActivo) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+		this.esActivo = esActivo;
+	}
 
-    public MarcaDominio(final UUID id, final String nombre,
-            final boolean esActivo) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-        this.esActivo = esActivo;
-    }
+	public static MarcaDominio obtenerValorDefecto() {
+		return new MarcaDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA, true);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public boolean getEsActivo() {
-        return esActivo;
-    }
+	public boolean getEsActivo() {
+		return esActivo;
+	}
 }

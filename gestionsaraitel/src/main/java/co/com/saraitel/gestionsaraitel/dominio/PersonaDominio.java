@@ -19,16 +19,12 @@ public class PersonaDominio {
 	private final boolean telefonoConfirmado;
 	private final boolean correoConfirmado;
 
-	public PersonaDominio() {
-		this(new Builder());
-	}
-
 	private PersonaDominio(final Builder builder) {
 		this.id = UtilUUID.obtenerValorDefecto(builder.id);
-		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.tipoDocumento, new TipoDocumentoDominio());
-		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(builder.prefijo, new PrefijoDominio());
+		this.tipoDocumento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.tipoDocumento,
+				TipoDocumentoDominio.obtenerValorDefecto());
+		this.prefijo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.prefijo,
+				PrefijoDominio.obtenerValorDefecto());
 		this.numeroDocumento = UtilTexto.quitarEspaciosEnBlanco(builder.numeroDocumento);
 		this.telefono = UtilTexto.quitarEspaciosEnBlanco(builder.telefono);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(builder.nombre);
@@ -36,6 +32,10 @@ public class PersonaDominio {
 		this.correo = UtilTexto.quitarEspaciosEnBlanco(builder.correo);
 		this.telefonoConfirmado = builder.telefonoConfirmado;
 		this.correoConfirmado = builder.correoConfirmado;
+	}
+
+	public static PersonaDominio obtenerValorDefecto() {
+		return new Builder().construir();
 	}
 
 	public static final class Builder {
@@ -53,8 +53,8 @@ public class PersonaDominio {
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
-			this.tipoDocumento = new TipoDocumentoDominio();
-			this.prefijo = new PrefijoDominio();
+			this.tipoDocumento = TipoDocumentoDominio.obtenerValorDefecto();
+			this.prefijo = PrefijoDominio.obtenerValorDefecto();
 			this.numeroDocumento = UtilTexto.VACIA;
 			this.telefono = UtilTexto.VACIA;
 			this.nombre = UtilTexto.VACIA;
@@ -63,7 +63,7 @@ public class PersonaDominio {
 			this.telefonoConfirmado = false;
 			this.correoConfirmado = false;
 		}
-		
+
 		public Builder id(final UUID id) {
 			this.id = id;
 			return this;

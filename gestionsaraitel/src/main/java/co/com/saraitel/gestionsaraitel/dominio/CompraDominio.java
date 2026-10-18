@@ -14,21 +14,19 @@ public class CompraDominio {
 	private final EstadoCompraDominio estado;
 	private final LocalDateTime fechaCompra;
 
-	public CompraDominio() {
-		this.id = UtilUUID.obtenerUUIDDefecto();
-		this.procesoCompra = new ProcesoCompraDominio();
-		this.estado = new EstadoCompraDominio();
-		this.fechaCompra = UtilFecha.FECHA_HORA_DEFECTO;
+	public CompraDominio(final UUID id, final ProcesoCompraDominio procesoCompra, final EstadoCompraDominio estado,
+			final LocalDateTime fechaCompra) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(procesoCompra,
+				ProcesoCompraDominio.obtenerValorDefecto());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado,
+				EstadoCompraDominio.obtenerValorDefecto());
+		this.fechaCompra = UtilFecha.obtenerValorDefecto(fechaCompra);
 	}
 
-	public CompraDominio(final UUID id, final ProcesoCompraDominio procesoCompra,
-			final EstadoCompraDominio estado, final LocalDateTime fechaCompra) {
-		this.id = UtilUUID.obtenerValorDefecto(id);
-		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(procesoCompra, new ProcesoCompraDominio());
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoCompraDominio());
-		this.fechaCompra = UtilFecha.obtenerValorDefecto(fechaCompra);
+	public static CompraDominio obtenerValorDefecto() {
+		return new CompraDominio(UtilUUID.obtenerUUIDDefecto(), ProcesoCompraDominio.obtenerValorDefecto(),
+				EstadoCompraDominio.obtenerValorDefecto(), UtilFecha.FECHA_HORA_DEFECTO);
 	}
 
 	public UUID getId() {

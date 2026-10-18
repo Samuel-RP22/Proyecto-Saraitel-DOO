@@ -7,24 +7,23 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class PrefijoDominio {
 
-    private UUID id;
-    private String codigo;
+	private final UUID id;
+	private final String codigo;
 
-    public PrefijoDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.codigo = UtilTexto.VACIA;
-    }
+	public PrefijoDominio(final UUID id, final String codigo) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
+	}
 
-    public PrefijoDominio(final UUID id, final String codigo) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.codigo = UtilTexto.quitarEspaciosEnBlanco(codigo);
-    }
+	public static PrefijoDominio obtenerValorDefecto() {
+		return new PrefijoDominio(UtilUUID.obtenerUUIDDefecto(), UtilTexto.VACIA);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getCodigo() {
-        return codigo;
-    }
+	public String getCodigo() {
+		return codigo;
+	}
 }

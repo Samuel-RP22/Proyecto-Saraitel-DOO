@@ -11,40 +11,37 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class PagoDominio {
 
-    private UUID id;
-    private CompraDominio compra;
-    private BigDecimal montoPagado;
-    private LocalDateTime fechaPago;
+	private final UUID id;
+	private final CompraDominio compra;
+	private final BigDecimal montoPagado;
+	private final LocalDateTime fechaPago;
 
-    public PagoDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.compra = new CompraDominio();
-        this.montoPagado = UtilNumero.CERO_DECIMAL;
-        this.fechaPago = UtilFecha.FECHA_HORA_DEFECTO;
-    }
+	public PagoDominio(final UUID id, final CompraDominio compra, final BigDecimal montoPagado,
+			final LocalDateTime fechaPago) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(compra, CompraDominio.obtenerValorDefecto());
+		this.montoPagado = UtilNumero.obtenerValorDefecto(montoPagado);
+		this.fechaPago = UtilFecha.obtenerValorDefecto(fechaPago);
+	}
 
-    public PagoDominio(final UUID id, final CompraDominio compra,
-            final BigDecimal montoPagado, final LocalDateTime fechaPago) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.compra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-                compra, new CompraDominio());
-        this.montoPagado = UtilNumero.obtenerValorDefecto(montoPagado);
-        this.fechaPago = UtilFecha.obtenerValorDefecto(fechaPago);
-    }
+	public static PagoDominio obtenerValorDefecto() {
+		return new PagoDominio(UtilUUID.obtenerUUIDDefecto(), CompraDominio.obtenerValorDefecto(),
+				UtilNumero.CERO_DECIMAL, UtilFecha.FECHA_HORA_DEFECTO);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public CompraDominio getCompra() {
-        return compra;
-    }
+	public CompraDominio getCompra() {
+		return compra;
+	}
 
-    public BigDecimal getMontoPagado() {
-        return montoPagado;
-    }
+	public BigDecimal getMontoPagado() {
+		return montoPagado;
+	}
 
-    public LocalDateTime getFechaPago() {
-        return fechaPago;
-    }
+	public LocalDateTime getFechaPago() {
+		return fechaPago;
+	}
 }

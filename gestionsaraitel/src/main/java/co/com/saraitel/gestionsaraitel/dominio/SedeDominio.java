@@ -8,55 +8,49 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class SedeDominio {
 
-    private UUID id;
-    private CiudadDominio ciudad;
-    private String nombre;
-    private String nit;
-    private String direccion;
-    private boolean esActiva;
+	private final UUID id;
+	private final CiudadDominio ciudad;
+	private final String nombre;
+	private final String nit;
+	private final String direccion;
+	private final boolean esActiva;
 
-    public SedeDominio() {
-        this.id = UtilUUID.obtenerUUIDDefecto();
-        this.ciudad = new CiudadDominio();
-        this.nombre = UtilTexto.VACIA;
-        this.nit = UtilTexto.VACIA;
-        this.direccion = UtilTexto.VACIA;
-        this.esActiva = true;
-    }
+	public SedeDominio(final UUID id, final CiudadDominio ciudad, final String nombre, final String nit,
+			final String direccion, final boolean esActiva) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+		this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ciudad, CiudadDominio.obtenerValorDefecto());
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+		this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
+		this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
+		this.esActiva = esActiva;
+	}
 
-    public SedeDominio(final UUID id, final CiudadDominio ciudad,
-            final String nombre, final String nit, final String direccion,
-            final boolean esActiva) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-        this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-                ciudad, new CiudadDominio());
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-        this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
-        this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
-        this.esActiva = esActiva;
-    }
+	public static SedeDominio obtenerValorDefecto() {
+		return new SedeDominio(UtilUUID.obtenerUUIDDefecto(), CiudadDominio.obtenerValorDefecto(), UtilTexto.VACIA,
+				UtilTexto.VACIA, UtilTexto.VACIA, true);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public CiudadDominio getCiudad() {
-        return ciudad;
-    }
+	public CiudadDominio getCiudad() {
+		return ciudad;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getNit() {
-        return nit;
-    }
+	public String getNit() {
+		return nit;
+	}
 
-    public String getDireccion() {
-        return direccion;
-    }
+	public String getDireccion() {
+		return direccion;
+	}
 
-    public boolean getEsActiva() {
-        return esActiva;
-    }
+	public boolean getEsActiva() {
+		return esActiva;
+	}
 }

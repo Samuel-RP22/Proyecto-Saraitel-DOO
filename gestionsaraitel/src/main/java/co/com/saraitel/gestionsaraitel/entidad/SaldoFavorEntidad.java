@@ -13,7 +13,6 @@ public class SaldoFavorEntidad {
 	private DevolucionEntidad devolucion;
 	private EstadoSaldoFavorEntidad estado;
 	private BigDecimal montoUsado;
-	
 
 	public SaldoFavorEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
@@ -22,8 +21,8 @@ public class SaldoFavorEntidad {
 		setMontoUsado(UtilNumero.CERO_DECIMAL);
 	}
 
-	public SaldoFavorEntidad(final UUID id, final DevolucionEntidad devolucion,
-			final EstadoSaldoFavorEntidad estado, final BigDecimal montoUsado) {
+	public SaldoFavorEntidad(final UUID id, final DevolucionEntidad devolucion, final EstadoSaldoFavorEntidad estado,
+			final BigDecimal montoUsado) {
 		setId(id);
 		setDevolucion(devolucion);
 		setEstado(estado);
@@ -43,17 +42,15 @@ public class SaldoFavorEntidad {
 	}
 
 	public void setDevolucion(final DevolucionEntidad devolucion) {
-		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(devolucion, new DevolucionEntidad());
+		this.devolucion = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(devolucion, new DevolucionEntidad());
 	}
-	
+
 	public EstadoSaldoFavorEntidad getEstado() {
 		return estado;
 	}
 
 	public void setEstado(final EstadoSaldoFavorEntidad estado) {
-		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-				(estado, new EstadoSaldoFavorEntidad());
+		this.estado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(estado, new EstadoSaldoFavorEntidad());
 	}
 
 	public BigDecimal getMontoUsado() {

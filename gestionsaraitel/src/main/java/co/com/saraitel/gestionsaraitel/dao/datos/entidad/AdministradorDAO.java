@@ -6,8 +6,6 @@ import co.com.saraitel.gestionsaraitel.dao.datos.ConsultarDao;
 import co.com.saraitel.gestionsaraitel.dao.datos.CrearDao;
 import co.com.saraitel.gestionsaraitel.entidad.AdministradorEntidad;
 
-public interface AdministradorDAO
-        extends CrearDao<AdministradorEntidad>,
-                ConsultarDao<AdministradorEntidad, UUID> {
+public interface AdministradorDAO extends CrearDao<AdministradorEntidad>, ConsultarDao<AdministradorEntidad, UUID> {
 
 }
