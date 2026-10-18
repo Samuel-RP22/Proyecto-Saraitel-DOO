@@ -29,32 +29,6 @@ public class CatalogoMensajes {
 	}
 
 
-public static class PostgreSqlDAO {
-
-    private PostgreSqlDAO() {
-    }
-
-    public static final String USUARIO_ERROR_CREANDO_REGISTRO =
-            "Se presentó un problema al registrar la información. "
-            + "Por favor, intente de nuevo y si el problema persiste "
-            + "contacte al administrador de la aplicación.";
-
-    public static final String USUARIO_ERROR_CONSULTANDO_REGISTROS =
-            "Se presentó un problema al consultar la información. "
-            + "Por favor, intente de nuevo y si el problema persiste "
-            + "contacte al administrador de la aplicación.";
-
-    public static final String USUARIO_ERROR_ACTUALIZANDO_REGISTRO =
-            "Se presentó un problema al actualizar la información. "
-            + "Por favor, intente de nuevo y si el problema persiste "
-            + "contacte al administrador de la aplicación.";
-
-    public static final String USUARIO_ERROR_ELIMINANDO_REGISTRO =
-            "Se presentó un problema al eliminar la información. "
-            + "Por favor, intente de nuevo y si el problema persiste "
-            + "contacte al administrador de la aplicación.";
-}
-
 
 	public static class DAOFactory {
 		private DAOFactory() {

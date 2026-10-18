@@ -7,46 +7,45 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class CiudadEntidad {
-    
-    private UUID id;
-    private String nombre;
-    private DepartamentoEntidad departamento;
 
-    public CiudadEntidad() {
-        setId(UtilUUID.obtenerUUIDDefecto());
-        setNombre(UtilTexto.VACIA);
-        setDepartamento(new DepartamentoEntidad());
-    }
+	private UUID id;
+	private String nombre;
+	private DepartamentoEntidad departamento;
 
-    public CiudadEntidad(final UUID id, final String nombre, 
-    		final DepartamentoEntidad departamento) {
-        setId(id);
-        setNombre(nombre);
-        setDepartamento(departamento);
-    }
+	public CiudadEntidad() {
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setNombre(UtilTexto.VACIA);
+		setDepartamento(new DepartamentoEntidad());
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public CiudadEntidad(final UUID id, final String nombre, final DepartamentoEntidad departamento) {
+		setId(id);
+		setNombre(nombre);
+		setDepartamento(departamento);
+	}
 
-    public void setId(final UUID id) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public void setId(final UUID id) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+	}
 
-    public void setNombre(final String nombre) {
-        this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public DepartamentoEntidad getDepartamento() {
-        return departamento;
-    }
+	public void setNombre(final String nombre) {
+		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
+	}
 
-    public void setDepartamento(final DepartamentoEntidad departamento) {
-        this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-        		(departamento, new DepartamentoEntidad());
-    }
+	public DepartamentoEntidad getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(final DepartamentoEntidad departamento) {
+		this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento,
+				new DepartamentoEntidad());
+	}
 }

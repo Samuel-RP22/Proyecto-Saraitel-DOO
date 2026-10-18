@@ -47,213 +47,203 @@ import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTr
 
 public class PostgreSqlDaoFactory extends DAOFactory {
 
-    private static final String URL =
-        "jdbc:postgresql://localhost:5432/saraitel";
+	private static final String URL = "jdbc:postgresql://localhost:5432/saraitel";
+	private static final String USUARIO = "admin";
+	private static final String CONTRASENA = "123";
 
-    private static final String USUARIO = "admin";
-    private static final String CONTRASENA = "123";
+	public PostgreSqlDaoFactory() {
+		abrirConexion();
+	}
 
-    public PostgreSqlDaoFactory() {
-        abrirConexion();
-    }
+	@Override
+	protected void abrirConexion() {
+		try {
+			Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+			setConexion(conexion);
 
-    @Override
-    protected void abrirConexion() {
-        try {
-            Connection conexion =
-                DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+		} catch (SQLException excepcion) {
+			String mensajeUsuario = "No fue posible conectar con la base de datos PostgreSQL";
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		}
+	}
 
-            setConexion(conexion);
+	@Override
+	public AdministradorDAO obtenerAdministradorDao() {
+		return new AdministradorPostgreSqlDao(getConexion());
+	}
 
-        } catch (SQLException excepcion) {
-            String mensajeUsuario =
-                "No fue posible conectar con la base de datos PostgreSQL";
+	@Override
+	public AplicacionSaldoDAO obtenerAplicacionSaldoDao() {
+		return new AplicacionSaldoPostgreSqlDao(getConexion());
+	}
 
-            throw GestionSaraitelTransversalExcepcion.crear(
-                mensajeUsuario,
-                excepcion.getMessage(),
-                excepcion
-            );
-        }
-    }
+	@Override
+	public CategoriaDAO obtenerCategoriaDao() {
+		return new CategoriaPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public AdministradorDAO obtenerAdministradorDao() {
-        return new AdministradorPostgreSqlDao(getConexion());
-    }
+	@Override
+	public CiudadDAO obtenerCiudadDao() {
+		return new CiudadPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public AplicacionSaldoDAO obtenerAplicacionSaldoDao() {
-        return new AplicacionSaldoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ClienteDAO obtenerClienteDao() {
+		return new ClientePostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public CategoriaDAO obtenerCategoriaDao() {
-        return new CategoriaPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao() {
+		return new ClienteNoRegistradoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public CiudadDAO obtenerCiudadDao() {
-        return new CiudadPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ClienteRegistradoDAO obtenerClienteRegistradoDao() {
+		return new ClienteRegistradoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ClienteDAO obtenerClienteDao() {
-        return new ClientePostgreSqlDao(getConexion());
-    }
+	@Override
+	public ClienteRegistradoJDAO obtenerClienteRegistradoJDao() {
+		return new ClienteRegistradoJPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao() {
-        return new ClienteNoRegistradoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ClienteRegistradoNDAO obtenerClienteRegistradoNDao() {
+		return new ClienteRegistradoNPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ClienteRegistradoDAO obtenerClienteRegistradoDao() {
-        return new ClienteRegistradoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public CompraDAO obtenerCompraDao() {
+		return new CompraPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ClienteRegistradoJDAO obtenerClienteRegistradoJDao() {
-        return new ClienteRegistradoJPostgreSqlDao(getConexion());
-    }
+	@Override
+	public DepartamentoDAO obtenerDepartamentoDao() {
+		return new DepartamentoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ClienteRegistradoNDAO obtenerClienteRegistradoNDao() {
-        return new ClienteRegistradoNPostgreSqlDao(getConexion());
-    }
+	@Override
+	public DetalleCompraDAO obtenerDetalleCompraDao() {
+		return new DetalleCompraPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public CompraDAO obtenerCompraDao() {
-        return new CompraPostgreSqlDao(getConexion());
-    }
+	@Override
+	public DetalleIngresoDAO obtenerDetalleIngresoDao() {
+		return new DetalleIngresoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public DepartamentoDAO obtenerDepartamentoDao() {
-        return new DepartamentoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public DevolucionDAO obtenerDevolucionDao() {
+		return new DevolucionPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public DetalleCompraDAO obtenerDetalleCompraDao() {
-        return new DetalleCompraPostgreSqlDao(getConexion());
-    }
+	@Override
+	public EmpleadoDAO obtenerEmpleadoDao() {
+		return new EmpleadoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public DetalleIngresoDAO obtenerDetalleIngresoDao() {
-        return new DetalleIngresoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public EstadoCompraDAO obtenerEstadoCompraDao() {
+		return new EstadoCompraPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public DevolucionDAO obtenerDevolucionDao() {
-        return new DevolucionPostgreSqlDao(getConexion());
-    }
+	@Override
+	public EstadoInventarioDAO obtenerEstadoInventarioDao() {
+		return new EstadoInventarioPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public EmpleadoDAO obtenerEmpleadoDao() {
-        return new EmpleadoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao() {
+		return new EstadoProcesoCompraPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public EstadoCompraDAO obtenerEstadoCompraDao() {
-        return new EstadoCompraPostgreSqlDao(getConexion());
-    }
+	@Override
+	public EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao() {
+		return new EstadoSaldoFavorPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public EstadoInventarioDAO obtenerEstadoInventarioDao() {
-        return new EstadoInventarioPostgreSqlDao(getConexion());
-    }
+	@Override
+	public FacturaDAO obtenerFacturaDao() {
+		return new FacturaPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao() {
-        return new EstadoProcesoCompraPostgreSqlDao(getConexion());
-    }
+	@Override
+	public IngresoInventarioDAO obtenerIngresoInventarioDao() {
+		return new IngresoInventarioPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao() {
-        return new EstadoSaldoFavorPostgreSqlDao(getConexion());
-    }
+	@Override
+	public MarcaDAO obtenerMarcaDao() {
+		return new MarcaPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public FacturaDAO obtenerFacturaDao() {
-        return new FacturaPostgreSqlDao(getConexion());
-    }
+	@Override
+	public MetodoPagoDAO obtenerMetodoPagoDao() {
+		return new MetodoPagoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public IngresoInventarioDAO obtenerIngresoInventarioDao() {
-        return new IngresoInventarioPostgreSqlDao(getConexion());
-    }
+	@Override
+	public MotivoDAO obtenerMotivoDao() {
+		return new MotivoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public MarcaDAO obtenerMarcaDao() {
-        return new MarcaPostgreSqlDao(getConexion());
-    }
+	@Override
+	public PagoDAO obtenerPagoDao() {
+		return new PagoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public MetodoPagoDAO obtenerMetodoPagoDao() {
-        return new MetodoPagoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public PagoNormalDAO obtenerPagoNormalDao() {
+		return new PagoNormalPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public MotivoDAO obtenerMotivoDao() {
-        return new MotivoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public PaisDAO obtenerPaisDao() {
+		return new PaisPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public PagoDAO obtenerPagoDao() {
-        return new PagoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public PersonaDAO obtenerPersonaDao() {
+		return new PersonaPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public PagoNormalDAO obtenerPagoNormalDao() {
-        return new PagoNormalPostgreSqlDao(getConexion());
-    }
+	@Override
+	public PrefijoDAO obtenerPrefijoDao() {
+		return new PrefijoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public PaisDAO obtenerPaisDao() {
-        return new PaisPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ProcesoCompraDAO obtenerProcesoCompraDao() {
+		return new ProcesoCompraPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public PersonaDAO obtenerPersonaDao() {
-        return new PersonaPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ProductoDAO obtenerProductoDao() {
+		return new ProductoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public PrefijoDAO obtenerPrefijoDao() {
-        return new PrefijoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public ProductoSedeDAO obtenerProductoSedeDao() {
+		return new ProductoSedePostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ProcesoCompraDAO obtenerProcesoCompraDao() {
-        return new ProcesoCompraPostgreSqlDao(getConexion());
-    }
+	@Override
+	public SaldoFavorDAO obtenerSaldoFavorDao() {
+		return new SaldoFavorPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ProductoDAO obtenerProductoDao() {
-        return new ProductoPostgreSqlDao(getConexion());
-    }
+	@Override
+	public SedeDAO obtenerSedeDao() {
+		return new SedePostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public ProductoSedeDAO obtenerProductoSedeDao() {
-        return new ProductoSedePostgreSqlDao(getConexion());
-    }
+	@Override
+	public TipoDocumentoDAO obtenerTipoDocumentoDao() {
+		return new TipoDocumentoPostgreSqlDao(getConexion());
+	}
 
-    @Override
-    public SaldoFavorDAO obtenerSaldoFavorDao() {
-        return new SaldoFavorPostgreSqlDao(getConexion());
-    }
-
-    @Override
-    public SedeDAO obtenerSedeDao() {
-        return new SedePostgreSqlDao(getConexion());
-    }
-
-    @Override
-    public TipoDocumentoDAO obtenerTipoDocumentoDao() {
-        return new TipoDocumentoPostgreSqlDao(getConexion());
-    }
-
-    @Override
-    public VendedorDAO obtenerVendedorDao() {
-        return new VendedorPostgreSqlDao(getConexion());
-    }
+	@Override
+	public VendedorDAO obtenerVendedorDao() {
+		return new VendedorPostgreSqlDao(getConexion());
+	}
 }

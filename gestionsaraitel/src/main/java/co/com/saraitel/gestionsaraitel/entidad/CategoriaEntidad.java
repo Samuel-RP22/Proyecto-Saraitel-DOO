@@ -19,8 +19,7 @@ public class CategoriaEntidad {
 		setNivel(1);
 	}
 
-	public CategoriaEntidad(final UUID id, final String nombre, 
-			final UUID idCategoriaPadre, final int nivel) {
+	public CategoriaEntidad(final UUID id, final String nombre, final UUID idCategoriaPadre, final int nivel) {
 		setId(id);
 		setNombre(nombre);
 		setIdCategoriaPadre(idCategoriaPadre);

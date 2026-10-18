@@ -9,57 +9,55 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class AplicacionSaldoEntidad {
 
-    private UUID id;
-    private SaldoFavorEntidad saldoFavor;
-    private PagoEntidad pago;
-    private BigDecimal valorAplicado;
+	private UUID id;
+	private SaldoFavorEntidad saldoFavor;
+	private PagoEntidad pago;
+	private BigDecimal valorAplicado;
 
-    public AplicacionSaldoEntidad() {
-        setId(UtilUUID.obtenerUUIDDefecto());
-        setSaldoFavor(new SaldoFavorEntidad());
-        setPago(new PagoEntidad());
-        setValorAplicado(UtilNumero.CERO_DECIMAL);
-    }
+	public AplicacionSaldoEntidad() {
+		setId(UtilUUID.obtenerUUIDDefecto());
+		setSaldoFavor(new SaldoFavorEntidad());
+		setPago(new PagoEntidad());
+		setValorAplicado(UtilNumero.CERO_DECIMAL);
+	}
 
-    public AplicacionSaldoEntidad(final UUID id, final SaldoFavorEntidad saldoFavor,
-            final PagoEntidad pago, final BigDecimal valorAplicado) {
-        setId(id);
-        setSaldoFavor(saldoFavor);
-        setPago(pago);
-        setValorAplicado(valorAplicado);
-    }
+	public AplicacionSaldoEntidad(final UUID id, final SaldoFavorEntidad saldoFavor, final PagoEntidad pago,
+			final BigDecimal valorAplicado) {
+		setId(id);
+		setSaldoFavor(saldoFavor);
+		setPago(pago);
+		setValorAplicado(valorAplicado);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public void setId(final UUID id) {
-        this.id = UtilUUID.obtenerValorDefecto(id);
-    }
+	public void setId(final UUID id) {
+		this.id = UtilUUID.obtenerValorDefecto(id);
+	}
 
-    public SaldoFavorEntidad getSaldoFavor() {
-        return saldoFavor;
-    }
+	public SaldoFavorEntidad getSaldoFavor() {
+		return saldoFavor;
+	}
 
-    public void setSaldoFavor(final SaldoFavorEntidad saldoFavor) {
-        this.saldoFavor = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-        		(saldoFavor, new SaldoFavorEntidad());
-    }
+	public void setSaldoFavor(final SaldoFavorEntidad saldoFavor) {
+		this.saldoFavor = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(saldoFavor, new SaldoFavorEntidad());
+	}
 
-    public PagoEntidad getPago() {
-        return pago;
-    }
+	public PagoEntidad getPago() {
+		return pago;
+	}
 
-    public void setPago(final PagoEntidad pago) {
-        this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo
-        		(pago, new PagoEntidad());
-    }
+	public void setPago(final PagoEntidad pago) {
+		this.pago = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pago, new PagoEntidad());
+	}
 
-    public BigDecimal getValorAplicado() {
-        return valorAplicado;
-    }
+	public BigDecimal getValorAplicado() {
+		return valorAplicado;
+	}
 
-    public void setValorAplicado(final BigDecimal valorAplicado) {
-        this.valorAplicado = UtilNumero.obtenerValorDefecto(valorAplicado);
-    }
+	public void setValorAplicado(final BigDecimal valorAplicado) {
+		this.valorAplicado = UtilNumero.obtenerValorDefecto(valorAplicado);
+	}
 }

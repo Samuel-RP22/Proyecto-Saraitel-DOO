@@ -46,121 +46,120 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
 public abstract class DAOFactory {
 
-    private Connection conexion;
-    private static FactoriaEnum factoria = FactoriaEnum.POSTGRESQL;
+	private Connection conexion;
+	private static final FactoriaEnum factoria = FactoriaEnum.POSTGRESQL;
 
-    public static DAOFactory obtenerFactoria() {
-    	if (factoria == FactoriaEnum.POSTGRESQL) {
-    	    return new PostgreSqlDaoFactory();
-    	} else {
-    	    var mensajeUsuario = CatalogoMensajes.DAOFactory
-    	            .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
-    	    throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
-    	}
-    }
+	public static DAOFactory obtenerFactoria() {
+		if (factoria == FactoriaEnum.POSTGRESQL) {
+			return new PostgreSqlDaoFactory();
+		} else {
+			var mensajeUsuario = CatalogoMensajes.DAOFactory.USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
+		}
+	}
 
-    protected DAOFactory() {
-    }
+	protected DAOFactory() {
+	}
 
-    protected DAOFactory(Connection conexion) {
-        setConexion(conexion);
-    }
+	protected DAOFactory(Connection conexion) {
+		this.conexion = conexion;
+	}
 
-    protected Connection getConexion() {
-        return conexion;
-    }
+	protected Connection getConexion() {
+		return conexion;
+	}
 
-    protected void setConexion(Connection conexion) {
-        this.conexion = conexion;
-    }
+	protected final void setConexion(Connection conexion) {
+		this.conexion = conexion;
+	}
 
-    protected abstract void abrirConexion();
+	protected abstract void abrirConexion();
 
-    public void cerrarConexion() {
-        UtilSQL.cerrarConexion(conexion);
-    }
+	public void cerrarConexion() {
+		UtilSQL.cerrarConexion(conexion);
+	}
 
-    public void iniciarTransaccion() {
-        UtilSQL.iniciarTransaccion(conexion);
-    }
+	public void iniciarTransaccion() {
+		UtilSQL.iniciarTransaccion(conexion);
+	}
 
-    public void confirmarTransaccion() {
-        UtilSQL.confirmarTransaccion(conexion);
-    }
+	public void confirmarTransaccion() {
+		UtilSQL.confirmarTransaccion(conexion);
+	}
 
-    public void cancelarTransaccion() {
-        UtilSQL.cancelarTransaccion(conexion);
-    }
+	public void cancelarTransaccion() {
+		UtilSQL.cancelarTransaccion(conexion);
+	}
 
-    public abstract AdministradorDAO obtenerAdministradorDao();
+	public abstract AdministradorDAO obtenerAdministradorDao();
 
-    public abstract AplicacionSaldoDAO obtenerAplicacionSaldoDao();
+	public abstract AplicacionSaldoDAO obtenerAplicacionSaldoDao();
 
-    public abstract CategoriaDAO obtenerCategoriaDao();
+	public abstract CategoriaDAO obtenerCategoriaDao();
 
-    public abstract CiudadDAO obtenerCiudadDao();
+	public abstract CiudadDAO obtenerCiudadDao();
 
-    public abstract ClienteDAO obtenerClienteDao();
+	public abstract ClienteDAO obtenerClienteDao();
 
-    public abstract ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao();
+	public abstract ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao();
 
-    public abstract ClienteRegistradoDAO obtenerClienteRegistradoDao();
+	public abstract ClienteRegistradoDAO obtenerClienteRegistradoDao();
 
-    public abstract ClienteRegistradoJDAO obtenerClienteRegistradoJDao();
+	public abstract ClienteRegistradoJDAO obtenerClienteRegistradoJDao();
 
-    public abstract ClienteRegistradoNDAO obtenerClienteRegistradoNDao();
+	public abstract ClienteRegistradoNDAO obtenerClienteRegistradoNDao();
 
-    public abstract CompraDAO obtenerCompraDao();
+	public abstract CompraDAO obtenerCompraDao();
 
-    public abstract DepartamentoDAO obtenerDepartamentoDao();
+	public abstract DepartamentoDAO obtenerDepartamentoDao();
 
-    public abstract DetalleCompraDAO obtenerDetalleCompraDao();
+	public abstract DetalleCompraDAO obtenerDetalleCompraDao();
 
-    public abstract DetalleIngresoDAO obtenerDetalleIngresoDao();
+	public abstract DetalleIngresoDAO obtenerDetalleIngresoDao();
 
-    public abstract DevolucionDAO obtenerDevolucionDao();
+	public abstract DevolucionDAO obtenerDevolucionDao();
 
-    public abstract EmpleadoDAO obtenerEmpleadoDao();
+	public abstract EmpleadoDAO obtenerEmpleadoDao();
 
-    public abstract EstadoCompraDAO obtenerEstadoCompraDao();
+	public abstract EstadoCompraDAO obtenerEstadoCompraDao();
 
-    public abstract EstadoInventarioDAO obtenerEstadoInventarioDao();
+	public abstract EstadoInventarioDAO obtenerEstadoInventarioDao();
 
-    public abstract EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao();
+	public abstract EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao();
 
-    public abstract EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao();
+	public abstract EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao();
 
-    public abstract FacturaDAO obtenerFacturaDao();
+	public abstract FacturaDAO obtenerFacturaDao();
 
-    public abstract IngresoInventarioDAO obtenerIngresoInventarioDao();
+	public abstract IngresoInventarioDAO obtenerIngresoInventarioDao();
 
-    public abstract MarcaDAO obtenerMarcaDao();
+	public abstract MarcaDAO obtenerMarcaDao();
 
-    public abstract MetodoPagoDAO obtenerMetodoPagoDao();
+	public abstract MetodoPagoDAO obtenerMetodoPagoDao();
 
-    public abstract MotivoDAO obtenerMotivoDao();
+	public abstract MotivoDAO obtenerMotivoDao();
 
-    public abstract PagoDAO obtenerPagoDao();
+	public abstract PagoDAO obtenerPagoDao();
 
-    public abstract PagoNormalDAO obtenerPagoNormalDao();
+	public abstract PagoNormalDAO obtenerPagoNormalDao();
 
-    public abstract PaisDAO obtenerPaisDao();
+	public abstract PaisDAO obtenerPaisDao();
 
-    public abstract PersonaDAO obtenerPersonaDao();
+	public abstract PersonaDAO obtenerPersonaDao();
 
-    public abstract PrefijoDAO obtenerPrefijoDao();
+	public abstract PrefijoDAO obtenerPrefijoDao();
 
-    public abstract ProcesoCompraDAO obtenerProcesoCompraDao();
+	public abstract ProcesoCompraDAO obtenerProcesoCompraDao();
 
-    public abstract ProductoDAO obtenerProductoDao();
+	public abstract ProductoDAO obtenerProductoDao();
 
-    public abstract ProductoSedeDAO obtenerProductoSedeDao();
+	public abstract ProductoSedeDAO obtenerProductoSedeDao();
 
-    public abstract SaldoFavorDAO obtenerSaldoFavorDao();
+	public abstract SaldoFavorDAO obtenerSaldoFavorDao();
 
-    public abstract SedeDAO obtenerSedeDao();
+	public abstract SedeDAO obtenerSedeDao();
 
-    public abstract TipoDocumentoDAO obtenerTipoDocumentoDao();
+	public abstract TipoDocumentoDAO obtenerTipoDocumentoDao();
 
-    public abstract VendedorDAO obtenerVendedorDao();
+	public abstract VendedorDAO obtenerVendedorDao();
 }
