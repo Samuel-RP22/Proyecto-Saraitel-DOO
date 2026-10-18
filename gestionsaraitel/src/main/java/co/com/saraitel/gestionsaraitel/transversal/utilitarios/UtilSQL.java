@@ -14,7 +14,7 @@ public final class UtilSQL {
 
 	public static boolean conexionEstaVacia(Connection conexion) {
 		return UtilObjeto.esNulo(conexion);
-	}//Listo
+	}
 
 	public static boolean conexionEstaAbierta(Connection conexion) {
 		try {
@@ -26,7 +26,7 @@ public final class UtilSQL {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_VALIDANDO_SI_CONEXION_SQL_ESTA_ABIERTA;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
-	}//Listo
+	}
 
 	public static boolean transaccionEstaIniciada(Connection conexion) {
 		try {
@@ -38,10 +38,10 @@ public final class UtilSQL {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_VALIDANDO_SI_TRANSACCION_SQL_ESTA_INICIADA;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
-	}//Listo
+	}
 
 	public static void iniciarTransaccion(Connection conexion) {
-		if (transaccionEstaIniciada(conexion)) {
+		if (!conexionEstaAbierta(conexion) || transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
 		}
@@ -49,72 +49,63 @@ public final class UtilSQL {
 		try {
 			conexion.setAutoCommit(false);
 		} catch (SQLException excepcion) {
-			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_INICIANDO_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} catch (Exception excepcion) {
-			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_VALIDANDO_SI_TRANSACCION_SQL_ESTA_INICIADA;
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_INICIANDO_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
-		
-	}//Listo
+
+	}
 
 	public static void confirmarTransaccion(Connection conexion) {
 		if (!transaccionEstaIniciada(conexion)) {
-			var mensajeUsuario = "No es posible confirmar una transaccion que no fue iniciada";
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CONFIRMAR_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
 		}
 
 		try {
 			conexion.commit();
 		} catch (SQLException excepcion) {
-			var mensajeUsuario = "No fue posible confirmar la transaccion SQL";
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CONFIRMANDO_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} catch (Exception excepcion) {
-			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_VALIDANDO_SI_TRANSACCION_SQL_ESTA_INICIADA;
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONFIRMANDO_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}
 
 	public static void cancelarTransaccion(Connection conexion) {
 		if (!transaccionEstaIniciada(conexion)) {
-			var mensajeUsuario = "No es posible cancelar una transaccion que no fue iniciada";
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CANCELAR_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
 		}
 
 		try {
 			conexion.rollback();
-			conexion.setAutoCommit(true);
 		} catch (SQLException excepcion) {
-			var mensajeUsuario = "No fue posible cancelar la transaccion SQL";
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CANCELANDO_TRANSACCION_SQL;
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CANCELANDO_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}
 
 	public static void cerrarConexion(Connection conexion) {
 		if (!conexionEstaAbierta(conexion)) {
-			return;
-		}
-
-		try {
-			if (transaccionEstaIniciada(conexion)) {
-				conexion.rollback();
-			}
-		} catch (SQLException excepcionRollback) {
-			var mensajeUsuario = "No fue posible cancelar la transaccion SQL al cerrar la conexion";
-
-			try {
-				conexion.close();
-			} catch (SQLException excepcionCierre) {
-				excepcionRollback.addSuppressed(excepcionCierre);
-			}
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcionRollback.getMessage(), excepcionRollback);
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL;
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
 		}
 
 		try {
 			conexion.close();
-		} catch (SQLException excepcion) {
-			var mensajeUsuario = "No fue posible cerrar la conexion SQL de forma segura";
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (SQLException exception) {
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CERRANDO_CONEXION_SQL;
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
+		} catch (Exception exception) {
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL;
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
 		}
 	}
 }
