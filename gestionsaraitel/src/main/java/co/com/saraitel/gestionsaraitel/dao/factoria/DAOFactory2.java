@@ -62,10 +62,4 @@ public abstract class DAOFactory2 {
 		//Tarea: cómo se cancela una transaccion de forma segura?
 	}
 	
-	public abstract PaisDao obtenerPaisDao();
-	
-	public abstract DepartamentoDao obtenerDepartamentoDao();
-	
-	public abstract CiudadDao obtenerCiudadDao();
-	
 }

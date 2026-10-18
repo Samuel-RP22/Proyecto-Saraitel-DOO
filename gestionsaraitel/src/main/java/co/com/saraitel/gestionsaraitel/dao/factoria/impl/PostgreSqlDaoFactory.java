@@ -1,4 +1,3 @@
-```java
 package co.com.saraitel.gestionsaraitel.dao.factoria.impl;
 
 import java.sql.Connection;
@@ -258,4 +257,3 @@ public class PostgreSqlDaoFactory extends DAOFactory {
         return new VendedorPostgreSqlDao(getConexion());
     }
 }
-```

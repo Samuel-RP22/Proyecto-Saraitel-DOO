@@ -13,5 +13,5 @@ public interface ClienteRegistradoJDAO
                 ConsultarDao<ClienteRegistradoJEntidad, UUID>,
                 ActualizarDao<ClienteRegistradoJEntidad, UUID>,
                 EliminarDao<UUID> {
-
+	
 }

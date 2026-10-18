@@ -8,6 +8,6 @@ import co.com.saraitel.gestionsaraitel.entidad.ClienteNoRegistradoEntidad;
 
 public interface ClienteNoRegistradoDAO
         extends CrearDao<ClienteNoRegistradoEntidad>,
-                ConsultarDao<ClienteNoRegistradoEntidad, UUID>{
-
+                ConsultarDao<ClienteNoRegistradoEntidad, UUID> {
+	
 }

@@ -50,14 +50,13 @@ public abstract class DAOFactory {
     private static FactoriaEnum factoria = FactoriaEnum.POSTGRESQL;
 
     public static DAOFactory obtenerFactoria() {
-        switch (factoria) {
-        case POSTGRESQL:
-            return new PostgreSqlDaoFactory();
-        default:
-            var mensajeUsuario = CatalogoMensajes.DAOFactory
-                    .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
-            throw GestionsaraitelTransversalException.crear(mensajeUsuario);
-        }
+    	if (factoria == FactoriaEnum.POSTGRESQL) {
+    	    return new PostgreSqlDaoFactory();
+    	} else {
+    	    var mensajeUsuario = CatalogoMensajes.DAOFactory
+    	            .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
+    	    throw GestionsaraitelTransversalException.crear(mensajeUsuario);
+    	}
     }
 
     protected DAOFactory() {

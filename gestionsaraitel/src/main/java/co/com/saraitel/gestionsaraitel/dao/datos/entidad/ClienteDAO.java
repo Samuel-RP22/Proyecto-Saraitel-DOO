@@ -11,5 +11,5 @@ public interface ClienteDAO
         extends CrearDao<ClienteEntidad>,
                 ConsultarDao<ClienteEntidad, UUID>,
                 EliminarDao<UUID> {
-
+	
 }
