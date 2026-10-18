@@ -28,6 +28,13 @@ public final class UtilSQL {
 		}
 	}
 
+	public static void asegurarConexionAbierta(final Connection conexion) {
+		if (!conexionEstaAbierta(conexion)) {
+			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CONTINUAR_CONEXION_SQL_NO_ESTA_ABIERTA;
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
+		}
+	}
+
 	public static boolean transaccionEstaIniciada(Connection conexion) {
 		if (!conexionEstaAbierta(conexion)) {
 			return false;

@@ -1,6 +1,6 @@
 package co.com.saraitel.gestionsaraitel.dao.datos;
 
-public interface CrearDao<E> {
+public interface CrearDAO<E> {
 
 	void crear(E entidad);
 }
