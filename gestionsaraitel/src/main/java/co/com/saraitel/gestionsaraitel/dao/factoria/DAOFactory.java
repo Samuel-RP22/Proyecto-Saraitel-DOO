@@ -41,7 +41,7 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
 import co.com.saraitel.gestionsaraitel.dao.factoria.enums.FactoriaEnum;
 import co.com.saraitel.gestionsaraitel.dao.factoria.impl.PostgreSqlDaoFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
-import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionsaraitelTransversalException;
+import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
 public abstract class DAOFactory {
@@ -55,7 +55,7 @@ public abstract class DAOFactory {
     	} else {
     	    var mensajeUsuario = CatalogoMensajes.DAOFactory
     	            .USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
-    	    throw GestionsaraitelTransversalException.crear(mensajeUsuario);
+    	    throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
     	}
     }
 

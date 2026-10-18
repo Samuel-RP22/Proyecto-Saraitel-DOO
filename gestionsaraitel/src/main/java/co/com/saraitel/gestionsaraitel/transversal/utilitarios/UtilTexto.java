@@ -61,5 +61,16 @@ public final class UtilTexto {
 	public static String formatearPorcentaje(final int valor) {
 		return valor + "%";
 	}
-	
+
+	public static String concatenar(final String... textos) {
+		var resultado = new StringBuilder();
+
+		if (!UtilObjeto.esNulo(textos)) {
+			for (var texto : textos) {
+				resultado.append(obtenerValorDefecto(texto));
+			}
+		}
+
+		return resultado.toString();
+	}
 }

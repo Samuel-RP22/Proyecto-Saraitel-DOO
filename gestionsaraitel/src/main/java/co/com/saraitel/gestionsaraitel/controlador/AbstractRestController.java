@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import co.com.saraitel.gestionsaraitel.controlador.respuesta.RespuestaError;
-import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelException;
+import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 
 @RestControllerAdvice
 public abstract class AbstractRestController {
 
-	@ExceptionHandler(GestionSaraitelException.class)
-	public ResponseEntity<RespuestaError<String>> controlarGestionSaraitelExcepcion(GestionSaraitelException excepcion) {
+	@ExceptionHandler(GestionSaraitelExcepcion.class)
+	public ResponseEntity<RespuestaError<String>> controlarGestionSaraitelExcepcion(GestionSaraitelExcepcion excepcion) {
 		var respuesta = RespuestaError.crear(excepcion.getMensajeUsuario());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
 		//logger.printException(excepcion);

@@ -3,7 +3,7 @@ package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.pais;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.Rule;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
-import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioException;
+import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioExcepcion;
 
 public class AsegurarNombreNuevoPaisNoExistaRule implements Rule<Object> {
 	
@@ -28,7 +28,7 @@ public class AsegurarNombreNuevoPaisNoExistaRule implements Rule<Object> {
 		
 		if(!resultados.isEmpty()) {
 			var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.PAIS_YA_EXISTE_CON_EL_MISMO_NOMBRE_DE_PAIS_A_CREAR;
-			throw GestionSaraitelNegocioException.crear(mensajeUsuario);
+			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelException;
+import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 
 public class RespuestaOk<D> extends Respuesta<D> {
 
