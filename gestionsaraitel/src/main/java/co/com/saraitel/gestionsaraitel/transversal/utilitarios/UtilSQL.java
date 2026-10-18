@@ -100,12 +100,12 @@ public final class UtilSQL {
 
 		try {
 			conexion.close();
-		} catch (SQLException exception) {
+		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CERRANDO_CONEXION_SQL;
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
-		} catch (Exception exception) {
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL;
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}
 }
