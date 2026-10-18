@@ -11,7 +11,7 @@ public class ClienteEntidad {
 
 	public ClienteEntidad() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setEsClienteRegistrado(true);
+		setEsClienteRegistrado(false);
 	}
 
 	public ClienteEntidad(final UUID id, final boolean esClienteRegistrado) {
