@@ -29,8 +29,12 @@ public final class UtilSQL {
 	}
 
 	public static boolean transaccionEstaIniciada(Connection conexion) {
+		if (!conexionEstaAbierta(conexion)) {
+			return false;
+		}
+
 		try {
-			return (conexionEstaAbierta(conexion) && !conexion.getAutoCommit());
+			return !conexion.getAutoCommit();
 		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_VALIDANDO_SI_TRANSACCION_SQL_ESTA_INICIADA;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
@@ -44,7 +48,7 @@ public final class UtilSQL {
 		if (!conexionEstaAbierta(conexion) || transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
-		}	
+		}
 
 		try {
 			conexion.setAutoCommit(false);
