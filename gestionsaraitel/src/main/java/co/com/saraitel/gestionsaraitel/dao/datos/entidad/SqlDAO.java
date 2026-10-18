@@ -42,10 +42,9 @@ public abstract class SqlDAO {
 	protected <E> List<E> ejecutarConsulta(final String sql, final List<Object> parametros,
 			final MapeadorFila<E> mapeador, final String mensajeUsuario) {
 		List<E> resultadosConsulta = new ArrayList<>();
-
-		try (PreparedStatement sentencia = getConexion().prepareStatement(sql)) {
+		try (var sentencia = getConexion().prepareStatement(sql)) {
 			asignarParametros(sentencia, parametros);
-			try (ResultSet resultados = sentencia.executeQuery()) {
+			try (var resultados = sentencia.executeQuery()) {
 				while (resultados.next()) {
 					resultadosConsulta.add(mapeador.mapear(resultados));
 				}
@@ -53,7 +52,6 @@ public abstract class SqlDAO {
 		} catch (SQLException excepcion) {
 			throw GestionSaraitelDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
-
 		return resultadosConsulta;
 	}
 
