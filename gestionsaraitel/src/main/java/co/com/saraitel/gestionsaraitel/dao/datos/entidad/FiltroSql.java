@@ -1,5 +1,6 @@
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,13 @@ public final class FiltroSql {
 	public FiltroSql conFechaHora(final String columna, final LocalDateTime valor) {
 
 		if (!UtilFecha.FECHA_HORA_DEFECTO.equals(valor)) {
+			agregar(columna, valor);
+		}
+		return this;
+	}
+	
+	public FiltroSql conDecimal(final String columna, final BigDecimal valor) {
+		if (valor != null && valor.compareTo(BigDecimal.ZERO) != 0) {
 			agregar(columna, valor);
 		}
 		return this;
