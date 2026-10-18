@@ -44,7 +44,7 @@ public final class UtilSQL {
 		if (!conexionEstaAbierta(conexion) || transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
 			throw GestionsaraitelTransversalException.crear(mensajeUsuario);
-		}
+		}	
 
 		try {
 			conexion.setAutoCommit(false);
@@ -100,12 +100,12 @@ public final class UtilSQL {
 
 		try {
 			conexion.close();
-		} catch (SQLException excepcion) {
+		} catch (SQLException exception) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CERRANDO_CONEXION_SQL;
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
-		} catch (Exception excepcion) {
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
+		} catch (Exception exception) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL;
-			throw GestionsaraitelTransversalException.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+			throw GestionsaraitelTransversalException.crear(mensajeUsuario, exception.getMessage(), exception);
 		}
 	}
 }
