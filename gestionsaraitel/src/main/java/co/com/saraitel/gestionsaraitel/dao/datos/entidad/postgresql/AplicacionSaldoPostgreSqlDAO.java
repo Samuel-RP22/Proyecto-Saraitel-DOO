@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -45,16 +44,14 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 	@Override
 	public void crear(final AplicacionSaldoEntidad entidad) {
 		ejecutarActualizacion(SQL_CREAR, "Error al crear la aplicación de saldo",
-				"Error NO CONTROLADO al crear la aplicación de saldo", entidad.getId(),
-				entidad.getSaldoFavor().getId(), entidad.getPago().getId(),
-				entidad.getValorAplicado());
+				"Error NO CONTROLADO al crear la aplicación de saldo", entidad.getId(), entidad.getSaldoFavor().getId(),
+				entidad.getPago().getId(), entidad.getValorAplicado());
 	}
 
 	@Override
 	public AplicacionSaldoEntidad consultarPorId(final UUID id) {
-		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar la aplicación de saldo",
-				"Error NO CONTROLADO al consultar la aplicación de saldo");
+		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar la aplicación de saldo", "Error NO CONTROLADO al consultar la aplicación de saldo");
 
 		if (resultado.isEmpty()) {
 			return new AplicacionSaldoEntidad();
@@ -74,8 +71,7 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 				.conDecimal("\"ValorAplicado\"", filtroSeguro.getValorAplicado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar aplicaciones de saldo",
-				"Error NO CONTROLADO al consultar aplicaciones de saldo");
+				"Error al consultar aplicaciones de saldo", "Error NO CONTROLADO al consultar aplicaciones de saldo");
 	}
 
 	@Override

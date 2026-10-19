@@ -56,8 +56,7 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 				.conId("\"Persona_id\"", filtroSeguro.getPersona().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes registrados.",
-				"Error NO CONTROLADO al consultar clientes registrados.");
+				"Error al consultar clientes registrados.", "Error NO CONTROLADO al consultar clientes registrados.");
 	}
 
 	@Override

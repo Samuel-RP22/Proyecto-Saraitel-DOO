@@ -136,6 +136,6 @@ public final class FiltroSql {
 	}
 
 	public List<Object> getParametros() {
-		return parametros;
+		return List.copyOf(parametros);
 	}
 }
