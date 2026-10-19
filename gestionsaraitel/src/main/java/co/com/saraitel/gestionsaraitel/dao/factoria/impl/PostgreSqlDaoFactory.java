@@ -40,8 +40,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SaldoFavorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SedeDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDao;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDao;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
@@ -70,7 +70,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public AdministradorDAO obtenerAdministradorDao() {
-		return new AdministradorPostgreSqlDao(getConexion());
+		return new AdministradorPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -80,37 +80,37 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public CategoriaDAO obtenerCategoriaDao() {
-		return new CategoriaPostgreSqlDao(getConexion());
+		return new CategoriaPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public CiudadDAO obtenerCiudadDao() {
-		return new CiudadPostgreSqlDao(getConexion());
+		return new CiudadPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ClienteDAO obtenerClienteDao() {
-		return new ClientePostgreSqlDao(getConexion());
+		return new ClientePostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ClienteNoRegistradoDAO obtenerClienteNoRegistradoDao() {
-		return new ClienteNoRegistradoPostgreSqlDao(getConexion());
+		return new ClienteNoRegistradoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ClienteRegistradoDAO obtenerClienteRegistradoDao() {
-		return new ClienteRegistradoPostgreSqlDao(getConexion());
+		return new ClienteRegistradoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ClienteRegistradoJDAO obtenerClienteRegistradoJDao() {
-		return new ClienteRegistradoJPostgreSqlDao(getConexion());
+		return new ClienteRegistradoJPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ClienteRegistradoNDAO obtenerClienteRegistradoNDao() {
-		return new ClienteRegistradoNPostgreSqlDao(getConexion());
+		return new ClienteRegistradoNPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public DepartamentoDAO obtenerDepartamentoDao() {
-		return new DepartamentoPostgreSqlDao(getConexion());
+		return new DepartamentoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public DetalleIngresoDAO obtenerDetalleIngresoDao() {
-		return new DetalleIngresoPostgreSqlDao(getConexion());
+		return new DetalleIngresoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -140,27 +140,27 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public EmpleadoDAO obtenerEmpleadoDao() {
-		return new EmpleadoPostgreSqlDao(getConexion());
+		return new EmpleadoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public EstadoCompraDAO obtenerEstadoCompraDao() {
-		return new EstadoCompraPostgreSqlDao(getConexion());
+		return new EstadoCompraPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public EstadoInventarioDAO obtenerEstadoInventarioDao() {
-		return new EstadoInventarioPostgreSqlDao(getConexion());
+		return new EstadoInventarioPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public EstadoProcesoCompraDAO obtenerEstadoProcesoCompraDao() {
-		return new EstadoProcesoCompraPostgreSqlDao(getConexion());
+		return new EstadoProcesoCompraPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public EstadoSaldoFavorDAO obtenerEstadoSaldoFavorDao() {
-		return new EstadoSaldoFavorPostgreSqlDao(getConexion());
+		return new EstadoSaldoFavorPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -170,12 +170,12 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public IngresoInventarioDAO obtenerIngresoInventarioDao() {
-		return new IngresoInventarioPostgreSqlDao(getConexion());
+		return new IngresoInventarioPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public MarcaDAO obtenerMarcaDao() {
-		return new MarcaPostgreSqlDao(getConexion());
+		return new MarcaPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public MotivoDAO obtenerMotivoDao() {
-		return new MotivoPostgreSqlDao(getConexion());
+		return new MotivoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -200,17 +200,17 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public PaisDAO obtenerPaisDao() {
-		return new PaisPostgreSqlDao(getConexion());
+		return new PaisPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public PersonaDAO obtenerPersonaDao() {
-		return new PersonaPostgreSqlDao(getConexion());
+		return new PersonaPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public PrefijoDAO obtenerPrefijoDao() {
-		return new PrefijoPostgreSqlDao(getConexion());
+		return new PrefijoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -220,12 +220,12 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public ProductoDAO obtenerProductoDao() {
-		return new ProductoPostgreSqlDao(getConexion());
+		return new ProductoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public ProductoSedeDAO obtenerProductoSedeDao() {
-		return new ProductoSedePostgreSqlDao(getConexion());
+		return new ProductoSedePostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -235,16 +235,16 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public SedeDAO obtenerSedeDao() {
-		return new SedePostgreSqlDao(getConexion());
+		return new SedePostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public TipoDocumentoDAO obtenerTipoDocumentoDao() {
-		return new TipoDocumentoPostgreSqlDao(getConexion());
+		return new TipoDocumentoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public VendedorDAO obtenerVendedorDao() {
-		return new VendedorPostgreSqlDao(getConexion());
+		return new VendedorPostgreSqlDAO(getConexion());
 	}
 }

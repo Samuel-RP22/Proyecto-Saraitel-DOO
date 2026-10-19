@@ -13,13 +13,13 @@ import co.com.saraitel.gestionsaraitel.entidad.AdministradorEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
-public class AdministradorPostgreSqlDao extends SqlDAO implements AdministradorDAO {
+public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorDAO {
 
 	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Administrador\" (\"id\", \"Empleado_id\") VALUES (?, ?)";
 
 	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Empleado_id\" FROM saraitel.\"Administrador\"";
 
-	public AdministradorPostgreSqlDao(final Connection conexion) {
+	public AdministradorPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
 	}
 

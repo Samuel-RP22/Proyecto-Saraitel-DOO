@@ -12,7 +12,7 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
 
-public class EstadoProcesoCompraPostgreSqlDao extends SqlDAO
+public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
         implements EstadoProcesoCompraDAO {
 
     private static final String SQL_CREAR = """
@@ -37,7 +37,7 @@ public class EstadoProcesoCompraPostgreSqlDao extends SqlDAO
             FROM saraitel."EstadoProcesoCompra"
             """;
 
-    public EstadoProcesoCompraPostgreSqlDao(final Connection conexion) {
+    public EstadoProcesoCompraPostgreSqlDAO(final Connection conexion) {
         super(conexion);
     }
 
