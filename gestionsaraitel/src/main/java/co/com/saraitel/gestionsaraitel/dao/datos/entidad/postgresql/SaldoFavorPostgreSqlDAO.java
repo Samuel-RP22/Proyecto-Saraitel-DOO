@@ -10,7 +10,7 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SaldoFavorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.DevolucionEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoSaldoFavorEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SaldoFavorEntidad;
 
@@ -18,23 +18,23 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 
 	private static final String SQL_CREAR = """
 			INSERT INTO saraitel."SaldoFavor"
-			("id", "ClienteRegistrado_id", "EstadoSaldoFavor_id", "Monto", "FechaCreacion")
-			VALUES (?, ?, ?, ?, ?)
+			("id", "Devolucion_id", "EstadoSaldoFavor_id", "MontoUsado")
+			VALUES (?, ?, ?, ?)
 			""";
 
 	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "ClienteRegistrado_id", "EstadoSaldoFavor_id", "Monto", "FechaCreacion"
+			SELECT "id", "Devolucion_id", "EstadoSaldoFavor_id", "MontoUsado"
 			FROM saraitel."SaldoFavor"
 			WHERE "id" = ?
 			""";
 
 	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "ClienteRegistrado_id", "EstadoSaldoFavor_id", "Monto", "FechaCreacion"
+			SELECT "id", "Devolucion_id", "EstadoSaldoFavor_id", "MontoUsado"
 			FROM saraitel."SaldoFavor"
 			""";
 
 	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "ClienteRegistrado_id", "EstadoSaldoFavor_id", "Monto", "FechaCreacion"
+			SELECT "id", "Devolucion_id", "EstadoSaldoFavor_id", "MontoUsado"
 			FROM saraitel."SaldoFavor"
 			""";
 
@@ -44,9 +44,9 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 
 	@Override
 	public void crear(final SaldoFavorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el saldo a favor",
-				entidad.getId().toString(), entidad.getClienteRegistrado().getId().toString(),
-				entidad.getEstado().getId().toString(), entidad.getMonto(), entidad.getFechaCreacion());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el saldo a favor", entidad.getId().toString(),
+				entidad.getDevolucion().getId().toString(), entidad.getEstado().getId().toString(),
+				entidad.getMontoUsado());
 	}
 
 	@Override
@@ -54,7 +54,11 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 		List<SaldoFavorEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
 				this::mapear, "Error al consultar el saldo a favor");
 
-		return resultado.isEmpty() ? new SaldoFavorEntidad() : resultado.get(0);
+		if (resultado.isEmpty()) {
+			return new SaldoFavorEntidad();
+		} else {
+			return resultado.get(0);
+		}
 	}
 
 	@Override
@@ -62,12 +66,10 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 
 		SaldoFavorEntidad filtroSeguro = filtro == null ? new SaldoFavorEntidad() : filtro;
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO)
-				.conId("\"id\"", filtroSeguro.getId())
-				.conId("\"ClienteRegistrado_id\"", filtroSeguro.getClienteRegistrado().getId())
+		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+				.conId("\"Devolucion_id\"", filtroSeguro.getDevolucion().getId())
 				.conId("\"EstadoSaldoFavor_id\"", filtroSeguro.getEstado().getId())
-				.conDecimal("\"Monto\"", filtroSeguro.getMonto())
-				.conFechaHora("\"FechaCreacion\"", filtroSeguro.getFechaCreacion());
+				.conDecimal("\"MontoUsado\"", filtroSeguro.getMontoUsado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				"Error al consultar saldos a favor");
@@ -75,7 +77,8 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 
 	@Override
 	public List<SaldoFavorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar saldos a favor");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				"Error al consultar los saldos a favor");
 	}
 
 	private SaldoFavorEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -84,16 +87,19 @@ public class SaldoFavorPostgreSqlDAO extends SqlDAO implements SaldoFavorDAO {
 
 		entidad.setId(leerUUID(resultados, "id"));
 
-		ClienteRegistradoEntidad clienteRegistrado = new ClienteRegistradoEntidad();
-		clienteRegistrado.setId(leerUUID(resultados, "ClienteRegistrado_id"));
-		entidad.setClienteRegistrado(clienteRegistrado);
+		DevolucionEntidad devolucion = new DevolucionEntidad();
+
+		devolucion.setId(leerUUID(resultados, "Devolucion_id"));
+
+		entidad.setDevolucion(devolucion);
 
 		EstadoSaldoFavorEntidad estado = new EstadoSaldoFavorEntidad();
+
 		estado.setId(leerUUID(resultados, "EstadoSaldoFavor_id"));
+
 		entidad.setEstado(estado);
 
-		entidad.setMonto(resultados.getBigDecimal("Monto"));
-		entidad.setFechaCreacion(resultados.getTimestamp("FechaCreacion").toLocalDateTime());
+		entidad.setMontoUsado(resultados.getBigDecimal("MontoUsado"));
 
 		return entidad;
 	}

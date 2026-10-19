@@ -18,23 +18,23 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	private static final String SQL_CREAR = """
 			INSERT INTO saraitel."PagoNormal"
-			("id", "Pago_id", "MetodoPago_id")
-			VALUES (?, ?, ?)
+			("id", "MetodoPago_id", "Pago_id", "MontoPagar")
+			VALUES (?, ?, ?, ?)
 			""";
 
 	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Pago_id", "MetodoPago_id"
+			SELECT "id", "MetodoPago_id", "Pago_id", "MontoPagar"
 			FROM saraitel."PagoNormal"
 			WHERE "id" = ?
 			""";
 
 	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Pago_id", "MetodoPago_id"
+			SELECT "id", "MetodoPago_id", "Pago_id", "MontoPagar"
 			FROM saraitel."PagoNormal"
 			""";
 
 	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Pago_id", "MetodoPago_id"
+			SELECT "id", "MetodoPago_id", "Pago_id", "MontoPagar"
 			FROM saraitel."PagoNormal"
 			""";
 
@@ -44,9 +44,9 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	@Override
 	public void crear(final PagoNormalEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago normal",
-				entidad.getId().toString(), entidad.getPago().getId().toString(),
-				entidad.getMetodoPago().getId().toString());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago normal", entidad.getId().toString(),
+				entidad.getMetodoPago().getId().toString(), entidad.getPago().getId().toString(),
+				entidad.getMontoPagar());
 	}
 
 	@Override
@@ -54,7 +54,11 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 		List<PagoNormalEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
 				this::mapear, "Error al consultar el pago normal");
 
-		return resultado.isEmpty() ? new PagoNormalEntidad() : resultado.get(0);
+		if (resultado.isEmpty()) {
+			return new PagoNormalEntidad();
+		} else {
+			return resultado.get(0);
+		}
 	}
 
 	@Override
@@ -62,10 +66,10 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 		PagoNormalEntidad filtroSeguro = filtro == null ? new PagoNormalEntidad() : filtro;
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO)
-				.conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+				.conId("\"MetodoPago_id\"", filtroSeguro.getMetodoPago().getId())
 				.conId("\"Pago_id\"", filtroSeguro.getPago().getId())
-				.conId("\"MetodoPago_id\"", filtroSeguro.getMetodoPago().getId());
+				.conDecimal("\"MontoPagar\"", filtroSeguro.getMontoPagar());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				"Error al consultar pagos normales");
@@ -73,7 +77,8 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	@Override
 	public List<PagoNormalEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar pagos normales");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				"Error al consultar los pagos normales");
 	}
 
 	private PagoNormalEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -82,14 +87,19 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 		entidad.setId(leerUUID(resultados, "id"));
 
-		PagoEntidad pago = new PagoEntidad();
-		pago.setId(leerUUID(resultados, "Pago_id"));
-		entidad.setPago(pago);
-
 		MetodoPagoEntidad metodoPago = new MetodoPagoEntidad();
+
 		metodoPago.setId(leerUUID(resultados, "MetodoPago_id"));
+
 		entidad.setMetodoPago(metodoPago);
 
+		PagoEntidad pago = new PagoEntidad();
+
+		pago.setId(leerUUID(resultados, "Pago_id"));
+
+		entidad.setPago(pago);
+
+		entidad.setMontoPagar(resultados.getBigDecimal("MontoPagar"));
 
 		return entidad;
 	}

@@ -16,23 +16,23 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 
 	private static final String SQL_CREAR = """
 			INSERT INTO saraitel."MetodoPago"
-			("id", "Nombre")
-			VALUES (?, ?)
+			("id", "Nombre", "EsActivo")
+			VALUES (?, ?, ?)
 			""";
 
 	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Nombre"
+			SELECT "id", "Nombre", "EsActivo"
 			FROM saraitel."MetodoPago"
 			WHERE "id" = ?
 			""";
 
 	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Nombre"
+			SELECT "id", "Nombre", "EsActivo"
 			FROM saraitel."MetodoPago"
 			""";
 
 	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Nombre"
+			SELECT "id", "Nombre", "EsActivo"
 			FROM saraitel."MetodoPago"
 			""";
 
@@ -42,8 +42,8 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 
 	@Override
 	public void crear(final MetodoPagoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el método de pago",
-				entidad.getId().toString(), entidad.getNombre());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el método de pago", entidad.getId().toString(),
+				entidad.getNombre(), entidad.getEsActivo());
 	}
 
 	@Override
@@ -51,7 +51,11 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 		List<MetodoPagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
 				this::mapear, "Error al consultar el método de pago");
 
-		return resultado.isEmpty() ? new MetodoPagoEntidad() : resultado.get(0);
+		if (resultado.isEmpty()) {
+			return new MetodoPagoEntidad();
+		} else {
+			return resultado.get(0);
+		}
 	}
 
 	@Override
@@ -59,9 +63,9 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 
 		MetodoPagoEntidad filtroSeguro = filtro == null ? new MetodoPagoEntidad() : filtro;
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO)
-				.conId("\"id\"", filtroSeguro.getId())
-				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
+		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+				.conTexto("\"Nombre\"", filtroSeguro.getNombre())
+				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				"Error al consultar métodos de pago");
@@ -69,7 +73,8 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 
 	@Override
 	public List<MetodoPagoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar métodos de pago");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				"Error al consultar los métodos de pago");
 	}
 
 	private MetodoPagoEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -77,8 +82,8 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 		MetodoPagoEntidad entidad = new MetodoPagoEntidad();
 
 		entidad.setId(leerUUID(resultados, "id"));
-
 		entidad.setNombre(resultados.getString("Nombre"));
+		entidad.setEsActivo(resultados.getBoolean("EsActivo"));
 
 		return entidad;
 	}

@@ -17,23 +17,23 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 	private static final String SQL_CREAR = """
 			INSERT INTO saraitel."Pago"
-			("id", "Compra_id", "Monto", "FechaPago")
+			("id", "Compra_id", "MontoPagado", "FechaPago")
 			VALUES (?, ?, ?, ?)
 			""";
 
 	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Compra_id", "Monto", "FechaPago"
+			SELECT "id", "Compra_id", "MontoPagado", "FechaPago"
 			FROM saraitel."Pago"
 			WHERE "id" = ?
 			""";
 
 	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Compra_id", "Monto", "FechaPago"
+			SELECT "id", "Compra_id", "MontoPagado", "FechaPago"
 			FROM saraitel."Pago"
 			""";
 
 	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Compra_id", "Monto", "FechaPago"
+			SELECT "id", "Compra_id", "MontoPagado", "FechaPago"
 			FROM saraitel."Pago"
 			""";
 
@@ -43,17 +43,20 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 	@Override
 	public void crear(final PagoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago",
-				entidad.getId().toString(), entidad.getCompra().getId().toString(), entidad.getMonto(),
-				entidad.getFechaPago());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago", entidad.getId().toString(),
+				entidad.getCompra().getId().toString(), entidad.getMontoPagado(), entidad.getFechaPago());
 	}
 
 	@Override
 	public PagoEntidad consultarPorId(final UUID id) {
-		List<PagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el pago");
+		List<PagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
+				"Error al consultar el pago");
 
-		return resultado.isEmpty() ? new PagoEntidad() : resultado.get(0);
+		if (resultado.isEmpty()) {
+			return new PagoEntidad();
+		} else {
+			return resultado.get(0);
+		}
 	}
 
 	@Override
@@ -61,10 +64,9 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 		PagoEntidad filtroSeguro = filtro == null ? new PagoEntidad() : filtro;
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO)
-				.conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Compra_id\"", filtroSeguro.getCompra().getId())
-				.conDecimal("\"Monto\"", filtroSeguro.getMonto())
+				.conDecimal("\"MontoPagado\"", filtroSeguro.getMontoPagado())
 				.conFechaHora("\"FechaPago\"", filtroSeguro.getFechaPago());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
@@ -73,7 +75,7 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 	@Override
 	public List<PagoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar pagos");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los pagos");
 	}
 
 	private PagoEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -83,10 +85,12 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 		entidad.setId(leerUUID(resultados, "id"));
 
 		CompraEntidad compra = new CompraEntidad();
+
 		compra.setId(leerUUID(resultados, "Compra_id"));
+
 		entidad.setCompra(compra);
 
-		entidad.setMonto(resultados.getBigDecimal("Monto"));
+		entidad.setMontoPagado(resultados.getBigDecimal("MontoPagado"));
 		entidad.setFechaPago(resultados.getTimestamp("FechaPago").toLocalDateTime());
 
 		return entidad;
