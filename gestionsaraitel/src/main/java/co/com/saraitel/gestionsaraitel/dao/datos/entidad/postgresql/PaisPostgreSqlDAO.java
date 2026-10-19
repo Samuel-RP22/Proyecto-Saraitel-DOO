@@ -30,7 +30,7 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void crear(final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, CatalogoMensajes.PostgreSqlDAO.USUARIO_ERROR_CREANDO_REGISTRO,
+		ejecutarActualizacion(SQL_CREAR, CatalogoMensajes;
 				entidad.getId().toString(), entidad.getNombre());
 	}
 
