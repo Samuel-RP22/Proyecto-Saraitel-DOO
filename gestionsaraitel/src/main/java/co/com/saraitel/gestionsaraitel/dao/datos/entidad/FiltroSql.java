@@ -19,7 +19,6 @@ public final class FiltroSql {
 		if (UtilTexto.esVacia(sentenciaBase)) {
 			throw new IllegalArgumentException("La sentencia SQL base no puede estar vacía");
 		}
-
 		sentencia = new StringBuilder(sentenciaBase).append(" WHERE 1=1");
 	}
 
@@ -27,7 +26,6 @@ public final class FiltroSql {
 		if (UtilTexto.esVacia(columna)) {
 			throw new IllegalArgumentException("La columna del filtro no puede estar vacía");
 		}
-
 		sentencia.append(" AND ").append(columna).append(" = ?");
 		parametros.add(valor);
 	}
@@ -68,7 +66,7 @@ public final class FiltroSql {
 		}
 		return this;
 	}
-	
+
 	public FiltroSql conDecimal(final String columna, final BigDecimal valor) {
 		if (valor != null && valor.compareTo(BigDecimal.ZERO) != 0) {
 			agregar(columna, valor);

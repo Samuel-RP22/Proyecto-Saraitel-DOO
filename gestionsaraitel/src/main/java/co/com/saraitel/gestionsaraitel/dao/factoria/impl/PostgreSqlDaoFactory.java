@@ -40,8 +40,32 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SaldoFavorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SedeDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.AdministradorPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.CategoriaPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.CiudadPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteNoRegistradoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClientePostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoJPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoNPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DetalleIngresoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EmpleadoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoCompraPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoInventarioPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoProcesoCompraPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoSaldoFavorPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.IngresoInventarioPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.MarcaPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.MotivoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PersonaPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PrefijoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ProductoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ProductoSedePostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.SedePostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.TipoDocumentoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.VendedorPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
@@ -61,7 +85,6 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 		try {
 			Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
 			setConexion(conexion);
-
 		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
