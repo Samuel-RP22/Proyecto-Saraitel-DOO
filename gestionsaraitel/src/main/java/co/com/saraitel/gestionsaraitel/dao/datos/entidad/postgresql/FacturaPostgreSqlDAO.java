@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FacturaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.FacturaEntidad;
 
@@ -43,14 +43,16 @@ public class FacturaPostgreSqlDAO extends SqlDAO implements FacturaDAO {
 
 	@Override
 	public void crear(final FacturaEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la factura", entidad.getId().toString(),
-				entidad.getCompra().getId().toString(), entidad.getFechaEmision());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear la factura",
+				"Error NO CONTROLADO al crear la factura", entidad.getId(),
+				entidad.getCompra().getId(), entidad.getFechaEmision());
 	}
 
 	@Override
 	public FacturaEntidad consultarPorId(final UUID id) {
-		List<FacturaEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
-				"Error al consultar la factura");
+		List<FacturaEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar la factura",
+				"Error NO CONTROLADO al consultar la factura");
 
 		if (resultado.isEmpty()) {
 			return new FacturaEntidad();
@@ -74,12 +76,14 @@ public class FacturaPostgreSqlDAO extends SqlDAO implements FacturaDAO {
 				.conFechaHora("\"FechaEmision\"", filtroSeguro.getFechaEmision());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar facturas");
+				"Error al consultar facturas",
+				"Error NO CONTROLADO al consultar facturas");
 	}
 
 	@Override
 	public List<FacturaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar facturas");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar facturas",
+				"Error NO CONTROLADO al consultar facturas");
 	}
 
 	private FacturaEntidad mapear(final ResultSet resultados) throws SQLException {

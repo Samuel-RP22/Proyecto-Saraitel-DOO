@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoCompraDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoCompraEntidad;
 
 public class EstadoCompraPostgreSqlDAO extends SqlDAO implements EstadoCompraDAO {
@@ -42,14 +42,16 @@ public class EstadoCompraPostgreSqlDAO extends SqlDAO implements EstadoCompraDAO
 
 	@Override
 	public void crear(final EstadoCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el estado de compra", entidad.getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el estado de compra",
+				"Error NO CONTROLADO al crear el estado de compra", entidad.getId(),
 				entidad.getCodigo(), entidad.getNombre());
 	}
 
 	@Override
 	public EstadoCompraEntidad consultarPorId(final UUID id) {
-		List<EstadoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el estado de compra");
+		List<EstadoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el estado de compra",
+				"Error NO CONTROLADO al consultar el estado de compra");
 
 		if (resultado.isEmpty()) {
 			return new EstadoCompraEntidad();
@@ -73,13 +75,15 @@ public class EstadoCompraPostgreSqlDAO extends SqlDAO implements EstadoCompraDAO
 				.conTexto("\"Codigo\"", filtroSeguro.getCodigo()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar estados de compra");
+				"Error al consultar estados de compra",
+				"Error NO CONTROLADO al consultar estados de compra");
 	}
 
 	@Override
 	public List<EstadoCompraEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los estados de compra");
+				"Error al consultar los estados de compra",
+				"Error NO CONTROLADO al consultar los estados de compra");
 	}
 
 	private EstadoCompraEntidad mapear(final ResultSet resultados) throws SQLException {

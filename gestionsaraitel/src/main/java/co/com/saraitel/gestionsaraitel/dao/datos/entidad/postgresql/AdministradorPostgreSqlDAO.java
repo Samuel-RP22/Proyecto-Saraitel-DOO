@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AdministradorDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.AdministradorEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -16,7 +16,6 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorDAO {
 
 	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Administrador\" (\"id\", \"Empleado_id\") VALUES (?, ?)";
-
 	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Empleado_id\" FROM saraitel.\"Administrador\"";
 
 	public AdministradorPostgreSqlDAO(final Connection conexion) {
@@ -25,8 +24,8 @@ public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorD
 
 	@Override
 	public void crear(final AdministradorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear administrador.", entidad.getId().toString(),
-				entidad.getEmpleado().getId().toString());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear administrador.", "Error NO CONTROLADO al crear administrador.",
+				entidad.getId(), entidad.getEmpleado().getId());
 	}
 
 	@Override
@@ -47,12 +46,13 @@ public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorD
 				filtroSeguro.getEmpleado().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar administradores.");
+				"Error al consultar administradores.", "Error NO CONTROLADO al consultar administradores.");
 	}
 
 	@Override
 	public List<AdministradorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar administradores.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar administradores.",
+				"Error NO CONTROLADO al consultar administradores.");
 	}
 
 	private AdministradorEntidad mapear(final ResultSet resultados) throws SQLException {

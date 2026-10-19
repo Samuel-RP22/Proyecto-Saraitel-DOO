@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.entidad.VendedorEntidad;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.VendedorEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
@@ -26,8 +26,9 @@ public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
 
 	@Override
 	public void crear(final VendedorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear vendedor.", entidad.getId().toString(),
-				entidad.getEmpleado().getId().toString());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear vendedor.",
+				"Error NO CONTROLADO al crear vendedor.", entidad.getId(),
+				entidad.getEmpleado().getId());
 	}
 
 	@Override
@@ -48,12 +49,14 @@ public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
 				filtroSeguro.getEmpleado().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar vendedores.");
+				"Error al consultar vendedores.",
+				"Error NO CONTROLADO al consultar vendedores.");
 	}
 
 	@Override
 	public List<VendedorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar vendedores.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar vendedores.",
+				"Error NO CONTROLADO al consultar vendedores.");
 	}
 
 	private VendedorEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -40,12 +40,14 @@ public class TipoDocumentoPostgreSqlDAO extends SqlDAO implements TipoDocumentoD
 				filtroSeguro.getTipo());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar tipos de documento.");
+				"Error al consultar tipos de documento.",
+				"Error NO CONTROLADO al consultar tipos de documento.");
 	}
 
 	@Override
 	public List<TipoDocumentoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar tipos de documento.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar tipos de documento.",
+				"Error NO CONTROLADO al consultar tipos de documento.");
 	}
 
 	private TipoDocumentoEntidad mapear(final ResultSet resultados) throws SQLException {

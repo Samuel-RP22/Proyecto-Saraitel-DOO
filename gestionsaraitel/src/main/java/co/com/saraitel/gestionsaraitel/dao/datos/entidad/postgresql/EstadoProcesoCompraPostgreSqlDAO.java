@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoProcesoCompraDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
 
 public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
@@ -46,7 +46,8 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
         ejecutarActualizacion(
                 SQL_CREAR,
                 "Error al crear el estado del proceso de compra",
-                entidad.getId().toString(),
+				"Error NO CONTROLADO al crear el estado del proceso de compra",
+                entidad.getId(),
                 entidad.getCodigo(),
                 entidad.getNombre()
         );
@@ -56,9 +57,10 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
     public EstadoProcesoCompraEntidad consultarPorId(final UUID id) {
         List<EstadoProcesoCompraEntidad> resultado = ejecutarConsulta(
                 SQL_CONSULTAR_POR_ID,
-                List.of(id.toString()),
+                List.of(id),
                 this::mapear,
-                "Error al consultar el estado del proceso de compra"
+                "Error al consultar el estado del proceso de compra",
+				"Error NO CONTROLADO al consultar el estado del proceso de compra"
         );
 
         if (resultado.isEmpty()) {
@@ -89,7 +91,8 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
                 filtroSql.getSentencia(),
                 filtroSql.getParametros(),
                 this::mapear,
-                "Error al consultar estados del proceso de compra"
+                "Error al consultar estados del proceso de compra",
+				"Error NO CONTROLADO al consultar estados del proceso de compra"
         );
     }
 
@@ -99,7 +102,8 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
                 SQL_CONSULTAR_TODOS,
                 List.of(),
                 this::mapear,
-                "Error al consultar los estados del proceso de compra"
+                "Error al consultar los estados del proceso de compra",
+				"Error NO CONTROLADO al consultar los estados del proceso de compra"
         );
     }
 

@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
-import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoCompraEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
 
 public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
 
@@ -44,15 +44,17 @@ public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
 
 	@Override
 	public void crear(final CompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la compra", entidad.getId().toString(),
-				entidad.getProcesoCompra().getId().toString(), entidad.getEstado().getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear la compra",
+				"Error NO CONTROLADO al crear la compra", entidad.getId(),
+				entidad.getProcesoCompra().getId(), entidad.getEstado().getId(),
 				entidad.getFechaCompra());
 	}
 
 	@Override
 	public CompraEntidad consultarPorId(final UUID id) {
-		List<CompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
-				"Error al consultar la compra");
+		List<CompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar la compra",
+				"Error NO CONTROLADO al consultar la compra");
 
 		if (resultado.isEmpty()) {
 			return new CompraEntidad();
@@ -77,12 +79,14 @@ public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
 				.conFechaHora("\"FechaCompra\"", filtroSeguro.getFechaCompra());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar compras");
+				"Error al consultar compras",
+				"Error NO CONTROLADO al consultar compras");
 	}
 
 	@Override
 	public List<CompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar compras");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar compras",
+				"Error NO CONTROLADO al consultar compras");
 	}
 
 	private CompraEntidad mapear(final ResultSet resultados) throws SQLException {

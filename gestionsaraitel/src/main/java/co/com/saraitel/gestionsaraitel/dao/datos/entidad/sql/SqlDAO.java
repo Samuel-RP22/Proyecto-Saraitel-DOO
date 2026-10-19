@@ -1,4 +1,4 @@
-package co.com.saraitel.gestionsaraitel.dao.datos.entidad;
+package co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,27 +30,32 @@ public abstract class SqlDAO {
 		this.conexion = conexion;
 	}
 
-	protected void ejecutarActualizacion(final String sql, final String mensajeUsuario, final Object... parametros) {
-		try (var sentencia = getConexion().prepareStatement(sql)) {
+	protected void ejecutarActualizacion(final String sql, final String mensajeUsuario,
+			final String mensajeUsuarioNoControlado, final Object... parametros) {
+		try (PreparedStatement sentencia = getConexion().prepareStatement(sql)) {
 			asignarParametros(sentencia, Arrays.asList(parametros));
 			sentencia.executeUpdate();
 		} catch (SQLException excepcion) {
 			throw GestionSaraitelDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
+			throw GestionSaraitelDatosExcepcion.crear(mensajeUsuarioNoControlado, excepcion.getMessage(), excepcion);
 		}
 	}
 
 	protected <E> List<E> ejecutarConsulta(final String sql, final List<Object> parametros,
-			final MapeadorFila<E> mapeador, final String mensajeUsuario) {
+			final MapeadorFila<E> mapeador, final String mensajeUsuario, final String mensajeUsuarioNoControlado) {
 		List<E> resultadosConsulta = new ArrayList<>();
-		try (var sentencia = getConexion().prepareStatement(sql)) {
+		try (PreparedStatement sentencia = getConexion().prepareStatement(sql)) {
 			asignarParametros(sentencia, parametros);
-			try (var resultados = sentencia.executeQuery()) {
+			try (ResultSet resultados = sentencia.executeQuery()) {
 				while (resultados.next()) {
 					resultadosConsulta.add(mapeador.mapear(resultados));
 				}
 			}
 		} catch (SQLException excepcion) {
 			throw GestionSaraitelDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
+			throw GestionSaraitelDatosExcepcion.crear(mensajeUsuarioNoControlado, excepcion.getMessage(), excepcion);
 		}
 		return resultadosConsulta;
 	}

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AplicacionSaldoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.AplicacionSaldoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PagoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SaldoFavorEntidad;
@@ -44,15 +44,17 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 
 	@Override
 	public void crear(final AplicacionSaldoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la aplicación de saldo", entidad.getId().toString(),
-				entidad.getSaldoFavor().getId().toString(), entidad.getPago().getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear la aplicación de saldo",
+				"Error NO CONTROLADO al crear la aplicación de saldo", entidad.getId(),
+				entidad.getSaldoFavor().getId(), entidad.getPago().getId(),
 				entidad.getValorAplicado());
 	}
 
 	@Override
 	public AplicacionSaldoEntidad consultarPorId(final UUID id) {
-		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar la aplicación de saldo");
+		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar la aplicación de saldo",
+				"Error NO CONTROLADO al consultar la aplicación de saldo");
 
 		if (resultado.isEmpty()) {
 			return new AplicacionSaldoEntidad();
@@ -72,13 +74,15 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 				.conDecimal("\"ValorAplicado\"", filtroSeguro.getValorAplicado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar aplicaciones de saldo");
+				"Error al consultar aplicaciones de saldo",
+				"Error NO CONTROLADO al consultar aplicaciones de saldo");
 	}
 
 	@Override
 	public List<AplicacionSaldoEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar las aplicaciones de saldo");
+				"Error al consultar las aplicaciones de saldo",
+				"Error NO CONTROLADO al consultar las aplicaciones de saldo");
 	}
 
 	private AplicacionSaldoEntidad mapear(final ResultSet resultados) throws SQLException {

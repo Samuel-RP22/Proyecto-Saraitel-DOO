@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EmpleadoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
@@ -32,8 +32,9 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 
 	@Override
 	public void crear(final EmpleadoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear empleado.", entidad.getId().toString(),
-				entidad.getSede().getId().toString(), entidad.getPersona().getId().toString(), entidad.getEsActivo());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear empleado.",
+				"Error NO CONTROLADO al crear empleado.", entidad.getId(),
+				entidad.getSede().getId(), entidad.getPersona().getId(), entidad.getEsActivo());
 	}
 
 	@Override
@@ -56,18 +57,21 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar empleados.");
+				"Error al consultar empleados.",
+				"Error NO CONTROLADO al consultar empleados.");
 	}
 
 	@Override
 	public List<EmpleadoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar empleados.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar empleados.",
+				"Error NO CONTROLADO al consultar empleados.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final EmpleadoEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar empleado.", entidad.getSede().getId().toString(),
-				entidad.getPersona().getId().toString(), entidad.getEsActivo(), id.toString());
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar empleado.",
+				"Error NO CONTROLADO al actualizar empleado.", entidad.getSede().getId(),
+				entidad.getPersona().getId(), entidad.getEsActivo(), id);
 	}
 
 	private EmpleadoEntidad mapear(final ResultSet resultados) throws SQLException {

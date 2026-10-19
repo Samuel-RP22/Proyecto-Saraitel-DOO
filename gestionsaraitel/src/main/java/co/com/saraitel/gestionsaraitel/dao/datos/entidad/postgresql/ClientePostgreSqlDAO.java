@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -8,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -28,7 +27,8 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 	@Override
 	public void crear(final ClienteEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente.", entidad.getId().toString(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente.",
+				"Error NO CONTROLADO al crear cliente.", entidad.getId(),
 				entidad.getEsClienteRegistrado());
 	}
 
@@ -51,17 +51,20 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 				.conBooleano("\"ClientePorDefecto\"", filtroSeguro.getEsClienteRegistrado(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes.");
+				"Error al consultar clientes.",
+				"Error NO CONTROLADO al consultar clientes.");
 	}
 
 	@Override
 	public List<ClienteEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes.",
+				"Error NO CONTROLADO al consultar clientes.");
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente.", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente.",
+				"Error NO CONTROLADO al eliminar cliente.", id);
 	}
 
 	private ClienteEntidad mapear(final ResultSet resultados) throws SQLException {

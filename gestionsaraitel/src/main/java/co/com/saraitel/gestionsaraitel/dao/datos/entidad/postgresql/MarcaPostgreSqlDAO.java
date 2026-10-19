@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MarcaDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MarcaEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -26,7 +26,8 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 
 	@Override
 	public void crear(final MarcaEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear marca.", entidad.getId().toString(), entidad.getNombre(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear marca.",
+				"Error NO CONTROLADO al crear marca.", entidad.getId(), entidad.getNombre(),
 				entidad.getEsActivo());
 	}
 
@@ -50,12 +51,14 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar marcas.");
+				"Error al consultar marcas.",
+				"Error NO CONTROLADO al consultar marcas.");
 	}
 
 	@Override
 	public List<MarcaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar marcas.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar marcas.",
+				"Error NO CONTROLADO al consultar marcas.");
 	}
 
 	private MarcaEntidad mapear(final ResultSet resultados) throws SQLException {

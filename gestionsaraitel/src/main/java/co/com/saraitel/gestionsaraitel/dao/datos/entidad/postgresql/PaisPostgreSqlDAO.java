@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
 
 public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
@@ -52,14 +52,16 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void crear(final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el país", entidad.getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el país",
+				"Error NO CONTROLADO al crear el país", entidad.getId(),
 				entidad.getNombre());
 	}
 
 	@Override
 	public PaisEntidad consultarPorId(final UUID id) {
-		List<PaisEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
-				"Error al consultar el país");
+		List<PaisEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar el país",
+				"Error NO CONTROLADO al consultar el país");
 
 		if (resultado.isEmpty()) {
 			return new PaisEntidad();
@@ -77,22 +79,26 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar países");
+				"Error al consultar países",
+				"Error NO CONTROLADO al consultar países");
 	}
 
 	@Override
 	public List<PaisEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los países");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los países",
+				"Error NO CONTROLADO al consultar los países");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el país", entidad.getNombre(), id.toString());
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el país",
+				"Error NO CONTROLADO al actualizar el país", entidad.getNombre(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el país", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el país",
+				"Error NO CONTROLADO al eliminar el país", id);
 	}
 
 	private PaisEntidad mapear(final ResultSet resultados) throws SQLException {

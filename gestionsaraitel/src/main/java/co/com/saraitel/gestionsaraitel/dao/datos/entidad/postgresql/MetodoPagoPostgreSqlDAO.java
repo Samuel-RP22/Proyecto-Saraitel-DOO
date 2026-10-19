@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MetodoPagoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MetodoPagoEntidad;
 
 public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
@@ -42,14 +42,16 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 
 	@Override
 	public void crear(final MetodoPagoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el método de pago", entidad.getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el método de pago",
+				"Error NO CONTROLADO al crear el método de pago", entidad.getId(),
 				entidad.getNombre(), entidad.getEsActivo());
 	}
 
 	@Override
 	public MetodoPagoEntidad consultarPorId(final UUID id) {
-		List<MetodoPagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el método de pago");
+		List<MetodoPagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el método de pago",
+				"Error NO CONTROLADO al consultar el método de pago");
 
 		if (resultado.isEmpty()) {
 			return new MetodoPagoEntidad();
@@ -68,13 +70,15 @@ public class MetodoPagoPostgreSqlDAO extends SqlDAO implements MetodoPagoDAO {
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar métodos de pago");
+				"Error al consultar métodos de pago",
+				"Error NO CONTROLADO al consultar métodos de pago");
 	}
 
 	@Override
 	public List<MetodoPagoEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los métodos de pago");
+				"Error al consultar los métodos de pago",
+				"Error NO CONTROLADO al consultar los métodos de pago");
 	}
 
 	private MetodoPagoEntidad mapear(final ResultSet resultados) throws SQLException {

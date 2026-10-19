@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProductoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CategoriaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.MarcaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoEntidad;
@@ -34,8 +34,9 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 	@Override
 	public void crear(final ProductoEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el producto.", entidad.getId().toString(),
-				entidad.getMarca().getId().toString(), entidad.getCategoria().getId().toString(), entidad.getModelo(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el producto.",
+				"Error NO CONTROLADO al crear el producto.", entidad.getId(),
+				entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(),
 				entidad.getNombre(), entidad.getDescripcion());
 	}
 
@@ -64,20 +65,23 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 		sentencia.conTexto("\"Descripcion\"", filtroSeguro.getDescripcion());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				"Error al consultar productos.");
+				"Error al consultar productos.",
+				"Error NO CONTROLADO al consultar productos.");
 	}
 
 	@Override
 	public List<ProductoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar productos.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar productos.",
+				"Error NO CONTROLADO al consultar productos.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el producto.", entidad.getMarca().getId().toString(),
-				entidad.getCategoria().getId().toString(), entidad.getModelo(), entidad.getNombre(),
-				entidad.getDescripcion(), id.toString());
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el producto.",
+				"Error NO CONTROLADO al actualizar el producto.", entidad.getMarca().getId(),
+				entidad.getCategoria().getId(), entidad.getModelo(), entidad.getNombre(),
+				entidad.getDescripcion(), id);
 	}
 
 	private ProductoEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoJDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoJEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
@@ -39,8 +39,9 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoJEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado jurídico.", entidad.getId().toString(),
-				entidad.getClienteRegistrado().getId().toString(), entidad.getPrefijo().getId().toString(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado jurídico.",
+				"Error NO CONTROLADO al crear cliente registrado jurídico.", entidad.getId(),
+				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
 				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
 	}
@@ -70,27 +71,31 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes registrados jurídicos.");
+				"Error al consultar clientes registrados jurídicos.",
+				"Error NO CONTROLADO al consultar clientes registrados jurídicos.");
 	}
 
 	@Override
 	public List<ClienteRegistradoJEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear,
-				"Error al consultar clientes registrados jurídicos.");
+				"Error al consultar clientes registrados jurídicos.",
+				"Error NO CONTROLADO al consultar clientes registrados jurídicos.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ClienteRegistradoJEntidad entidad) {
 
 		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar cliente registrado jurídico.",
-				entidad.getClienteRegistrado().getId().toString(), entidad.getPrefijo().getId().toString(),
+				"Error NO CONTROLADO al actualizar cliente registrado jurídico.",
+				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
-				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id.toString());
+				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado jurídico.", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado jurídico.",
+				"Error NO CONTROLADO al eliminar cliente registrado jurídico.", id);
 	}
 
 	private ClienteRegistradoJEntidad mapear(final ResultSet resultados) throws SQLException {

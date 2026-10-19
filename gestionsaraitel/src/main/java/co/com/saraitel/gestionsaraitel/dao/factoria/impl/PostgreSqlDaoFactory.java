@@ -41,6 +41,7 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SedeDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.VendedorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.AdministradorPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.AplicacionSaldoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.CategoriaPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.CiudadPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteNoRegistradoPostgreSqlDAO;
@@ -48,21 +49,30 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClientePostg
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoJPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoNPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ClienteRegistradoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.CompraPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DepartamentoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DetalleCompraPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DetalleIngresoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.DevolucionPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EmpleadoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoCompraPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoInventarioPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoProcesoCompraPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.EstadoSaldoFavorPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.FacturaPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.IngresoInventarioPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.MarcaPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.MetodoPagoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.MotivoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PagoNormalPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PagoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PaisPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PersonaPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.PrefijoPostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ProcesoCompraPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ProductoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.ProductoSedePostgreSqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.SaldoFavorPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.SedePostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.TipoDocumentoPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.VendedorPostgreSqlDAO;
@@ -98,7 +108,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public AplicacionSaldoDAO obtenerAplicacionSaldoDao() {
-		return new AplicacionSaldoPostgreSqlDao(getConexion());
+		return new AplicacionSaldoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -138,7 +148,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public CompraDAO obtenerCompraDao() {
-		return new CompraPostgreSqlDao(getConexion());
+		return new CompraPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -148,7 +158,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public DetalleCompraDAO obtenerDetalleCompraDao() {
-		return new DetalleCompraPostgreSqlDao(getConexion());
+		return new DetalleCompraPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -158,7 +168,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public DevolucionDAO obtenerDevolucionDao() {
-		return new DevolucionPostgreSqlDao(getConexion());
+		return new DevolucionPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -188,7 +198,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public FacturaDAO obtenerFacturaDao() {
-		return new FacturaPostgreSqlDao(getConexion());
+		return new FacturaPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -203,7 +213,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public MetodoPagoDAO obtenerMetodoPagoDao() {
-		return new MetodoPagoPostgreSqlDao(getConexion());
+		return new MetodoPagoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -213,12 +223,12 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public PagoDAO obtenerPagoDao() {
-		return new PagoPostgreSqlDao(getConexion());
+		return new PagoPostgreSqlDAO(getConexion());
 	}
 
 	@Override
 	public PagoNormalDAO obtenerPagoNormalDao() {
-		return new PagoNormalPostgreSqlDao(getConexion());
+		return new PagoNormalPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -238,7 +248,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public ProcesoCompraDAO obtenerProcesoCompraDao() {
-		return new ProcesoCompraPostgreSqlDao(getConexion());
+		return new ProcesoCompraPostgreSqlDAO(getConexion());
 	}
 
 	@Override
@@ -253,7 +263,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 
 	@Override
 	public SaldoFavorDAO obtenerSaldoFavorDao() {
-		return new SaldoFavorPostgreSqlDao(getConexion());
+		return new SaldoFavorPostgreSqlDAO(getConexion());
 	}
 
 	@Override

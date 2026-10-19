@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DetalleCompraDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DetalleCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoSedeEntidad;
@@ -63,15 +63,17 @@ public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraD
 
 	@Override
 	public void crear(final DetalleCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el detalle de la compra", entidad.getId().toString(),
-				entidad.getProcesoCompra().getId().toString(), entidad.getProductoSede().getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el detalle de la compra",
+				"Error NO CONTROLADO al crear el detalle de la compra", entidad.getId(),
+				entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(),
 				entidad.getCantidad(), entidad.getPrecioUnitario(), entidad.getSubtotal());
 	}
 
 	@Override
 	public DetalleCompraEntidad consultarPorId(final UUID id) {
-		List<DetalleCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el detalle de la compra");
+		List<DetalleCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el detalle de la compra",
+				"Error NO CONTROLADO al consultar el detalle de la compra");
 
 		return resultado.isEmpty() ? new DetalleCompraEntidad() : resultado.get(0);
 	}
@@ -87,26 +89,30 @@ public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraD
 				.conEntero("\"Cantidad\"", filtroSeguro.getCantidad());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar detalles de la compra");
+				"Error al consultar detalles de la compra",
+				"Error NO CONTROLADO al consultar detalles de la compra");
 	}
 
 	@Override
 	public List<DetalleCompraEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los detalles de la compra");
+				"Error al consultar los detalles de la compra",
+				"Error NO CONTROLADO al consultar los detalles de la compra");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DetalleCompraEntidad entidad) {
 
 		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el detalle de la compra",
-				entidad.getProcesoCompra().getId().toString(), entidad.getProductoSede().getId().toString(),
-				entidad.getCantidad(), entidad.getPrecioUnitario(), entidad.getSubtotal(), id.toString());
+				"Error NO CONTROLADO al actualizar el detalle de la compra",
+				entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(),
+				entidad.getCantidad(), entidad.getPrecioUnitario(), entidad.getSubtotal(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el detalle de la compra", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el detalle de la compra",
+				"Error NO CONTROLADO al eliminar el detalle de la compra", id);
 	}
 
 	private DetalleCompraEntidad mapear(final ResultSet resultados) throws SQLException {

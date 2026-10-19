@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProductoSedeDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoSedeEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
@@ -61,16 +61,18 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public void crear(final ProductoSedeEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el producto por sede", entidad.getId().toString(),
-				entidad.getProducto().getId().toString(), entidad.getSede().getId().toString(), entidad.getPrecio(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el producto por sede",
+				"Error NO CONTROLADO al crear el producto por sede", entidad.getId(),
+				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
 				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
 				entidad.getStockGarantia());
 	}
 
 	@Override
 	public ProductoSedeEntidad consultarPorId(final UUID id) {
-		List<ProductoSedeEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el producto por sede");
+		List<ProductoSedeEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el producto por sede",
+				"Error NO CONTROLADO al consultar el producto por sede");
 
 		if (resultado.isEmpty()) {
 			return new ProductoSedeEntidad();
@@ -96,20 +98,23 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 				.conEntero("\"StockGarantia\"", filtroSeguro.getStockGarantia());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar productos por sede");
+				"Error al consultar productos por sede",
+				"Error NO CONTROLADO al consultar productos por sede");
 	}
 
 	@Override
 	public List<ProductoSedeEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar productos por sede");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar productos por sede",
+				"Error NO CONTROLADO al consultar productos por sede");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoSedeEntidad entidad) {
 		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el producto por sede",
-				entidad.getProducto().getId().toString(), entidad.getSede().getId().toString(), entidad.getPrecio(),
+				"Error NO CONTROLADO al actualizar el producto por sede",
+				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
 				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
-				entidad.getStockGarantia(), id.toString());
+				entidad.getStockGarantia(), id);
 	}
 
 	private ProductoSedeEntidad mapear(final ResultSet resultados) throws SQLException {

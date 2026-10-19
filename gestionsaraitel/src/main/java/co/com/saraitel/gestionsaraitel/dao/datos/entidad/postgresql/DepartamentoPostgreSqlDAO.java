@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DepartamentoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DepartamentoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -40,12 +40,14 @@ public class DepartamentoPostgreSqlDAO extends SqlDAO implements DepartamentoDAO
 				.conId("\"Pais_id\"", filtroSeguro.getPais().getId()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar departamentos.");
+				"Error al consultar departamentos.",
+				"Error NO CONTROLADO al consultar departamentos.");
 	}
 
 	@Override
 	public List<DepartamentoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar departamentos.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar departamentos.",
+				"Error NO CONTROLADO al consultar departamentos.");
 	}
 
 	private DepartamentoEntidad mapear(final ResultSet resultados) throws SQLException {

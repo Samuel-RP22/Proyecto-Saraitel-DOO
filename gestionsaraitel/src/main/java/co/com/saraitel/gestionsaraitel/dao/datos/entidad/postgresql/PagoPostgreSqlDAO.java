@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PagoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PagoEntidad;
 
@@ -43,14 +43,16 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 	@Override
 	public void crear(final PagoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago", entidad.getId().toString(),
-				entidad.getCompra().getId().toString(), entidad.getMontoPagado(), entidad.getFechaPago());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago",
+				"Error NO CONTROLADO al crear el pago", entidad.getId(),
+				entidad.getCompra().getId(), entidad.getMontoPagado(), entidad.getFechaPago());
 	}
 
 	@Override
 	public PagoEntidad consultarPorId(final UUID id) {
-		List<PagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
-				"Error al consultar el pago");
+		List<PagoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar el pago",
+				"Error NO CONTROLADO al consultar el pago");
 
 		if (resultado.isEmpty()) {
 			return new PagoEntidad();
@@ -70,12 +72,14 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 				.conFechaHora("\"FechaPago\"", filtroSeguro.getFechaPago());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar pagos");
+				"Error al consultar pagos",
+				"Error NO CONTROLADO al consultar pagos");
 	}
 
 	@Override
 	public List<PagoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los pagos");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los pagos",
+				"Error NO CONTROLADO al consultar los pagos");
 	}
 
 	private PagoEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -1,4 +1,4 @@
-package co.com.saraitel.gestionsaraitel.dao.datos.entidad;
+package co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

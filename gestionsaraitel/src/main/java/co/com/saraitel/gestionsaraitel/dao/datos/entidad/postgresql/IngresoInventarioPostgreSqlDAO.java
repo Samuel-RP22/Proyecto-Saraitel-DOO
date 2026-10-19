@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.IngresoInventarioDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.IngresoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
@@ -31,8 +31,9 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 	@Override
 	public void crear(final IngresoInventarioEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el ingreso de inventario.", entidad.getId().toString(),
-				entidad.getSede().getId().toString(), entidad.getEstado().getId().toString(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el ingreso de inventario.",
+				"Error NO CONTROLADO al crear el ingreso de inventario.", entidad.getId(),
+				entidad.getSede().getId(), entidad.getEstado().getId(),
 				Timestamp.valueOf(entidad.getFechaLlegada()), entidad.getTotal());
 	}
 
@@ -59,12 +60,14 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 		sentencia.conFechaHora("\"FechaLlegada\"", filtroSeguro.getFechaLlegada());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				"Error al consultar ingresos de inventario.");
+				"Error al consultar ingresos de inventario.",
+				"Error NO CONTROLADO al consultar ingresos de inventario.");
 	}
 
 	@Override
 	public List<IngresoInventarioEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar ingresos de inventario.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar ingresos de inventario.",
+				"Error NO CONTROLADO al consultar ingresos de inventario.");
 	}
 
 	private IngresoInventarioEntidad mapear(final ResultSet resultados) throws SQLException {

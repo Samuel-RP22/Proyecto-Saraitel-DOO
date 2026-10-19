@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PrefijoDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -40,12 +40,14 @@ public class PrefijoPostgreSqlDAO extends SqlDAO implements PrefijoDAO {
 				filtroSeguro.getCodigo());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar prefijos.");
+				"Error al consultar prefijos.",
+				"Error NO CONTROLADO al consultar prefijos.");
 	}
 
 	@Override
 	public List<PrefijoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar prefijos.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar prefijos.",
+				"Error NO CONTROLADO al consultar prefijos.");
 	}
 
 	private PrefijoEntidad mapear(final ResultSet resultados) throws SQLException {

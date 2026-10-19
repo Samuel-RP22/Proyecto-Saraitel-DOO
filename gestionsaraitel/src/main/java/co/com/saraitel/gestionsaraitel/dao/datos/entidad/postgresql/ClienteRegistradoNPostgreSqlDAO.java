@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoNDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoNEntidad;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoNEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -31,8 +31,9 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoNEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado.", entidad.getId().toString(),
-				entidad.getClienteRegistrado().getId().toString(), entidad.getPersona().getId().toString());
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado.",
+				"Error NO CONTROLADO al crear cliente registrado.", entidad.getId(),
+				entidad.getClienteRegistrado().getId(), entidad.getPersona().getId());
 	}
 
 	@Override
@@ -55,17 +56,20 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 				.conId("\"Persona_id\"", filtroSeguro.getPersona().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes registrados.");
+				"Error al consultar clientes registrados.",
+				"Error NO CONTROLADO al consultar clientes registrados.");
 	}
 
 	@Override
 	public List<ClienteRegistradoNEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes registrados.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes registrados.",
+				"Error NO CONTROLADO al consultar clientes registrados.");
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado.", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado.",
+				"Error NO CONTROLADO al eliminar cliente registrado.", id);
 	}
 
 	private ClienteRegistradoNEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteNoRegistradoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteNoRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -28,8 +28,9 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 
 	@Override
 	public void crear(final ClienteNoRegistradoEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente no registrado.", entidad.getId().toString(),
-				entidad.getCliente().getId().toString());
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente no registrado.",
+				"Error NO CONTROLADO al crear cliente no registrado.", entidad.getId(),
+				entidad.getCliente().getId());
 	}
 
 	@Override
@@ -52,12 +53,14 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 				filtroSeguro.getCliente().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes no registrados.");
+				"Error al consultar clientes no registrados.",
+				"Error NO CONTROLADO al consultar clientes no registrados.");
 	}
 
 	@Override
 	public List<ClienteNoRegistradoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes no registrados.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes no registrados.",
+				"Error NO CONTROLADO al consultar clientes no registrados.");
 	}
 
 	private ClienteNoRegistradoEntidad mapear(final ResultSet resultados) throws SQLException {

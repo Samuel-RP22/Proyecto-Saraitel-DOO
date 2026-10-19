@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MotivoDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MotivoEntidad;
 
 public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
@@ -35,8 +35,9 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 
 	@Override
 	public MotivoEntidad consultarPorId(final UUID id) {
-		List<MotivoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()), this::mapear,
-				"Error al consultar el motivo");
+		List<MotivoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				"Error al consultar el motivo",
+				"Error NO CONTROLADO al consultar el motivo");
 
 		if (resultado.isEmpty()) {
 			return new MotivoEntidad();
@@ -59,12 +60,14 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar motivos");
+				"Error al consultar motivos",
+				"Error NO CONTROLADO al consultar motivos");
 	}
 
 	@Override
 	public List<MotivoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar motivos");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar motivos",
+				"Error NO CONTROLADO al consultar motivos");
 	}
 
 	private MotivoEntidad mapear(final ResultSet resultados) throws SQLException {

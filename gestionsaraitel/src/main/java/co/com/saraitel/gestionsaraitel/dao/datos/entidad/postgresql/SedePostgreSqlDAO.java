@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SedeDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CiudadEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -33,8 +33,9 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 
 	@Override
 	public void crear(final SedeEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear sede", entidad.getId().toString(),
-				entidad.getCiudad().getId().toString(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear sede",
+				"Error NO CONTROLADO al crear sede", entidad.getId(),
+				entidad.getCiudad().getId(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
 				entidad.getEsActiva());
 	}
 
@@ -59,18 +60,21 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 				.conBooleano("\"EsActiva\"", filtroSeguro.getEsActiva(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar sedes.");
+				"Error al consultar sedes.",
+				"Error NO CONTROLADO al consultar sedes.");
 	}
 
 	@Override
 	public List<SedeEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar sedes.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar sedes.",
+				"Error NO CONTROLADO al consultar sedes.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final SedeEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar sede.", entidad.getCiudad().getId().toString(),
-				entidad.getNombre(), entidad.getNit(), entidad.getDireccion(), entidad.getEsActiva(), id.toString());
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar sede.",
+				"Error NO CONTROLADO al actualizar sede.", entidad.getCiudad().getId(),
+				entidad.getNombre(), entidad.getNit(), entidad.getDireccion(), entidad.getEsActiva(), id);
 	}
 
 	private SedeEntidad mapear(final ResultSet resultados) throws SQLException {

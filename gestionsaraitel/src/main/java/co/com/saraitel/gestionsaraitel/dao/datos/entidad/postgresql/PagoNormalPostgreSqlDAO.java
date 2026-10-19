@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PagoNormalDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MetodoPagoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PagoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PagoNormalEntidad;
@@ -44,15 +44,17 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	@Override
 	public void crear(final PagoNormalEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago normal", entidad.getId().toString(),
-				entidad.getMetodoPago().getId().toString(), entidad.getPago().getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el pago normal",
+				"Error NO CONTROLADO al crear el pago normal", entidad.getId(),
+				entidad.getMetodoPago().getId(), entidad.getPago().getId(),
 				entidad.getMontoPagar());
 	}
 
 	@Override
 	public PagoNormalEntidad consultarPorId(final UUID id) {
-		List<PagoNormalEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el pago normal");
+		List<PagoNormalEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el pago normal",
+				"Error NO CONTROLADO al consultar el pago normal");
 
 		if (resultado.isEmpty()) {
 			return new PagoNormalEntidad();
@@ -72,13 +74,15 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 				.conDecimal("\"MontoPagar\"", filtroSeguro.getMontoPagar());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar pagos normales");
+				"Error al consultar pagos normales",
+				"Error NO CONTROLADO al consultar pagos normales");
 	}
 
 	@Override
 	public List<PagoNormalEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los pagos normales");
+				"Error al consultar los pagos normales",
+				"Error NO CONTROLADO al consultar los pagos normales");
 	}
 
 	private PagoNormalEntidad mapear(final ResultSet resultados) throws SQLException {

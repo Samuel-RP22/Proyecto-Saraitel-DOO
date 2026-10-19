@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CategoriaDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CategoriaEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -32,9 +32,10 @@ public class CategoriaPostgreSqlDAO extends SqlDAO implements CategoriaDAO {
 
 	@Override
 	public void crear(final CategoriaEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear la categoría.", entidad.getId().toString(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear la categoría.",
+				"Error NO CONTROLADO al crear la categoría.", entidad.getId(),
 				entidad.getNombre(),
-				entidad.getIdCategoriaPadre() == null ? null : entidad.getIdCategoriaPadre().toString(),
+				entidad.getIdCategoriaPadre(),
 				entidad.getNivel());
 	}
 
@@ -61,24 +62,28 @@ public class CategoriaPostgreSqlDAO extends SqlDAO implements CategoriaDAO {
 		sentencia.conEntero("\"Nivel\"", filtroSeguro.getNivel());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				"Error al consultar categorías.");
+				"Error al consultar categorías.",
+				"Error NO CONTROLADO al consultar categorías.");
 	}
 
 	@Override
 	public List<CategoriaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar categorías.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar categorías.",
+				"Error NO CONTROLADO al consultar categorías.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final CategoriaEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar la categoría.", entidad.getNombre(),
-				entidad.getIdCategoriaPadre() == null ? null : entidad.getIdCategoriaPadre().toString(),
-				entidad.getNivel(), id.toString());
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar la categoría.",
+				"Error NO CONTROLADO al actualizar la categoría.", entidad.getNombre(),
+				entidad.getIdCategoriaPadre(),
+				entidad.getNivel(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar la categoría.", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar la categoría.",
+				"Error NO CONTROLADO al eliminar la categoría.", id);
 	}
 
 	private CategoriaEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PersonaDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
-import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
@@ -39,8 +39,9 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 
 	@Override
 	public void crear(final PersonaEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear persona.", entidad.getId().toString(),
-				entidad.getTipoDocumento().getId().toString(), entidad.getPrefijo().getId().toString(),
+		ejecutarActualizacion(SQL_INSERTAR, "Error al crear persona.",
+				"Error NO CONTROLADO al crear persona.", entidad.getId(),
+				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
 				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
 				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
 	}
@@ -70,25 +71,29 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar personas.");
+				"Error al consultar personas.",
+				"Error NO CONTROLADO al consultar personas.");
 	}
 
 	@Override
 	public List<PersonaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar personas.");
+		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar personas.",
+				"Error NO CONTROLADO al consultar personas.");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PersonaEntidad entidad) {
 		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar persona.",
-				entidad.getTipoDocumento().getId().toString(), entidad.getPrefijo().getId().toString(),
+				"Error NO CONTROLADO al actualizar persona.",
+				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
 				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
-				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id.toString());
+				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar persona.", id.toString());
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar persona.",
+				"Error NO CONTROLADO al eliminar persona.", id);
 	}
 
 	private PersonaEntidad mapear(final ResultSet resultados) throws SQLException {

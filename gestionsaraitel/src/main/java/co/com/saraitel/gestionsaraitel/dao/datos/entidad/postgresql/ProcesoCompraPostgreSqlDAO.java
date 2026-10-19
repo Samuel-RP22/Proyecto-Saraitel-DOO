@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ProcesoCompraDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
@@ -49,16 +49,18 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 
 	@Override
 	public void crear(final ProcesoCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el proceso de compra", entidad.getId().toString(),
-				entidad.getCliente().getId().toString(), entidad.getEmpleado().getId().toString(),
-				entidad.getEstado().getId().toString(), entidad.getFechaInicio(), entidad.getFechaActualizacion(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el proceso de compra",
+				"Error NO CONTROLADO al crear el proceso de compra", entidad.getId(),
+				entidad.getCliente().getId(), entidad.getEmpleado().getId(),
+				entidad.getEstado().getId(), entidad.getFechaInicio(), entidad.getFechaActualizacion(),
 				entidad.getTotal());
 	}
 
 	@Override
 	public ProcesoCompraEntidad consultarPorId(final UUID id) {
-		List<ProcesoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar el proceso de compra");
+		List<ProcesoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar el proceso de compra",
+				"Error NO CONTROLADO al consultar el proceso de compra");
 
 		if (resultado.isEmpty()) {
 			return new ProcesoCompraEntidad();
@@ -85,12 +87,14 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 				.conFechaHora("\"FechaActualizacion\"", filtroSeguro.getFechaActualizacion());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar procesos de compra");
+				"Error al consultar procesos de compra",
+				"Error NO CONTROLADO al consultar procesos de compra");
 	}
 
 	@Override
 	public List<ProcesoCompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar procesos de compra");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar procesos de compra",
+				"Error NO CONTROLADO al consultar procesos de compra");
 	}
 
 	private ProcesoCompraEntidad mapear(final ResultSet resultados) throws SQLException {

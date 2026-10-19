@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.DevolucionDAO;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.FiltroSql;
-import co.com.saraitel.gestionsaraitel.dao.datos.entidad.SqlDAO;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
+import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DetalleCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.DevolucionEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.MotivoEntidad;
@@ -59,16 +59,18 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 	@Override
 	public void crear(final DevolucionEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la devolución", entidad.getId().toString(),
-				entidad.getDetalleCompra().getId().toString(), entidad.getMotivo().getId().toString(),
+		ejecutarActualizacion(SQL_CREAR, "Error al crear la devolución",
+				"Error NO CONTROLADO al crear la devolución", entidad.getId(),
+				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
 				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
 				entidad.getEstado());
 	}
 
 	@Override
 	public DevolucionEntidad consultarPorId(final UUID id) {
-		List<DevolucionEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id.toString()),
-				this::mapear, "Error al consultar la devolución");
+		List<DevolucionEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, "Error al consultar la devolución",
+				"Error NO CONTROLADO al consultar la devolución");
 
 		if (resultado.isEmpty()) {
 			return new DevolucionEntidad();
@@ -91,21 +93,24 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 				.conTexto("\"Estado\"", filtroSeguro.getEstado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar devoluciones");
+				"Error al consultar devoluciones",
+				"Error NO CONTROLADO al consultar devoluciones");
 	}
 
 	@Override
 	public List<DevolucionEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar las devoluciones");
+		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar las devoluciones",
+				"Error NO CONTROLADO al consultar las devoluciones");
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DevolucionEntidad entidad) {
 
 		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar la devolución",
-				entidad.getDetalleCompra().getId().toString(), entidad.getMotivo().getId().toString(),
+				"Error NO CONTROLADO al actualizar la devolución",
+				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
 				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
-				entidad.getEstado(), id.toString());
+				entidad.getEstado(), id);
 	}
 
 	private DevolucionEntidad mapear(final ResultSet resultados) throws SQLException {
