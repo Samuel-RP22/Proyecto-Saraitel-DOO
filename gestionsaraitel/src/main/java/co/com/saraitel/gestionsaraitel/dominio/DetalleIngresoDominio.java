@@ -28,6 +28,16 @@ public class DetalleIngresoDominio {
 		this.costoUnitario = UtilNumero.obtenerValorDefecto(costoUnitario);
 		this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
 	}
+	
+	public static DetalleIngresoDominio obtenerValorDefecto() {
+	    return new DetalleIngresoDominio(
+	            UtilUUID.obtenerUUIDDefecto(),
+	            IngresoInventarioDominio.obtenerValorDefecto(),
+	            ProductoSedeDominio.obtenerValorDefecto(),
+	            0,
+	            UtilNumero.CERO_DECIMAL,
+	            UtilNumero.CERO_DECIMAL);
+	}
 
 	public UUID getId() {
 		return id;

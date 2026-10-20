@@ -19,7 +19,7 @@ public class ClienteRegistradoDominio {
 	}
 
 	public static ClienteRegistradoDominio obtenerValorDefecto() {
-		return new ClienteRegistradoDominio(UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(), false);
+		return new ClienteRegistradoDominio(UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(), true);
 	}
 
 	public UUID getId() {

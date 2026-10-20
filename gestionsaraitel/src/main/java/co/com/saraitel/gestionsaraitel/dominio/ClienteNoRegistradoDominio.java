@@ -16,6 +16,10 @@ public class ClienteNoRegistradoDominio {
 				ClienteDominio.obtenerValorDefecto());
 	}
 
+	public static ClienteNoRegistradoDominio obtenerValorDefecto() {
+		return new ClienteNoRegistradoDominio(UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto());
+	}
+
 	public UUID getId() {
 		return id;
 	}
