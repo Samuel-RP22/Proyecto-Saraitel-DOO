@@ -6,7 +6,7 @@ import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
 import co.com.saraitel.gestionsaraitel.dto.PaisDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-
+//
 public class PaisDTOAssembler2 implements DTOAssembler<PaisDominio, PaisDTO> {
 
 	private static final DTOAssembler<PaisDominio, PaisDTO> instancia = new PaisDTOAssembler2();
