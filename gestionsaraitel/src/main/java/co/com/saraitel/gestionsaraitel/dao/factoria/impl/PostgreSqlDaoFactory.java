@@ -82,9 +82,9 @@ import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTr
 
 public class PostgreSqlDaoFactory extends DAOFactory {
 
-	private static final String URL = "jdbc:postgresql://localhost:5432/saraitel";
-	private static final String USUARIO = "admin";
-	private static final String CONTRASENA = "123";
+	private static final String URL = System.getenv("DATABASE_URL");
+	private static final String USUARIO = System.getenv("DATABASE_USER");
+	private static final String CONTRASENA = System.getenv("DATABASE_PASSWORD");
 
 	public PostgreSqlDaoFactory() {
 		abrirConexion();

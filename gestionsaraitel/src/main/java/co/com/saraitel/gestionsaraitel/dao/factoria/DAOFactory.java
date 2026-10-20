@@ -70,6 +70,7 @@ public abstract class DAOFactory {
 	}
 
 	protected final void setConexion(Connection conexion) {
+		UtilSQL.asegurarConexionAbierta(conexion);
 		this.conexion = conexion;
 	}
 

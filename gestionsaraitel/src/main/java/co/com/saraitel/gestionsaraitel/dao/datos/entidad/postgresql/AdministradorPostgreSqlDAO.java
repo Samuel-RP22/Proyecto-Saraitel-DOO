@@ -15,8 +15,15 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorDAO {
 
-	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Administrador\" (\"id\", \"Empleado_id\") VALUES (?, ?)";
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Empleado_id\" FROM saraitel.\"Administrador\"";
+	private static final String SQL_CREAR = """
+			INSERT INTO saraitel."Administrador" 
+			("id", "Empleado_id")
+			VALUES (?, ?)
+			""";
+	private static final String SQL_CONSULTAR = """
+			SELECT "id", "Empleado_id" 
+			FROM saraitel."Administrador"
+			""";
 
 	public AdministradorPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
