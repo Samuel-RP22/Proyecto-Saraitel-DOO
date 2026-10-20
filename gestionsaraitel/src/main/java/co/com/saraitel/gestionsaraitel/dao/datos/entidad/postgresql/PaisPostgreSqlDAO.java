@@ -52,16 +52,14 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void crear(final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el país",
-				"Error NO CONTROLADO al crear el país", entidad.getId(),
-				entidad.getNombre());
+		ejecutarActualizacion(SQL_CREAR, "Error al crear el país", "Error NO CONTROLADO al crear el país",
+				entidad.getId(), entidad.getNombre());
 	}
 
 	@Override
 	public PaisEntidad consultarPorId(final UUID id) {
 		List<PaisEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				"Error al consultar el país",
-				"Error NO CONTROLADO al consultar el país");
+				"Error al consultar el país", "Error NO CONTROLADO al consultar el país");
 
 		if (resultado.isEmpty()) {
 			return new PaisEntidad();
@@ -79,8 +77,7 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar países",
-				"Error NO CONTROLADO al consultar países");
+				"Error al consultar países", "Error NO CONTROLADO al consultar países");
 	}
 
 	@Override
@@ -97,8 +94,7 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el país",
-				"Error NO CONTROLADO al eliminar el país", id);
+		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el país", "Error NO CONTROLADO al eliminar el país", id);
 	}
 
 	private PaisEntidad mapear(final ResultSet resultados) throws SQLException {
