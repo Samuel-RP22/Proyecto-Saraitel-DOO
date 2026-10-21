@@ -17,6 +17,7 @@ public final class FiltroSql {
 
 	public FiltroSql(final String sentenciaBase) {
 		sentencia = new StringBuilder(sentenciaBase).append(" WHERE 1=1");
+		//QUITAR WHERE 1=1
 	}
 
 	private void agregarCondicion(final String columna, final String operador, final Object valor) {

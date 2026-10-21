@@ -38,6 +38,6 @@ public final class UtilUUID {
 	}
 
 	public static String generarComoTexto() {
-		return generar().toString().toLowerCase();
+		return generar().toString();
 	}
 }

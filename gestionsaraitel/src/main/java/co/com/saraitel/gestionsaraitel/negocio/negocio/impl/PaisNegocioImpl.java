@@ -35,16 +35,17 @@ public class PaisNegocioImpl implements PaisNegocio {
 	}
 
 	private UUID generarIdPaisUnico() {
-		UUID id;
+	    UUID id;
+	    boolean existe;
 
-		do {
-			id = UUID.randomUUID();
-		} while (!daoFactory.obtenerPaisDao().consultarPorId(id).getId()
-				.equals(UtilUUID.obtenerUUIDDefecto()) == false);
+	    do {
+	        id = UUID.randomUUID();
+	        var paisExistente = daoFactory.obtenerPaisDao().consultarPorId(id);
+	        existe = !paisExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
+	    } while (existe);
 
-		return id;
+	    return id;
 	}
-
 	@Override
 	public void modificarInformacionPaisExistente(final UUID id, final PaisDominio datos) {
 

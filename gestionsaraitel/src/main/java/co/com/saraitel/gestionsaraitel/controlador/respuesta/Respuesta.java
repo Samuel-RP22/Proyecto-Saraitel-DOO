@@ -20,8 +20,7 @@ class Respuesta<D> {
 		setMensajes(mensajes);
 		setDatos(datos);
 		setEstado(estado);
-		correlationId = UtilUUID.obtenerValorDefectoComoTexto(correlationId);
-		//GENERAR COMO TEXTOOO
+		correlationId = UtilUUID.generarComoTexto();
 	}
 	
 	public LocalDateTime getTimestamp() {

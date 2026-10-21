@@ -2,6 +2,8 @@ package co.com.saraitel.gestionsaraitel.controlador.respuesta;
 
 import java.util.List;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
+
 public class RespuestaOk<D> extends Respuesta<D> {
 
 	protected RespuestaOk(List<String> mensajes, List<D> datos) {
@@ -11,11 +13,17 @@ public class RespuestaOk<D> extends Respuesta<D> {
 	public static <D> RespuestaOk<D> crear(List<String> mensajes, List<D> datos) {
 		return new RespuestaOk<>(mensajes, datos);
 	}
-
+	
+	public static <D> RespuestaOk<D> crear(String mensaje) {
+		var mensajeFormateado = UtilTexto.quitarEspaciosEnBlanco(mensaje);
+		return new RespuestaOk<>(List.of(mensajeFormateado), List.of());
+	}
+	
 	public static <D> RespuestaOk<D> crear(List<D> datos) {
 		return new RespuestaOk<>(List.of(), datos);
 	}
+	
+	public static <D> RespuestaOk<D> crear(D dato) {
+		return new RespuestaOk<>(List.of(), List.of(dato));
+	}
 }
-
-
-//MIRAR RESPUESTA DE NUEVO !!!!IMPORTANTE!!!!
