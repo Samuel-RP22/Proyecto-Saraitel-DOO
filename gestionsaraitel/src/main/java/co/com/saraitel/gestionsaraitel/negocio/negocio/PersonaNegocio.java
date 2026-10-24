@@ -7,11 +7,11 @@ import co.com.saraitel.gestionsaraitel.dominio.PersonaDominio;
 
 public interface PersonaNegocio {
 
-	void registrarInformacionNuevoPais(PersonaDominio datos);
+	void registrarInformacionNuevaPersona(PersonaDominio datos);
 
-	void modificarInformacionPaisExistente(UUID id, PersonaDominio datos);
+	void modificarInformacionPersonaExistente(UUID id, PersonaDominio datos);
 
-	void darBajaInformacionPaisExistente(UUID id);
+	void darBajaInformacionPersonaExistente(UUID id);
 
 	List<PersonaDominio> consultarPorFiltro(PersonaDominio filtro);
 

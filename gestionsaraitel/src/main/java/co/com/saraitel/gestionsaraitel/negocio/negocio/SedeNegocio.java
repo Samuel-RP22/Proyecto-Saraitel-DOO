@@ -7,9 +7,9 @@ import co.com.saraitel.gestionsaraitel.dominio.SedeDominio;
 
 public interface SedeNegocio {
 
-	void registrarInformacionNuevoPais(SedeDominio datos);
+	void registrarInformacionNuevaSede(SedeDominio datos);
 
-	void modificarInformacionPaisExistente(UUID id, SedeDominio datos);
+	void modificarInformacionSedeExistente(UUID id, SedeDominio datos);
 
 	List<SedeDominio> consultarPorFiltro(SedeDominio filtro);
 

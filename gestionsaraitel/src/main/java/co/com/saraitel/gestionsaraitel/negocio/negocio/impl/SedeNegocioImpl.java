@@ -23,7 +23,7 @@ public class SedeNegocioImpl implements SedeNegocio {
 	}
 
 	@Override
-	public void registrarInformacionNuevoPais(final SedeDominio datos) {
+	public void registrarInformacionNuevaSede(final SedeDominio datos) {
 		ValidarDatosRegistrarInformacionNuevaSedeRule.obtenerInstancia().ejecutar(datos);
 
 		AsegurarNombreNuevaSedeNoExistaRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
@@ -51,7 +51,7 @@ public class SedeNegocioImpl implements SedeNegocio {
 	}
 
 	@Override
-	public void modificarInformacionPaisExistente(final UUID id, final SedeDominio datos) {
+	public void modificarInformacionSedeExistente(final UUID id, final SedeDominio datos) {
 
 		var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(id);
 
@@ -102,7 +102,6 @@ public class SedeNegocioImpl implements SedeNegocio {
 
 		daoFactory.obtenerSedeDao().actualizar(id, entidadActualizada);
 	}
-
 
 	@Override
 	public List<SedeDominio> consultarPorFiltro(final SedeDominio filtro) {

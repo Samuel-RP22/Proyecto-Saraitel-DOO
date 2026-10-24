@@ -47,6 +47,37 @@ public class CatalogoMensajes {
 
 
 	
+
+public static class PersonaNegocioImpl {
+
+	private PersonaNegocioImpl() {
+	}
+	
+	public static final String PERSONA_YA_EXISTE_CON_EL_MISMO_NUMERO_DOCUMENTO_DE_PERSONA_A_CREAR = "Ya existe otra persona con el mismo número de documento";
+	public static final String PERSONA_YA_EXISTE_CON_EL_MISMO_TELEFONO_DE_PERSONA_A_CREAR = "Ya existe otra persona con el mismo teléfono";
+	public static final String PERSONA_YA_EXISTE_CON_EL_MISMO_CORREO_DE_PERSONA_A_CREAR = "Ya existe otra persona con el mismo correo";
+	public static final String TIPO_DOCUMENTO_PERSONA_OBLIGATORIO = "El tipo de documento de la persona es obligatorio";
+	public static final String NUMERO_DOCUMENTO_PERSONA_OBLIGATORIO = "El número de documento de la persona es obligatorio";
+	public static final String LONGITUD_NUMERO_DOCUMENTO_PERSONA_NO_VALIDA = "La longitud del número de documento debe estar entre 5 y 15 caracteres";
+	public static final String FORMATO_NUMERO_DOCUMENTO_PERSONA_NO_VALIDO = "El número de documento solo puede contener letras y números";
+	public static final String NOMBRE_PERSONA_OBLIGATORIO = "El nombre de la persona es obligatorio";
+	public static final String LONGITUD_NOMBRE_PERSONA_NO_VALIDA = "La longitud del nombre debe estar entre 2 y 50 caracteres";
+	public static final String FORMATO_NOMBRE_PERSONA_NO_VALIDO = "El nombre solo puede contener letras y espacios";
+	public static final String APELLIDO_PERSONA_OBLIGATORIO = "El apellido de la persona es obligatorio";
+	public static final String LONGITUD_APELLIDO_PERSONA_NO_VALIDA = "La longitud del apellido debe estar entre 2 y 50 caracteres";
+	public static final String FORMATO_APELLIDO_PERSONA_NO_VALIDO = "El apellido solo puede contener letras y espacios";
+	public static final String TELEFONO_PERSONA_OBLIGATORIO = "El teléfono de la persona es obligatorio";
+	public static final String LONGITUD_TELEFONO_PERSONA_NO_VALIDA = "La longitud del teléfono debe estar entre 7 y 15 dígitos";
+	public static final String FORMATO_TELEFONO_PERSONA_NO_VALIDO = "El teléfono solo puede contener números";
+	public static final String CORREO_PERSONA_OBLIGATORIO = "El correo electrónico de la persona es obligatorio";
+	public static final String LONGITUD_CORREO_PERSONA_NO_VALIDA = "La longitud del correo debe estar entre 6 y 100 caracteres";
+	public static final String FORMATO_CORREO_PERSONA_NO_VALIDO = "El formato del correo electrónico no es válido";
+	public static final String PREFIJO_PERSONA_OBLIGATORIO = "El prefijo telefónico de la persona es obligatorio para llevar a cabo la operación deseada";
+}
+
+	
+	
+	
 	
 	
 	
