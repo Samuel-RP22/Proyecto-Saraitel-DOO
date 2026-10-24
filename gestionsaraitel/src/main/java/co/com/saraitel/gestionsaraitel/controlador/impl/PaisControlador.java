@@ -55,7 +55,7 @@ public class PaisControlador extends AbstractRestController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<RespuestaOk<PaisDTO>> consultarPorId(@PathVariable UUID id) {
-		var pais = fachada.consultarPorid(id);
+		var pais = fachada.consultarPorId(id);
 		RespuestaOk<PaisDTO> respuesta = RespuestaOk.crear(pais);
 		return ResponseEntity.ok(respuesta);
 	}

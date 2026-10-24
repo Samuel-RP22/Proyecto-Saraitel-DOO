@@ -6,11 +6,13 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.dominio.EmpleadoDominio;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.EmpleadoNegocio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.EmpleadoEntidadAssembler;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarDireccionNuevoEmpleadoNoExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarNitNuevoEmpleadoNoExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarNombreNuevoEmpleadoNoExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarPersonaEmpleadoExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarPersonaNuevoEmpleadoNoExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarSedeEmpleadoEsteActivaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.AsegurarSedeEmpleadoExistaRule;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.empleado.ValidarDatosRegistrarInformacionNuevoEmpleadoRule;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -26,28 +28,27 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 	public void registrarInformacionNuevoEmpleado(final EmpleadoDominio datos) {
 		ValidarDatosRegistrarInformacionNuevoEmpleadoRule.obtenerInstancia().ejecutar(datos);
 
-		AsegurarNombreNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
-		AsegurarNitNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getNit(), daoFactory);
-		AsegurarDireccionNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getDireccion(), daoFactory);
+		AsegurarSedeEmpleadoExistaRule.obtenerInstancia().ejecutar(datos.getSede().getId(), daoFactory);
+		AsegurarSedeEmpleadoEsteActivaRule.obtenerInstancia().ejecutar(datos.getSede().getId(), daoFactory);
+		AsegurarPersonaEmpleadoExistaRule.obtenerInstancia().ejecutar(datos.getPersona().getId(), daoFactory);
+
+		AsegurarPersonaNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getPersona().getId(), daoFactory);
 
 		var empleadoEntidad = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(datos);
 
-		empleadoEntidad.setId(generarIdEmpleadoUnico());
-
-		daoFactory.obtenerEmpleadoDao().crear(empleadoEntidad);
-	}
-
-	private UUID generarIdEmpleadoUnico() {
 		UUID id;
-		boolean existe;
+		boolean idExiste;
 
 		do {
 			id = UUID.randomUUID();
-			var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
-			existe = !empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
+			var empleadoConMismoId = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
+			idExiste = !empleadoConMismoId.getId().equals(UtilUUID.obtenerUUIDDefecto());
+		} while (idExiste);
 
-		return id;
+		empleadoEntidad.setId(id);
+		empleadoEntidad.setEsActivo(true);
+
+		daoFactory.obtenerEmpleadoDao().crear(empleadoEntidad);
 	}
 
 	@Override
@@ -59,13 +60,46 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 			return;
 		}
 
-		var datosActualizados = new EmpleadoDominio(id, datos.getPersona(), datos.getSede(), datos.getCargo());
+		var datosActualizados = new EmpleadoDominio(id, datos.getSede(), datos.getPersona(), datos.getEsActiva());
 
 		ValidarDatosRegistrarInformacionNuevoEmpleadoRule.obtenerInstancia().ejecutar(datosActualizados);
+
+		AsegurarSedeEmpleadoExistaRule.obtenerInstancia().ejecutar(datosActualizados.getSede().getId(), daoFactory);
+		AsegurarSedeEmpleadoEsteActivaRule.obtenerInstancia().ejecutar(datosActualizados.getSede().getId(), daoFactory);
+		AsegurarPersonaEmpleadoExistaRule.obtenerInstancia().ejecutar(datosActualizados.getPersona().getId(),
+				daoFactory);
+
+		var personaFiltro = new PersonaEntidad();
+		personaFiltro.setId(datosActualizados.getPersona().getId());
+
+		var entidadFiltro = new EmpleadoEntidad();
+		entidadFiltro.setPersona(personaFiltro);
+
+		var empleadosConMismaPersona = daoFactory.obtenerEmpleadoDao().consultarPorFiltro(entidadFiltro);
+
+		boolean personaDuplicada = empleadosConMismaPersona.stream().anyMatch(empleado -> !empleado.getId().equals(id));
+
+		if (personaDuplicada) {
+			AsegurarPersonaNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datosActualizados.getPersona().getId(),
+					daoFactory);
+		}
 
 		var entidadActualizada = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(datosActualizados);
 
 		daoFactory.obtenerEmpleadoDao().actualizar(id, entidadActualizada);
+	}
+
+	@Override
+	public void darBajaInformacionEmpleadoExistente(final UUID id) {
+		var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
+
+		if (empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+			return;
+		}
+
+		empleadoExistente.setEsActivo(false);
+
+		daoFactory.obtenerEmpleadoDao().actualizar(id, empleadoExistente);
 	}
 
 	@Override

@@ -79,79 +79,6 @@ public static class PersonaNegocioImpl {
 	
 	
 	
-
-
-
-
-	public static class CiudadFachadaImpl {
-		private CiudadFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de las ciudades con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES = "Se ha presentado un problema inesperado tratando de consultar la información de las ciudades, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDAD = "Se ha presentado un problema inesperado tratando de consultar la información de la ciudad, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class DepartamentoFachadaImpl {
-		private DepartamentoFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los departamentos con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS = "Se ha presentado un problema inesperado tratando de consultar la información de los departamentos, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO = "Se ha presentado un problema inesperado tratando de consultar la información del departamento, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class EmpleadoFachadaImpl {
-		private EmpleadoFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_EMPLEADO = "Se ha presentado un problema inesperado tratando de registrar la información del nuevo empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_MODIFICANDO_EMPLEADO = "Se ha presentado un problema inesperado tratando de modificar la información del empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los empleados con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS = "Se ha presentado un problema inesperado tratando de consultar la información de los empleados, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADO = "Se ha presentado un problema inesperado tratando de consultar la información del empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class PersonaFachadaImpl {
-		private PersonaFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_PERSONA = "Se ha presentado un problema inesperado tratando de registrar la información de la nueva persona, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_MODIFICANDO_PERSONA = "Se ha presentado un problema inesperado tratando de modificar la información de la persona, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_DANDO_DE_BAJA_PERSONA = "Se ha presentado un problema inesperado tratando de dar de baja la información de la persona, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de las personas con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS = "Se ha presentado un problema inesperado tratando de consultar la información de las personas, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONA = "Se ha presentado un problema inesperado tratando de consultar la información de la persona, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class PrefijoFachadaImpl {
-		private PrefijoFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los prefijos con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS = "Se ha presentado un problema inesperado tratando de consultar la información de los prefijos, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJO = "Se ha presentado un problema inesperado tratando de consultar la información del prefijo, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class SedeFachadaImpl {
-		private SedeFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_SEDE = "Se ha presentado un problema inesperado tratando de registrar la información de la nueva sede, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_MODIFICANDO_SEDE = "Se ha presentado un problema inesperado tratando de modificar la información de la sede, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de las sedes con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES = "Se ha presentado un problema inesperado tratando de consultar la información de las sedes, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDE = "Se ha presentado un problema inesperado tratando de consultar la información de la sede, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static class TipoDocumentoFachadaImpl {
-		private TipoDocumentoFachadaImpl() {
-		}
-
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPOS_DOCUMENTO_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los tipos de documento con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPOS_DOCUMENTO = "Se ha presentado un problema inesperado tratando de consultar la información de los tipos de documento, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPO_DOCUMENTO = "Se ha presentado un problema inesperado tratando de consultar la información del tipo de documento, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
 	
 	
 	
@@ -275,6 +202,20 @@ public static class PersonaNegocioImpl {
 	
 	
 	
+	public static class EmpleadoNegocioImpl {
+		private EmpleadoNegocioImpl() {
+		}
+
+		public static final String EMPLEADO_YA_EXISTE_CON_LA_MISMA_PERSONA_DE_EMPLEADO_A_CREAR = "Ya existe un empleado registrado con la persona con la cual se desea crear el empleado deseado";
+
+		public static final String SEDE_EMPLEADO_OBLIGATORIA = "La sede del empleado es obligatoria para llevar a cabo la operación deseada";
+		public static final String SEDE_EMPLEADO_NO_EXISTE = "La sede asignada al empleado no existe, asegurese de seleccionar una sede registrada";
+		public static final String SEDE_EMPLEADO_NO_ACTIVA = "La sede asignada al empleado no se encuentra activa, asegurese de seleccionar una sede abierta al público";
+
+		public static final String PERSONA_EMPLEADO_OBLIGATORIA = "La persona del empleado es obligatoria para llevar a cabo la operación deseada";
+		public static final String PERSONA_EMPLEADO_NO_EXISTE = "La persona asignada al empleado no existe, asegurese de registrar primero la persona";
+	}
+
 	public static class PaisNegocioImpl {
 		private PaisNegocioImpl() {
 		}
