@@ -119,7 +119,7 @@ public class PaisFachadaImpl implements PaisFachada {
 	}
 
 	@Override
-	public PaisDTO consultarPorid(UUID id) {
+	public PaisDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var paisNegocio = new PaisNegocioImpl(daoFactory);
 

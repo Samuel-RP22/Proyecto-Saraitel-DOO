@@ -25,7 +25,7 @@ public class CategoriaDTOAssembler implements DTOAssembler<CategoriaDominio, Cat
 		CategoriaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CategoriaDominio.obtenerValorDefecto());
 
-		return new CategoriaDTO(dominioTmp.getId(), dominioTmp.getNombre(), dominioTmp.getCategoriaPadre(),
+		return new CategoriaDTO(dominioTmp.getId(), dominioTmp.getNombre(), dominioTmp.getIdCategoriaPadre(),
 				dominioTmp.getNivel());
 	}
 

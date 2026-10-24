@@ -11,8 +11,6 @@ public interface SedeFachada {
 
 	void modificarInformacionSedeExistente(UUID id, SedeDTO datos);
 
-	void darBajaInformacionSedeExistente(UUID id);
-
 	List<SedeDTO> consultarPorFiltro(SedeDTO filtro);
 
 	List<SedeDTO> consultarTodos();
