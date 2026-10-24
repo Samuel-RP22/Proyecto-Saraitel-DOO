@@ -3,6 +3,8 @@ package co.com.saraitel.gestionsaraitel.controlador.impl;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,49 +31,55 @@ import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.PaisFachadaImpl;
 @RestController
 @RequestMapping("/api/v1/paises")
 public class PaisControlador extends AbstractRestController {
-	MENSAJE DE ERROR SI NO ENCUENTRA OBJETO DE DOMINIO CON ID CORRESPONDIENTE
-    private PaisFachada fachada = new PaisFachadaImpl();
+	// MENSAJE DE ERROR SI NO ENCUENTRA OBJETO DE DOMINIO CON ID CORRESPONDIENTE
+	private PaisFachada fachada = new PaisFachadaImpl();
 
-    @GetMapping("/dummy")
-    public PaisDTO obtenerDummy() {
-        return new PaisDTO();
-    }
+	@GetMapping("/login")
+	public String hacerLogin(@AuthenticationPrincipal OidcUser datosUsuario) {
+		return "Hola Usuario %s. Te has autenticado con el correo %s. Su token es %s".formatted(datosUsuario.getFullName(),
+				datosUsuario.getEmail(), datosUsuario.getIdToken().getTokenValue());
+	}
 
-    @PostMapping
-    public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoPais(@RequestBody PaisDTO pais) {
-        fachada.registrarInformacionNuevoPais(pais);
-        RespuestaOk<String> respuesta = RespuestaOk
-                .crear("Se ha registrado la información del nuevo país de forma exitosa");
-        return ResponseEntity.ok(respuesta);
-    }
+	@GetMapping("/dummy")
+	public PaisDTO obtenerDummy() {
+		return new PaisDTO();
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RespuestaOk<PaisDTO>> consultarPorId(@PathVariable UUID id) {
-        var pais = fachada.consultarPorid(id);
-        RespuestaOk<PaisDTO> respuesta = RespuestaOk.crear(pais);
-        return ResponseEntity.ok(respuesta);
-    }
+	@PostMapping
+	public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoPais(@RequestBody PaisDTO pais) {
+		fachada.registrarInformacionNuevoPais(pais);
+		RespuestaOk<String> respuesta = RespuestaOk
+				.crear("Se ha registrado la información del nuevo país de forma exitosa");
+		return ResponseEntity.ok(respuesta);
+	}
 
-    @GetMapping
-    public ResponseEntity<RespuestaOk<PaisDTO>> consultarPorFiltro(PaisDTO filtro) {
-        var paises = fachada.consultarPorFiltro(filtro);
-        RespuestaOk<PaisDTO> respuesta = RespuestaOk.crear(paises);
-        return ResponseEntity.ok(respuesta);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<RespuestaOk<PaisDTO>> consultarPorId(@PathVariable UUID id) {
+		var pais = fachada.consultarPorid(id);
+		RespuestaOk<PaisDTO> respuesta = RespuestaOk.crear(pais);
+		return ResponseEntity.ok(respuesta);
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<RespuestaOk<String>> modificarInformacionPaisExistente(@PathVariable UUID id,
-            @RequestBody PaisDTO datos) {
-        fachada.modificarInformacionPaisExistente(id, datos);
-        RespuestaOk<String> respuesta = RespuestaOk.crear("Se ha modificado la información del país de forma exitosa");
-        return ResponseEntity.ok(respuesta);
-    }
+	@GetMapping
+	public ResponseEntity<RespuestaOk<PaisDTO>> consultarPorFiltro(PaisDTO filtro) {
+		var paises = fachada.consultarPorFiltro(filtro);
+		RespuestaOk<PaisDTO> respuesta = RespuestaOk.crear(paises);
+		return ResponseEntity.ok(respuesta);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<RespuestaOk<String>> darBajaInformacionPaisExistente(@PathVariable UUID id) {
-        fachada.darBajaInformacionPaisExistente(id);
-        RespuestaOk<String> respuesta = RespuestaOk
-                .crear("Se ha dado de baja la información del país de forma exitosa");
-        return ResponseEntity.ok(respuesta);
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<RespuestaOk<String>> modificarInformacionPaisExistente(@PathVariable UUID id,
+			@RequestBody PaisDTO datos) {
+		fachada.modificarInformacionPaisExistente(id, datos);
+		RespuestaOk<String> respuesta = RespuestaOk.crear("Se ha modificado la información del país de forma exitosa");
+		return ResponseEntity.ok(respuesta);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<RespuestaOk<String>> darBajaInformacionPaisExistente(@PathVariable UUID id) {
+		fachada.darBajaInformacionPaisExistente(id);
+		RespuestaOk<String> respuesta = RespuestaOk
+				.crear("Se ha dado de baja la información del país de forma exitosa");
+		return ResponseEntity.ok(respuesta);
+	}
 }

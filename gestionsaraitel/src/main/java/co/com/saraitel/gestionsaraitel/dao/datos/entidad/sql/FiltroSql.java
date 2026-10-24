@@ -12,16 +12,16 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public final class FiltroSql {
 
-	private final StringBuilder sentencia;
+	private final String sentenciaBase;
+	private final List<String> condiciones = new ArrayList<>();
 	private final List<Object> parametros = new ArrayList<>();
 
 	public FiltroSql(final String sentenciaBase) {
-		sentencia = new StringBuilder(sentenciaBase).append(" WHERE 1=1");
-		//QUITAR WHERE 1=1
+		this.sentenciaBase = sentenciaBase;
 	}
 
 	private void agregarCondicion(final String columna, final String operador, final Object valor) {
-		sentencia.append(" AND ").append(columna).append(' ').append(operador).append(" ?");
+		condiciones.add(columna + " " + operador + " ?");
 		parametros.add(valor);
 	}
 
@@ -133,7 +133,10 @@ public final class FiltroSql {
 	}
 
 	public String getSentencia() {
-		return sentencia.toString();
+		if (condiciones.isEmpty()) {
+			return sentenciaBase;
+		}
+		return sentenciaBase + " WHERE " + String.join(" AND ", condiciones);
 	}
 
 	public List<Object> getParametros() {
