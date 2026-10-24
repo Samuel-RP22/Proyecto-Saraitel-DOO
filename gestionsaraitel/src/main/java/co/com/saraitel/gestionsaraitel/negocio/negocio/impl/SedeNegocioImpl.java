@@ -103,16 +103,6 @@ public class SedeNegocioImpl implements SedeNegocio {
 		daoFactory.obtenerSedeDao().actualizar(id, entidadActualizada);
 	}
 
-	@Override
-	public void darBajaInformacionPaisExistente(final UUID id) {
-		var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(id);
-
-		if (sedeExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
-			return;
-		}
-
-		daoFactory.obtenerSedeDao().eliminar(id);
-	}
 
 	@Override
 	public List<SedeDominio> consultarPorFiltro(final SedeDominio filtro) {
