@@ -15,6 +15,11 @@ public class VendedorDominio {
 		this.empleado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(empleado,
 				EmpleadoDominio.obtenerValorDefecto());
 	}
+	
+	public static VendedorDominio obtenerValorDefecto() {
+		return new VendedorDominio(UtilUUID.obtenerUUIDDefecto(),
+				EmpleadoDominio.obtenerValorDefecto());
+	}
 
 	public UUID getId() {
 		return id;

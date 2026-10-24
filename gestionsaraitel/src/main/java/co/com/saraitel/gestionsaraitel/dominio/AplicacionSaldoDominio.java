@@ -23,6 +23,11 @@ public class AplicacionSaldoDominio {
 		this.valorAplicado = UtilNumero.obtenerValorDefecto(valorAplicado);
 	}
 
+	public static AplicacionSaldoDominio obtenerValorDefecto() {
+		return new AplicacionSaldoDominio(UtilUUID.obtenerUUIDDefecto(), SaldoFavorDominio.obtenerValorDefecto(),
+				PagoDominio.obtenerValorDefecto(), UtilNumero.CERO_DECIMAL);
+	}
+
 	public UUID getId() {
 		return id;
 	}

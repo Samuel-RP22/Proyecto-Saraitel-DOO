@@ -19,6 +19,11 @@ public class FacturaDominio {
 		this.fechaEmision = UtilFecha.obtenerValorDefecto(fechaEmision);
 	}
 
+	public static FacturaDominio obtenerValorDefecto() {
+		return new FacturaDominio(UtilUUID.obtenerUUIDDefecto(), CompraDominio.obtenerValorDefecto(),
+				UtilFecha.FECHA_HORA_DEFECTO);
+	}
+
 	public UUID getId() {
 		return id;
 	}

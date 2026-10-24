@@ -23,6 +23,11 @@ public class PagoNormalDominio {
 		this.montoPagar = UtilNumero.obtenerValorDefecto(montoPagar);
 	}
 
+	public static PagoNormalDominio obtenerValorDefecto() {
+		return new PagoNormalDominio(UtilUUID.obtenerUUIDDefecto(), MetodoPagoDominio.obtenerValorDefecto(),
+				PagoDominio.obtenerValorDefecto(), UtilNumero.CERO_DECIMAL);
+	}
+
 	public UUID getId() {
 		return id;
 	}

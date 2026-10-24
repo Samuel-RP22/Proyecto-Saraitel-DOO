@@ -31,7 +31,7 @@ public class CategoriaDominio {
 		return nombre;
 	}
 
-	public UUID getCategoriaPadre() {
+	public UUID getIdCategoriaPadre() {
 		return categoriaPadre;
 	}
 

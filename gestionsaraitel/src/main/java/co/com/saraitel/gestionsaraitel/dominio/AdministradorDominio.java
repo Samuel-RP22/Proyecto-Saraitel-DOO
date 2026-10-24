@@ -16,6 +16,10 @@ public class AdministradorDominio {
 				EmpleadoDominio.obtenerValorDefecto());
 	}
 
+	public static AdministradorDominio obtenerValorDefecto() {
+		return new AdministradorDominio(UtilUUID.obtenerUUIDDefecto(), EmpleadoDominio.obtenerValorDefecto());
+	}
+
 	public UUID getId() {
 		return id;
 	}
