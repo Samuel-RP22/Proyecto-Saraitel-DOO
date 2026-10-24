@@ -73,7 +73,31 @@ public class CatalogoMensajes {
 
 	}
 
-	
+	public static class SedeNegocioImpl {
+		private SedeNegocioImpl() {
+		}
+ 
+		public static final String SEDE_YA_EXISTE_CON_EL_MISMO_NOMBRE_DE_SEDE_A_CREAR = "Ya existe otra sede con el nombre con el cual se desea crear la sede deseada";
+		public static final String SEDE_YA_EXISTE_CON_EL_MISMO_NIT_DE_SEDE_A_CREAR = "Ya existe otra sede con el NIT con el cual se desea crear la sede deseada";
+		public static final String SEDE_YA_EXISTE_CON_LA_MISMA_DIRECCION_DE_SEDE_A_CREAR = "Ya existe otra sede con la dirección con la cual se desea crear la sede deseada";
+		public static final String SEDE_NO_EXISTE_CON_EL_ID_DESEADO = "No existe una sede con el identificador deseado para llevar a cabo la operación";
+ 
+		public static final String CIUDAD_SEDE_OBLIGATORIA = "La ciudad de la sede es obligatoria para llevar a cabo la operación deseada";
+ 
+		public static final String NOMBRE_SEDE_OBLIGATORIO = "El nombre de la sede es obligatorio para llevar a cabo la operación deseada";
+		public static final String LONGITUD_NOMBRE_SEDE_NO_VALIDA = "La longitud del nombre de la sede no es valida, asegurese que este entre 1 y 50";
+		public static final String FORMATO_NOMBRE_SEDE_NO_VALIDO = "El formato del nombre de la sede no es valido, asegurese que solo posea letras de la A a la Z mayúsculas y minúsculas y espacios";
+ 
+		public static final String NIT_SEDE_OBLIGATORIO = "El NIT de la sede es obligatorio para llevar a cabo la operación deseada";
+		public static final String LONGITUD_NIT_SEDE_NO_VALIDA = "La longitud del NIT de la sede no es valida, asegurese que este entre 9 y 12 caracteres";
+		public static final String FORMATO_NIT_SEDE_NO_VALIDO = "El formato del NIT de la sede no es valido, asegurese que posea entre 9 y 10 dígitos y, opcionalmente, el dígito de verificación separado por un guion (ejemplo: 900123456-7)";
+ 
+		public static final String ES_ACTIVA_SEDE_OBLIGATORIO = "Debe indicar si la sede se encuentra abierta al público o no para llevar a cabo la operación deseada";
+ 
+		public static final String DIRECCION_SEDE_OBLIGATORIA = "La dirección de la sede es obligatoria para llevar a cabo la operación deseada";
+		public static final String LONGITUD_DIRECCION_SEDE_NO_VALIDA = "La longitud de la dirección de la sede no es valida, asegurese que este entre 5 y 100";
+		public static final String FORMATO_DIRECCION_SEDE_NO_VALIDO = "El formato de la dirección de la sede no es valido, asegurese que solo posea letras, números, espacios y los símbolos # - . , °";
+	}
 	
 	
 	
