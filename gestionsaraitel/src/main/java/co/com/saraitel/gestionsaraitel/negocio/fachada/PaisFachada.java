@@ -17,5 +17,5 @@ public interface PaisFachada {
 	
 	List<PaisDTO> consultarTodos();
 
-	PaisDTO consultarPorid(UUID id);
+	PaisDTO consultarPorId(UUID id);
 }
