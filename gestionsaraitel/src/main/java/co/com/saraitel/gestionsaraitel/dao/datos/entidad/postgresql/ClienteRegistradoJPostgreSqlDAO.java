@@ -10,6 +10,7 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoJDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
+import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoJEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
@@ -22,9 +23,12 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 			+ "\"Telefono\", \"Nit\", \"RazonSocial\", \"Correo\", " + "\"TelefonoConfirmado\", \"CorreoConfirmado\") "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"ClienteRegistrado_id\", \"Prefijo_id\", "
-			+ "\"Telefono\", \"Nit\", \"RazonSocial\", \"Correo\", " + "\"TelefonoConfirmado\", \"CorreoConfirmado\" "
-			+ "FROM saraitel.\"ClienteRegistradoJ\"";
+	// Tabla derivada: agrega el id del cliente sin cambiar las columnas por las que se filtra.
+	private static final String SQL_CONSULTAR = "SELECT * FROM (SELECT j.\"id\", j.\"ClienteRegistrado_id\", "
+			+ "j.\"Prefijo_id\", j.\"Telefono\", j.\"Nit\", j.\"RazonSocial\", j.\"Correo\", "
+			+ "j.\"TelefonoConfirmado\", j.\"CorreoConfirmado\", cr.\"Cliente_id\" "
+			+ "FROM saraitel.\"ClienteRegistradoJ\" j "
+			+ "JOIN saraitel.\"ClienteRegistrado\" cr ON cr.\"id\" = j.\"ClienteRegistrado_id\") AS clientes_juridicos";
 
 	private static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"ClienteRegistradoJ\" SET "
 			+ "\"ClienteRegistrado_id\" = ?, \"Prefijo_id\" = ?, "
@@ -104,8 +108,9 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		entidad.setId(leerUUID(resultados, "id"));
 
-		var clienteRegistrado = new ClienteRegistradoEntidad();
-		clienteRegistrado.setId(leerUUID(resultados, "ClienteRegistrado_id"));
+		var cliente = new ClienteEntidad(leerUUID(resultados, "Cliente_id"), true);
+		var clienteRegistrado = new ClienteRegistradoEntidad(leerUUID(resultados, "ClienteRegistrado_id"), cliente,
+				false);
 		entidad.setClienteRegistrado(clienteRegistrado);
 
 		var prefijo = new PrefijoEntidad();

@@ -15,9 +15,9 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"Cliente\" "
-			+ "(\"id\", \"ClientePorDefecto\") VALUES (?, ?)";
+			+ "(\"id\", \"EsClienteRegistrado\") VALUES (?, ?)";
 
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"ClientePorDefecto\" " + "FROM saraitel.\"Cliente\"";
+	private static final String SQL_CONSULTAR = "SELECT \"id\", \"EsClienteRegistrado\" " + "FROM saraitel.\"Cliente\"";
 
 	private static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"Cliente\" WHERE \"id\" = ?";
 
@@ -48,7 +48,7 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteEntidad());
 
 		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
-				.conBooleano("\"ClientePorDefecto\"", filtroSeguro.getEsClienteRegistrado(), false);
+				.conBooleano("\"EsClienteRegistrado\"", filtroSeguro.getEsClienteRegistrado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
 				"Error al consultar clientes.",
@@ -71,7 +71,7 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 		var entidad = new ClienteEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-		entidad.setEsClienteRegistrado(resultados.getBoolean("ClientePorDefecto"));
+		entidad.setEsClienteRegistrado(resultados.getBoolean("EsClienteRegistrado"));
 
 		return entidad;
 	}

@@ -15,7 +15,7 @@ public class ClienteDominio {
 	}
 
 	public static ClienteDominio obtenerValorDefecto() {
-		return new ClienteDominio(UtilUUID.obtenerUUIDDefecto(), false);
+		return new ClienteDominio(UtilUUID.obtenerUUIDDefecto(), true);
 	}
 
 	public UUID getId() {

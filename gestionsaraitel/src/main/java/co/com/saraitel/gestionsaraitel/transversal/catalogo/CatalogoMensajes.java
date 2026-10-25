@@ -340,7 +340,7 @@ public static class PersonaNegocioImpl {
 
 		public static final String CODIGO_ESTADO_PROCESO_COMPRA_OBLIGATORIO = "El código del estado de proceso de compra es obligatorio para llevar a cabo la operación deseada";
 		public static final String LONGITUD_CODIGO_ESTADO_PROCESO_COMPRA_NO_VALIDA = "La longitud del código del estado de proceso de compra no es valida, asegurese que este entre 2 y 20";
-		public static final String FORMATO_CODIGO_ESTADO_PROCESO_COMPRA_NO_VALIDO = "El formato del código del estado de proceso de compra no es valido, asegurese que solo posea letras mayúsculas de la A a la Z, números y guion bajo (ejemplo: EN_PROCESO)";
+		public static final String FORMATO_CODIGO_ESTADO_PROCESO_COMPRA_NO_VALIDO = "El formato del código del estado de proceso de compra no es valido, asegurese que solo posea letras mayúsculas de la A a la Z, números y guion bajo (ejemplo: EP)";
 
 		public static final String NOMBRE_ESTADO_PROCESO_COMPRA_OBLIGATORIO = "El nombre del estado de proceso de compra es obligatorio para llevar a cabo la operación deseada";
 		public static final String LONGITUD_NOMBRE_ESTADO_PROCESO_COMPRA_NO_VALIDA = "La longitud del nombre del estado de proceso de compra no es valida, asegurese que este entre 1 y 50";
@@ -372,14 +372,66 @@ public static class PersonaNegocioImpl {
 		public static final String EMPLEADO_PROCESO_COMPRA_NO_EXISTE = "El empleado asignado al proceso de compra no existe, asegurese de seleccionar un empleado registrado";
 		public static final String EMPLEADO_PROCESO_COMPRA_NO_ACTIVO = "El empleado asignado al proceso de compra no se encuentra activo, asegurese de seleccionar un empleado activo";
 
-		public static final String ESTADO_PROCESO_COMPRA_OBLIGATORIO = "El estado del proceso de compra es obligatorio para llevar a cabo la operación deseada";
-		public static final String ESTADO_PROCESO_COMPRA_NO_EXISTE = "El estado asignado al proceso de compra no existe, asegurese de seleccionar un estado registrado";
+		public static final String ESTADO_INICIAL_PROCESO_COMPRA_NO_CONFIGURADO = "No es posible registrar el proceso de compra porque no existe el estado inicial En proceso (código EP), por favor contacte al administrador de la aplicación";
+	}
 
-		public static final String FECHA_INICIO_PROCESO_COMPRA_OBLIGATORIA = "La fecha y hora de inicio del proceso de compra es obligatoria para llevar a cabo la operación deseada";
-		public static final String FECHA_ACTUALIZACION_PROCESO_COMPRA_OBLIGATORIA = "La fecha y hora de actualización del proceso de compra es obligatoria para llevar a cabo la operación deseada";
-		public static final String FECHA_ACTUALIZACION_PROCESO_COMPRA_ANTERIOR_A_FECHA_INICIO = "La fecha y hora de actualización del proceso de compra no puede ser anterior a su fecha y hora de inicio";
+	public static class ClienteRegistradoNNegocioImpl {
+		private ClienteRegistradoNNegocioImpl() {
+		}
 
-		public static final String TOTAL_PROCESO_COMPRA_NO_VALIDO = "El total del proceso de compra no es valido, asegurese que no sea un valor negativo";
+		public static final String PERSONA_CLIENTE_NATURAL_NO_EXISTE = "La persona seleccionada para el cliente natural no existe, asegurese de escoger una persona registrada o de ingresar los datos de una nueva";
+		public static final String PERSONA_YA_ES_CLIENTE_NATURAL = "La persona seleccionada ya está registrada como cliente natural, búsquela en la lista de clientes registrados";
+	}
+
+	public static class ClienteRegistradoJNegocioImpl {
+		private ClienteRegistradoJNegocioImpl() {
+		}
+
+		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_EL_MISMO_NIT = "Ya existe un cliente jurídico registrado con el NIT con el cual se desea crear el cliente deseado";
+		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_LA_MISMA_RAZON_SOCIAL = "Ya existe un cliente jurídico registrado con la razón social con la cual se desea crear el cliente deseado";
+
+		public static final String NIT_CLIENTE_JURIDICO_OBLIGATORIO = "El NIT del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
+		public static final String LONGITUD_NIT_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del NIT del cliente jurídico no es valida, asegurese que este entre 9 y 12 caracteres";
+		public static final String FORMATO_NIT_CLIENTE_JURIDICO_NO_VALIDO = "El formato del NIT del cliente jurídico no es valido, asegurese que posea entre 9 y 10 dígitos y, opcionalmente, el dígito de verificación separado por un guion (ejemplo: 900123456-7)";
+
+		public static final String RAZON_SOCIAL_CLIENTE_JURIDICO_OBLIGATORIA = "La razón social del cliente jurídico es obligatoria para llevar a cabo la operación deseada";
+		public static final String LONGITUD_RAZON_SOCIAL_CLIENTE_JURIDICO_NO_VALIDA = "La longitud de la razón social del cliente jurídico no es valida, asegurese que este entre 2 y 100";
+		public static final String FORMATO_RAZON_SOCIAL_CLIENTE_JURIDICO_NO_VALIDO = "El formato de la razón social del cliente jurídico no es valido, asegurese que solo posea letras, números, espacios y los símbolos . , & -";
+
+		public static final String PREFIJO_CLIENTE_JURIDICO_OBLIGATORIO = "El prefijo telefónico del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
+		public static final String PREFIJO_CLIENTE_JURIDICO_NO_EXISTE = "El prefijo telefónico seleccionado para el cliente jurídico no existe";
+
+		public static final String TELEFONO_CLIENTE_JURIDICO_OBLIGATORIO = "El teléfono del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
+		public static final String LONGITUD_TELEFONO_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del teléfono del cliente jurídico no es valida, asegurese que este entre 7 y 15 dígitos";
+		public static final String FORMATO_TELEFONO_CLIENTE_JURIDICO_NO_VALIDO = "El formato del teléfono del cliente jurídico no es valido, asegurese que solo posea números";
+
+		public static final String CORREO_CLIENTE_JURIDICO_OBLIGATORIO = "El correo del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
+		public static final String LONGITUD_CORREO_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del correo del cliente jurídico no es valida, asegurese que este entre 6 y 100";
+		public static final String FORMATO_CORREO_CLIENTE_JURIDICO_NO_VALIDO = "El formato del correo del cliente jurídico no es valido, asegurese que tenga una estructura como nombre@dominio.com";
+	}
+
+	public static final class ClienteRegistradoNFachadaImpl {
+		private ClienteRegistradoNFachadaImpl() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_CLIENTE_NATURAL = "Se ha presentado un problema inesperado tratando de registrar la información del nuevo cliente natural, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_NATURALS = "Se ha presentado un problema inesperado tratando de consultar la información de los clientes naturales, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClienteRegistradoJFachadaImpl {
+		private ClienteRegistradoJFachadaImpl() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_CLIENTE_JURIDICO = "Se ha presentado un problema inesperado tratando de registrar la información del nuevo cliente jurídico, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS = "Se ha presentado un problema inesperado tratando de consultar la información de los clientes jurídicos, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EmpleadoAutenticado {
+		private EmpleadoAutenticado() {
+		}
+
+		public static final String USUARIO_AUTENTICADO_NO_ES_EMPLEADO_ACTIVO = "El usuario con el que inició sesión no está registrado como un empleado activo, por lo que no puede registrar procesos de compra. Contacte al administrador de la aplicación";
+		public static final String USUARIO_NO_ES_EMPLEADO_ACTIVO_PARA_INGRESAR = "No puede ingresar a Saraitel: el correo con el que se autenticó no pertenece a un empleado activo. Intente con otra cuenta o contacte al administrador de la aplicación";
 	}
 
 	public static class PaisNegocioImpl {

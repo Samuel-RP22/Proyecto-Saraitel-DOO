@@ -24,7 +24,7 @@ public final class UtilFecha {
 	}
 
 	public static LocalDateTime obtenerFechaHoraActual() {
-		return LocalDateTime.now(ZONA_HORARIA_COLOMBIA);
+		return LocalDateTime.now(ZONA_HORARIA_COLOMBIA).truncatedTo(ChronoUnit.SECONDS);
 	}
 
 	public static long obtenerEpochMilliActual() {

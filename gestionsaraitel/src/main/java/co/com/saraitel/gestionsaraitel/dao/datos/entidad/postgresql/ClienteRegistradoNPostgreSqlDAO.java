@@ -10,9 +10,12 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteRegistradoNDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
+import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoNEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
+import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRegistradoNDAO {
@@ -20,8 +23,14 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"ClienteRegistradoN\" "
 			+ "(\"id\", \"ClienteRegistrado_id\", \"Persona_id\") " + "VALUES (?, ?, ?)";
 
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"ClienteRegistrado_id\", \"Persona_id\" "
-			+ "FROM saraitel.\"ClienteRegistradoN\"";
+	// Tabla derivada: permite filtrar por las columnas de siempre y trae los datos de la persona
+	// y el id del cliente, necesarios para mostrar el nombre en la interfaz.
+	private static final String SQL_CONSULTAR = "SELECT * FROM (SELECT n.\"id\", n.\"ClienteRegistrado_id\", "
+			+ "n.\"Persona_id\", cr.\"Cliente_id\", p.\"TipoDocumento_id\", p.\"Prefijo_id\", "
+			+ "p.\"NumeroDocumento\", p.\"Telefono\", p.\"Nombre\", p.\"Apellido\", p.\"Correo\" "
+			+ "FROM saraitel.\"ClienteRegistradoN\" n "
+			+ "JOIN saraitel.\"ClienteRegistrado\" cr ON cr.\"id\" = n.\"ClienteRegistrado_id\" "
+			+ "JOIN saraitel.\"Persona\" p ON p.\"id\" = n.\"Persona_id\") AS clientes_naturales";
 
 	private static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"ClienteRegistradoN\" " + "WHERE \"id\" = ?";
 
@@ -76,12 +85,26 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 		var entidad = new ClienteRegistradoNEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
 
-		var clienteRegistrado = new ClienteRegistradoEntidad();
-		clienteRegistrado.setId(leerUUID(resultados, "ClienteRegistrado_id"));
+		var cliente = new ClienteEntidad(leerUUID(resultados, "Cliente_id"), true);
+		var clienteRegistrado = new ClienteRegistradoEntidad(leerUUID(resultados, "ClienteRegistrado_id"), cliente,
+				true);
 		entidad.setClienteRegistrado(clienteRegistrado);
+
+		var tipoDocumento = new TipoDocumentoEntidad();
+		tipoDocumento.setId(leerUUID(resultados, "TipoDocumento_id"));
+
+		var prefijo = new PrefijoEntidad();
+		prefijo.setId(leerUUID(resultados, "Prefijo_id"));
 
 		var persona = new PersonaEntidad();
 		persona.setId(leerUUID(resultados, "Persona_id"));
+		persona.setTipoDocumento(tipoDocumento);
+		persona.setPrefijo(prefijo);
+		persona.setNumeroDocumento(resultados.getString("NumeroDocumento"));
+		persona.setTelefono(resultados.getString("Telefono"));
+		persona.setNombre(resultados.getString("Nombre"));
+		persona.setApellido(resultados.getString("Apellido"));
+		persona.setCorreo(resultados.getString("Correo"));
 		entidad.setPersona(persona);
 
 		return entidad;

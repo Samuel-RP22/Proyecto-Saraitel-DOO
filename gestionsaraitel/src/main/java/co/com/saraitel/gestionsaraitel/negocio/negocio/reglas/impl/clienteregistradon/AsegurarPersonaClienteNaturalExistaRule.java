@@ -1,4 +1,4 @@
-package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.procesocompra;
+package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon;
 
 import java.util.UUID;
 
@@ -8,11 +8,11 @@ import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class AsegurarEstadoDelProcesoCompraExistaRule implements Rule<Object> {
+public class AsegurarPersonaClienteNaturalExistaRule implements Rule<Object> {
 
-	private static final Rule<Object> instancia = new AsegurarEstadoDelProcesoCompraExistaRule();
+	private static final Rule<Object> instancia = new AsegurarPersonaClienteNaturalExistaRule();
 
-	private AsegurarEstadoDelProcesoCompraExistaRule() {
+	private AsegurarPersonaClienteNaturalExistaRule() {
 	}
 
 	public static final Rule<Object> obtenerInstancia() {
@@ -21,13 +21,13 @@ public class AsegurarEstadoDelProcesoCompraExistaRule implements Rule<Object> {
 
 	@Override
 	public void ejecutar(Object... datos) {
-		var idEstado = (UUID) datos[0];
+		var idPersona = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 
-		var estadoExistente = daoFactory.obtenerEstadoProcesoCompraDao().consultarPorId(idEstado);
+		var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(idPersona);
 
-		if (estadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
-			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.ESTADO_PROCESO_COMPRA_NO_EXISTE;
+		if (personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoNNegocioImpl.PERSONA_CLIENTE_NATURAL_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}

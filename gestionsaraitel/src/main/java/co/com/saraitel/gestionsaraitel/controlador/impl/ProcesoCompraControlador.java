@@ -13,19 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.saraitel.gestionsaraitel.controlador.AbstractRestController;
+import co.com.saraitel.gestionsaraitel.controlador.EmpleadoAutenticado;
 import co.com.saraitel.gestionsaraitel.controlador.respuesta.RespuestaOk;
 import co.com.saraitel.gestionsaraitel.dto.ProcesoCompraDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.ProcesoCompraFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.ProcesoCompraFachadaImpl;
 
 // ...../api/v1/procesos-compra?id=valor
-// ...../api/v1/procesos-compra?cliente=valor&empleado=valor
+// ...../api/v1/procesos-compra?cliente.id=valor&empleado.id=valor&estado.id=valor
 // ...../api/v1/procesos-compra
 
 @RestController
 @RequestMapping("/api/v1/procesos-compra")
 public class ProcesoCompraControlador extends AbstractRestController {
-	// MENSAJE DE ERROR SI NO ENCUENTRA OBJETO DE DOMINIO CON ID CORRESPONDIENTE
+
 	private ProcesoCompraFachada fachada = new ProcesoCompraFachadaImpl();
 
 	@GetMapping("/login")
@@ -39,9 +40,15 @@ public class ProcesoCompraControlador extends AbstractRestController {
 		return new ProcesoCompraDTO();
 	}
 
+	/**
+	 * Solo se reciben el cliente y, si no hay sesión, el empleado. El total, las fechas y el estado inicial
+	 * los asigna el negocio. Si hay un usuario autenticado, el empleado es siempre el de la sesión.
+	 */
 	@PostMapping
 	public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoProcesoCompra(
-			@RequestBody ProcesoCompraDTO procesoCompra) {
+			@RequestBody ProcesoCompraDTO procesoCompra, @AuthenticationPrincipal OidcUser usuario) {
+		EmpleadoAutenticado.obtener(usuario).ifPresent(procesoCompra::setEmpleado);
+
 		fachada.registrarInformacionNuevoProcesoCompra(procesoCompra);
 		RespuestaOk<String> respuesta = RespuestaOk
 				.crear("Se ha registrado la información del nuevo proceso de compra de forma exitosa");

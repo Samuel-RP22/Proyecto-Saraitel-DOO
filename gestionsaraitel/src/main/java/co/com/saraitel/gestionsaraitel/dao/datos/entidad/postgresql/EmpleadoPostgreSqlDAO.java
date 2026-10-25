@@ -20,8 +20,13 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Empleado\" "
 			+ "(\"id\", \"Sede_id\", \"Persona_id\", \"EsActivo\") " + "VALUES (?, ?, ?, ?)";
 
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Sede_id\", \"Persona_id\", \"EsActivo\" "
-			+ "FROM saraitel.\"Empleado\"";
+	// Tabla derivada: trae nombre, apellido, documento y correo de la persona y el nombre de la sede,
+	// para mostrar al empleado en la interfaz y reconocer al usuario autenticado por su correo.
+	private static final String SQL_CONSULTAR = "SELECT * FROM (SELECT e.\"id\", e.\"Sede_id\", e.\"Persona_id\", "
+			+ "e.\"EsActivo\", p.\"NumeroDocumento\", p.\"Nombre\", p.\"Apellido\", p.\"Correo\", "
+			+ "s.\"Nombre\" AS \"NombreSede\" FROM saraitel.\"Empleado\" e "
+			+ "JOIN saraitel.\"Persona\" p ON p.\"id\" = e.\"Persona_id\" "
+			+ "JOIN saraitel.\"Sede\" s ON s.\"id\" = e.\"Sede_id\") AS empleados";
 
 	private static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Empleado\" "
 			+ "SET \"Sede_id\" = ?, \"Persona_id\" = ?, \"EsActivo\" = ? " + "WHERE \"id\" = ?";
@@ -82,10 +87,15 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 
 		var sede = new SedeEntidad();
 		sede.setId(leerUUID(resultados, "Sede_id"));
+		sede.setNombre(resultados.getString("NombreSede"));
 		entidad.setSede(sede);
 
 		var persona = new PersonaEntidad();
 		persona.setId(leerUUID(resultados, "Persona_id"));
+		persona.setNumeroDocumento(resultados.getString("NumeroDocumento"));
+		persona.setNombre(resultados.getString("Nombre"));
+		persona.setApellido(resultados.getString("Apellido"));
+		persona.setCorreo(resultados.getString("Correo"));
 		entidad.setPersona(persona);
 
 		return entidad;

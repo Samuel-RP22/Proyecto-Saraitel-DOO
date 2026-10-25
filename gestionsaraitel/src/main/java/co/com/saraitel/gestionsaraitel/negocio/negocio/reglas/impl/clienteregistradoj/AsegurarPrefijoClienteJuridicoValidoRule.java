@@ -1,4 +1,4 @@
-package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.procesocompra;
+package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradoj;
 
 import java.util.UUID;
 
@@ -7,11 +7,11 @@ import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class AsegurarEstadoDelProcesoCompraValidoRule implements Rule<UUID> {
+public class AsegurarPrefijoClienteJuridicoValidoRule implements Rule<UUID> {
 
-	private static final Rule<UUID> instancia = new AsegurarEstadoDelProcesoCompraValidoRule();
+	private static final Rule<UUID> instancia = new AsegurarPrefijoClienteJuridicoValidoRule();
 
-	private AsegurarEstadoDelProcesoCompraValidoRule() {
+	private AsegurarPrefijoClienteJuridicoValidoRule() {
 	}
 
 	public static final Rule<UUID> obtenerInstancia() {
@@ -20,14 +20,14 @@ public class AsegurarEstadoDelProcesoCompraValidoRule implements Rule<UUID> {
 
 	@Override
 	public void ejecutar(UUID... datos) {
-		var idEstado = UtilUUID.obtenerValorDefecto(datos[0]);
+		var idPrefijo = UtilUUID.obtenerValorDefecto(datos[0]);
 
-		validarObligatoriedad(idEstado);
+		validarObligatoriedad(idPrefijo);
 	}
 
 	private void validarObligatoriedad(UUID dato) {
 		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
-			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.ESTADO_PROCESO_COMPRA_OBLIGATORIO;
+			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.PREFIJO_CLIENTE_JURIDICO_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}

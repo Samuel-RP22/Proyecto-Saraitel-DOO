@@ -8,8 +8,8 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 
 public class AsegurarProcesoCompraEnProcesoSeaAnuladoTrasCincoMinutosRule implements Rule<Object> {
 
-	private static final String CODIGO_ESTADO_EN_PROCESO = "EN_PROCESO";
-	private static final String CODIGO_ESTADO_ANULADO = "ANULADO";
+	private static final String CODIGO_ESTADO_EN_PROCESO = "EP";
+	private static final String CODIGO_ESTADO_ANULADO = "AN";
 	private static final long MINUTOS_MAXIMOS_INACTIVIDAD = 5;
 
 	private static final Rule<Object> instancia = new AsegurarProcesoCompraEnProcesoSeaAnuladoTrasCincoMinutosRule();
