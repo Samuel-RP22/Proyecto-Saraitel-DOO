@@ -8,9 +8,9 @@ import co.com.saraitel.gestionsaraitel.dto.DepartamentoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.DepartamentoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl.DepartamentoDTOAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.impl.DepartamentoNegocioImpl;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelFachadaExcepcion;
-import co.com.saraitel.gestionsaraitel.transversal.mensajes.CatalogoMensajes;
 
 public class DepartamentoFachadaImpl implements DepartamentoFachada {
 

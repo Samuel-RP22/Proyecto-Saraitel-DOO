@@ -28,27 +28,29 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 	public void registrarInformacionNuevoEmpleado(final EmpleadoDominio datos) {
 		ValidarDatosRegistrarInformacionNuevoEmpleadoRule.obtenerInstancia().ejecutar(datos);
 
-		AsegurarSedeEmpleadoExistaRule.obtenerInstancia().ejecutar(datos.getSede().getId(), daoFactory);
-		AsegurarSedeEmpleadoEsteActivaRule.obtenerInstancia().ejecutar(datos.getSede().getId(), daoFactory);
-		AsegurarPersonaEmpleadoExistaRule.obtenerInstancia().ejecutar(datos.getPersona().getId(), daoFactory);
+		validarPoliticasSedeYPersona(datos);
 
 		AsegurarPersonaNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getPersona().getId(), daoFactory);
 
 		var empleadoEntidad = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(datos);
 
-		UUID id;
-		boolean idExiste;
-
-		do {
-			id = UUID.randomUUID();
-			var empleadoConMismoId = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
-			idExiste = !empleadoConMismoId.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (idExiste);
-
-		empleadoEntidad.setId(id);
+		empleadoEntidad.setId(generarIdEmpleadoUnico());
 		empleadoEntidad.setEsActivo(true);
 
 		daoFactory.obtenerEmpleadoDao().crear(empleadoEntidad);
+	}
+
+	private UUID generarIdEmpleadoUnico() {
+		UUID id;
+		boolean existe;
+
+		do {
+			id = UUID.randomUUID();
+			var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
+			existe = !empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
+		} while (existe);
+
+		return id;
 	}
 
 	@Override
@@ -64,10 +66,7 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 
 		ValidarDatosRegistrarInformacionNuevoEmpleadoRule.obtenerInstancia().ejecutar(datosActualizados);
 
-		AsegurarSedeEmpleadoExistaRule.obtenerInstancia().ejecutar(datosActualizados.getSede().getId(), daoFactory);
-		AsegurarSedeEmpleadoEsteActivaRule.obtenerInstancia().ejecutar(datosActualizados.getSede().getId(), daoFactory);
-		AsegurarPersonaEmpleadoExistaRule.obtenerInstancia().ejecutar(datosActualizados.getPersona().getId(),
-				daoFactory);
+		validarPoliticasSedeYPersona(datosActualizados);
 
 		var personaFiltro = new PersonaEntidad();
 		personaFiltro.setId(datosActualizados.getPersona().getId());
@@ -125,5 +124,14 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 		}
 
 		return EmpleadoEntidadAssembler.getInstance().convertirADominio(entidad);
+	}
+
+	private void validarPoliticasSedeYPersona(final EmpleadoDominio datos) {
+		var idSede = datos.getSede().getId();
+		var idPersona = datos.getPersona().getId();
+
+		AsegurarSedeEmpleadoExistaRule.obtenerInstancia().ejecutar(idSede, daoFactory);
+		AsegurarSedeEmpleadoEsteActivaRule.obtenerInstancia().ejecutar(idSede, daoFactory);
+		AsegurarPersonaEmpleadoExistaRule.obtenerInstancia().ejecutar(idPersona, daoFactory);
 	}
 }

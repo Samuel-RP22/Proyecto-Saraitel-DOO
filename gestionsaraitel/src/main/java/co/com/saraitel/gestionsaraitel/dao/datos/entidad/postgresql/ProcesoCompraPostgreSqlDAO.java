@@ -43,6 +43,13 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 			FROM saraitel."ProcesoCompra"
 			""";
 
+	private static final String SQL_ACTUALIZAR = """
+			UPDATE saraitel."ProcesoCompra"
+			SET "Cliente_id" = ?, "Empleado_id" = ?, "EstadoProcesoCompra_id" = ?,
+			    "FechaInicio" = ?, "FechaActualizacion" = ?, "TotalCompra" = ?
+			WHERE "id" = ?
+			""";
+
 	public ProcesoCompraPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
 	}
@@ -95,6 +102,14 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 	public List<ProcesoCompraEntidad> consultarTodos() {
 		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar procesos de compra",
 				"Error NO CONTROLADO al consultar procesos de compra");
+	}
+
+	@Override
+	public void actualizar(final UUID id, final ProcesoCompraEntidad entidad) {
+		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el proceso de compra",
+				"Error NO CONTROLADO al actualizar el proceso de compra", entidad.getCliente().getId(),
+				entidad.getEmpleado().getId(), entidad.getEstado().getId(), entidad.getFechaInicio(),
+				entidad.getFechaActualizacion(), entidad.getTotal(), id);
 	}
 
 	private ProcesoCompraEntidad mapear(final ResultSet resultados) throws SQLException {

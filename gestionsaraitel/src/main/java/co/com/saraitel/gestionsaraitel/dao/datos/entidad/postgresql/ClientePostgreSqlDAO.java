@@ -48,7 +48,7 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteEntidad());
 
 		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
-				.conBooleano("\"ClientePorDefecto\"", filtroSeguro.getEsClienteRegistrado(), true);
+				.conBooleano("\"ClientePorDefecto\"", filtroSeguro.getEsClienteRegistrado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
 				"Error al consultar clientes.",

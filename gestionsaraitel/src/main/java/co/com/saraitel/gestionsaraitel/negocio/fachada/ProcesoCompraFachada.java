@@ -9,10 +9,6 @@ public interface ProcesoCompraFachada {
 
 	void registrarInformacionNuevoProcesoCompra(ProcesoCompraDTO datos);
 
-	void modificarInformacionProcesoCompraExistente(UUID id, ProcesoCompraDTO datos);
-
-	void darBajaInformacionProcesoCompraExistente(UUID id);
-
 	List<ProcesoCompraDTO> consultarPorFiltro(ProcesoCompraDTO filtro);
 
 	List<ProcesoCompraDTO> consultarTodos();

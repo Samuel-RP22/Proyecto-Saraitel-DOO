@@ -8,9 +8,9 @@ import co.com.saraitel.gestionsaraitel.dto.ClienteDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.ClienteFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl.ClienteDTOAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.impl.ClienteNegocioImpl;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelFachadaExcepcion;
-import co.com.saraitel.gestionsaraitel.transversal.mensajes.CatalogoMensajes;
 
 public class ClienteFachadaImpl implements ClienteFachada {
 

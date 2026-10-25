@@ -8,9 +8,9 @@ import co.com.saraitel.gestionsaraitel.dto.CiudadDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.CiudadFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl.CiudadDTOAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.impl.CiudadNegocioImpl;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelFachadaExcepcion;
-import co.com.saraitel.gestionsaraitel.transversal.mensajes.CatalogoMensajes;
 
 public class CiudadFachadaImpl implements CiudadFachada {
 

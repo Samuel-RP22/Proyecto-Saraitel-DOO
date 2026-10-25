@@ -8,9 +8,9 @@ import co.com.saraitel.gestionsaraitel.dto.SedeDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.SedeFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl.SedeDTOAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.impl.SedeNegocioImpl;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelFachadaExcepcion;
-import co.com.saraitel.gestionsaraitel.transversal.mensajes.CatalogoMensajes;
 
 public class SedeFachadaImpl implements SedeFachada {
 

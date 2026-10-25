@@ -1,47 +1,47 @@
-package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.pais;
+package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.estadoprocesocompra;
 
 import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.Rule;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 
-public class AsegurarNombrePaisValidoRule implements Rule<String> {
-	
-	private static final Rule<String> instancia = new AsegurarNombrePaisValidoRule();
-	
-	private AsegurarNombrePaisValidoRule() {
+public class AsegurarNombreEstadoProcesoCompraValidoRule implements Rule<String> {
+
+	private static final Rule<String> instancia = new AsegurarNombreEstadoProcesoCompraValidoRule();
+
+	private AsegurarNombreEstadoProcesoCompraValidoRule() {
 	}
-	
-	public static final Rule<String> obtenerInstancia(){
+
+	public static final Rule<String> obtenerInstancia() {
 		return instancia;
 	}
 
 	@Override
 	public void ejecutar(String... datos) {
-		var nombrePais = datos[0];
-		
-		validarObligatoriedad(nombrePais);
-		validarFormato(nombrePais);	
-		validarLongitud(nombrePais, 1, 50);
+		var nombreEstadoProcesoCompra = datos[0];
+
+		validarObligatoriedad(nombreEstadoProcesoCompra);
+		validarFormato(nombreEstadoProcesoCompra);
+		validarLongitud(nombreEstadoProcesoCompra, 1, 50);
 	}
-	
+
 	private void validarObligatoriedad(String dato) {
 		if (UtilTexto.esVacia(dato)) {
-			var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.LONGITUD_NOMBRE_PAIS_NO_VALIDA;
+			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraNegocioImpl.NOMBRE_ESTADO_PROCESO_COMPRA_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}
-	
+
 	private void validarLongitud(String dato, int longitudMinima, int longitudMaxima) {
 		if (!UtilTexto.longitudCadenaEsValida(dato, longitudMinima, longitudMaxima, true)) {
-			var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.LONGITUD_NOMBRE_PAIS_NO_VALIDA;
+			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraNegocioImpl.LONGITUD_NOMBRE_ESTADO_PROCESO_COMPRA_NO_VALIDA;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}
 
 	private void validarFormato(String dato) {
 		if (!UtilTexto.formatoEsValido(dato, UtilTexto.SOLO_LETRAS_Y_ESPACIOS)) {
-			var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.FORMATO_NOMBRE_PAIS_NO_VALIDO;
+			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraNegocioImpl.FORMATO_NOMBRE_ESTADO_PROCESO_COMPRA_NO_VALIDO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}

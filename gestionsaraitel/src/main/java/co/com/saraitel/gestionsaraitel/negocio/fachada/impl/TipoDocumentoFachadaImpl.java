@@ -8,9 +8,9 @@ import co.com.saraitel.gestionsaraitel.dto.TipoDocumentoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.TipoDocumentoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl.TipoDocumentoDTOAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.impl.TipoDocumentoNegocioImpl;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelFachadaExcepcion;
-import co.com.saraitel.gestionsaraitel.transversal.mensajes.CatalogoMensajes;
 
 public class TipoDocumentoFachadaImpl implements TipoDocumentoFachada {
 
