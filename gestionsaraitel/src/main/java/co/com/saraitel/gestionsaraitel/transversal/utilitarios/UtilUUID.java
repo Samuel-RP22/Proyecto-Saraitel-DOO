@@ -53,7 +53,7 @@ public final class UtilUUID {
 		UUID id;
 		do {
 			id = generar();
-		} while (!consultarIdExistente.apply(id).equals(obtenerUUIDDefecto()));
+		} while (!esValorDefecto(consultarIdExistente.apply(id)));
 		return id;
 	}
 }
