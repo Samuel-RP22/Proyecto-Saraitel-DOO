@@ -21,14 +21,14 @@ public class DevolucionDominio {
 	private final String estado;
 
 	public DevolucionDominio(final UUID id, final DetalleCompraDominio detalleCompra, final MotivoDominio motivo,
-			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
+			final LocalDateTime fechaDevolucion, final Integer cantidad, final BigDecimal montoDevolucion,
 			final String estado) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.detalleCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(detalleCompra,
 				DetalleCompraDominio.obtenerValorDefecto());
 		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, MotivoDominio.obtenerValorDefecto());
 		this.fechaDevolucion = UtilFecha.obtenerValorDefecto(fechaDevolucion);
-		this.cantidad = cantidad;
+		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
 		this.montoDevolucion = UtilNumero.obtenerValorDefecto(montoDevolucion);
 		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}

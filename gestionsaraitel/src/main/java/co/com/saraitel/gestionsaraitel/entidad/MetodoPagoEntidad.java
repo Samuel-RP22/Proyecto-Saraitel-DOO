@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -43,7 +44,7 @@ public class MetodoPagoEntidad {
 		return esActivo;
 	}
 
-	public void setEsActivo(final boolean esActivo) {
-		this.esActivo = esActivo;
+	public void setEsActivo(final Boolean esActivo) {
+		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
 	}
 }

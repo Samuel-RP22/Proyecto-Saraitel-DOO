@@ -11,11 +11,11 @@ public class ClienteRegistradoDominio {
 	private final ClienteDominio cliente;
 	private final boolean clienteNaturalDefecto;
 
-	public ClienteRegistradoDominio(final UUID id, final ClienteDominio cliente, final boolean clienteNaturalDefecto) {
+	public ClienteRegistradoDominio(final UUID id, final ClienteDominio cliente, final Boolean clienteNaturalDefecto) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.cliente = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cliente,
 				ClienteDominio.obtenerValorDefecto());
-		this.clienteNaturalDefecto = clienteNaturalDefecto;
+		this.clienteNaturalDefecto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteNaturalDefecto, true);
 	}
 
 	public static ClienteRegistradoDominio obtenerValorDefecto() {

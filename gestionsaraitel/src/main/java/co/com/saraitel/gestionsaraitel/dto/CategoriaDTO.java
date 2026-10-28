@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -54,7 +55,7 @@ public class CategoriaDTO {
 		return nivel;
 	}
 
-	public void setNivel(final int nivel) {
-		this.nivel = nivel;
+	public void setNivel(final Integer nivel) {
+		this.nivel = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(nivel, 1);
 	}
 }

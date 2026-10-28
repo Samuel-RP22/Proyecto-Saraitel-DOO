@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteEntidad {
@@ -31,7 +32,7 @@ public class ClienteEntidad {
 		return esClienteRegistrado;
 	}
 
-	public void setEsClienteRegistrado(final boolean esClienteRegistrado) {
-		this.esClienteRegistrado = esClienteRegistrado;
+	public void setEsClienteRegistrado(final Boolean esClienteRegistrado) {
+		this.esClienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esClienteRegistrado, true);
 	}
 }

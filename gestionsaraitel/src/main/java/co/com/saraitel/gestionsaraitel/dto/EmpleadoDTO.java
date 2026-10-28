@@ -54,7 +54,7 @@ public class EmpleadoDTO {
 		return esActivo;
 	}
 
-	public void setEsActivo(final boolean esActivo) {
-		this.esActivo = esActivo;
+	public void setEsActivo(final Boolean esActivo) {
+		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
 	}
 }

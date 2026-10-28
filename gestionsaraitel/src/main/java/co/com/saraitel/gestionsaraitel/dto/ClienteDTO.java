@@ -11,7 +11,7 @@ public class ClienteDTO {
 
 	public ClienteDTO() {
 		setId(UtilUUID.obtenerUUIDDefecto());
-		setEsClienteRegistrado(false);
+		setEsClienteRegistrado(true);
 	}
 
 	public ClienteDTO(final UUID id, final boolean esClienteRegistrado) {

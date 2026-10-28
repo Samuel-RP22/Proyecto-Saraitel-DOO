@@ -78,7 +78,7 @@ public class SedeDTO {
 		return esActiva;
 	}
 
-	public void setEsActiva(final boolean esActiva) {
-		this.esActiva = esActiva;
+	public void setEsActiva(final Boolean esActiva) {
+		this.esActiva = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActiva, true);
 	}
 }

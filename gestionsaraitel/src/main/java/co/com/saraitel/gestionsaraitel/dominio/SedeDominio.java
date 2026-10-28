@@ -16,13 +16,13 @@ public class SedeDominio {
 	private final boolean esActiva;
 
 	public SedeDominio(final UUID id, final CiudadDominio ciudad, final String nombre, final String nit,
-			final String direccion, final boolean esActiva) {
+			final String direccion, final Boolean esActiva) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.ciudad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(ciudad, CiudadDominio.obtenerValorDefecto());
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 		this.nit = UtilTexto.quitarEspaciosEnBlanco(nit);
 		this.direccion = UtilTexto.quitarEspaciosEnBlanco(direccion);
-		this.esActiva = esActiva;
+		this.esActiva = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActiva, true);
 	}
 
 	public static SedeDominio obtenerValorDefecto() {

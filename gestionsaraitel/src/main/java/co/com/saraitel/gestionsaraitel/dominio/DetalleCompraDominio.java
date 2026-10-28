@@ -17,14 +17,14 @@ public class DetalleCompraDominio {
 	private final BigDecimal subtotal;
 
 	public DetalleCompraDominio(final UUID id, final ProcesoCompraDominio procesoCompra,
-			final ProductoSedeDominio productoSede, final int cantidad, final BigDecimal precioUnitario,
+			final ProductoSedeDominio productoSede, final Integer cantidad, final BigDecimal precioUnitario,
 			final BigDecimal subtotal) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.procesoCompra = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(procesoCompra,
 				ProcesoCompraDominio.obtenerValorDefecto());
 		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede,
 				ProductoSedeDominio.obtenerValorDefecto());
-		this.cantidad = cantidad;
+		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
 		this.precioUnitario = UtilNumero.obtenerValorDefecto(precioUnitario);
 		this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
 	}

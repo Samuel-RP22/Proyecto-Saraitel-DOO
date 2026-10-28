@@ -223,12 +223,23 @@ const ls = { get(k) { try { return localStorage.getItem(k); } catch { return nul
 const api = (ruta) => "/api/v1" + ruta;
 ls.del("saraitel.apiBase"); // se borra la URL que se haya guardado antes en el navegador
 
+// ---------- CSRF: Spring Security deja el token en la cookie XSRF-TOKEN ----------
+// En cada POST/PUT/DELETE hay que devolverlo en el encabezado X-XSRF-TOKEN; si no, responde 403.
+const leerCookie = (nombre) => {
+  const par = document.cookie.split("; ").find((c) => c.startsWith(nombre + "="));
+  return par ? decodeURIComponent(par.substring(nombre.length + 1)) : null;
+};
+const METODOS_SEGUROS = ["GET", "HEAD", "OPTIONS"];
+
 // ---------- HTTP: entiende RespuestaOk / RespuestaError ----------
 async function llamar(ruta, opciones = {}) {
+  const metodo = (opciones.method || "GET").toUpperCase();
+  const tokenCsrf = METODOS_SEGUROS.includes(metodo) ? null : leerCookie("XSRF-TOKEN");
   let res;
   try {
-    res = await fetch(api(ruta), { credentials: "include", headers: { Accept: "application/json",
-      ...(opciones.body ? { "Content-Type": "application/json" } : {}) }, ...opciones });
+    res = await fetch(api(ruta), { credentials: "include", ...opciones, headers: { Accept: "application/json",
+      ...(opciones.body ? { "Content-Type": "application/json" } : {}),
+      ...(tokenCsrf ? { "X-XSRF-TOKEN": tokenCsrf } : {}) } });
   } catch { throw new Error("No se pudo conectar con el servidor. Revisa que el backend esté encendido."); }
   if (!(res.headers.get("content-type") || "").includes("json"))
     throw new Error(res.redirected || res.status === 401 || res.status === 403 ? "Tu sesión no está activa. Inicia sesión y vuelve a intentar." : "El servidor no respondió JSON (HTTP " + res.status + ").");

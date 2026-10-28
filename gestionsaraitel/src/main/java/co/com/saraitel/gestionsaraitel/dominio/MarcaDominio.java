@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -11,10 +12,10 @@ public class MarcaDominio {
 	private final String nombre;
 	private final boolean esActivo;
 
-	public MarcaDominio(final UUID id, final String nombre, final boolean esActivo) {
+	public MarcaDominio(final UUID id, final String nombre, final Boolean esActivo) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
-		this.esActivo = esActivo;
+		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
 	}
 
 	public static MarcaDominio obtenerValorDefecto() {

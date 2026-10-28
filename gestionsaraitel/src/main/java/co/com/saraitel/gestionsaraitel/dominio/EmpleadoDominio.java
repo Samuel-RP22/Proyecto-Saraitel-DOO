@@ -13,12 +13,12 @@ public class EmpleadoDominio {
 	private final boolean esActivo;
 
 	public EmpleadoDominio(final UUID id, final SedeDominio sede, final PersonaDominio persona,
-			final boolean esActivo) {
+			final Boolean esActivo) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, SedeDominio.obtenerValorDefecto());
 		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona,
 				PersonaDominio.obtenerValorDefecto());
-		this.esActivo = esActivo;
+		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
 	}
 
 	public static EmpleadoDominio obtenerValorDefecto() {

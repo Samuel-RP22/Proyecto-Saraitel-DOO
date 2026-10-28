@@ -79,8 +79,8 @@ public class DevolucionEntidad {
 		return cantidad;
 	}
 
-	public void setCantidad(final int cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidad(final Integer cantidad) {
+		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
 	}
 
 	public BigDecimal getMontoDevolucion() {

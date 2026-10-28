@@ -43,7 +43,7 @@ public class ClienteRegistradoEntidad {
 		return clienteNaturalDefecto;
 	}
 
-	public void setClienteNaturalDefecto(final boolean clienteNaturalDefecto) {
-		this.clienteNaturalDefecto = clienteNaturalDefecto;
+	public void setClienteNaturalDefecto(final Boolean clienteNaturalDefecto) {
+		this.clienteNaturalDefecto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteNaturalDefecto, true);
 	}
 }
