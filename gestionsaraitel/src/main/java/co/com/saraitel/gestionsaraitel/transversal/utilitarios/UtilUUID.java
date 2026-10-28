@@ -1,5 +1,6 @@
 package co.com.saraitel.gestionsaraitel.transversal.utilitarios;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.UnaryOperator;
 
@@ -41,7 +42,7 @@ public final class UtilUUID {
 	}
 
 	public static boolean esValorDefecto(final UUID valor) {
-		return obtenerUUIDDefecto().equals(obtenerValorDefecto(valor));
+		return Objects.equals(obtenerValorDefecto(valor), obtenerUUIDDefecto());
 	}
 
 	public static String generarComoTexto() {
