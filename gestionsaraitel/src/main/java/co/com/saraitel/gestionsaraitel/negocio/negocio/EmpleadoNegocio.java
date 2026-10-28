@@ -17,5 +17,5 @@ public interface EmpleadoNegocio {
 
 	List<EmpleadoDominio> consultarTodos();
 
-	EmpleadoDominio consultarPorid(UUID id);
+	EmpleadoDominio consultarPorId(UUID id);
 }

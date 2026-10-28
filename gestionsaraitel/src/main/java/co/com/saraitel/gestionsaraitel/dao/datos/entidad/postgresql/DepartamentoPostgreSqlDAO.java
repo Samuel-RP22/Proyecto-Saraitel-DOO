@@ -12,11 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DepartamentoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class DepartamentoPostgreSqlDAO extends SqlDAO implements DepartamentoDAO {
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Pais_id\", \"Nombre\" FROM saraitel.\"Departamento\"";
 
 	public DepartamentoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -29,25 +28,25 @@ public class DepartamentoPostgreSqlDAO extends SqlDAO implements DepartamentoDAO
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new DepartamentoEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new DepartamentoEntidad());
 	}
 
 	@Override
 	public List<DepartamentoEntidad> consultarPorFiltro(final DepartamentoEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new DepartamentoEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.DepartamentoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Pais_id\"", filtroSeguro.getPais().getId()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar departamentos.",
-				"Error NO CONTROLADO al consultar departamentos.");
+				CatalogoMensajesSql.DepartamentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTOS,
+				CatalogoMensajesSql.DepartamentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS);
 	}
 
 	@Override
 	public List<DepartamentoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar departamentos.",
-				"Error NO CONTROLADO al consultar departamentos.");
+		return ejecutarConsulta(CatalogoMensajesSql.DepartamentoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.DepartamentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTOS,
+				CatalogoMensajesSql.DepartamentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS);
 	}
 
 	private DepartamentoEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -10,24 +10,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MotivoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MotivoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Motivo"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Motivo"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Motivo"
-			""";
 
 	public MotivoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -35,39 +21,29 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 
 	@Override
 	public MotivoEntidad consultarPorId(final UUID id) {
-		List<MotivoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				"Error al consultar el motivo",
-				"Error NO CONTROLADO al consultar el motivo");
+		List<MotivoEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVO,
+				CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVO);
 
-		if (resultado.isEmpty()) {
-			return new MotivoEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new MotivoEntidad());
 	}
 
 	@Override
 	public List<MotivoEntidad> consultarPorFiltro(final MotivoEntidad filtro) {
-		MotivoEntidad filtroSeguro;
+		MotivoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new MotivoEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new MotivoEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar motivos",
-				"Error NO CONTROLADO al consultar motivos");
+				CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS,
+				CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVOS);
 	}
 
 	@Override
 	public List<MotivoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar motivos",
-				"Error NO CONTROLADO al consultar motivos");
+		return ejecutarConsulta(CatalogoMensajesSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS,
+				CatalogoMensajesSql.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVOS);
 	}
 
 	private MotivoEntidad mapear(final ResultSet resultados) throws SQLException {

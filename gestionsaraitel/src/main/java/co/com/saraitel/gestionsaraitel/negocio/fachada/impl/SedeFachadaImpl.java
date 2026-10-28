@@ -22,7 +22,7 @@ public class SedeFachadaImpl implements SedeFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var sedeDominio = SedeDTOAssembler.getInstance().convertirADominio(datos);
+			var sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			sedeNegocio.registrarInformacionNuevaSede(sedeDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -45,7 +45,7 @@ public class SedeFachadaImpl implements SedeFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var sedeDominio = SedeDTOAssembler.getInstance().convertirADominio(datos);
+			var sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			sedeNegocio.modificarInformacionSedeExistente(id, sedeDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -66,9 +66,9 @@ public class SedeFachadaImpl implements SedeFachada {
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = SedeDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaSedes = sedeNegocio.consultarPorFiltro(filtroDominio);
-			return SedeDTOAssembler.getInstance().convertirADTO(listaSedes);
+			return SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -86,7 +86,7 @@ public class SedeFachadaImpl implements SedeFachada {
 
 		try {
 			var listaSedes = sedeNegocio.consultarTodos();
-			return SedeDTOAssembler.getInstance().convertirADTO(listaSedes);
+			return SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -103,8 +103,8 @@ public class SedeFachadaImpl implements SedeFachada {
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
 
 		try {
-			var sedeDominio = sedeNegocio.consultarPorid(id);
-			return SedeDTOAssembler.getInstance().convertirADTO(sedeDominio);
+			var sedeDominio = sedeNegocio.consultarPorId(id);
+			return SedeDTOAssembler.obtenerInstancia().convertirADTO(sedeDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

@@ -16,7 +16,7 @@ public class PrefijoDTOAssembler implements DTOAssembler<PrefijoDominio, Prefijo
 	private PrefijoDTOAssembler() {
 	}
 
-	public static DTOAssembler<PrefijoDominio, PrefijoDTO> getInstance() {
+	public static DTOAssembler<PrefijoDominio, PrefijoDTO> obtenerInstancia() {
 		return instancia;
 	}
 

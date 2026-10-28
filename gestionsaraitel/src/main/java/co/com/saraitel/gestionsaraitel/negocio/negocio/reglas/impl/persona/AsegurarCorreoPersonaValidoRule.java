@@ -8,9 +8,7 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 public class AsegurarCorreoPersonaValidoRule implements Rule<String> {
 
 	private static final Rule<String> instancia = new AsegurarCorreoPersonaValidoRule();
-
-	private static final String FORMATO = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
+	
 	private AsegurarCorreoPersonaValidoRule() {
 	}
 
@@ -42,7 +40,7 @@ public class AsegurarCorreoPersonaValidoRule implements Rule<String> {
 	}
 
 	private void validarFormato(String dato) {
-		if (!UtilTexto.formatoEsValido(dato, FORMATO)) {
+		if (!UtilTexto.formatoEsValido(dato, UtilTexto.FORMATO_CORREO)) {
 			var mensajeUsuario = CatalogoMensajes.PersonaNegocioImpl.FORMATO_CORREO_PERSONA_NO_VALIDO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

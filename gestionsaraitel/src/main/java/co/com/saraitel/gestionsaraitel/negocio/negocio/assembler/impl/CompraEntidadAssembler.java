@@ -12,7 +12,7 @@ public class CompraEntidadAssembler implements EntidadAssembler<CompraDominio, C
 	private CompraEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<CompraDominio, CompraEntidad> getInstance() {
+	public static EntidadAssembler<CompraDominio, CompraEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,8 +21,8 @@ public class CompraEntidadAssembler implements EntidadAssembler<CompraDominio, C
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CompraDominio.obtenerValorDefecto());
 		return new CompraEntidad(dominioTmp.getId(),
-				ProcesoCompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getProcesoCompra()),
-				EstadoCompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getEstado()),
+				ProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getProcesoCompra()),
+				EstadoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEstado()),
 				dominioTmp.getFechaCompra());
 	}
 
@@ -30,8 +30,8 @@ public class CompraEntidadAssembler implements EntidadAssembler<CompraDominio, C
 	public CompraDominio convertirADominio(CompraEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new CompraEntidad());
 		return new CompraDominio(entidadTmp.getId(),
-				ProcesoCompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getProcesoCompra()),
-				EstadoCompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getEstado()),
+				ProcesoCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProcesoCompra()),
+				EstadoCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEstado()),
 				entidadTmp.getFechaCompra());
 	}
 }

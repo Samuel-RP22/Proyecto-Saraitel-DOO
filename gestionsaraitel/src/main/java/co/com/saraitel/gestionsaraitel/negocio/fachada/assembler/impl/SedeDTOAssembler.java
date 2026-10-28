@@ -18,7 +18,7 @@ public class SedeDTOAssembler implements DTOAssembler<SedeDominio, SedeDTO> {
 	private SedeDTOAssembler() {
 	}
 
-	public static DTOAssembler<SedeDominio, SedeDTO> getInstance() {
+	public static DTOAssembler<SedeDominio, SedeDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,7 +27,7 @@ public class SedeDTOAssembler implements DTOAssembler<SedeDominio, SedeDTO> {
 		SedeDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				SedeDominio.obtenerValorDefecto());
 
-		CiudadDTO ciudadDTO = CiudadDTOAssembler.getInstance().convertirADTO(dominioTmp.getCiudad());
+		CiudadDTO ciudadDTO = CiudadDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCiudad());
 
 		return new SedeDTO(dominioTmp.getId(), ciudadDTO, dominioTmp.getNombre(), dominioTmp.getNit(),
 				dominioTmp.getDireccion(), dominioTmp.getEsActiva());
@@ -37,7 +37,7 @@ public class SedeDTOAssembler implements DTOAssembler<SedeDominio, SedeDTO> {
 	public SedeDominio convertirADominio(SedeDTO dto) {
 		SedeDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new SedeDTO());
 
-		CiudadDominio ciudadDominio = CiudadDTOAssembler.getInstance().convertirADominio(dtoTmp.getCiudad());
+		CiudadDominio ciudadDominio = CiudadDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCiudad());
 
 		return new SedeDominio(dtoTmp.getId(), ciudadDominio, dtoTmp.getNombre(), dtoTmp.getNit(),
 				dtoTmp.getDireccion(), dtoTmp.getEsActiva());

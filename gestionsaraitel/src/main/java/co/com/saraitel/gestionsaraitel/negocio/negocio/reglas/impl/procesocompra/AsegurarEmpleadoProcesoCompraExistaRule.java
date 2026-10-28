@@ -26,7 +26,7 @@ public class AsegurarEmpleadoProcesoCompraExistaRule implements Rule<Object> {
 
 		var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(idEmpleado);
 
-		if (empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(empleadoExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.EMPLEADO_PROCESO_COMPRA_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

@@ -26,7 +26,7 @@ public class AsegurarCiudadSedeValidaRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.SedeNegocioImpl.CIUDAD_SEDE_OBLIGATORIA;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

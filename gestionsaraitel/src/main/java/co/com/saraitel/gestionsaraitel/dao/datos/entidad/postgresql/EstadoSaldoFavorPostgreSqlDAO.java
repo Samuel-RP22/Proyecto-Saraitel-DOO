@@ -11,30 +11,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoSaldoFavorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoSaldoFavorEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldoFavorDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."EstadoSaldoFavor"
-			("id", "Codigo", "Nombre")
-			VALUES (?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoSaldoFavor"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoSaldoFavor"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoSaldoFavor"
-			""";
 
 	public EstadoSaldoFavorPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -42,42 +22,43 @@ public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldo
 
 	@Override
 	public void crear(final EstadoSaldoFavorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el estado de saldo a favor",
-				"Error NO CONTROLADO al crear el estado de saldo a favor", entidad.getId(),
-				entidad.getCodigo(), entidad.getNombre());
+		ejecutarActualizacion(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
+				entidad.getId(), entidad.getCodigo(), entidad.getNombre());
 	}
 
 	@Override
 	public EstadoSaldoFavorEntidad consultarPorId(final UUID id) {
-		List<EstadoSaldoFavorEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el estado de saldo a favor",
-				"Error NO CONTROLADO al consultar el estado de saldo a favor");
+		List<EstadoSaldoFavorEntidad> resultado = ejecutarConsulta(
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR);
 
-		if (resultado.isEmpty()) {
-			return new EstadoSaldoFavorEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new EstadoSaldoFavorEntidad());
 	}
 
 	@Override
 	public List<EstadoSaldoFavorEntidad> consultarPorFiltro(final EstadoSaldoFavorEntidad filtro) {
 
-		EstadoSaldoFavorEntidad filtroSeguro = filtro == null ? new EstadoSaldoFavorEntidad() : filtro;
+		EstadoSaldoFavorEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new EstadoSaldoFavorEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conTexto("\"Codigo\"", filtroSeguro.getCodigo()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"", filtroSeguro.getCodigo())
+				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar estados de saldo a favor",
-				"Error NO CONTROLADO al consultar estados de saldo a favor");
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
 	}
 
 	@Override
 	public List<EstadoSaldoFavorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los estados de saldo a favor",
-				"Error NO CONTROLADO al consultar los estados de saldo a favor");
+		return ejecutarConsulta(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
+				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
 	}
 
 	private EstadoSaldoFavorEntidad mapear(final ResultSet resultados) throws SQLException {

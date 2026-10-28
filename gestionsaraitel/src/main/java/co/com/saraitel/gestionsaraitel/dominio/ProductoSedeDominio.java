@@ -44,7 +44,7 @@ public class ProductoSedeDominio {
 		private SedeDominio sede;
 		private BigDecimal precio;
 		private boolean tieneOferta;
-		private int oferta = 0;
+		private int oferta;
 		private BigDecimal precioTrasOferta;
 		private int stock;
 		private int stockGarantia;

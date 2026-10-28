@@ -13,5 +13,5 @@ public interface EstadoProcesoCompraNegocio {
 
 	List<EstadoProcesoCompraDominio> consultarTodos();
 
-	EstadoProcesoCompraDominio consultarPorid(UUID id);
+	EstadoProcesoCompraDominio consultarPorId(UUID id);
 }

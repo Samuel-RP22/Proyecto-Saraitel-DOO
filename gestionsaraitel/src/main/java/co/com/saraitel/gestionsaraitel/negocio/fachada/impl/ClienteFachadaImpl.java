@@ -22,7 +22,7 @@ public class ClienteFachadaImpl implements ClienteFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var clienteDominio = ClienteDTOAssembler.getInstance().convertirADominio(datos);
+			var clienteDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			clienteNegocio.registrarInformacionNuevoCliente(clienteDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -65,9 +65,9 @@ public class ClienteFachadaImpl implements ClienteFachada {
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = ClienteDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaClientes = clienteNegocio.consultarPorFiltro(filtroDominio);
-			return ClienteDTOAssembler.getInstance().convertirADTO(listaClientes);
+			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -85,7 +85,7 @@ public class ClienteFachadaImpl implements ClienteFachada {
 
 		try {
 			var listaClientes = clienteNegocio.consultarTodos();
-			return ClienteDTOAssembler.getInstance().convertirADTO(listaClientes);
+			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -102,8 +102,8 @@ public class ClienteFachadaImpl implements ClienteFachada {
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
 
 		try {
-			var clienteDominio = clienteNegocio.consultarPorid(id);
-			return ClienteDTOAssembler.getInstance().convertirADTO(clienteDominio);
+			var clienteDominio = clienteNegocio.consultarPorId(id);
+			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(clienteDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

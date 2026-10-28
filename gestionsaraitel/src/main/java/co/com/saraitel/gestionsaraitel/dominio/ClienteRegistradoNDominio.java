@@ -20,6 +20,11 @@ public class ClienteRegistradoNDominio {
 				PersonaDominio.obtenerValorDefecto());
 	}
 
+	public static ClienteRegistradoNDominio obtenerValorDefecto() {
+		return new ClienteRegistradoNDominio(UtilUUID.obtenerUUIDDefecto(), ClienteRegistradoDominio.obtenerValorDefecto(),
+				PersonaDominio.obtenerValorDefecto());
+	}
+
 	public UUID getId() {
 		return id;
 	}

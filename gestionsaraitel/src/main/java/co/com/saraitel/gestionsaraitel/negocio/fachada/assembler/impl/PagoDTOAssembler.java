@@ -16,7 +16,7 @@ public class PagoDTOAssembler implements DTOAssembler<PagoDominio, PagoDTO> {
 	private PagoDTOAssembler() {
 	}
 
-	public static DTOAssembler<PagoDominio, PagoDTO> getInstance() {
+	public static DTOAssembler<PagoDominio, PagoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -26,7 +26,7 @@ public class PagoDTOAssembler implements DTOAssembler<PagoDominio, PagoDTO> {
 		PagoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoDominio.obtenerValorDefecto());
 
-		return new PagoDTO(dominioTmp.getId(), CompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getCompra()),
+		return new PagoDTO(dominioTmp.getId(), CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()),
 				dominioTmp.getMontoPagado(), dominioTmp.getFechaPago());
 	}
 
@@ -35,7 +35,7 @@ public class PagoDTOAssembler implements DTOAssembler<PagoDominio, PagoDTO> {
 
 		PagoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PagoDTO());
 
-		return new PagoDominio(dtoTmp.getId(), CompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getCompra()),
+		return new PagoDominio(dtoTmp.getId(), CompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCompra()),
 				dtoTmp.getMontoPagado(), dtoTmp.getFechaPago());
 	}
 

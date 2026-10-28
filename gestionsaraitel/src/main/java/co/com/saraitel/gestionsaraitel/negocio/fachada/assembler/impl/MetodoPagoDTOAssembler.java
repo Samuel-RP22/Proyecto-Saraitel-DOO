@@ -16,7 +16,7 @@ public class MetodoPagoDTOAssembler implements DTOAssembler<MetodoPagoDominio, M
 	private MetodoPagoDTOAssembler() {
 	}
 
-	public static DTOAssembler<MetodoPagoDominio, MetodoPagoDTO> getInstance() {
+	public static DTOAssembler<MetodoPagoDominio, MetodoPagoDTO> obtenerInstancia() {
 		return instancia;
 	}
 

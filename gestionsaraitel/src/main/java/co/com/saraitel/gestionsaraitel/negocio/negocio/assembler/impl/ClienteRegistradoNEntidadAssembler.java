@@ -16,7 +16,7 @@ public class ClienteRegistradoNEntidadAssembler
 	private ClienteRegistradoNEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ClienteRegistradoNDominio, ClienteRegistradoNEntidad> getInstance() {
+	public static EntidadAssembler<ClienteRegistradoNDominio, ClienteRegistradoNEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,8 +27,8 @@ public class ClienteRegistradoNEntidadAssembler
 						ClienteRegistradoDominio.obtenerValorDefecto(), PersonaDominio.obtenerValorDefecto()));
 
 		return new ClienteRegistradoNEntidad(dominioTmp.getId(),
-				ClienteRegistradoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getClienteRegistrado()),
-				PersonaEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPersona()));
+				ClienteRegistradoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getClienteRegistrado()),
+				PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPersona()));
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ClienteRegistradoNEntidadAssembler
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteRegistradoNEntidad());
 
 		return new ClienteRegistradoNDominio(entidadTmp.getId(),
-				ClienteRegistradoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getClienteRegistrado()),
-				PersonaEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPersona()));
+				ClienteRegistradoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getClienteRegistrado()),
+				PersonaEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPersona()));
 	}
 }

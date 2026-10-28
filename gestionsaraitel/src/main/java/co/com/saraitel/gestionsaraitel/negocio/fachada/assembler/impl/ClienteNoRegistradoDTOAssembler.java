@@ -20,7 +20,7 @@ public class ClienteNoRegistradoDTOAssembler
     private ClienteNoRegistradoDTOAssembler() {
     }
 
-    public static DTOAssembler<ClienteNoRegistradoDominio, ClienteNoRegistradoDTO> getInstance() {
+    public static DTOAssembler<ClienteNoRegistradoDominio, ClienteNoRegistradoDTO> obtenerInstancia() {
         return instancia;
     }
 
@@ -29,12 +29,15 @@ public class ClienteNoRegistradoDTOAssembler
         var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
                 dominio, ClienteNoRegistradoDominio.obtenerValorDefecto());
 
-        ClienteDTO clienteDTO = ClienteDTOAssembler.getInstance()
+        ClienteDTO clienteDTO = ClienteDTOAssembler.obtenerInstancia()
                 .convertirADTO(dominioTmp.getCliente());
 
         return new ClienteNoRegistradoDTO(
                 dominioTmp.getId(),
-                clienteDTO);
+                clienteDTO,
+                dominioTmp.getNombre(),
+                dominioTmp.getApellido(),
+                dominioTmp.getNumeroDocumento());
     }
 
     @Override
@@ -42,12 +45,15 @@ public class ClienteNoRegistradoDTOAssembler
         var dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
                 dto, new ClienteNoRegistradoDTO());
 
-        ClienteDominio clienteDominio = ClienteDTOAssembler.getInstance()
+        ClienteDominio clienteDominio = ClienteDTOAssembler.obtenerInstancia()
                 .convertirADominio(dtoTmp.getCliente());
 
         return new ClienteNoRegistradoDominio(
                 dtoTmp.getId(),
-                clienteDominio);
+                clienteDominio,
+                dtoTmp.getNombre(),
+                dtoTmp.getApellido(),
+                dtoTmp.getNumeroDocumento());
     }
 
     @Override

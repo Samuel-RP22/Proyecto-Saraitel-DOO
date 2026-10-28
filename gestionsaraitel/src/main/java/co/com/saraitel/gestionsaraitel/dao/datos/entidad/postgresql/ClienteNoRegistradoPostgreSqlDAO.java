@@ -12,15 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteNoRegistradoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteNoRegistradoDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"ClienteNoRegistrado\" "
-			+ "(\"id\", \"Cliente_id\") VALUES (?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Cliente_id\" "
-			+ "FROM saraitel.\"ClienteNoRegistrado\"";
 
 	public ClienteNoRegistradoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -28,9 +23,11 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 
 	@Override
 	public void crear(final ClienteNoRegistradoEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente no registrado.",
-				"Error NO CONTROLADO al crear cliente no registrado.", entidad.getId(),
-				entidad.getCliente().getId());
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_NO_REGISTRADO,
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_NO_REGISTRADO,
+				entidad.getId(), entidad.getCliente().getId(), entidad.getNombre(), entidad.getApellido(),
+				entidad.getNumeroDocumento());
 	}
 
 	@Override
@@ -40,7 +37,7 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new ClienteNoRegistradoEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new ClienteNoRegistradoEntidad());
 	}
 
 	@Override
@@ -49,18 +46,20 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
 				new ClienteNoRegistradoEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conId("\"Cliente_id\"",
-				filtroSeguro.getCliente().getId());
+		var consulta = new FiltroSql(CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+				.conId("\"Cliente_id\"", filtroSeguro.getCliente().getId())
+				.conTexto("\"NumeroDocumento\"", filtroSeguro.getNumeroDocumento());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes no registrados.",
-				"Error NO CONTROLADO al consultar clientes no registrados.");
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_NO_REGISTRADOS,
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_NO_REGISTRADOS);
 	}
 
 	@Override
 	public List<ClienteNoRegistradoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes no registrados.",
-				"Error NO CONTROLADO al consultar clientes no registrados.");
+		return ejecutarConsulta(CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_NO_REGISTRADOS,
+				CatalogoMensajesSql.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_NO_REGISTRADOS);
 	}
 
 	private ClienteNoRegistradoEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -71,6 +70,10 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 		var cliente = new ClienteEntidad();
 		cliente.setId(leerUUID(resultados, "Cliente_id"));
 		entidad.setCliente(cliente);
+
+		entidad.setNombre(resultados.getString("Nombre"));
+		entidad.setApellido(resultados.getString("Apellido"));
+		entidad.setNumeroDocumento(resultados.getString("NumeroDocumento"));
 
 		return entidad;
 	}

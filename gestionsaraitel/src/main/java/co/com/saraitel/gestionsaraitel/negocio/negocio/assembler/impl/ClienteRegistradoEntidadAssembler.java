@@ -15,7 +15,7 @@ public class ClienteRegistradoEntidadAssembler
 	private ClienteRegistradoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ClienteRegistradoDominio, ClienteRegistradoEntidad> getInstance() {
+	public static EntidadAssembler<ClienteRegistradoDominio, ClienteRegistradoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -24,7 +24,7 @@ public class ClienteRegistradoEntidadAssembler
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio, new ClienteRegistradoDominio(
 				UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(), false));
 		return new ClienteRegistradoEntidad(dominioTmp.getId(),
-				ClienteEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCliente()),
+				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()),
 				dominioTmp.getClienteNaturalDefecto());
 	}
 
@@ -32,7 +32,7 @@ public class ClienteRegistradoEntidadAssembler
 	public ClienteRegistradoDominio convertirADominio(ClienteRegistradoEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteRegistradoEntidad());
 		return new ClienteRegistradoDominio(entidadTmp.getId(),
-				ClienteEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCliente()),
+				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()),
 				entidadTmp.getClienteNaturalDefecto());
 	}
 }

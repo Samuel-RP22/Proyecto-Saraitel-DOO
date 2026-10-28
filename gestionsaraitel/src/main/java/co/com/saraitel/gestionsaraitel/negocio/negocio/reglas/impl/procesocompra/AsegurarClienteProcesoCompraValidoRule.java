@@ -26,7 +26,7 @@ public class AsegurarClienteProcesoCompraValidoRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.CLIENTE_PROCESO_COMPRA_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

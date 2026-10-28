@@ -9,8 +9,6 @@ public class AsegurarNitClienteJuridicoValidoRule implements Rule<String> {
 
 	private static final Rule<String> instancia = new AsegurarNitClienteJuridicoValidoRule();
 
-	private static final String FORMATO_NIT = "^[0-9]{9,10}(-[0-9])?$";
-
 	private AsegurarNitClienteJuridicoValidoRule() {
 	}
 
@@ -42,7 +40,7 @@ public class AsegurarNitClienteJuridicoValidoRule implements Rule<String> {
 	}
 
 	private void validarFormato(String dato) {
-		if (!UtilTexto.formatoEsValido(dato, FORMATO_NIT)) {
+		if (!UtilTexto.formatoEsValido(dato, UtilTexto.FORMATO_NIT)) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.FORMATO_NIT_CLIENTE_JURIDICO_NO_VALIDO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

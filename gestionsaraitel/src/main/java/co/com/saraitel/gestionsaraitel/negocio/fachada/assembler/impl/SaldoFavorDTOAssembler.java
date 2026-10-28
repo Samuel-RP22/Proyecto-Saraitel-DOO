@@ -16,7 +16,7 @@ public class SaldoFavorDTOAssembler implements DTOAssembler<SaldoFavorDominio, S
 	private SaldoFavorDTOAssembler() {
 	}
 
-	public static DTOAssembler<SaldoFavorDominio, SaldoFavorDTO> getInstance() {
+	public static DTOAssembler<SaldoFavorDominio, SaldoFavorDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,8 +27,8 @@ public class SaldoFavorDTOAssembler implements DTOAssembler<SaldoFavorDominio, S
 				SaldoFavorDominio.obtenerValorDefecto());
 
 		return new SaldoFavorDTO(dominioTmp.getId(),
-				DevolucionDTOAssembler.getInstance().convertirADTO(dominioTmp.getDevolucion()),
-				EstadoSaldoFavorDTOAssembler.getInstance().convertirADTO(dominioTmp.getEstado()),
+				DevolucionDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getDevolucion()),
+				EstadoSaldoFavorDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getEstado()),
 				dominioTmp.getMontoUsado());
 	}
 
@@ -38,8 +38,8 @@ public class SaldoFavorDTOAssembler implements DTOAssembler<SaldoFavorDominio, S
 		SaldoFavorDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new SaldoFavorDTO());
 
 		return new SaldoFavorDominio(dtoTmp.getId(),
-				DevolucionDTOAssembler.getInstance().convertirADominio(dtoTmp.getDevolucion()),
-				EstadoSaldoFavorDTOAssembler.getInstance().convertirADominio(dtoTmp.getEstado()),
+				DevolucionDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getDevolucion()),
+				EstadoSaldoFavorDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEstado()),
 				dtoTmp.getMontoUsado());
 	}
 

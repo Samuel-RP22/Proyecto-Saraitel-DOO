@@ -32,6 +32,10 @@ public class ClienteRegistradoJDominio {
 		this.telefonoConfirmado = builder.telefonoConfirmado;
 	}
 
+	public static ClienteRegistradoJDominio obtenerValorDefecto() {
+		return new Builder().construir();
+	}
+
 	public static final class Builder {
 
 		private UUID id;

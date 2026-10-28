@@ -16,7 +16,7 @@ public class EstadoInventarioDTOAssembler implements DTOAssembler<EstadoInventar
 	private EstadoInventarioDTOAssembler() {
 	}
 
-	public static DTOAssembler<EstadoInventarioDominio, EstadoInventarioDTO> getInstance() {
+	public static DTOAssembler<EstadoInventarioDominio, EstadoInventarioDTO> obtenerInstancia() {
 		return instancia;
 	}
 

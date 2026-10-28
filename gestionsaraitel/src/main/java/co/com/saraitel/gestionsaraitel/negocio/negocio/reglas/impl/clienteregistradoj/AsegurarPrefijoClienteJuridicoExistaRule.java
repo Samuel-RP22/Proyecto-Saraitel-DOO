@@ -26,7 +26,7 @@ public class AsegurarPrefijoClienteJuridicoExistaRule implements Rule<Object> {
 
 		var prefijoExistente = daoFactory.obtenerPrefijoDao().consultarPorId(idPrefijo);
 
-		if (prefijoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(prefijoExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.PREFIJO_CLIENTE_JURIDICO_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

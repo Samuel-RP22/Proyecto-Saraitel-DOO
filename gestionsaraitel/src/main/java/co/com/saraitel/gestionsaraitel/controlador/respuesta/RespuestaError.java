@@ -8,10 +8,10 @@ public class RespuestaError<D> extends Respuesta<D> {
 		super(mensajes, datos, EstadoRespuesta.ERROR);
 	}
 
-	public static RespuestaError<String> crear(final String message) {
-		return new RespuestaError<>(List.of(message), List.of());
+	public static RespuestaError<String> crear(final String mensaje) {
+		return new RespuestaError<>(List.of(mensaje), List.of());
 	}
-	
+
 	public static <D> RespuestaError<D> crear(List<String> mensajes, List<D> datos) {
 		return new RespuestaError<>(mensajes, datos);
 	}

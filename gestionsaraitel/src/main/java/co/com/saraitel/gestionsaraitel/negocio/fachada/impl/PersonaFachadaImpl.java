@@ -22,7 +22,7 @@ public class PersonaFachadaImpl implements PersonaFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var personaDominio = PersonaDTOAssembler.getInstance().convertirADominio(datos);
+			var personaDominio = PersonaDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			personaNegocio.registrarInformacionNuevaPersona(personaDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -45,7 +45,7 @@ public class PersonaFachadaImpl implements PersonaFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var personaDominio = PersonaDTOAssembler.getInstance().convertirADominio(datos);
+			var personaDominio = PersonaDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			personaNegocio.modificarInformacionPersonaExistente(id, personaDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -88,9 +88,9 @@ public class PersonaFachadaImpl implements PersonaFachada {
 		var personaNegocio = new PersonaNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = PersonaDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = PersonaDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaPersonas = personaNegocio.consultarPorFiltro(filtroDominio);
-			return PersonaDTOAssembler.getInstance().convertirADTO(listaPersonas);
+			return PersonaDTOAssembler.obtenerInstancia().convertirADTO(listaPersonas);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -108,7 +108,7 @@ public class PersonaFachadaImpl implements PersonaFachada {
 
 		try {
 			var listaPersonas = personaNegocio.consultarTodos();
-			return PersonaDTOAssembler.getInstance().convertirADTO(listaPersonas);
+			return PersonaDTOAssembler.obtenerInstancia().convertirADTO(listaPersonas);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -125,8 +125,8 @@ public class PersonaFachadaImpl implements PersonaFachada {
 		var personaNegocio = new PersonaNegocioImpl(daoFactory);
 
 		try {
-			var personaDominio = personaNegocio.consultarPorid(id);
-			return PersonaDTOAssembler.getInstance().convertirADTO(personaDominio);
+			var personaDominio = personaNegocio.consultarPorId(id);
+			return PersonaDTOAssembler.obtenerInstancia().convertirADTO(personaDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

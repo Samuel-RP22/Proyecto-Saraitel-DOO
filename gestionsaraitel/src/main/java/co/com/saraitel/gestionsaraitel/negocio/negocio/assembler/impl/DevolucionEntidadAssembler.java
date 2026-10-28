@@ -12,7 +12,7 @@ public class DevolucionEntidadAssembler implements EntidadAssembler<DevolucionDo
 	private DevolucionEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<DevolucionDominio, DevolucionEntidad> getInstance() {
+	public static EntidadAssembler<DevolucionDominio, DevolucionEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,8 +21,8 @@ public class DevolucionEntidadAssembler implements EntidadAssembler<DevolucionDo
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DevolucionDominio.obtenerValorDefecto());
 		return new DevolucionEntidad(dominioTmp.getId(),
-				DetalleCompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getDetalleCompra()),
-				MotivoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getMotivo()),
+				DetalleCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getDetalleCompra()),
+				MotivoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getMotivo()),
 				dominioTmp.getFechaDevolucion(), dominioTmp.getCantidad(), dominioTmp.getMontoDevolucion(),
 				dominioTmp.getEstado());
 	}
@@ -31,8 +31,8 @@ public class DevolucionEntidadAssembler implements EntidadAssembler<DevolucionDo
 	public DevolucionDominio convertirADominio(DevolucionEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DevolucionEntidad());
 		return new DevolucionDominio(entidadTmp.getId(),
-				DetalleCompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getDetalleCompra()),
-				MotivoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getMotivo()),
+				DetalleCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getDetalleCompra()),
+				MotivoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getMotivo()),
 				entidadTmp.getFechaDevolucion(), entidadTmp.getCantidad(), entidadTmp.getMontoDevolucion(),
 				entidadTmp.getEstado());
 	}

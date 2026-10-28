@@ -20,9 +20,9 @@ public class PaisFachadaImpl implements PaisFachada {
 		var paisNegocio = new PaisNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = PaisDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = PaisDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaPaises = paisNegocio.consultarPorFiltro(filtroDominio);
-			return PaisDTOAssembler.getInstance().convertirADTO(listaPaises);
+			return PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -40,7 +40,7 @@ public class PaisFachadaImpl implements PaisFachada {
 
 		try {
 			var listaPaises = paisNegocio.consultarTodos();
-			return PaisDTOAssembler.getInstance().convertirADTO(listaPaises);
+			return PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -58,7 +58,7 @@ public class PaisFachadaImpl implements PaisFachada {
 
 		try {
 			var paisDominio = paisNegocio.consultarPorId(id);
-			return PaisDTOAssembler.getInstance().convertirADTO(paisDominio);
+			return PaisDTOAssembler.obtenerInstancia().convertirADTO(paisDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

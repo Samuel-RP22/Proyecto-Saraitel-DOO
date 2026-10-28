@@ -98,6 +98,9 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
+			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ABRIENDO_CONEXION_POSTGRESQL;
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}
 

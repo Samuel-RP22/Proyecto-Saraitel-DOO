@@ -14,9 +14,6 @@ import co.com.saraitel.gestionsaraitel.dto.PersonaDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.PersonaFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.PersonaFachadaImpl;
 
-// ...../api/v1/personas
-// ...../api/v1/personas/{id}
-
 @RestController
 @RequestMapping("/api/v1/personas")
 public class PersonaControlador extends AbstractRestController {

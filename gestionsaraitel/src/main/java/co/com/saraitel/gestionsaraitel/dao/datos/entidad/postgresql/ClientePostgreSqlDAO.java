@@ -10,16 +10,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.ClienteDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"Cliente\" "
-			+ "(\"id\", \"EsClienteRegistrado\") VALUES (?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"EsClienteRegistrado\" " + "FROM saraitel.\"Cliente\"";
-
-	private static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"Cliente\" WHERE \"id\" = ?";
 
 	public ClientePostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -27,8 +21,8 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 	@Override
 	public void crear(final ClienteEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente.",
-				"Error NO CONTROLADO al crear cliente.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ClientePostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE,
+				CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE, entidad.getId(),
 				entidad.getEsClienteRegistrado());
 	}
 
@@ -39,7 +33,7 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new ClienteEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new ClienteEntidad());
 	}
 
 	@Override
@@ -47,24 +41,24 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.ClientePostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conBooleano("\"EsClienteRegistrado\"", filtroSeguro.getEsClienteRegistrado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes.",
-				"Error NO CONTROLADO al consultar clientes.");
+				CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES,
+				CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES);
 	}
 
 	@Override
 	public List<ClienteEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes.",
-				"Error NO CONTROLADO al consultar clientes.");
+		return ejecutarConsulta(CatalogoMensajesSql.ClientePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES,
+				CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente.",
-				"Error NO CONTROLADO al eliminar cliente.", id);
+		ejecutarActualizacion(CatalogoMensajesSql.ClientePostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE,
+				CatalogoMensajesSql.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE, id);
 	}
 
 	private ClienteEntidad mapear(final ResultSet resultados) throws SQLException {

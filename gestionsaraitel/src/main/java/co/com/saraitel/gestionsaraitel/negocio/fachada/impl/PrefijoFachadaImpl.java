@@ -20,9 +20,9 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 		var prefijoNegocio = new PrefijoNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = PrefijoDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = PrefijoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaPrefijos = prefijoNegocio.consultarPorFiltro(filtroDominio);
-			return PrefijoDTOAssembler.getInstance().convertirADTO(listaPrefijos);
+			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -40,7 +40,7 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 
 		try {
 			var listaPrefijos = prefijoNegocio.consultarTodos();
-			return PrefijoDTOAssembler.getInstance().convertirADTO(listaPrefijos);
+			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -57,8 +57,8 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 		var prefijoNegocio = new PrefijoNegocioImpl(daoFactory);
 
 		try {
-			var prefijoDominio = prefijoNegocio.consultarPorid(id);
-			return PrefijoDTOAssembler.getInstance().convertirADTO(prefijoDominio);
+			var prefijoDominio = prefijoNegocio.consultarPorId(id);
+			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(prefijoDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

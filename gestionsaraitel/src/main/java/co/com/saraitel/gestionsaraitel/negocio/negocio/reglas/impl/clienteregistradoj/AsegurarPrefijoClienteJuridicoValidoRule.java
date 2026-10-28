@@ -26,7 +26,7 @@ public class AsegurarPrefijoClienteJuridicoValidoRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.PREFIJO_CLIENTE_JURIDICO_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

@@ -13,7 +13,7 @@ public class ClienteRegistradoJEntidadAssembler
 	private ClienteRegistradoJEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ClienteRegistradoJDominio, ClienteRegistradoJEntidad> getInstance() {
+	public static EntidadAssembler<ClienteRegistradoJDominio, ClienteRegistradoJEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -23,9 +23,9 @@ public class ClienteRegistradoJEntidadAssembler
 				new ClienteRegistradoJDominio.Builder().construir());
 
 		return new ClienteRegistradoJEntidad.Builder().id(dominioTmp.getId())
-				.clienteRegistrado(ClienteRegistradoEntidadAssembler.getInstance()
+				.clienteRegistrado(ClienteRegistradoEntidadAssembler.obtenerInstancia()
 						.convertirAEntidad(dominioTmp.getClienteRegistrado()))
-				.prefijo(PrefijoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPrefijo()))
+				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPrefijo()))
 				.telefono(dominioTmp.getTelefono()).nit(dominioTmp.getNit()).razonSocial(dominioTmp.getRazonSocial())
 				.correo(dominioTmp.getCorreo()).correoConfirmado(dominioTmp.getCorreoConfirmado())
 				.telefonoConfirmado(dominioTmp.getTelefonoConfirmado()).construir();
@@ -37,9 +37,9 @@ public class ClienteRegistradoJEntidadAssembler
 				new ClienteRegistradoJEntidad.Builder().construir());
 
 		return new ClienteRegistradoJDominio.Builder().id(entidadTmp.getId())
-				.clienteRegistrado(ClienteRegistradoEntidadAssembler.getInstance()
+				.clienteRegistrado(ClienteRegistradoEntidadAssembler.obtenerInstancia()
 						.convertirADominio(entidadTmp.getClienteRegistrado()))
-				.prefijo(PrefijoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPrefijo()))
+				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPrefijo()))
 				.telefono(entidadTmp.getTelefono()).nit(entidadTmp.getNit()).razonSocial(entidadTmp.getRazonSocial())
 				.correo(entidadTmp.getCorreo()).correoConfirmado(entidadTmp.getCorreoConfirmado())
 				.telefonoConfirmado(entidadTmp.getTelefonoConfirmado()).construir();

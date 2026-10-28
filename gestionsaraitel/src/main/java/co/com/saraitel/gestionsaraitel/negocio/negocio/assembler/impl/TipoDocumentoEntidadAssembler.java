@@ -13,7 +13,7 @@ public class TipoDocumentoEntidadAssembler implements EntidadAssembler<TipoDocum
 	private TipoDocumentoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<TipoDocumentoDominio, TipoDocumentoEntidad> getInstance() {
+	public static EntidadAssembler<TipoDocumentoDominio, TipoDocumentoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

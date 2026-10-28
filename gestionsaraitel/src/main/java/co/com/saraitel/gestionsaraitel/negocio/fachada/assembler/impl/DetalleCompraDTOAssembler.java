@@ -16,7 +16,7 @@ public class DetalleCompraDTOAssembler implements DTOAssembler<DetalleCompraDomi
 	private DetalleCompraDTOAssembler() {
 	}
 
-	public static DTOAssembler<DetalleCompraDominio, DetalleCompraDTO> getInstance() {
+	public static DTOAssembler<DetalleCompraDominio, DetalleCompraDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,8 +27,8 @@ public class DetalleCompraDTOAssembler implements DTOAssembler<DetalleCompraDomi
 				DetalleCompraDominio.obtenerValorDefecto());
 
 		return new DetalleCompraDTO(dominioTmp.getId(),
-				ProcesoCompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getProcesoCompra()),
-				ProductoSedeDTOAssembler.getInstance().convertirADTO(dominioTmp.getProductoSede()),
+				ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProcesoCompra()),
+				ProductoSedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProductoSede()),
 				dominioTmp.getCantidad(), dominioTmp.getPrecioUnitario(), dominioTmp.getSubtotal());
 	}
 
@@ -38,8 +38,8 @@ public class DetalleCompraDTOAssembler implements DTOAssembler<DetalleCompraDomi
 		DetalleCompraDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DetalleCompraDTO());
 
 		return new DetalleCompraDominio(dtoTmp.getId(),
-				ProcesoCompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getProcesoCompra()),
-				ProductoSedeDTOAssembler.getInstance().convertirADominio(dtoTmp.getProductoSede()),
+				ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProcesoCompra()),
+				ProductoSedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProductoSede()),
 				dtoTmp.getCantidad(), dtoTmp.getPrecioUnitario(), dtoTmp.getSubtotal());
 	}
 

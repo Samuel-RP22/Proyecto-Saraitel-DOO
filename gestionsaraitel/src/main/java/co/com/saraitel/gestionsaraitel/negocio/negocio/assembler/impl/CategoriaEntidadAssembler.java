@@ -12,7 +12,7 @@ public class CategoriaEntidadAssembler implements EntidadAssembler<CategoriaDomi
 	private CategoriaEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<CategoriaDominio, CategoriaEntidad> getInstance() {
+	public static EntidadAssembler<CategoriaDominio, CategoriaEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

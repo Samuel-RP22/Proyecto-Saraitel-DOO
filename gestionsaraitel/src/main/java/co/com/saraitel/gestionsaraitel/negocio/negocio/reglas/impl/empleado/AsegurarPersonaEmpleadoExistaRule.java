@@ -26,7 +26,7 @@ public class AsegurarPersonaEmpleadoExistaRule implements Rule<Object> {
 
 		var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(idPersona);
 
-		if (personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(personaExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.EmpleadoNegocioImpl.PERSONA_EMPLEADO_NO_EXISTE;
 
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);

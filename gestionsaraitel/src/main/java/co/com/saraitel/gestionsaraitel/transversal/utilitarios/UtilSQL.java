@@ -12,11 +12,11 @@ public final class UtilSQL {
 	private UtilSQL() {
 	}
 
-	public static boolean conexionEstaVacia(Connection conexion) {
+	public static boolean conexionEstaVacia(final Connection conexion) {
 		return UtilObjeto.esNulo(conexion);
 	}
 
-	public static boolean conexionEstaAbierta(Connection conexion) {
+	public static boolean conexionEstaAbierta(final Connection conexion) {
 		try {
 			return (!conexionEstaVacia(conexion) && !conexion.isClosed());
 		} catch (SQLException excepcion) {
@@ -35,7 +35,7 @@ public final class UtilSQL {
 		}
 	}
 
-	public static boolean transaccionEstaIniciada(Connection conexion) {
+	public static boolean transaccionEstaIniciada(final Connection conexion) {
 		if (!conexionEstaAbierta(conexion)) {
 			return false;
 		}
@@ -51,7 +51,7 @@ public final class UtilSQL {
 		}
 	}
 
-	public static void iniciarTransaccion(Connection conexion) {
+	public static void iniciarTransaccion(final Connection conexion) {
 		if (!conexionEstaAbierta(conexion) || transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
@@ -69,7 +69,7 @@ public final class UtilSQL {
 
 	}
 
-	public static void confirmarTransaccion(Connection conexion) {
+	public static void confirmarTransaccion(final Connection conexion) {
 		if (!transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CONFIRMAR_TRANSACCION_SQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
@@ -86,7 +86,7 @@ public final class UtilSQL {
 		}
 	}
 
-	public static void cancelarTransaccion(Connection conexion) {
+	public static void cancelarTransaccion(final Connection conexion) {
 		if (!transaccionEstaIniciada(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CANCELAR_TRANSACCION_SQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
@@ -103,7 +103,7 @@ public final class UtilSQL {
 		}
 	}
 
-	public static void cerrarConexion(Connection conexion) {
+	public static void cerrarConexion(final Connection conexion) {
 		if (!conexionEstaAbierta(conexion)) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
@@ -111,12 +111,12 @@ public final class UtilSQL {
 
 		try {
 			conexion.close();
-		} catch (SQLException exception) {
+		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_CERRANDO_CONEXION_SQL;
-			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
-		} catch (Exception exception) {
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} catch (Exception excepcion) {
 			var mensajeUsuario = CatalogoMensajes.UtilSQL.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL;
-			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
 	}
 }

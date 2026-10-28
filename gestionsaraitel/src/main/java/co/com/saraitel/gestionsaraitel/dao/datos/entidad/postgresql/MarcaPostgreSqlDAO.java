@@ -11,14 +11,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.MarcaDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.MarcaEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"Marca\" "
-			+ "(\"id\", \"Nombre\", \"EsActivo\") VALUES (?, ?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Nombre\", \"EsActivo\" " + "FROM saraitel.\"Marca\"";
 
 	public MarcaPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -26,8 +22,8 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 
 	@Override
 	public void crear(final MarcaEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear marca.",
-				"Error NO CONTROLADO al crear marca.", entidad.getId(), entidad.getNombre(),
+		ejecutarActualizacion(CatalogoMensajesSql.MarcaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_MARCA,
+				CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_MARCA, entidad.getId(), entidad.getNombre(),
 				entidad.getEsActivo());
 	}
 
@@ -38,7 +34,7 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new MarcaEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new MarcaEntidad());
 	}
 
 	@Override
@@ -46,19 +42,19 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new MarcaEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.MarcaPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre())
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar marcas.",
-				"Error NO CONTROLADO al consultar marcas.");
+				CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS,
+				CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MARCAS);
 	}
 
 	@Override
 	public List<MarcaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar marcas.",
-				"Error NO CONTROLADO al consultar marcas.");
+		return ejecutarConsulta(CatalogoMensajesSql.MarcaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS,
+				CatalogoMensajesSql.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MARCAS);
 	}
 
 	private MarcaEntidad mapear(final ResultSet resultados) throws SQLException {

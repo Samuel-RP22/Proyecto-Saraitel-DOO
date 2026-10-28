@@ -11,19 +11,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.AdministradorEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."Administrador" 
-			("id", "Empleado_id")
-			VALUES (?, ?)
-			""";
-	private static final String SQL_CONSULTAR = """
-			SELECT "id", "Empleado_id" 
-			FROM saraitel."Administrador"
-			""";
 
 	public AdministradorPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -31,7 +22,7 @@ public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorD
 
 	@Override
 	public void crear(final AdministradorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear administrador.", "Error NO CONTROLADO al crear administrador.",
+		ejecutarActualizacion(CatalogoMensajesSql.AdministradorPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ADMINISTRADOR, CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ADMINISTRADOR,
 				entidad.getId(), entidad.getEmpleado().getId());
 	}
 
@@ -42,24 +33,24 @@ public class AdministradorPostgreSqlDAO extends SqlDAO implements AdministradorD
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new AdministradorEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new AdministradorEntidad());
 	}
 
 	@Override
 	public List<AdministradorEntidad> consultarPorFiltro(final AdministradorEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new AdministradorEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conId("\"Empleado_id\"",
+		var consulta = new FiltroSql(CatalogoMensajesSql.AdministradorPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conId("\"Empleado_id\"",
 				filtroSeguro.getEmpleado().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar administradores.", "Error NO CONTROLADO al consultar administradores.");
+				CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ADMINISTRADORES, CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ADMINISTRADORES);
 	}
 
 	@Override
 	public List<AdministradorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar administradores.",
-				"Error NO CONTROLADO al consultar administradores.");
+		return ejecutarConsulta(CatalogoMensajesSql.AdministradorPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ADMINISTRADORES,
+				CatalogoMensajesSql.AdministradorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ADMINISTRADORES);
 	}
 
 	private AdministradorEntidad mapear(final ResultSet resultados) throws SQLException {

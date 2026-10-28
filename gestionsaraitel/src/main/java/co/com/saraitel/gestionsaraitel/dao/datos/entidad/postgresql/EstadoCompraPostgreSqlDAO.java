@@ -11,30 +11,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoCompraDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoCompraEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class EstadoCompraPostgreSqlDAO extends SqlDAO implements EstadoCompraDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."EstadoCompra"
-			("id", "Codigo", "Nombre")
-			VALUES (?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoCompra"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoCompra"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Codigo", "Nombre"
-			FROM saraitel."EstadoCompra"
-			""";
 
 	public EstadoCompraPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -42,48 +22,38 @@ public class EstadoCompraPostgreSqlDAO extends SqlDAO implements EstadoCompraDAO
 
 	@Override
 	public void crear(final EstadoCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el estado de compra",
-				"Error NO CONTROLADO al crear el estado de compra", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_COMPRA,
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_COMPRA, entidad.getId(),
 				entidad.getCodigo(), entidad.getNombre());
 	}
 
 	@Override
 	public EstadoCompraEntidad consultarPorId(final UUID id) {
-		List<EstadoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el estado de compra",
-				"Error NO CONTROLADO al consultar el estado de compra");
+		List<EstadoCompraEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_COMPRA,
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_COMPRA);
 
-		if (resultado.isEmpty()) {
-			return new EstadoCompraEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new EstadoCompraEntidad());
 	}
 
 	@Override
 	public List<EstadoCompraEntidad> consultarPorFiltro(final EstadoCompraEntidad filtro) {
 
-		EstadoCompraEntidad filtroSeguro;
+		EstadoCompraEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new EstadoCompraEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new EstadoCompraEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conTexto("\"Codigo\"", filtroSeguro.getCodigo()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar estados de compra",
-				"Error NO CONTROLADO al consultar estados de compra");
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_COMPRA,
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_COMPRA);
 	}
 
 	@Override
 	public List<EstadoCompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los estados de compra",
-				"Error NO CONTROLADO al consultar los estados de compra");
+		return ejecutarConsulta(CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_COMPRA,
+				CatalogoMensajesSql.EstadoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_COMPRA);
 	}
 
 	private EstadoCompraEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -32,25 +32,12 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 
 		AsegurarPersonaNuevoEmpleadoNoExistaRule.obtenerInstancia().ejecutar(datos.getPersona().getId(), daoFactory);
 
-		var empleadoEntidad = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var empleadoEntidad = EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
-		empleadoEntidad.setId(generarIdEmpleadoUnico());
+		empleadoEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerEmpleadoDao().consultarPorId(id).getId()));
 		empleadoEntidad.setEsActivo(true);
 
 		daoFactory.obtenerEmpleadoDao().crear(empleadoEntidad);
-	}
-
-	private UUID generarIdEmpleadoUnico() {
-		UUID id;
-		boolean existe;
-
-		do {
-			id = UUID.randomUUID();
-			var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
-			existe = !empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
 	}
 
 	@Override
@@ -58,11 +45,11 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 
 		var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
 
-		if (empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(empleadoExistente.getId())) {
 			return;
 		}
 
-		var datosActualizados = new EmpleadoDominio(id, datos.getSede(), datos.getPersona(), datos.getEsActiva());
+		var datosActualizados = new EmpleadoDominio(id, datos.getSede(), datos.getPersona(), datos.getEsActivo());
 
 		ValidarDatosRegistrarInformacionNuevoEmpleadoRule.obtenerInstancia().ejecutar(datosActualizados);
 
@@ -83,7 +70,7 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 					daoFactory);
 		}
 
-		var entidadActualizada = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(datosActualizados);
+		var entidadActualizada = EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(datosActualizados);
 
 		daoFactory.obtenerEmpleadoDao().actualizar(id, entidadActualizada);
 	}
@@ -92,7 +79,7 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 	public void darBajaInformacionEmpleadoExistente(final UUID id) {
 		var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
 
-		if (empleadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(empleadoExistente.getId())) {
 			return;
 		}
 
@@ -103,27 +90,27 @@ public class EmpleadoNegocioImpl implements EmpleadoNegocio {
 
 	@Override
 	public List<EmpleadoDominio> consultarPorFiltro(final EmpleadoDominio filtro) {
-		var entidadFiltro = EmpleadoEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerEmpleadoDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(EmpleadoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(EmpleadoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<EmpleadoDominio> consultarTodos() {
 		return daoFactory.obtenerEmpleadoDao().consultarTodos().stream()
-				.map(EmpleadoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(EmpleadoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public EmpleadoDominio consultarPorid(final UUID id) {
+	public EmpleadoDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerEmpleadoDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return EmpleadoDominio.obtenerValorDefecto();
 		}
 
-		return EmpleadoEntidadAssembler.getInstance().convertirADominio(entidad);
+		return EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 
 	private void validarPoliticasSedeYPersona(final EmpleadoDominio datos) {

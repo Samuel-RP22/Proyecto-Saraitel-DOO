@@ -11,5 +11,5 @@ public interface DepartamentoNegocio {
 	
 	List<DepartamentoDominio> consultarTodos();
 
-	DepartamentoDominio consultarPorid(UUID id);
+	DepartamentoDominio consultarPorId(UUID id);
 }

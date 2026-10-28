@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelDatosExcepcion;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -62,6 +66,16 @@ public abstract class SqlDAO {
 
 	protected static UUID leerUUID(final ResultSet resultados, final String columna) throws SQLException {
 		return UtilUUID.convertirAUUID(resultados.getString(columna));
+	}
+
+	protected static LocalDateTime leerFechaHora(final ResultSet resultados, final String columna)
+			throws SQLException {
+		return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(resultados.getTimestamp(columna),
+				Timestamp.valueOf(UtilFecha.FECHA_HORA_DEFECTO)).toLocalDateTime();
+	}
+
+	protected static <E> E obtenerPrimeroOValorDefecto(final List<E> resultados, final E valorDefecto) {
+		return resultados.stream().findFirst().orElse(valorDefecto);
 	}
 
 	private static void asignarParametros(final PreparedStatement sentencia, final List<Object> parametros)

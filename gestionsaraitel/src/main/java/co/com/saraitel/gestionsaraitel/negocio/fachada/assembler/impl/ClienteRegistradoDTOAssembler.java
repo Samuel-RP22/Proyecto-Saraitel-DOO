@@ -18,7 +18,7 @@ public class ClienteRegistradoDTOAssembler implements DTOAssembler<ClienteRegist
 	private ClienteRegistradoDTOAssembler() {
 	}
 
-	public static DTOAssembler<ClienteRegistradoDominio, ClienteRegistradoDTO> getInstance() {
+	public static DTOAssembler<ClienteRegistradoDominio, ClienteRegistradoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,7 +27,7 @@ public class ClienteRegistradoDTOAssembler implements DTOAssembler<ClienteRegist
 		ClienteRegistradoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ClienteRegistradoDominio.obtenerValorDefecto());
 
-		ClienteDTO clienteDTO = ClienteDTOAssembler.getInstance().convertirADTO(dominioTmp.getCliente());
+		ClienteDTO clienteDTO = ClienteDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCliente());
 
 		return new ClienteRegistradoDTO(dominioTmp.getId(), clienteDTO, dominioTmp.getClienteNaturalDefecto());
 	}
@@ -37,7 +37,7 @@ public class ClienteRegistradoDTOAssembler implements DTOAssembler<ClienteRegist
 		ClienteRegistradoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new ClienteRegistradoDTO());
 
-		ClienteDominio clienteDominio = ClienteDTOAssembler.getInstance().convertirADominio(dtoTmp.getCliente());
+		ClienteDominio clienteDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCliente());
 
 		return new ClienteRegistradoDominio(dtoTmp.getId(), clienteDominio, dtoTmp.getClienteNaturalDefecto());
 	}

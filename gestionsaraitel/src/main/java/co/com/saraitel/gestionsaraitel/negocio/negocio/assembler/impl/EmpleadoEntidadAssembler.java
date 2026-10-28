@@ -12,7 +12,7 @@ public class EmpleadoEntidadAssembler implements EntidadAssembler<EmpleadoDomini
 	private EmpleadoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<EmpleadoDominio, EmpleadoEntidad> getInstance() {
+	public static EntidadAssembler<EmpleadoDominio, EmpleadoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,17 +21,17 @@ public class EmpleadoEntidadAssembler implements EntidadAssembler<EmpleadoDomini
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EmpleadoDominio.obtenerValorDefecto());
 		return new EmpleadoEntidad(dominioTmp.getId(),
-				SedeEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getSede()),
-				PersonaEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPersona()),
-				dominioTmp.getEsActiva());
+				SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSede()),
+				PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPersona()),
+				dominioTmp.getEsActivo());
 	}
 
 	@Override
 	public EmpleadoDominio convertirADominio(EmpleadoEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EmpleadoEntidad());
 		return new EmpleadoDominio(entidadTmp.getId(),
-				SedeEntidadAssembler.getInstance().convertirADominio(entidadTmp.getSede()),
-				PersonaEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPersona()),
+				SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSede()),
+				PersonaEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPersona()),
 				entidadTmp.getEsActivo());
 	}
 }

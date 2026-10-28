@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.AuthenticationException;
@@ -17,6 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import co.com.saraitel.gestionsaraitel.controlador.EmpleadoAutenticado;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,68 +28,57 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SeguridadConfiguracion {
 
 	private static final String CODIGO_EMPLEADO_NO_ACTIVO = "empleado_no_activo";
+	private static final String ACCESO_DENEGADO = "/acceso-denegado.html";
+	private static final String LOGOUT = "/logout";
+	private static final String LOGIN_LOGOUT_INVALIDO = "/login?error";
+	private static final String LOGIN_LOGOUT_EXITOSO = "/login?logout";
+	private static final String PROCESO_COMPRA = "/proceso-compra.html";
+	private static final String SOLICITUD_AUTORIZACION_NO_ENCONTRADA = "authorization_request_not_found";
+	private static final String STATE_INVALIDO = "invalid_state_parameter";
 
 	@Bean
-	SecurityFilterChain filtroSeguridad(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(autorizacion -> autorizacion.requestMatchers("/acceso-denegado.html").permitAll()
-				.anyRequest().authenticated())
-				.oauth2Login(oauth -> oauth
-						.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
-						.defaultSuccessUrl("/proceso-compra.html", true).failureHandler(this::manejarFalloDeIngreso))
-				.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**", "/logout"))
-				.logout(logout -> logout.logoutSuccessUrl("/login?logout"));
+	SecurityFilterChain filtroSeguridad(HttpSecurity http) {
+		http.authorizeHttpRequests(
+				autorizacion -> autorizacion.requestMatchers(ACCESO_DENEGADO).permitAll().anyRequest().authenticated())
+				.oauth2Login(
+						oauth -> oauth.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
+								.defaultSuccessUrl(PROCESO_COMPRA, true).failureHandler(this::manejarFalloDeIngreso))
+				.csrf(csrf -> csrf.spa()).cors(Customizer.withDefaults())
+				.logout(logout -> logout.logoutUrl(LOGOUT).logoutSuccessUrl(LOGIN_LOGOUT_EXITOSO));
 
 		return http.build();
 	}
 
-	// Después de que Google autentica al usuario, solo se le deja entrar si su
-	// correo
-	// pertenece a un empleado activo. Si no, no se crea la sesión.
 	private OidcUser validarEmpleadoActivo(OidcUserRequest solicitud) {
 		var usuario = new OidcUserService().loadUser(solicitud);
-
-		if (EmpleadoAutenticado.buscarEmpleadoActivo(usuario.getEmail()).isEmpty()) {
+		if (!EmpleadoAutenticado.esEmpleadoActivo(usuario)) {
 			var mensajeUsuario = CatalogoMensajes.EmpleadoAutenticado.USUARIO_NO_ES_EMPLEADO_ACTIVO_PARA_INGRESAR;
 			throw new OAuth2AuthenticationException(new OAuth2Error(CODIGO_EMPLEADO_NO_ACTIVO), mensajeUsuario);
 		}
-
 		return usuario;
 	}
 
-	// - No es empleado activo: se cierra cualquier sesión anterior y se muestra la
-	// página de acceso denegado.
-	// - Atrás o recargar sobre la respuesta de Google ya usada: se cierra la sesión
-	// anterior y se vuelve a
-	// pedir el login, para que la cuenta que se escoja ahora pase otra vez por la
-	// validación de empleado activo.
-	// - Cualquier otro error: la página de login de siempre.
 	private void manejarFalloDeIngreso(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException excepcion) throws IOException {
 		var codigoError = excepcion instanceof OAuth2AuthenticationException excepcionOAuth
 				? excepcionOAuth.getError().getErrorCode()
-				: "";
-
+				: UtilTexto.VACIA;
 		if (CODIGO_EMPLEADO_NO_ACTIVO.equals(codigoError)) {
 			cerrarSesionAnterior(request);
-			response.sendRedirect("/acceso-denegado.html");
-		} else if ("authorization_request_not_found".equals(codigoError)
-				|| "invalid_state_parameter".equals(codigoError)) {
+			response.sendRedirect(ACCESO_DENEGADO);
+		} else if (SOLICITUD_AUTORIZACION_NO_ENCONTRADA.equals(codigoError) || STATE_INVALIDO.equals(codigoError)) {
 			cerrarSesionAnterior(request);
-			response.sendRedirect("/proceso-compra.html");
+			response.sendRedirect(PROCESO_COMPRA);
 		} else {
-			response.sendRedirect("/login?error");
+			response.sendRedirect(LOGIN_LOGOUT_INVALIDO);
 		}
 	}
 
-	// Un intento de ingreso fallido nunca debe dejar viva la sesión de una cuenta
-	// anterior.
 	private void cerrarSesionAnterior(HttpServletRequest request) {
 		var sesionAnterior = request.getSession(false);
-
-		if (sesionAnterior != null) {
+		if (!UtilObjeto.esNulo(sesionAnterior)) {
 			sesionAnterior.invalidate();
 		}
-
 		SecurityContextHolder.clearContext();
 	}
 }

@@ -16,7 +16,7 @@ public class ClienteDTOAssembler implements DTOAssembler<ClienteDominio, Cliente
 	private ClienteDTOAssembler() {
 	}
 
-	public static DTOAssembler<ClienteDominio, ClienteDTO> getInstance() {
+	public static DTOAssembler<ClienteDominio, ClienteDTO> obtenerInstancia() {
 		return instancia;
 	}
 

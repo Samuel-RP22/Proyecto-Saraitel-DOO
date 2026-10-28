@@ -14,41 +14,10 @@ import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."ProcesoCompra"
-			("id", "Cliente_id", "Empleado_id", "EstadoProcesoCompra_id",
-			 "FechaInicio", "FechaActualizacion", "TotalCompra")
-			VALUES (?, ?, ?, ?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Cliente_id", "Empleado_id", "EstadoProcesoCompra_id",
-			       "FechaInicio", "FechaActualizacion", "TotalCompra"
-			FROM saraitel."ProcesoCompra"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Cliente_id", "Empleado_id", "EstadoProcesoCompra_id",
-			       "FechaInicio", "FechaActualizacion", "TotalCompra"
-			FROM saraitel."ProcesoCompra"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Cliente_id", "Empleado_id", "EstadoProcesoCompra_id",
-			       "FechaInicio", "FechaActualizacion", "TotalCompra"
-			FROM saraitel."ProcesoCompra"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."ProcesoCompra"
-			SET "Cliente_id" = ?, "Empleado_id" = ?, "EstadoProcesoCompra_id" = ?,
-			    "FechaInicio" = ?, "FechaActualizacion" = ?, "TotalCompra" = ?
-			WHERE "id" = ?
-			""";
 
 	public ProcesoCompraPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -56,8 +25,8 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 
 	@Override
 	public void crear(final ProcesoCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el proceso de compra",
-				"Error NO CONTROLADO al crear el proceso de compra", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PROCESO_DE_COMPRA,
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PROCESO_DE_COMPRA, entidad.getId(),
 				entidad.getCliente().getId(), entidad.getEmpleado().getId(),
 				entidad.getEstado().getId(), entidad.getFechaInicio(), entidad.getFechaActualizacion(),
 				entidad.getTotal());
@@ -65,28 +34,18 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 
 	@Override
 	public ProcesoCompraEntidad consultarPorId(final UUID id) {
-		List<ProcesoCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el proceso de compra",
-				"Error NO CONTROLADO al consultar el proceso de compra");
+		List<ProcesoCompraEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PROCESO_DE_COMPRA,
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESO_DE_COMPRA);
 
-		if (resultado.isEmpty()) {
-			return new ProcesoCompraEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new ProcesoCompraEntidad());
 	}
 
 	@Override
 	public List<ProcesoCompraEntidad> consultarPorFiltro(final ProcesoCompraEntidad filtro) {
-		ProcesoCompraEntidad filtroSeguro;
+		ProcesoCompraEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProcesoCompraEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new ProcesoCompraEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Cliente_id\"", filtroSeguro.getCliente().getId())
 				.conId("\"Empleado_id\"", filtroSeguro.getEmpleado().getId())
 				.conId("\"EstadoProcesoCompra_id\"", filtroSeguro.getEstado().getId())
@@ -94,20 +53,20 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 				.conFechaHora("\"FechaActualizacion\"", filtroSeguro.getFechaActualizacion());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar procesos de compra",
-				"Error NO CONTROLADO al consultar procesos de compra");
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PROCESOS_DE_COMPRA,
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESOS_DE_COMPRA);
 	}
 
 	@Override
 	public List<ProcesoCompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar procesos de compra",
-				"Error NO CONTROLADO al consultar procesos de compra");
+		return ejecutarConsulta(CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PROCESOS_DE_COMPRA,
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESOS_DE_COMPRA);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProcesoCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el proceso de compra",
-				"Error NO CONTROLADO al actualizar el proceso de compra", entidad.getCliente().getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PROCESO_DE_COMPRA,
+				CatalogoMensajesSql.ProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PROCESO_DE_COMPRA, entidad.getCliente().getId(),
 				entidad.getEmpleado().getId(), entidad.getEstado().getId(), entidad.getFechaInicio(),
 				entidad.getFechaActualizacion(), entidad.getTotal(), id);
 	}
@@ -123,8 +82,8 @@ public class ProcesoCompraPostgreSqlDAO extends SqlDAO implements ProcesoCompraD
 		estado.setId(leerUUID(resultados, "EstadoProcesoCompra_id"));
 
 		return new ProcesoCompraEntidad(leerUUID(resultados, "id"), cliente, empleado, estado,
-				resultados.getTimestamp("FechaInicio").toLocalDateTime(),
-				resultados.getTimestamp("FechaActualizacion").toLocalDateTime(),
+				leerFechaHora(resultados, "FechaInicio"),
+				leerFechaHora(resultados, "FechaActualizacion"),
 				resultados.getBigDecimal("TotalCompra"));
 	}
 }

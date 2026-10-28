@@ -20,26 +20,26 @@ public class TipoDocumentoNegocioImpl implements TipoDocumentoNegocio {
 
 	@Override
 	public List<TipoDocumentoDominio> consultarPorFiltro(final TipoDocumentoDominio filtro) {
-		var entidadFiltro = TipoDocumentoEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = TipoDocumentoEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerTipoDocumentoDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(TipoDocumentoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(TipoDocumentoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<TipoDocumentoDominio> consultarTodos() {
 		return daoFactory.obtenerTipoDocumentoDao().consultarTodos().stream()
-				.map(TipoDocumentoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(TipoDocumentoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public TipoDocumentoDominio consultarPorid(final UUID id) {
+	public TipoDocumentoDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerTipoDocumentoDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return TipoDocumentoDominio.obtenerValorDefecto();
 		}
 
-		return TipoDocumentoEntidadAssembler.getInstance().convertirADominio(entidad);
+		return TipoDocumentoEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

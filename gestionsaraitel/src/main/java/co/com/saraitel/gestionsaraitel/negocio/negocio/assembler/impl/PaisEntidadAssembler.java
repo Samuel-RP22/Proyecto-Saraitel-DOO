@@ -12,7 +12,7 @@ public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisE
 	private PaisEntidadAssembler() {	
 	}
 	
-	public static EntidadAssembler<PaisDominio, PaisEntidad> getInstance() {
+	public static EntidadAssembler<PaisDominio, PaisEntidad> obtenerInstancia() {
 		return instancia;
 	}
 	

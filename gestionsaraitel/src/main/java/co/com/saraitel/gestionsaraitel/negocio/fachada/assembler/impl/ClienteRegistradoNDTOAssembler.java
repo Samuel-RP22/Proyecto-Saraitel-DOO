@@ -20,7 +20,7 @@ public class ClienteRegistradoNDTOAssembler implements DTOAssembler<ClienteRegis
 	private ClienteRegistradoNDTOAssembler() {
 	}
 
-	public static DTOAssembler<ClienteRegistradoNDominio, ClienteRegistradoNDTO> getInstance() {
+	public static DTOAssembler<ClienteRegistradoNDominio, ClienteRegistradoNDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -30,10 +30,10 @@ public class ClienteRegistradoNDTOAssembler implements DTOAssembler<ClienteRegis
 				new ClienteRegistradoNDominio(UtilUUID.obtenerUUIDDefecto(),
 						ClienteRegistradoDominio.obtenerValorDefecto(), PersonaDominio.obtenerValorDefecto()));
 
-		ClienteRegistradoDTO clienteRegistradoDTO = ClienteRegistradoDTOAssembler.getInstance()
+		ClienteRegistradoDTO clienteRegistradoDTO = ClienteRegistradoDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getClienteRegistrado());
 
-		PersonaDTO personaDTO = PersonaDTOAssembler.getInstance().convertirADTO(dominioTmp.getPersona());
+		PersonaDTO personaDTO = PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona());
 
 		return new ClienteRegistradoNDTO(dominioTmp.getId(), clienteRegistradoDTO, personaDTO);
 	}
@@ -43,10 +43,10 @@ public class ClienteRegistradoNDTOAssembler implements DTOAssembler<ClienteRegis
 		ClienteRegistradoNDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new ClienteRegistradoNDTO());
 
-		ClienteRegistradoDominio clienteRegistradoDominio = ClienteRegistradoDTOAssembler.getInstance()
+		ClienteRegistradoDominio clienteRegistradoDominio = ClienteRegistradoDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getClienteRegistrado());
 
-		PersonaDominio personaDominio = PersonaDTOAssembler.getInstance().convertirADominio(dtoTmp.getPersona());
+		PersonaDominio personaDominio = PersonaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPersona());
 
 		return new ClienteRegistradoNDominio(dtoTmp.getId(), clienteRegistradoDominio, personaDominio);
 	}

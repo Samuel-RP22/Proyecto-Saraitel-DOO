@@ -12,7 +12,7 @@ public class PagoEntidadAssembler implements EntidadAssembler<PagoDominio, PagoE
 	private PagoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<PagoDominio, PagoEntidad> getInstance() {
+	public static EntidadAssembler<PagoDominio, PagoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,7 +21,7 @@ public class PagoEntidadAssembler implements EntidadAssembler<PagoDominio, PagoE
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoDominio.obtenerValorDefecto());
 		return new PagoEntidad(dominioTmp.getId(),
-				CompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCompra()),
+				CompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCompra()),
 				dominioTmp.getMontoPagado(), dominioTmp.getFechaPago());
 	}
 
@@ -29,7 +29,7 @@ public class PagoEntidadAssembler implements EntidadAssembler<PagoDominio, PagoE
 	public PagoDominio convertirADominio(PagoEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PagoEntidad());
 		return new PagoDominio(entidadTmp.getId(),
-				CompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCompra()),
+				CompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCompra()),
 				entidadTmp.getMontoPagado(), entidadTmp.getFechaPago());
 	}
 }

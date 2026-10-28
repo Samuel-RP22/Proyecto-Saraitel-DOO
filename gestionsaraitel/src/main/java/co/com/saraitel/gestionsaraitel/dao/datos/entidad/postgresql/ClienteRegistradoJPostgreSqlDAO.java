@@ -14,28 +14,10 @@ import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoJEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRegistradoJDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"ClienteRegistradoJ\" "
-			+ "(\"id\", \"ClienteRegistrado_id\", \"Prefijo_id\", "
-			+ "\"Telefono\", \"Nit\", \"RazonSocial\", \"Correo\", " + "\"TelefonoConfirmado\", \"CorreoConfirmado\") "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-	// Tabla derivada: agrega el id del cliente sin cambiar las columnas por las que se filtra.
-	private static final String SQL_CONSULTAR = "SELECT * FROM (SELECT j.\"id\", j.\"ClienteRegistrado_id\", "
-			+ "j.\"Prefijo_id\", j.\"Telefono\", j.\"Nit\", j.\"RazonSocial\", j.\"Correo\", "
-			+ "j.\"TelefonoConfirmado\", j.\"CorreoConfirmado\", cr.\"Cliente_id\" "
-			+ "FROM saraitel.\"ClienteRegistradoJ\" j "
-			+ "JOIN saraitel.\"ClienteRegistrado\" cr ON cr.\"id\" = j.\"ClienteRegistrado_id\") AS clientes_juridicos";
-
-	private static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"ClienteRegistradoJ\" SET "
-			+ "\"ClienteRegistrado_id\" = ?, \"Prefijo_id\" = ?, "
-			+ "\"Telefono\" = ?, \"Nit\" = ?, \"RazonSocial\" = ?, " + "\"Correo\" = ?, \"TelefonoConfirmado\" = ?, "
-			+ "\"CorreoConfirmado\" = ? WHERE \"id\" = ?";
-
-	private static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"ClienteRegistradoJ\" " + "WHERE \"id\" = ?";
 
 	public ClienteRegistradoJPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -43,8 +25,8 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoJEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado jurídico.",
-				"Error NO CONTROLADO al crear cliente registrado jurídico.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO_JURIDICO, entidad.getId(),
 				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
 				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
@@ -57,7 +39,7 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new ClienteRegistradoJEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new ClienteRegistradoJEntidad());
 	}
 
 	@Override
@@ -65,7 +47,7 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteRegistradoJEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ClienteRegistrado_id\"", filtroSeguro.getClienteRegistrado().getId())
 				.conId("\"Prefijo_id\"", filtroSeguro.getPrefijo().getId())
 				.conTexto("\"Telefono\"", filtroSeguro.getTelefono()).conTexto("\"Nit\"", filtroSeguro.getNit())
@@ -75,22 +57,22 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes registrados jurídicos.",
-				"Error NO CONTROLADO al consultar clientes registrados jurídicos.");
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
 	}
 
 	@Override
 	public List<ClienteRegistradoJEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear,
-				"Error al consultar clientes registrados jurídicos.",
-				"Error NO CONTROLADO al consultar clientes registrados jurídicos.");
+		return ejecutarConsulta(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ClienteRegistradoJEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar cliente registrado jurídico.",
-				"Error NO CONTROLADO al actualizar cliente registrado jurídico.",
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
 				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
 				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
@@ -98,8 +80,8 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado jurídico.",
-				"Error NO CONTROLADO al eliminar cliente registrado jurídico.", id);
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO, id);
 	}
 
 	private ClienteRegistradoJEntidad mapear(final ResultSet resultados) throws SQLException {

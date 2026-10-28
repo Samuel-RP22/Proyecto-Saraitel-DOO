@@ -18,7 +18,7 @@ public class CiudadDTOAssembler implements DTOAssembler<CiudadDominio, CiudadDTO
 	private CiudadDTOAssembler() {
 	}
 
-	public static DTOAssembler<CiudadDominio, CiudadDTO> getInstance() {
+	public static DTOAssembler<CiudadDominio, CiudadDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,7 +27,7 @@ public class CiudadDTOAssembler implements DTOAssembler<CiudadDominio, CiudadDTO
 		CiudadDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CiudadDominio.obtenerValorDefecto());
 
-		DepartamentoDTO departamentoDTO = DepartamentoDTOAssembler.getInstance()
+		DepartamentoDTO departamentoDTO = DepartamentoDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getDepartamento());
 
 		return new CiudadDTO(dominioTmp.getId(), dominioTmp.getNombre(), departamentoDTO);
@@ -37,7 +37,7 @@ public class CiudadDTOAssembler implements DTOAssembler<CiudadDominio, CiudadDTO
 	public CiudadDominio convertirADominio(CiudadDTO dto) {
 		CiudadDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new CiudadDTO());
 
-		DepartamentoDominio departamentoDominio = DepartamentoDTOAssembler.getInstance()
+		DepartamentoDominio departamentoDominio = DepartamentoDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getDepartamento());
 
 		return new CiudadDominio(dtoTmp.getId(), dtoTmp.getNombre(), departamentoDominio);

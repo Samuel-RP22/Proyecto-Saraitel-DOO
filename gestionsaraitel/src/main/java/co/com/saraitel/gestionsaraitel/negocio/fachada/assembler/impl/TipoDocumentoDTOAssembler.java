@@ -16,7 +16,7 @@ public class TipoDocumentoDTOAssembler implements DTOAssembler<TipoDocumentoDomi
 	private TipoDocumentoDTOAssembler() {
 	}
 
-	public static DTOAssembler<TipoDocumentoDominio, TipoDocumentoDTO> getInstance() {
+	public static DTOAssembler<TipoDocumentoDominio, TipoDocumentoDTO> obtenerInstancia() {
 		return instancia;
 	}
 

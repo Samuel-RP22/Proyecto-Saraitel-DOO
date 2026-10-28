@@ -12,13 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.VendedorEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
-
-	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Vendedor\" (\"id\", \"Empleado_id\") VALUES (?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Empleado_id\" FROM saraitel.\"Vendedor\"";
 
 	public VendedorPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -26,8 +23,8 @@ public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
 
 	@Override
 	public void crear(final VendedorEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear vendedor.",
-				"Error NO CONTROLADO al crear vendedor.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.VendedorPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_VENDEDOR,
+				CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_VENDEDOR, entidad.getId(),
 				entidad.getEmpleado().getId());
 	}
 
@@ -38,25 +35,25 @@ public class VendedorPostgreSqlDAO extends SqlDAO implements VendedorDAO {
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new VendedorEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new VendedorEntidad());
 	}
 
 	@Override
 	public List<VendedorEntidad> consultarPorFiltro(final VendedorEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new VendedorEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conId("\"Empleado_id\"",
+		var consulta = new FiltroSql(CatalogoMensajesSql.VendedorPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conId("\"Empleado_id\"",
 				filtroSeguro.getEmpleado().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar vendedores.",
-				"Error NO CONTROLADO al consultar vendedores.");
+				CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_VENDEDORES,
+				CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_VENDEDORES);
 	}
 
 	@Override
 	public List<VendedorEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar vendedores.",
-				"Error NO CONTROLADO al consultar vendedores.");
+		return ejecutarConsulta(CatalogoMensajesSql.VendedorPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_VENDEDORES,
+				CatalogoMensajesSql.VendedorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_VENDEDORES);
 	}
 
 	private VendedorEntidad mapear(final ResultSet resultados) throws SQLException {

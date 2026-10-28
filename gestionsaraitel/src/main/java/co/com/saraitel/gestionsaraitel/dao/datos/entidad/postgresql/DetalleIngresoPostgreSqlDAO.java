@@ -13,49 +13,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DetalleIngresoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.IngresoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoSedeEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class DetalleIngresoPostgreSqlDAO extends SqlDAO implements DetalleIngresoDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."DetalleIngreso"
-			("id", "IngresoInventario_id", "ProductoSede_id",
-			 "Cantidad", "CostoUnitario", "Subtotal")
-			VALUES (?, ?, ?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "IngresoInventario_id", "ProductoSede_id",
-			       "Cantidad", "CostoUnitario", "Subtotal"
-			FROM saraitel."DetalleIngreso"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "IngresoInventario_id", "ProductoSede_id",
-			       "Cantidad", "CostoUnitario", "Subtotal"
-			FROM saraitel."DetalleIngreso"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "IngresoInventario_id", "ProductoSede_id",
-			       "Cantidad", "CostoUnitario", "Subtotal"
-			FROM saraitel."DetalleIngreso"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."DetalleIngreso"
-			SET "IngresoInventario_id" = ?,
-			    "ProductoSede_id" = ?,
-			    "Cantidad" = ?,
-			    "CostoUnitario" = ?,
-			    "Subtotal" = ?
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_ELIMINAR = """
-			DELETE FROM saraitel."DetalleIngreso"
-			WHERE "id" = ?
-			""";
 
 	public DetalleIngresoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -63,56 +24,56 @@ public class DetalleIngresoPostgreSqlDAO extends SqlDAO implements DetalleIngres
 
 	@Override
 	public void crear(final DetalleIngresoEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el detalle del ingreso",
-				"Error NO CONTROLADO al crear el detalle del ingreso", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_DETALLE_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DETALLE_DEL_INGRESO, entidad.getId(),
 				entidad.getIngresoInventario().getId(), entidad.getProductoSede().getId(),
 				entidad.getCantidad(), entidad.getCostoUnitario(), entidad.getSubtotal());
 	}
 
 	@Override
 	public DetalleIngresoEntidad consultarPorId(final UUID id) {
-		List<DetalleIngresoEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el detalle del ingreso",
-				"Error NO CONTROLADO al consultar el detalle del ingreso");
+		List<DetalleIngresoEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLE_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLE_DEL_INGRESO);
 
-		return resultado.isEmpty() ? new DetalleIngresoEntidad() : resultado.get(0);
+		return obtenerPrimeroOValorDefecto(resultado, new DetalleIngresoEntidad());
 	}
 
 	@Override
 	public List<DetalleIngresoEntidad> consultarPorFiltro(final DetalleIngresoEntidad filtro) {
 
-		DetalleIngresoEntidad filtroSeguro = filtro == null ? new DetalleIngresoEntidad() : filtro;
+		DetalleIngresoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new DetalleIngresoEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"IngresoInventario_id\"", filtroSeguro.getIngresoInventario().getId())
 				.conId("\"ProductoSede_id\"", filtroSeguro.getProductoSede().getId())
 				.conEntero("\"Cantidad\"", filtroSeguro.getCantidad());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar detalles del ingreso",
-				"Error NO CONTROLADO al consultar detalles del ingreso");
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DEL_INGRESO);
 	}
 
 	@Override
 	public List<DetalleIngresoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los detalles del ingreso",
-				"Error NO CONTROLADO al consultar los detalles del ingreso");
+		return ejecutarConsulta(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DEL_INGRESO);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DetalleIngresoEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el detalle del ingreso",
-				"Error NO CONTROLADO al actualizar el detalle del ingreso",
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DETALLE_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DETALLE_DEL_INGRESO,
 				entidad.getIngresoInventario().getId(), entidad.getProductoSede().getId(),
 				entidad.getCantidad(), entidad.getCostoUnitario(), entidad.getSubtotal(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el detalle del ingreso",
-				"Error NO CONTROLADO al eliminar el detalle del ingreso", id);
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_DETALLE_DEL_INGRESO,
+				CatalogoMensajesSql.DetalleIngresoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_DETALLE_DEL_INGRESO, id);
 	}
 
 	private DetalleIngresoEntidad mapear(final ResultSet resultados) throws SQLException {

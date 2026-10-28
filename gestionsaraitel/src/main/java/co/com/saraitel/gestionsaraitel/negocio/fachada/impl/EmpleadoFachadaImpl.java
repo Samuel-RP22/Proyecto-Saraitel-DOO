@@ -22,7 +22,7 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var empleadoDominio = EmpleadoDTOAssembler.getInstance().convertirADominio(datos);
+			var empleadoDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			empleadoNegocio.registrarInformacionNuevoEmpleado(empleadoDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -45,7 +45,7 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var empleadoDominio = EmpleadoDTOAssembler.getInstance().convertirADominio(datos);
+			var empleadoDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			empleadoNegocio.modificarInformacionEmpleadoExistente(id, empleadoDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -88,9 +88,9 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = EmpleadoDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaEmpleados = empleadoNegocio.consultarPorFiltro(filtroDominio);
-			return EmpleadoDTOAssembler.getInstance().convertirADTO(listaEmpleados);
+			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -108,7 +108,7 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 
 		try {
 			var listaEmpleados = empleadoNegocio.consultarTodos();
-			return EmpleadoDTOAssembler.getInstance().convertirADTO(listaEmpleados);
+			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -125,8 +125,8 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
 
 		try {
-			var empleadoDominio = empleadoNegocio.consultarPorid(id);
-			return EmpleadoDTOAssembler.getInstance().convertirADTO(empleadoDominio);
+			var empleadoDominio = empleadoNegocio.consultarPorId(id);
+			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(empleadoDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

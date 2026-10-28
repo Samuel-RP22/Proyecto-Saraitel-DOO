@@ -12,7 +12,7 @@ public class SedeEntidadAssembler implements EntidadAssembler<SedeDominio, SedeE
 	private SedeEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<SedeDominio, SedeEntidad> getInstance() {
+	public static EntidadAssembler<SedeDominio, SedeEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,7 +21,7 @@ public class SedeEntidadAssembler implements EntidadAssembler<SedeDominio, SedeE
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				SedeDominio.obtenerValorDefecto());
 		return new SedeEntidad(dominioTmp.getId(),
-				CiudadEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCiudad()), dominioTmp.getNombre(),
+				CiudadEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCiudad()), dominioTmp.getNombre(),
 				dominioTmp.getNit(), dominioTmp.getDireccion(), dominioTmp.getEsActiva());
 	}
 
@@ -29,7 +29,7 @@ public class SedeEntidadAssembler implements EntidadAssembler<SedeDominio, SedeE
 	public SedeDominio convertirADominio(SedeEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new SedeEntidad());
 		return new SedeDominio(entidadTmp.getId(),
-				CiudadEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCiudad()), entidadTmp.getNombre(),
+				CiudadEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCiudad()), entidadTmp.getNombre(),
 				entidadTmp.getNit(), entidadTmp.getDireccion(), entidadTmp.getEsActiva());
 	}
 }

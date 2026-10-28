@@ -16,23 +16,10 @@ import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoNEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRegistradoNDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"ClienteRegistradoN\" "
-			+ "(\"id\", \"ClienteRegistrado_id\", \"Persona_id\") " + "VALUES (?, ?, ?)";
-
-	// Tabla derivada: permite filtrar por las columnas de siempre y trae los datos de la persona
-	// y el id del cliente, necesarios para mostrar el nombre en la interfaz.
-	private static final String SQL_CONSULTAR = "SELECT * FROM (SELECT n.\"id\", n.\"ClienteRegistrado_id\", "
-			+ "n.\"Persona_id\", cr.\"Cliente_id\", p.\"TipoDocumento_id\", p.\"Prefijo_id\", "
-			+ "p.\"NumeroDocumento\", p.\"Telefono\", p.\"Nombre\", p.\"Apellido\", p.\"Correo\" "
-			+ "FROM saraitel.\"ClienteRegistradoN\" n "
-			+ "JOIN saraitel.\"ClienteRegistrado\" cr ON cr.\"id\" = n.\"ClienteRegistrado_id\" "
-			+ "JOIN saraitel.\"Persona\" p ON p.\"id\" = n.\"Persona_id\") AS clientes_naturales";
-
-	private static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"ClienteRegistradoN\" " + "WHERE \"id\" = ?";
 
 	public ClienteRegistradoNPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -40,8 +27,8 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoNEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear cliente registrado.",
-				"Error NO CONTROLADO al crear cliente registrado.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO,
+				CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO, entidad.getId(),
 				entidad.getClienteRegistrado().getId(), entidad.getPersona().getId());
 	}
 
@@ -52,7 +39,7 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new ClienteRegistradoNEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new ClienteRegistradoNEntidad());
 	}
 
 	@Override
@@ -60,24 +47,24 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteRegistradoNEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ClienteRegistrado_id\"", filtroSeguro.getClienteRegistrado().getId())
 				.conId("\"Persona_id\"", filtroSeguro.getPersona().getId());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar clientes registrados.", "Error NO CONTROLADO al consultar clientes registrados.");
+				CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS, CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS);
 	}
 
 	@Override
 	public List<ClienteRegistradoNEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar clientes registrados.",
-				"Error NO CONTROLADO al consultar clientes registrados.");
+		return ejecutarConsulta(CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS,
+				CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar cliente registrado.",
-				"Error NO CONTROLADO al eliminar cliente registrado.", id);
+		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO,
+				CatalogoMensajesSql.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO, id);
 	}
 
 	private ClienteRegistradoNEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -11,5 +11,5 @@ public interface CiudadNegocio {
 
 	List<CiudadDominio> consultarTodos();
 
-	CiudadDominio consultarPorid(UUID id);
+	CiudadDominio consultarPorId(UUID id);
 }

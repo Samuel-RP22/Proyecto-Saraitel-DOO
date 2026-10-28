@@ -16,9 +16,6 @@ import co.com.saraitel.gestionsaraitel.dto.EmpleadoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.EmpleadoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.EmpleadoFachadaImpl;
 
-// ...../api/v1/empleados
-// ...../api/v1/empleados/actual   (empleado del usuario autenticado; lista vacía si no hay sesión)
-
 @RestController
 @RequestMapping("/api/v1/empleados")
 public class EmpleadoControlador extends AbstractRestController {
@@ -34,7 +31,7 @@ public class EmpleadoControlador extends AbstractRestController {
 
 	@GetMapping("/actual")
 	public ResponseEntity<RespuestaOk<EmpleadoDTO>> consultarEmpleadoActual(@AuthenticationPrincipal OidcUser usuario) {
-		var empleados = EmpleadoAutenticado.obtener(usuario).map(List::of).orElse(List.of());
+		var empleados = EmpleadoAutenticado.obtenerUsuario(usuario).map(List::of).orElse(List.of());
 		RespuestaOk<EmpleadoDTO> respuesta = RespuestaOk.crear(empleados);
 		return ResponseEntity.ok(respuesta);
 	}

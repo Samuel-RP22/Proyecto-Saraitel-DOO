@@ -13,45 +13,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DetalleCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.DevolucionEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.MotivoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."Devolucion"
-			("id", "DetalleCompra_id", "Motivo_id", "FechaDevolucion",
-			 "Cantidad", "MontoDevolucion", "Estado")
-			VALUES (?, ?, ?, ?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "DetalleCompra_id", "Motivo_id", "FechaDevolucion",
-			       "Cantidad", "MontoDevolucion", "Estado"
-			FROM saraitel."Devolucion"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "DetalleCompra_id", "Motivo_id", "FechaDevolucion",
-			       "Cantidad", "MontoDevolucion", "Estado"
-			FROM saraitel."Devolucion"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "DetalleCompra_id", "Motivo_id", "FechaDevolucion",
-			       "Cantidad", "MontoDevolucion", "Estado"
-			FROM saraitel."Devolucion"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."Devolucion"
-			SET "DetalleCompra_id" = ?,
-			    "Motivo_id" = ?,
-			    "FechaDevolucion" = ?,
-			    "Cantidad" = ?,
-			    "MontoDevolucion" = ?,
-			    "Estado" = ?
-			WHERE "id" = ?
-			""";
 
 	public DevolucionPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -59,8 +24,8 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 	@Override
 	public void crear(final DevolucionEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la devolución",
-				"Error NO CONTROLADO al crear la devolución", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.DevolucionPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_DEVOLUCION,
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DEVOLUCION, entidad.getId(),
 				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
 				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
 				entidad.getEstado());
@@ -68,23 +33,19 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 	@Override
 	public DevolucionEntidad consultarPorId(final UUID id) {
-		List<DevolucionEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar la devolución",
-				"Error NO CONTROLADO al consultar la devolución");
+		List<DevolucionEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCION,
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCION);
 
-		if (resultado.isEmpty()) {
-			return new DevolucionEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new DevolucionEntidad());
 	}
 
 	@Override
 	public List<DevolucionEntidad> consultarPorFiltro(final DevolucionEntidad filtro) {
 
-		DevolucionEntidad filtroSeguro = filtro == null ? new DevolucionEntidad() : filtro;
+		DevolucionEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new DevolucionEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"DetalleCompra_id\"", filtroSeguro.getDetalleCompra().getId())
 				.conId("\"Motivo_id\"", filtroSeguro.getMotivo().getId())
 				.conFechaHora("\"FechaDevolucion\"", filtroSeguro.getFechaDevolucion())
@@ -93,21 +54,21 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 				.conTexto("\"Estado\"", filtroSeguro.getEstado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar devoluciones",
-				"Error NO CONTROLADO al consultar devoluciones");
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCIONES,
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCIONES);
 	}
 
 	@Override
 	public List<DevolucionEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar las devoluciones",
-				"Error NO CONTROLADO al consultar las devoluciones");
+		return ejecutarConsulta(CatalogoMensajesSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCIONES,
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCIONES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DevolucionEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar la devolución",
-				"Error NO CONTROLADO al actualizar la devolución",
+		ejecutarActualizacion(CatalogoMensajesSql.DevolucionPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DEVOLUCION,
+				CatalogoMensajesSql.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DEVOLUCION,
 				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
 				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
 				entidad.getEstado(), id);
@@ -131,7 +92,7 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 		entidad.setMotivo(motivo);
 
-		entidad.setFechaDevolucion(resultados.getTimestamp("FechaDevolucion").toLocalDateTime());
+		entidad.setFechaDevolucion(leerFechaHora(resultados, "FechaDevolucion"));
 		entidad.setCantidad(resultados.getInt("Cantidad"));
 		entidad.setMontoDevolucion(resultados.getBigDecimal("MontoDevolucion"));
 		entidad.setEstado(resultados.getString("Estado"));

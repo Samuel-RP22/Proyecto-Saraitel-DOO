@@ -16,7 +16,7 @@ public class MarcaDTOAssembler implements DTOAssembler<MarcaDominio, MarcaDTO> {
 	private MarcaDTOAssembler() {
 	}
 
-	public static DTOAssembler<MarcaDominio, MarcaDTO> getInstance() {
+	public static DTOAssembler<MarcaDominio, MarcaDTO> obtenerInstancia() {
 		return instancia;
 	}
 

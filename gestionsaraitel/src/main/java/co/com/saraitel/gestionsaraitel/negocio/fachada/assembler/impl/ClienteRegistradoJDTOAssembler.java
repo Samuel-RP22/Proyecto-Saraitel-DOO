@@ -20,7 +20,7 @@ public class ClienteRegistradoJDTOAssembler implements DTOAssembler<ClienteRegis
 	private ClienteRegistradoJDTOAssembler() {
 	}
 
-	public static DTOAssembler<ClienteRegistradoJDominio, ClienteRegistradoJDTO> getInstance() {
+	public static DTOAssembler<ClienteRegistradoJDominio, ClienteRegistradoJDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,10 +29,10 @@ public class ClienteRegistradoJDTOAssembler implements DTOAssembler<ClienteRegis
 		ClienteRegistradoJDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				new ClienteRegistradoJDominio.Builder().construir());
 
-		ClienteRegistradoDTO clienteRegistradoDTO = ClienteRegistradoDTOAssembler.getInstance()
+		ClienteRegistradoDTO clienteRegistradoDTO = ClienteRegistradoDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getClienteRegistrado());
 
-		PrefijoDTO prefijoDTO = PrefijoDTOAssembler.getInstance().convertirADTO(dominioTmp.getPrefijo());
+		PrefijoDTO prefijoDTO = PrefijoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPrefijo());
 
 		return new ClienteRegistradoJDTO.Builder().id(dominioTmp.getId()).clienteRegistrado(clienteRegistradoDTO)
 				.prefijo(prefijoDTO).telefono(dominioTmp.getTelefono()).nit(dominioTmp.getNit())
@@ -46,10 +46,10 @@ public class ClienteRegistradoJDTOAssembler implements DTOAssembler<ClienteRegis
 		ClienteRegistradoJDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new ClienteRegistradoJDTO());
 
-		ClienteRegistradoDominio clienteRegistradoDominio = ClienteRegistradoDTOAssembler.getInstance()
+		ClienteRegistradoDominio clienteRegistradoDominio = ClienteRegistradoDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getClienteRegistrado());
 
-		PrefijoDominio prefijoDominio = PrefijoDTOAssembler.getInstance().convertirADominio(dtoTmp.getPrefijo());
+		PrefijoDominio prefijoDominio = PrefijoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPrefijo());
 
 		return new ClienteRegistradoJDominio.Builder().id(dtoTmp.getId()).clienteRegistrado(clienteRegistradoDominio)
 				.prefijo(prefijoDominio).telefono(dtoTmp.getTelefono()).nit(dtoTmp.getNit())

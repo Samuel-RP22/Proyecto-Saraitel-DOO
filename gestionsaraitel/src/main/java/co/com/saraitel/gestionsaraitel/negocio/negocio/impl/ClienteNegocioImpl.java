@@ -20,31 +20,18 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public void registrarInformacionNuevoCliente(final ClienteDominio datos) {
-		var clienteEntidad = ClienteEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var clienteEntidad = ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
-		clienteEntidad.setId(generarIdClienteUnico());
+		clienteEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()));
 
 		daoFactory.obtenerClienteDao().crear(clienteEntidad);
-	}
-
-	private UUID generarIdClienteUnico() {
-		UUID id;
-		boolean existe;
-
-		do {
-			id = UUID.randomUUID();
-			var clienteExistente = daoFactory.obtenerClienteDao().consultarPorId(id);
-			existe = !clienteExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
 	}
 
 	@Override
 	public void darBajaInformacionClienteExistente(final UUID id) {
 		var clienteExistente = daoFactory.obtenerClienteDao().consultarPorId(id);
 
-		if (clienteExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(clienteExistente.getId())) {
 			return;
 		}
 
@@ -55,26 +42,26 @@ public class ClienteNegocioImpl implements ClienteNegocio {
 
 	@Override
 	public List<ClienteDominio> consultarPorFiltro(final ClienteDominio filtro) {
-		var entidadFiltro = ClienteEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerClienteDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(ClienteEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ClienteEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<ClienteDominio> consultarTodos() {
 		return daoFactory.obtenerClienteDao().consultarTodos().stream()
-				.map(ClienteEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ClienteEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public ClienteDominio consultarPorid(final UUID id) {
+	public ClienteDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerClienteDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return ClienteDominio.obtenerValorDefecto();
 		}
 
-		return ClienteEntidadAssembler.getInstance().convertirADominio(entidad);
+		return ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

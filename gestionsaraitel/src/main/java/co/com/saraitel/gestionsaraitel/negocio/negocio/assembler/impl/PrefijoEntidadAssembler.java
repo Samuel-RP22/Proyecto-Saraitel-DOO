@@ -13,7 +13,7 @@ public class PrefijoEntidadAssembler implements EntidadAssembler<PrefijoDominio,
 	private PrefijoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<PrefijoDominio, PrefijoEntidad> getInstance() {
+	public static EntidadAssembler<PrefijoDominio, PrefijoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

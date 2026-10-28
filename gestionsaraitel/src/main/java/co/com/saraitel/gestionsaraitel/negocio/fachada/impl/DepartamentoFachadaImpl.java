@@ -20,9 +20,9 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 		var departamentoNegocio = new DepartamentoNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = DepartamentoDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = DepartamentoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaDepartamentos = departamentoNegocio.consultarPorFiltro(filtroDominio);
-			return DepartamentoDTOAssembler.getInstance().convertirADTO(listaDepartamentos);
+			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -40,7 +40,7 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 
 		try {
 			var listaDepartamentos = departamentoNegocio.consultarTodos();
-			return DepartamentoDTOAssembler.getInstance().convertirADTO(listaDepartamentos);
+			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -57,8 +57,8 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 		var departamentoNegocio = new DepartamentoNegocioImpl(daoFactory);
 
 		try {
-			var departamentoDominio = departamentoNegocio.consultarPorid(id);
-			return DepartamentoDTOAssembler.getInstance().convertirADTO(departamentoDominio);
+			var departamentoDominio = departamentoNegocio.consultarPorId(id);
+			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(departamentoDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

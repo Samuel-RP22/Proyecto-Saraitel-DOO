@@ -13,7 +13,7 @@ public class EstadoInventarioEntidadAssembler
 	private EstadoInventarioEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<EstadoInventarioDominio, EstadoInventarioEntidad> getInstance() {
+	public static EntidadAssembler<EstadoInventarioDominio, EstadoInventarioEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

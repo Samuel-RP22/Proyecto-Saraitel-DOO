@@ -15,5 +15,5 @@ public interface ClienteNegocio {
 
 	List<ClienteDominio> consultarTodos();
 
-	ClienteDominio consultarPorid(UUID id);
+	ClienteDominio consultarPorId(UUID id);
 }

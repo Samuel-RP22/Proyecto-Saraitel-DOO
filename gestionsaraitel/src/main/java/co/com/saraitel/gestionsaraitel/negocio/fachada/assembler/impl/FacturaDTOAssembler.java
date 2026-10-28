@@ -18,7 +18,7 @@ public class FacturaDTOAssembler implements DTOAssembler<FacturaDominio, Factura
 	private FacturaDTOAssembler() {
 	}
 
-	public static DTOAssembler<FacturaDominio, FacturaDTO> getInstance() {
+	public static DTOAssembler<FacturaDominio, FacturaDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -30,7 +30,7 @@ public class FacturaDTOAssembler implements DTOAssembler<FacturaDominio, Factura
 						co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha.FECHA_HORA_DEFECTO));
 
 		return new FacturaDTO(dominioTmp.getId(),
-				CompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getCompra()), dominioTmp.getFechaEmision());
+				CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()), dominioTmp.getFechaEmision());
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class FacturaDTOAssembler implements DTOAssembler<FacturaDominio, Factura
 		FacturaDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new FacturaDTO());
 
 		return new FacturaDominio(dtoTmp.getId(),
-				CompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getCompra()), dtoTmp.getFechaEmision());
+				CompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCompra()), dtoTmp.getFechaEmision());
 	}
 
 	@Override

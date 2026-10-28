@@ -12,7 +12,7 @@ public class CiudadEntidadAssembler implements EntidadAssembler<CiudadDominio, C
 	private CiudadEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<CiudadDominio, CiudadEntidad> getInstance() {
+	public static EntidadAssembler<CiudadDominio, CiudadEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,13 +21,13 @@ public class CiudadEntidadAssembler implements EntidadAssembler<CiudadDominio, C
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CiudadDominio.obtenerValorDefecto());
 		return new CiudadEntidad(dominioTmp.getId(), dominioTmp.getNombre(),
-				DepartamentoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getDepartamento()));
+				DepartamentoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getDepartamento()));
 	}
 
 	@Override
 	public CiudadDominio convertirADominio(CiudadEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new CiudadEntidad());
 		return new CiudadDominio(entidadTmp.getId(), entidadTmp.getNombre(),
-				DepartamentoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getDepartamento()));
+				DepartamentoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getDepartamento()));
 	}
 }

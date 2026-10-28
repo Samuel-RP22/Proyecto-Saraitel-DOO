@@ -20,7 +20,7 @@ public class DetalleIngresoDTOAssembler implements DTOAssembler<DetalleIngresoDo
 	private DetalleIngresoDTOAssembler() {
 	}
 
-	public static DTOAssembler<DetalleIngresoDominio, DetalleIngresoDTO> getInstance() {
+	public static DTOAssembler<DetalleIngresoDominio, DetalleIngresoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,10 +29,10 @@ public class DetalleIngresoDTOAssembler implements DTOAssembler<DetalleIngresoDo
 		DetalleIngresoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DetalleIngresoDominio.obtenerValorDefecto());
 
-		IngresoInventarioDTO ingresoInventarioDTO = IngresoInventarioDTOAssembler.getInstance()
+		IngresoInventarioDTO ingresoInventarioDTO = IngresoInventarioDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getIngresoInventario());
 
-		ProductoSedeDTO productoSedeDTO = ProductoSedeDTOAssembler.getInstance()
+		ProductoSedeDTO productoSedeDTO = ProductoSedeDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getProductoSede());
 
 		return new DetalleIngresoDTO(dominioTmp.getId(), ingresoInventarioDTO, productoSedeDTO,
@@ -43,10 +43,10 @@ public class DetalleIngresoDTOAssembler implements DTOAssembler<DetalleIngresoDo
 	public DetalleIngresoDominio convertirADominio(DetalleIngresoDTO dto) {
 		DetalleIngresoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DetalleIngresoDTO());
 
-		IngresoInventarioDominio ingresoInventarioDominio = IngresoInventarioDTOAssembler.getInstance()
+		IngresoInventarioDominio ingresoInventarioDominio = IngresoInventarioDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getIngresoInventario());
 
-		ProductoSedeDominio productoSedeDominio = ProductoSedeDTOAssembler.getInstance()
+		ProductoSedeDominio productoSedeDominio = ProductoSedeDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getProductoSede());
 
 		return new DetalleIngresoDominio(dtoTmp.getId(), ingresoInventarioDominio, productoSedeDominio,

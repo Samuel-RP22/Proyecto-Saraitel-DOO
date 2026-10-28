@@ -76,4 +76,8 @@ public final class UtilFecha {
 	public static LocalDateTime restarDias(final LocalDateTime fecha, final int dias) {
 		return obtenerValorDefecto(fecha).minusDays(dias);
 	}
+
+	public static LocalDateTime sumarMinutos(final LocalDateTime fecha, final long minutos) {
+		return obtenerValorDefecto(fecha).plusMinutes(minutos);
+	}
 }

@@ -18,10 +18,7 @@ import co.com.saraitel.gestionsaraitel.controlador.respuesta.RespuestaOk;
 import co.com.saraitel.gestionsaraitel.dto.ProcesoCompraDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.ProcesoCompraFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.ProcesoCompraFachadaImpl;
-
-// ...../api/v1/procesos-compra?id=valor
-// ...../api/v1/procesos-compra?cliente.id=valor&empleado.id=valor&estado.id=valor
-// ...../api/v1/procesos-compra
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 
 @RestController
 @RequestMapping("/api/v1/procesos-compra")
@@ -29,29 +26,13 @@ public class ProcesoCompraControlador extends AbstractRestController {
 
 	private ProcesoCompraFachada fachada = new ProcesoCompraFachadaImpl();
 
-	@GetMapping("/login")
-	public String hacerLogin(@AuthenticationPrincipal OidcUser datosUsuario) {
-		return "Hola Usuario %s. Te has autenticado con el correo %s. Su token es %s".formatted(datosUsuario.getFullName(),
-				datosUsuario.getEmail(), datosUsuario.getIdToken().getTokenValue());
-	}
-
-	@GetMapping("/dummy")
-	public ProcesoCompraDTO obtenerDummy() {
-		return new ProcesoCompraDTO();
-	}
-
-	/**
-	 * Solo se reciben el cliente y, si no hay sesión, el empleado. El total, las fechas y el estado inicial
-	 * los asigna el negocio. Si hay un usuario autenticado, el empleado es siempre el de la sesión.
-	 */
 	@PostMapping
 	public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoProcesoCompra(
-			@RequestBody ProcesoCompraDTO procesoCompra, @AuthenticationPrincipal OidcUser usuario) {
-		EmpleadoAutenticado.obtener(usuario).ifPresent(procesoCompra::setEmpleado);
-
-		fachada.registrarInformacionNuevoProcesoCompra(procesoCompra);
-		RespuestaOk<String> respuesta = RespuestaOk
-				.crear("Se ha registrado la información del nuevo proceso de compra de forma exitosa");
+			@RequestBody ProcesoCompraDTO datos, @AuthenticationPrincipal OidcUser usuario) {
+		EmpleadoAutenticado.obtenerUsuario(usuario).ifPresent(datos::setEmpleado);
+		fachada.registrarInformacionNuevoProcesoCompra(datos);
+		var mensajeRespuesta = CatalogoMensajes.ProcesoCompraControlador.USUARIO_EXITO_PROCESO_COMPRA_REGISTRADO;
+		RespuestaOk<String> respuesta = RespuestaOk.crear(mensajeRespuesta);
 		return ResponseEntity.ok(respuesta);
 	}
 

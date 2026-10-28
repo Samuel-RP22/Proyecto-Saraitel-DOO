@@ -14,9 +14,6 @@ import co.com.saraitel.gestionsaraitel.dto.EstadoProcesoCompraDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.EstadoProcesoCompraFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.EstadoProcesoCompraFachadaImpl;
 
-// ...../api/v1/estados-proceso-compra
-// ...../api/v1/estados-proceso-compra/{id}
-
 @RestController
 @RequestMapping("/api/v1/estados-proceso-compra")
 public class EstadoProcesoCompraControlador extends AbstractRestController {

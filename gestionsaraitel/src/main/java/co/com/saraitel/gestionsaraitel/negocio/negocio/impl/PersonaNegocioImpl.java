@@ -19,35 +19,22 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 
 	@Override
 	public void registrarInformacionNuevaPersona(final PersonaDominio datos) {
-		var personaEntidad = PersonaEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var personaEntidad = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
-		personaEntidad.setId(generarIdPersonaUnico());
+		personaEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerPersonaDao().consultarPorId(id).getId()));
 
 		daoFactory.obtenerPersonaDao().crear(personaEntidad);
-	}
-
-	private UUID generarIdPersonaUnico() {
-		UUID id;
-		boolean existe;
-
-		do {
-			id = UUID.randomUUID();
-			var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(id);
-			existe = !personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
 	}
 
 	@Override
 	public void modificarInformacionPersonaExistente(final UUID id, final PersonaDominio datos) {
 		var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(id);
 
-		if (personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(personaExistente.getId())) {
 			return;
 		}
 
-		var entidadActualizada = PersonaEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var entidadActualizada = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
 		entidadActualizada.setId(id);
 
@@ -58,7 +45,7 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 	public void darBajaInformacionPersonaExistente(final UUID id) {
 		var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(id);
 
-		if (personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(personaExistente.getId())) {
 			return;
 		}
 
@@ -67,26 +54,26 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 
 	@Override
 	public List<PersonaDominio> consultarPorFiltro(final PersonaDominio filtro) {
-		var entidadFiltro = PersonaEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerPersonaDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(PersonaEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PersonaEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<PersonaDominio> consultarTodos() {
 		return daoFactory.obtenerPersonaDao().consultarTodos().stream()
-				.map(PersonaEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PersonaEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public PersonaDominio consultarPorid(final UUID id) {
+	public PersonaDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerPersonaDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return PersonaDominio.obtenerValorDefecto();
 		}
 
-		return PersonaEntidadAssembler.getInstance().convertirADominio(entidad);
+		return PersonaEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

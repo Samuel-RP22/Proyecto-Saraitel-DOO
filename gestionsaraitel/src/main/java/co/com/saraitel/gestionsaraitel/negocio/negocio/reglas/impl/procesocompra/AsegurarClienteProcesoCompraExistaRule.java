@@ -26,7 +26,7 @@ public class AsegurarClienteProcesoCompraExistaRule implements Rule<Object> {
 
 		var clienteExistente = daoFactory.obtenerClienteDao().consultarPorId(idCliente);
 
-		if (clienteExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(clienteExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.CLIENTE_PROCESO_COMPRA_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

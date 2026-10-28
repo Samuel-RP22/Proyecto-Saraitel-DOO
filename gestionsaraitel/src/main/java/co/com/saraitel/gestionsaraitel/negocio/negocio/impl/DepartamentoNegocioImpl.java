@@ -21,26 +21,26 @@ public class DepartamentoNegocioImpl implements DepartamentoNegocio {
 
 	@Override
 	public List<DepartamentoDominio> consultarPorFiltro(final DepartamentoDominio filtro) {
-		var entidadFiltro = DepartamentoEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = DepartamentoEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerDepartamentoDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(DepartamentoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(DepartamentoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<DepartamentoDominio> consultarTodos() {
 		return daoFactory.obtenerDepartamentoDao().consultarTodos().stream()
-				.map(DepartamentoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(DepartamentoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public DepartamentoDominio consultarPorid(final UUID id) {
+	public DepartamentoDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerDepartamentoDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return DepartamentoDominio.obtenerValorDefecto();
 		}
 
-		return DepartamentoEntidadAssembler.getInstance().convertirADominio(entidad);
+		return DepartamentoEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

@@ -18,7 +18,7 @@ public class AdministradorDTOAssembler implements DTOAssembler<AdministradorDomi
 	private AdministradorDTOAssembler() {
 	}
 
-	public static DTOAssembler<AdministradorDominio, AdministradorDTO> getInstance() {
+	public static DTOAssembler<AdministradorDominio, AdministradorDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,7 +29,7 @@ public class AdministradorDTOAssembler implements DTOAssembler<AdministradorDomi
 				new AdministradorDominio(UtilUUID.obtenerUUIDDefecto(), EmpleadoDominio.obtenerValorDefecto()));
 
 		return new AdministradorDTO(dominioTmp.getId(),
-				EmpleadoDTOAssembler.getInstance().convertirADTO(dominioTmp.getEmpleado()));
+				EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getEmpleado()));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class AdministradorDTOAssembler implements DTOAssembler<AdministradorDomi
 		AdministradorDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new AdministradorDTO());
 
 		return new AdministradorDominio(dtoTmp.getId(),
-				EmpleadoDTOAssembler.getInstance().convertirADominio(dtoTmp.getEmpleado()));
+				EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEmpleado()));
 	}
 
 	@Override

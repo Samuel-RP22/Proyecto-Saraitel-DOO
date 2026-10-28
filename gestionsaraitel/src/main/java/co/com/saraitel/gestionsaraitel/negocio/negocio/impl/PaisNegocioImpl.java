@@ -20,26 +20,26 @@ public class PaisNegocioImpl implements PaisNegocio {
 
 	@Override
 	public List<PaisDominio> consultarPorFiltro(final PaisDominio filtro) {
-		var entidadFiltro = PaisEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = PaisEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerPaisDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(PaisEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PaisEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<PaisDominio> consultarTodos() {
 		return daoFactory.obtenerPaisDao().consultarTodos().stream()
-				.map(PaisEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PaisEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public PaisDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerPaisDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return PaisDominio.obtenerValorDefecto();
 		}
 
-		return PaisEntidadAssembler.getInstance().convertirADominio(entidad);
+		return PaisEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

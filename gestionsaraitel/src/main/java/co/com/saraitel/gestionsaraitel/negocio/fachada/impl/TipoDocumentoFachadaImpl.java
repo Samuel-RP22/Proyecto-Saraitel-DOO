@@ -20,9 +20,9 @@ public class TipoDocumentoFachadaImpl implements TipoDocumentoFachada {
 		var tipoDocumentoNegocio = new TipoDocumentoNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = TipoDocumentoDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = TipoDocumentoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaTiposDocumento = tipoDocumentoNegocio.consultarPorFiltro(filtroDominio);
-			return TipoDocumentoDTOAssembler.getInstance().convertirADTO(listaTiposDocumento);
+			return TipoDocumentoDTOAssembler.obtenerInstancia().convertirADTO(listaTiposDocumento);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -40,7 +40,7 @@ public class TipoDocumentoFachadaImpl implements TipoDocumentoFachada {
 
 		try {
 			var listaTiposDocumento = tipoDocumentoNegocio.consultarTodos();
-			return TipoDocumentoDTOAssembler.getInstance().convertirADTO(listaTiposDocumento);
+			return TipoDocumentoDTOAssembler.obtenerInstancia().convertirADTO(listaTiposDocumento);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -57,8 +57,8 @@ public class TipoDocumentoFachadaImpl implements TipoDocumentoFachada {
 		var tipoDocumentoNegocio = new TipoDocumentoNegocioImpl(daoFactory);
 
 		try {
-			var tipoDocumentoDominio = tipoDocumentoNegocio.consultarPorid(id);
-			return TipoDocumentoDTOAssembler.getInstance().convertirADTO(tipoDocumentoDominio);
+			var tipoDocumentoDominio = tipoDocumentoNegocio.consultarPorId(id);
+			return TipoDocumentoDTOAssembler.obtenerInstancia().convertirADTO(tipoDocumentoDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

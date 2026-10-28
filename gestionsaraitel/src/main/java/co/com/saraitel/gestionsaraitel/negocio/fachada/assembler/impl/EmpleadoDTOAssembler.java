@@ -16,7 +16,7 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 	private EmpleadoDTOAssembler() {
 	}
 
-	public static DTOAssembler<EmpleadoDominio, EmpleadoDTO> getInstance() {
+	public static DTOAssembler<EmpleadoDominio, EmpleadoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -26,8 +26,8 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 		EmpleadoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EmpleadoDominio.obtenerValorDefecto());
 
-		return new EmpleadoDTO(dominioTmp.getId(), SedeDTOAssembler.getInstance().convertirADTO(dominioTmp.getSede()),
-				PersonaDTOAssembler.getInstance().convertirADTO(dominioTmp.getPersona()), dominioTmp.getEsActiva());
+		return new EmpleadoDTO(dominioTmp.getId(), SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede()),
+				PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona()), dominioTmp.getEsActivo());
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 
 		EmpleadoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new EmpleadoDTO());
 
-		return new EmpleadoDominio(dtoTmp.getId(), SedeDTOAssembler.getInstance().convertirADominio(dtoTmp.getSede()),
-				PersonaDTOAssembler.getInstance().convertirADominio(dtoTmp.getPersona()), dtoTmp.getEsActivo());
+		return new EmpleadoDominio(dtoTmp.getId(), SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede()),
+				PersonaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPersona()), dtoTmp.getEsActivo());
 	}
 
 	@Override

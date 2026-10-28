@@ -14,9 +14,6 @@ import co.com.saraitel.gestionsaraitel.dto.TipoDocumentoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.TipoDocumentoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.TipoDocumentoFachadaImpl;
 
-// ...../api/v1/tipos-documento
-// ...../api/v1/tipos-documento/{id}
-
 @RestController
 @RequestMapping("/api/v1/tipos-documento")
 public class TipoDocumentoControlador extends AbstractRestController {

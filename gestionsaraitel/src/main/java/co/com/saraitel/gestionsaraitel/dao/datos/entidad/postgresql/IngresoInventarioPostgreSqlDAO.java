@@ -14,16 +14,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.IngresoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInventarioDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"IngresoInventario\" "
-			+ "(\"id\", \"Sede_id\", \"EstadoInventario_id\", " + "\"FechaLlegada\", \"Total\") "
-			+ "VALUES (?, ?, ?, ?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Sede_id\", \"EstadoInventario_id\", "
-			+ "\"FechaLlegada\", \"Total\" " + "FROM saraitel.\"IngresoInventario\"";
 
 	public IngresoInventarioPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -31,8 +25,8 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 	@Override
 	public void crear(final IngresoInventarioEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el ingreso de inventario.",
-				"Error NO CONTROLADO al crear el ingreso de inventario.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO,
+				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO, entidad.getId(),
 				entidad.getSede().getId(), entidad.getEstado().getId(),
 				Timestamp.valueOf(entidad.getFechaLlegada()), entidad.getTotal());
 	}
@@ -44,7 +38,7 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new IngresoInventarioEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new IngresoInventarioEntidad());
 	}
 
 	@Override
@@ -52,7 +46,7 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new IngresoInventarioEntidad());
 
-		var sentencia = new FiltroSql(SQL_CONSULTAR);
+		var sentencia = new FiltroSql(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR);
 
 		sentencia.conId("\"id\"", filtroSeguro.getId());
 		sentencia.conId("\"Sede_id\"", filtroSeguro.getSede().getId());
@@ -60,14 +54,14 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 		sentencia.conFechaHora("\"FechaLlegada\"", filtroSeguro.getFechaLlegada());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				"Error al consultar ingresos de inventario.",
-				"Error NO CONTROLADO al consultar ingresos de inventario.");
+				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
+				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	@Override
 	public List<IngresoInventarioEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar ingresos de inventario.",
-				"Error NO CONTROLADO al consultar ingresos de inventario.");
+		return ejecutarConsulta(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
+				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	private IngresoInventarioEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -84,7 +78,7 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 		estado.setId(leerUUID(resultados, "EstadoInventario_id"));
 		entidad.setEstado(estado);
 
-		entidad.setFechaLlegada(resultados.getTimestamp("FechaLlegada").toLocalDateTime());
+		entidad.setFechaLlegada(leerFechaHora(resultados, "FechaLlegada"));
 
 		entidad.setTotal(resultados.getBigDecimal("Total"));
 

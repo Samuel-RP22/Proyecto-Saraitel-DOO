@@ -13,30 +13,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."Compra"
-			("id", "ProcesoCompra_id", "EstadoCompra_id", "FechaCompra")
-			VALUES (?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "ProcesoCompra_id", "EstadoCompra_id", "FechaCompra"
-			FROM saraitel."Compra"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "ProcesoCompra_id", "EstadoCompra_id", "FechaCompra"
-			FROM saraitel."Compra"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "ProcesoCompra_id", "EstadoCompra_id", "FechaCompra"
-			FROM saraitel."Compra"
-			""";
 
 	public CompraPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -44,49 +24,36 @@ public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
 
 	@Override
 	public void crear(final CompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la compra",
-				"Error NO CONTROLADO al crear la compra", entidad.getId(),
-				entidad.getProcesoCompra().getId(), entidad.getEstado().getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.CompraPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_COMPRA, CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_COMPRA,
+				entidad.getId(), entidad.getProcesoCompra().getId(), entidad.getEstado().getId(),
 				entidad.getFechaCompra());
 	}
 
 	@Override
 	public CompraEntidad consultarPorId(final UUID id) {
-		List<CompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				"Error al consultar la compra",
-				"Error NO CONTROLADO al consultar la compra");
+		List<CompraEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.CompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_COMPRA, CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_COMPRA);
 
-		if (resultado.isEmpty()) {
-			return new CompraEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new CompraEntidad());
 	}
 
 	@Override
 	public List<CompraEntidad> consultarPorFiltro(final CompraEntidad filtro) {
-		CompraEntidad filtroSeguro;
+		CompraEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new CompraEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new CompraEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.CompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ProcesoCompra_id\"", filtroSeguro.getProcesoCompra().getId())
 				.conId("\"EstadoCompra_id\"", filtroSeguro.getEstado().getId())
 				.conFechaHora("\"FechaCompra\"", filtroSeguro.getFechaCompra());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar compras",
-				"Error NO CONTROLADO al consultar compras");
+				CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_COMPRAS, CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_COMPRAS);
 	}
 
 	@Override
 	public List<CompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar compras",
-				"Error NO CONTROLADO al consultar compras");
+		return ejecutarConsulta(CatalogoMensajesSql.CompraPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_COMPRAS,
+				CatalogoMensajesSql.CompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_COMPRAS);
 	}
 
 	private CompraEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -97,6 +64,6 @@ public class CompraPostgreSqlDAO extends SqlDAO implements CompraDAO {
 		estado.setId(leerUUID(resultados, "EstadoCompra_id"));
 
 		return new CompraEntidad(leerUUID(resultados, "id"), procesoCompra, estado,
-				resultados.getTimestamp("FechaCompra").toLocalDateTime());
+				leerFechaHora(resultados, "FechaCompra"));
 	}
 }

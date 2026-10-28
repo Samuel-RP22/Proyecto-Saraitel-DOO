@@ -26,7 +26,7 @@ public class AsegurarSedeEmpleadoExistaRule implements Rule<Object> {
 
 		var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(idSede);
 
-		if (sedeExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(sedeExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.EmpleadoNegocioImpl.SEDE_EMPLEADO_NO_EXISTE;
 
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);

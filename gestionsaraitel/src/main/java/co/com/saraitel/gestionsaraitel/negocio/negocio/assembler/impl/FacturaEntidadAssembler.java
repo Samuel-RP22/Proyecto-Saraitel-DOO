@@ -12,7 +12,7 @@ public class FacturaEntidadAssembler implements EntidadAssembler<FacturaDominio,
 	private FacturaEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<FacturaDominio, FacturaEntidad> getInstance() {
+	public static EntidadAssembler<FacturaDominio, FacturaEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,7 +21,7 @@ public class FacturaEntidadAssembler implements EntidadAssembler<FacturaDominio,
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				FacturaDominio.obtenerValorDefecto());
 		return new FacturaEntidad(dominioTmp.getId(),
-				CompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCompra()),
+				CompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCompra()),
 				dominioTmp.getFechaEmision());
 	}
 
@@ -29,7 +29,7 @@ public class FacturaEntidadAssembler implements EntidadAssembler<FacturaDominio,
 	public FacturaDominio convertirADominio(FacturaEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new FacturaEntidad());
 		return new FacturaDominio(entidadTmp.getId(),
-				CompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCompra()),
+				CompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCompra()),
 				entidadTmp.getFechaEmision());
 	}
 }

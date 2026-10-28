@@ -26,7 +26,7 @@ public class AsegurarEmpleadoProcesoCompraValidoRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.EMPLEADO_PROCESO_COMPRA_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

@@ -16,7 +16,7 @@ public class EstadoCompraDTOAssembler implements DTOAssembler<EstadoCompraDomini
 	private EstadoCompraDTOAssembler() {
 	}
 
-	public static DTOAssembler<EstadoCompraDominio, EstadoCompraDTO> getInstance() {
+	public static DTOAssembler<EstadoCompraDominio, EstadoCompraDTO> obtenerInstancia() {
 		return instancia;
 	}
 

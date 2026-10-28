@@ -47,10 +47,10 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 public abstract class DAOFactory {
 
 	private Connection conexion;
-	private static final FactoriaEnum factoria = FactoriaEnum.POSTGRESQL;
+	private static final FactoriaEnum FACTORIA = FactoriaEnum.POSTGRESQL;
 
 	public static DAOFactory obtenerFactoria() {
-		if (factoria == FactoriaEnum.POSTGRESQL) {
+		if (FACTORIA == FactoriaEnum.POSTGRESQL) {
 			return new PostgreSqlDaoFactory();
 		} else {
 			var mensajeUsuario = CatalogoMensajes.DAOFactory.USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;

@@ -12,7 +12,7 @@ public class PersonaEntidadAssembler implements EntidadAssembler<PersonaDominio,
 	private PersonaEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<PersonaDominio, PersonaEntidad> getInstance() {
+	public static EntidadAssembler<PersonaDominio, PersonaEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -22,8 +22,8 @@ public class PersonaEntidadAssembler implements EntidadAssembler<PersonaDominio,
 				PersonaDominio.obtenerValorDefecto());
 		return new PersonaEntidad.Builder().id(dominioTmp.getId())
 				.tipoDocumento(
-						TipoDocumentoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getTipoDocumento()))
-				.prefijo(PrefijoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPrefijo()))
+						TipoDocumentoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getTipoDocumento()))
+				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPrefijo()))
 				.numeroDocumento(dominioTmp.getNumeroDocumento()).telefono(dominioTmp.getTelefono())
 				.nombre(dominioTmp.getNombre()).apellido(dominioTmp.getApellido()).correo(dominioTmp.getCorreo())
 				.telefonoConfirmado(dominioTmp.getTelefonoConfirmado())
@@ -35,8 +35,8 @@ public class PersonaEntidadAssembler implements EntidadAssembler<PersonaDominio,
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PersonaEntidad());
 		return new PersonaDominio.Builder().id(entidadTmp.getId())
 				.tipoDocumento(
-						TipoDocumentoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getTipoDocumento()))
-				.prefijo(PrefijoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPrefijo()))
+						TipoDocumentoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getTipoDocumento()))
+				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPrefijo()))
 				.numeroDocumento(entidadTmp.getNumeroDocumento()).telefono(entidadTmp.getTelefono())
 				.nombre(entidadTmp.getNombre()).apellido(entidadTmp.getApellido()).correo(entidadTmp.getCorreo())
 				.telefonoConfirmado(entidadTmp.getTelefonoConfirmado())

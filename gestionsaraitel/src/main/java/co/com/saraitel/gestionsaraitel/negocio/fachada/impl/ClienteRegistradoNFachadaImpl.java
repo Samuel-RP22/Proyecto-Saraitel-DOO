@@ -22,7 +22,7 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var dominio = ClienteRegistradoNDTOAssembler.getInstance().convertirADominio(datos);
+			var dominio = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			negocio.registrarInformacionNuevoClienteNatural(dominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -43,8 +43,8 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = ClienteRegistradoNDTOAssembler.getInstance().convertirADominio(filtro);
-			return ClienteRegistradoNDTOAssembler.getInstance().convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			var filtroDominio = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADominio(filtro);
+			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorFiltro(filtroDominio));
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -61,7 +61,7 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
 
 		try {
-			return ClienteRegistradoNDTOAssembler.getInstance().convertirADTO(negocio.consultarTodos());
+			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -78,7 +78,7 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
 
 		try {
-			return ClienteRegistradoNDTOAssembler.getInstance().convertirADTO(negocio.consultarPorid(id));
+			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

@@ -22,7 +22,7 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var procesoCompraDominio = ProcesoCompraDTOAssembler.getInstance().convertirADominio(datos);
+			var procesoCompraDominio = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			procesoCompraNegocio.registrarInformacionNuevoProcesoCompra(procesoCompraDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -45,9 +45,9 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var filtroDominio = ProcesoCompraDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaProcesosCompra = procesoCompraNegocio.consultarPorFiltro(filtroDominio);
-			var resultado = ProcesoCompraDTOAssembler.getInstance().convertirADTO(listaProcesosCompra);
+			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaProcesosCompra);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -71,7 +71,7 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 
 		try {
 			var listaProcesosCompra = procesoCompraNegocio.consultarTodos();
-			var resultado = ProcesoCompraDTOAssembler.getInstance().convertirADTO(listaProcesosCompra);
+			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaProcesosCompra);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -94,8 +94,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var procesoCompraDominio = procesoCompraNegocio.consultarPorid(id);
-			var resultado = ProcesoCompraDTOAssembler.getInstance().convertirADTO(procesoCompraDominio);
+			var procesoCompraDominio = procesoCompraNegocio.consultarPorId(id);
+			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(procesoCompraDominio);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {

@@ -12,7 +12,7 @@ public class PagoNormalEntidadAssembler implements EntidadAssembler<PagoNormalDo
 	private PagoNormalEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<PagoNormalDominio, PagoNormalEntidad> getInstance() {
+	public static EntidadAssembler<PagoNormalDominio, PagoNormalEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,8 +21,8 @@ public class PagoNormalEntidadAssembler implements EntidadAssembler<PagoNormalDo
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoNormalDominio.obtenerValorDefecto());
 		return new PagoNormalEntidad(dominioTmp.getId(),
-				MetodoPagoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getMetodoPago()),
-				PagoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPago()),
+				MetodoPagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getMetodoPago()),
+				PagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPago()),
 				dominioTmp.getMontoPagar());
 	}
 
@@ -30,8 +30,8 @@ public class PagoNormalEntidadAssembler implements EntidadAssembler<PagoNormalDo
 	public PagoNormalDominio convertirADominio(PagoNormalEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PagoNormalEntidad());
 		return new PagoNormalDominio(entidadTmp.getId(),
-				MetodoPagoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getMetodoPago()),
-				PagoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPago()),
+				MetodoPagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getMetodoPago()),
+				PagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPago()),
 				entidadTmp.getMontoPagar());
 	}
 }

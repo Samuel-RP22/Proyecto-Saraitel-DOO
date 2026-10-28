@@ -9,8 +9,6 @@ public class AsegurarCorreoClienteJuridicoValidoRule implements Rule<String> {
 
 	private static final Rule<String> instancia = new AsegurarCorreoClienteJuridicoValidoRule();
 
-	private static final String FORMATO_CORREO = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
 	private AsegurarCorreoClienteJuridicoValidoRule() {
 	}
 
@@ -42,7 +40,7 @@ public class AsegurarCorreoClienteJuridicoValidoRule implements Rule<String> {
 	}
 
 	private void validarFormato(String dato) {
-		if (!UtilTexto.formatoEsValido(dato, FORMATO_CORREO)) {
+		if (!UtilTexto.formatoEsValido(dato, UtilTexto.FORMATO_CORREO)) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.FORMATO_CORREO_CLIENTE_JURIDICO_NO_VALIDO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

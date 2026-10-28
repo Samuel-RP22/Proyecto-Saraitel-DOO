@@ -2,7 +2,6 @@ package co.com.saraitel.gestionsaraitel.negocio.negocio.impl;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoNDominio;
@@ -34,7 +33,7 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 		var persona = datos.getPersona();
 		UUID idPersona;
 
-		if (persona.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(persona.getId())) {
 			// Persona nueva: se valida igual que en el registro de personas y se crea en esta transacción.
 			ValidarDatosRegistrarInformacionNuevaPersonaRule.obtenerInstancia().ejecutar(persona);
 
@@ -43,8 +42,8 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 			AsegurarTelefonoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getTelefono(), daoFactory);
 			AsegurarCorreoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getCorreo(), daoFactory);
 
-			var personaEntidad = PersonaEntidadAssembler.getInstance().convertirAEntidad(persona);
-			idPersona = generarIdUnico(id -> daoFactory.obtenerPersonaDao().consultarPorId(id).getId());
+			var personaEntidad = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(persona);
+			idPersona = UtilUUID.generarIdUnico(id -> daoFactory.obtenerPersonaDao().consultarPorId(id).getId());
 			personaEntidad.setId(idPersona);
 			daoFactory.obtenerPersonaDao().crear(personaEntidad);
 		} else {
@@ -60,7 +59,7 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 		var clienteRegistrado = registrarClienteRegistrado(true);
 
 		var clienteNatural = new ClienteRegistradoNEntidad(
-				generarIdUnico(id -> daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id).getId()),
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id).getId()),
 				clienteRegistrado, personaReferencia);
 
 		daoFactory.obtenerClienteRegistradoNDao().crear(clienteNatural);
@@ -68,42 +67,36 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 
 	@Override
 	public List<ClienteRegistradoNDominio> consultarPorFiltro(final ClienteRegistradoNDominio filtro) {
-		var entidadFiltro = ClienteRegistradoNEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerClienteRegistradoNDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(ClienteRegistradoNEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ClienteRegistradoNEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<ClienteRegistradoNDominio> consultarTodos() {
 		return daoFactory.obtenerClienteRegistradoNDao().consultarTodos().stream()
-				.map(ClienteRegistradoNEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ClienteRegistradoNEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public ClienteRegistradoNDominio consultarPorid(final UUID id) {
+	public ClienteRegistradoNDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id);
 
-		return ClienteRegistradoNEntidadAssembler.getInstance().convertirADominio(entidad);
-	}
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
+			return ClienteRegistradoNDominio.obtenerValorDefecto();
+		}
 
-	private UUID generarIdUnico(final Function<UUID, UUID> consultarIdExistente) {
-		UUID id;
-
-		do {
-			id = UUID.randomUUID();
-		} while (!consultarIdExistente.apply(id).equals(UtilUUID.obtenerUUIDDefecto()));
-
-		return id;
+		return ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 
 	private ClienteRegistradoEntidad registrarClienteRegistrado(final boolean esNatural) {
-		var cliente = new ClienteEntidad(generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()),
+		var cliente = new ClienteEntidad(UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()),
 				true);
 		daoFactory.obtenerClienteDao().crear(cliente);
 
 		var clienteRegistrado = new ClienteRegistradoEntidad(
-				generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()), cliente,
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()), cliente,
 				esNatural);
 		daoFactory.obtenerClienteRegistradoDao().crear(clienteRegistrado);
 

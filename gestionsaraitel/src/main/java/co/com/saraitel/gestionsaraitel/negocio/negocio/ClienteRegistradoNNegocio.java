@@ -13,5 +13,5 @@ public interface ClienteRegistradoNNegocio {
 
 	List<ClienteRegistradoNDominio> consultarTodos();
 
-	ClienteRegistradoNDominio consultarPorid(UUID id);
+	ClienteRegistradoNDominio consultarPorId(UUID id);
 }

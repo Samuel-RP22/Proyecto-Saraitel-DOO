@@ -16,7 +16,7 @@ public class CategoriaDTOAssembler implements DTOAssembler<CategoriaDominio, Cat
 	private CategoriaDTOAssembler() {
 	}
 
-	public static DTOAssembler<CategoriaDominio, CategoriaDTO> getInstance() {
+	public static DTOAssembler<CategoriaDominio, CategoriaDTO> obtenerInstancia() {
 		return instancia;
 	}
 

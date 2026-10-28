@@ -20,7 +20,7 @@ public class PersonaDTOAssembler implements DTOAssembler<PersonaDominio, Persona
 	private PersonaDTOAssembler() {
 	}
 
-	public static DTOAssembler<PersonaDominio, PersonaDTO> getInstance() {
+	public static DTOAssembler<PersonaDominio, PersonaDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -30,10 +30,10 @@ public class PersonaDTOAssembler implements DTOAssembler<PersonaDominio, Persona
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PersonaDominio.obtenerValorDefecto());
 
-		TipoDocumentoDTO tipoDocumentoDTO = TipoDocumentoDTOAssembler.getInstance()
+		TipoDocumentoDTO tipoDocumentoDTO = TipoDocumentoDTOAssembler.obtenerInstancia()
 				.convertirADTO(dominioTmp.getTipoDocumento());
 
-		PrefijoDTO prefijoDTO = PrefijoDTOAssembler.getInstance().convertirADTO(dominioTmp.getPrefijo());
+		PrefijoDTO prefijoDTO = PrefijoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPrefijo());
 
 		return new PersonaDTO.Builder().id(dominioTmp.getId()).tipoDocumento(tipoDocumentoDTO).prefijo(prefijoDTO)
 				.numeroDocumento(dominioTmp.getNumeroDocumento()).telefono(dominioTmp.getTelefono())
@@ -45,10 +45,10 @@ public class PersonaDTOAssembler implements DTOAssembler<PersonaDominio, Persona
 	@Override
 	public PersonaDominio convertirADominio(PersonaDTO dto) {
 		var dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PersonaDTO());
-		TipoDocumentoDominio tipoDocumentoDominio = TipoDocumentoDTOAssembler.getInstance()
+		TipoDocumentoDominio tipoDocumentoDominio = TipoDocumentoDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getTipoDocumento());
 
-		PrefijoDominio prefijoDominio = PrefijoDTOAssembler.getInstance().convertirADominio(dtoTmp.getPrefijo());
+		PrefijoDominio prefijoDominio = PrefijoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPrefijo());
 
 		return new PersonaDominio.Builder().id(dtoTmp.getId()).tipoDocumento(tipoDocumentoDominio)
 				.prefijo(prefijoDominio).numeroDocumento(dtoTmp.getNumeroDocumento()).telefono(dtoTmp.getTelefono())

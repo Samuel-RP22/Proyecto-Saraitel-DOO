@@ -20,9 +20,9 @@ public class CiudadFachadaImpl implements CiudadFachada {
 		var ciudadNegocio = new CiudadNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = CiudadDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = CiudadDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaCiudades = ciudadNegocio.consultarPorFiltro(filtroDominio);
-			return CiudadDTOAssembler.getInstance().convertirADTO(listaCiudades);
+			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -40,7 +40,7 @@ public class CiudadFachadaImpl implements CiudadFachada {
 
 		try {
 			var listaCiudades = ciudadNegocio.consultarTodos();
-			return CiudadDTOAssembler.getInstance().convertirADTO(listaCiudades);
+			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -57,8 +57,8 @@ public class CiudadFachadaImpl implements CiudadFachada {
 		var ciudadNegocio = new CiudadNegocioImpl(daoFactory);
 
 		try {
-			var ciudadDominio = ciudadNegocio.consultarPorid(id);
-			return CiudadDTOAssembler.getInstance().convertirADTO(ciudadDominio);
+			var ciudadDominio = ciudadNegocio.consultarPorId(id);
+			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(ciudadDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

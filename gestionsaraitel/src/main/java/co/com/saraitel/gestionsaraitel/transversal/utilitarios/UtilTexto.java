@@ -1,16 +1,12 @@
 package co.com.saraitel.gestionsaraitel.transversal.utilitarios;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 public final class UtilTexto {
 
 	public static final String VACIA = "";
 	public static final String SOLO_LETRAS_Y_ESPACIOS = "^[a-zA-Z ñÑáÁéÉíÍóÓúÚ]*$";
-	private static final DecimalFormatSymbols SIMBOLOS = new DecimalFormatSymbols(Locale.forLanguageTag("es-CO"));
-	private static final String FORMATO_DINERO = "$ #,##0.00";
+	public static final String SOLO_NUMEROS = "^[0-9]+$";
+	public static final String FORMATO_CORREO = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+	public static final String FORMATO_NIT = "^[0-9]{9,10}(-[0-9])?$";
 
 	private UtilTexto() {
 	}
@@ -53,15 +49,6 @@ public final class UtilTexto {
 		return obtenerValorDefecto(valor).matches(obtenerValorDefecto(patron));
 	}
 
-	public static String formatearDinero(final BigDecimal valor) {
-		var formato = new DecimalFormat(FORMATO_DINERO, SIMBOLOS);
-		return formato.format(UtilNumero.obtenerValorDefecto(valor));
-	}
-
-	public static String formatearPorcentaje(final int valor) {
-		return valor + "%";
-	}
-
 	public static String concatenar(final String... textos) {
 		var resultado = new StringBuilder();
 
@@ -70,7 +57,6 @@ public final class UtilTexto {
 				resultado.append(obtenerValorDefecto(texto));
 			}
 		}
-
 		return resultado.toString();
 	}
 }

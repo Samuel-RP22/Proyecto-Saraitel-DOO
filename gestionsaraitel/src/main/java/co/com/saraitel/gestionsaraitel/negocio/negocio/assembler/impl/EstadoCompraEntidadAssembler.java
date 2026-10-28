@@ -12,7 +12,7 @@ public class EstadoCompraEntidadAssembler implements EntidadAssembler<EstadoComp
 	private EstadoCompraEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<EstadoCompraDominio, EstadoCompraEntidad> getInstance() {
+	public static EntidadAssembler<EstadoCompraDominio, EstadoCompraEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

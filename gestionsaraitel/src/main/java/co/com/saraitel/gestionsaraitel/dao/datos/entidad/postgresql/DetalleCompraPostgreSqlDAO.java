@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -13,49 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.DetalleCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoSedeEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."DetalleCompra"
-			("id", "ProcesoCompra_id", "ProductoSede_id",
-			 "Cantidad", "PrecioUnitario", "Subtotal")
-			VALUES (?, ?, ?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "ProcesoCompra_id", "ProductoSede_id",
-			       "Cantidad", "PrecioUnitario", "Subtotal"
-			FROM saraitel."DetalleCompra"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "ProcesoCompra_id", "ProductoSede_id",
-			       "Cantidad", "PrecioUnitario", "Subtotal"
-			FROM saraitel."DetalleCompra"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "ProcesoCompra_id", "ProductoSede_id",
-			       "Cantidad", "PrecioUnitario", "Subtotal"
-			FROM saraitel."DetalleCompra"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."DetalleCompra"
-			SET "ProcesoCompra_id" = ?,
-			    "ProductoSede_id" = ?,
-			    "Cantidad" = ?,
-			    "PrecioUnitario" = ?,
-			    "Subtotal" = ?
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_ELIMINAR = """
-			DELETE FROM saraitel."DetalleCompra"
-			WHERE "id" = ?
-			""";
 
 	public DetalleCompraPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -63,56 +23,64 @@ public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraD
 
 	@Override
 	public void crear(final DetalleCompraEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el detalle de la compra",
-				"Error NO CONTROLADO al crear el detalle de la compra", entidad.getId(),
-				entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_DETALLE_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DETALLE_DE_LA_COMPRA,
+				entidad.getId(), entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(),
 				entidad.getCantidad(), entidad.getPrecioUnitario(), entidad.getSubtotal());
 	}
 
 	@Override
 	public DetalleCompraEntidad consultarPorId(final UUID id) {
-		List<DetalleCompraEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el detalle de la compra",
-				"Error NO CONTROLADO al consultar el detalle de la compra");
+		List<DetalleCompraEntidad> resultado = ejecutarConsulta(
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLE_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLE_DE_LA_COMPRA);
 
-		return resultado.isEmpty() ? new DetalleCompraEntidad() : resultado.get(0);
+		return obtenerPrimeroOValorDefecto(resultado, new DetalleCompraEntidad());
 	}
 
 	@Override
 	public List<DetalleCompraEntidad> consultarPorFiltro(final DetalleCompraEntidad filtro) {
 
-		DetalleCompraEntidad filtroSeguro = filtro == null ? new DetalleCompraEntidad() : filtro;
+		DetalleCompraEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new DetalleCompraEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ProcesoCompra_id\"", filtroSeguro.getProcesoCompra().getId())
 				.conId("\"ProductoSede_id\"", filtroSeguro.getProductoSede().getId())
 				.conEntero("\"Cantidad\"", filtroSeguro.getCantidad());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar detalles de la compra",
-				"Error NO CONTROLADO al consultar detalles de la compra");
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DE_LA_COMPRA);
 	}
 
 	@Override
 	public List<DetalleCompraEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear,
-				"Error al consultar los detalles de la compra",
-				"Error NO CONTROLADO al consultar los detalles de la compra");
+		return ejecutarConsulta(CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DE_LA_COMPRA);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DetalleCompraEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el detalle de la compra",
-				"Error NO CONTROLADO al actualizar el detalle de la compra",
-				entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(),
-				entidad.getCantidad(), entidad.getPrecioUnitario(), entidad.getSubtotal(), id);
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DETALLE_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DETALLE_DE_LA_COMPRA,
+				entidad.getProcesoCompra().getId(), entidad.getProductoSede().getId(), entidad.getCantidad(),
+				entidad.getPrecioUnitario(), entidad.getSubtotal(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el detalle de la compra",
-				"Error NO CONTROLADO al eliminar el detalle de la compra", id);
+		ejecutarActualizacion(CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.SQL_ELIMINAR,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_DETALLE_DE_LA_COMPRA,
+				CatalogoMensajesSql.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_DETALLE_DE_LA_COMPRA,
+				id);
 	}
 
 	private DetalleCompraEntidad mapear(final ResultSet resultados) throws SQLException {

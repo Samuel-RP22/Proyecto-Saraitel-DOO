@@ -20,12 +20,13 @@ public class ValidarDatosRegistrarInformacionNuevoProcesoCompraRule implements R
 		var dominio = datos[0];
 		var cliente = dominio.getCliente();
 
-		// El cliente no registrado se crea en el momento de la venta, por eso solo
-		// se exige el id cuando se trata de un cliente registrado o de uno ya existente.
-		var esClienteNoRegistradoNuevo = !cliente.getEsClienteRegistrado()
-				&& cliente.getId().equals(UtilUUID.obtenerUUIDDefecto());
+		// Si es cliente no registrado y no trae id, el negocio le asigna el cliente genérico
+		// (Consumidor final) que ya existe en la base de datos; no se crea ningún cliente.
+		// En cualquier otro caso el id del cliente es obligatorio.
+		var usaClienteGenerico = !cliente.getEsClienteRegistrado()
+				&& UtilUUID.esValorDefecto(cliente.getId());
 
-		if (!esClienteNoRegistradoNuevo) {
+		if (!usaClienteGenerico) {
 			AsegurarClienteProcesoCompraValidoRule.obtenerInstancia().ejecutar(cliente.getId());
 		}
 

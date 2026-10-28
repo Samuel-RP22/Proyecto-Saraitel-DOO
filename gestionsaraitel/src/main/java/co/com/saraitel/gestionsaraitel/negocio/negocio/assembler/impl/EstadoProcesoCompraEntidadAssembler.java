@@ -15,7 +15,7 @@ public class EstadoProcesoCompraEntidadAssembler
 	private EstadoProcesoCompraEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraEntidad> getInstance() {
+	public static EntidadAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

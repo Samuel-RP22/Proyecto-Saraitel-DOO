@@ -16,7 +16,7 @@ public class CompraDTOAssembler implements DTOAssembler<CompraDominio, CompraDTO
 	private CompraDTOAssembler() {
 	}
 
-	public static DTOAssembler<CompraDominio, CompraDTO> getInstance() {
+	public static DTOAssembler<CompraDominio, CompraDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,8 +27,8 @@ public class CompraDTOAssembler implements DTOAssembler<CompraDominio, CompraDTO
 				CompraDominio.obtenerValorDefecto());
 
 		return new CompraDTO(dominioTmp.getId(),
-				ProcesoCompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getProcesoCompra()),
-				EstadoCompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getEstado()),
+				ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProcesoCompra()),
+				EstadoCompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getEstado()),
 				dominioTmp.getFechaCompra());
 	}
 
@@ -38,8 +38,8 @@ public class CompraDTOAssembler implements DTOAssembler<CompraDominio, CompraDTO
 		CompraDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new CompraDTO());
 
 		return new CompraDominio(dtoTmp.getId(),
-				ProcesoCompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getProcesoCompra()),
-				EstadoCompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getEstado()), dtoTmp.getFechaCompra());
+				ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProcesoCompra()),
+				EstadoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEstado()), dtoTmp.getFechaCompra());
 	}
 
 	@Override

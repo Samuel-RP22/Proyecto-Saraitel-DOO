@@ -20,7 +20,7 @@ public class PagoNormalDTOAssembler implements DTOAssembler<PagoNormalDominio, P
 	private PagoNormalDTOAssembler() {
 	}
 
-	public static DTOAssembler<PagoNormalDominio, PagoNormalDTO> getInstance() {
+	public static DTOAssembler<PagoNormalDominio, PagoNormalDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -32,8 +32,8 @@ public class PagoNormalDTOAssembler implements DTOAssembler<PagoNormalDominio, P
 						PagoDominio.obtenerValorDefecto(), UtilNumero.CERO_DECIMAL));
 
 		return new PagoNormalDTO(dominioTmp.getId(),
-				MetodoPagoDTOAssembler.getInstance().convertirADTO(dominioTmp.getMetodoPago()),
-				PagoDTOAssembler.getInstance().convertirADTO(dominioTmp.getPago()), dominioTmp.getMontoPagar());
+				MetodoPagoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getMetodoPago()),
+				PagoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPago()), dominioTmp.getMontoPagar());
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class PagoNormalDTOAssembler implements DTOAssembler<PagoNormalDominio, P
 		PagoNormalDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PagoNormalDTO());
 
 		return new PagoNormalDominio(dtoTmp.getId(),
-				MetodoPagoDTOAssembler.getInstance().convertirADominio(dtoTmp.getMetodoPago()),
-				PagoDTOAssembler.getInstance().convertirADominio(dtoTmp.getPago()), dtoTmp.getMontoPagar());
+				MetodoPagoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getMetodoPago()),
+				PagoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPago()), dtoTmp.getMontoPagar());
 	}
 
 	@Override

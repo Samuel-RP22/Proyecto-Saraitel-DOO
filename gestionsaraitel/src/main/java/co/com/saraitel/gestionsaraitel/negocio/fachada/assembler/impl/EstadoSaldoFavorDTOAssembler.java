@@ -16,7 +16,7 @@ public class EstadoSaldoFavorDTOAssembler implements DTOAssembler<EstadoSaldoFav
 	private EstadoSaldoFavorDTOAssembler() {
 	}
 
-	public static DTOAssembler<EstadoSaldoFavorDominio, EstadoSaldoFavorDTO> getInstance() {
+	public static DTOAssembler<EstadoSaldoFavorDominio, EstadoSaldoFavorDTO> obtenerInstancia() {
 		return instancia;
 	}
 

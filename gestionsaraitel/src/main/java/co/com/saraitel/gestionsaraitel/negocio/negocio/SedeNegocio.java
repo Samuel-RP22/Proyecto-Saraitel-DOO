@@ -15,5 +15,5 @@ public interface SedeNegocio {
 
 	List<SedeDominio> consultarTodos();
 
-	SedeDominio consultarPorid(UUID id);
+	SedeDominio consultarPorId(UUID id);
 }

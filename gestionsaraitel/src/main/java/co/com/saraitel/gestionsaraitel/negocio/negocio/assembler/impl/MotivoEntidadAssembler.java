@@ -12,7 +12,7 @@ public class MotivoEntidadAssembler implements EntidadAssembler<MotivoDominio, M
 	private MotivoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<MotivoDominio, MotivoEntidad> getInstance() {
+	public static EntidadAssembler<MotivoDominio, MotivoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

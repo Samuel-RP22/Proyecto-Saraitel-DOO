@@ -17,7 +17,7 @@ public class EstadoProcesoCompraDTOAssembler
 	private EstadoProcesoCompraDTOAssembler() {
 	}
 
-	public static DTOAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraDTO> getInstance() {
+	public static DTOAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraDTO> obtenerInstancia() {
 		return instancia;
 	}
 

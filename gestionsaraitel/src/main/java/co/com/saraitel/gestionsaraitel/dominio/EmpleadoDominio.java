@@ -10,15 +10,15 @@ public class EmpleadoDominio {
 	private final UUID id;
 	private final SedeDominio sede;
 	private final PersonaDominio persona;
-	private final boolean esActiva;
+	private final boolean esActivo;
 
 	public EmpleadoDominio(final UUID id, final SedeDominio sede, final PersonaDominio persona,
-			final boolean esActiva) {
+			final boolean esActivo) {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, SedeDominio.obtenerValorDefecto());
 		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona,
 				PersonaDominio.obtenerValorDefecto());
-		this.esActiva = esActiva;
+		this.esActivo = esActivo;
 	}
 
 	public static EmpleadoDominio obtenerValorDefecto() {
@@ -38,7 +38,7 @@ public class EmpleadoDominio {
 		return persona;
 	}
 
-	public boolean getEsActiva() {
-		return esActiva;
+	public boolean getEsActivo() {
+		return esActivo;
 	}
 }

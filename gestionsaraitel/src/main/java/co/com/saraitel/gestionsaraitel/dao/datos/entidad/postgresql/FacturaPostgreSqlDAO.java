@@ -12,30 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.FacturaEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class FacturaPostgreSqlDAO extends SqlDAO implements FacturaDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."Factura"
-			("id", "Compra_id", "FechaEmision")
-			VALUES (?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Compra_id", "FechaEmision"
-			FROM saraitel."Factura"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Compra_id", "FechaEmision"
-			FROM saraitel."Factura"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Compra_id", "FechaEmision"
-			FROM saraitel."Factura"
-			""";
 
 	public FacturaPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -43,44 +23,34 @@ public class FacturaPostgreSqlDAO extends SqlDAO implements FacturaDAO {
 
 	@Override
 	public void crear(final FacturaEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear la factura", "Error NO CONTROLADO al crear la factura",
+		ejecutarActualizacion(CatalogoMensajesSql.FacturaPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_FACTURA, CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_FACTURA,
 				entidad.getId(), entidad.getCompra().getId(), entidad.getFechaEmision());
 	}
 
 	@Override
 	public FacturaEntidad consultarPorId(final UUID id) {
-		List<FacturaEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				"Error al consultar la factura", "Error NO CONTROLADO al consultar la factura");
+		List<FacturaEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.FacturaPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_FACTURA, CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_FACTURA);
 
-		if (resultado.isEmpty()) {
-			return new FacturaEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new FacturaEntidad());
 	}
 
 	@Override
 	public List<FacturaEntidad> consultarPorFiltro(final FacturaEntidad filtro) {
-		FacturaEntidad filtroSeguro;
+		FacturaEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new FacturaEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new FacturaEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.FacturaPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Compra_id\"", filtroSeguro.getCompra().getId())
 				.conFechaHora("\"FechaEmision\"", filtroSeguro.getFechaEmision());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar facturas", "Error NO CONTROLADO al consultar facturas");
+				CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_FACTURAS, CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_FACTURAS);
 	}
 
 	@Override
 	public List<FacturaEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar facturas",
-				"Error NO CONTROLADO al consultar facturas");
+		return ejecutarConsulta(CatalogoMensajesSql.FacturaPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_FACTURAS,
+				CatalogoMensajesSql.FacturaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_FACTURAS);
 	}
 
 	private FacturaEntidad mapear(final ResultSet resultados) throws SQLException {
@@ -88,6 +58,6 @@ public class FacturaPostgreSqlDAO extends SqlDAO implements FacturaDAO {
 		compra.setId(leerUUID(resultados, "Compra_id"));
 
 		return new FacturaEntidad(leerUUID(resultados, "id"), compra,
-				resultados.getTimestamp("FechaEmision").toLocalDateTime());
+				leerFechaHora(resultados, "FechaEmision"));
 	}
 }

@@ -14,7 +14,7 @@ public class EstadoSaldoFavorEntidadAssembler
 	private EstadoSaldoFavorEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<EstadoSaldoFavorDominio, EstadoSaldoFavorEntidad> getInstance() {
+	public static EntidadAssembler<EstadoSaldoFavorDominio, EstadoSaldoFavorEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

@@ -26,7 +26,7 @@ public class AsegurarTipoDocumentoPersonaValidoRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.PersonaNegocioImpl.TIPO_DOCUMENTO_PERSONA_OBLIGATORIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

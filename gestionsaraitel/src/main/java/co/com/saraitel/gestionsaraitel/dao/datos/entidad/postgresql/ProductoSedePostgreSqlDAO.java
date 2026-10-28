@@ -13,47 +13,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoSedeEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."ProductoSede"
-			("id", "Producto_id", "Sede_id", "Precio", "TieneOferta",
-			 "Oferta", "PrecioTrasOferta", "Stock", "StockGarantia")
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Producto_id", "Sede_id", "Precio", "TieneOferta",
-			       "Oferta", "PrecioTrasOferta", "Stock", "StockGarantia"
-			FROM saraitel."ProductoSede"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Producto_id", "Sede_id", "Precio", "TieneOferta",
-			       "Oferta", "PrecioTrasOferta", "Stock", "StockGarantia"
-			FROM saraitel."ProductoSede"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Producto_id", "Sede_id", "Precio", "TieneOferta",
-			       "Oferta", "PrecioTrasOferta", "Stock", "StockGarantia"
-			FROM saraitel."ProductoSede"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."ProductoSede"
-			SET "Producto_id" = ?,
-			    "Sede_id" = ?,
-			    "Precio" = ?,
-			    "TieneOferta" = ?,
-			    "Oferta" = ?,
-			    "PrecioTrasOferta" = ?,
-			    "Stock" = ?,
-			    "StockGarantia" = ?
-			WHERE "id" = ?
-			""";
 
 	public ProductoSedePostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -61,8 +24,8 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public void crear(final ProductoSedeEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el producto por sede",
-				"Error NO CONTROLADO al crear el producto por sede", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ProductoSedePostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO_POR_SEDE,
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO_POR_SEDE, entidad.getId(),
 				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
 				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
 				entidad.getStockGarantia());
@@ -70,48 +33,38 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public ProductoSedeEntidad consultarPorId(final UUID id) {
-		List<ProductoSedeEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, "Error al consultar el producto por sede",
-				"Error NO CONTROLADO al consultar el producto por sede");
+		List<ProductoSedeEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
+				this::mapear, CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTO_POR_SEDE,
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTO_POR_SEDE);
 
-		if (resultado.isEmpty()) {
-			return new ProductoSedeEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new ProductoSedeEntidad());
 	}
 
 	@Override
 	public List<ProductoSedeEntidad> consultarPorFiltro(final ProductoSedeEntidad filtro) {
-		ProductoSedeEntidad filtroSeguro;
+		ProductoSedeEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProductoSedeEntidad());
 
-		if (filtro == null) {
-			filtroSeguro = new ProductoSedeEntidad();
-		} else {
-			filtroSeguro = filtro;
-		}
-
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Producto_id\"", filtroSeguro.getProducto().getId())
 				.conId("\"Sede_id\"", filtroSeguro.getSede().getId()).conEntero("\"Oferta\"", filtroSeguro.getOferta())
 				.conEntero("\"Stock\"", filtroSeguro.getStock())
 				.conEntero("\"StockGarantia\"", filtroSeguro.getStockGarantia());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar productos por sede",
-				"Error NO CONTROLADO al consultar productos por sede");
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS_POR_SEDE,
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS_POR_SEDE);
 	}
 
 	@Override
 	public List<ProductoSedeEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar productos por sede",
-				"Error NO CONTROLADO al consultar productos por sede");
+		return ejecutarConsulta(CatalogoMensajesSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS_POR_SEDE,
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS_POR_SEDE);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoSedeEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el producto por sede",
-				"Error NO CONTROLADO al actualizar el producto por sede",
+		ejecutarActualizacion(CatalogoMensajesSql.ProductoSedePostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO_POR_SEDE,
+				CatalogoMensajesSql.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO_POR_SEDE,
 				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
 				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
 				entidad.getStockGarantia(), id);

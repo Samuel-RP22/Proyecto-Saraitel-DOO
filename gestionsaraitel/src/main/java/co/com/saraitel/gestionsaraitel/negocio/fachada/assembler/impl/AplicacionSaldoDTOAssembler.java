@@ -20,7 +20,7 @@ public class AplicacionSaldoDTOAssembler implements DTOAssembler<AplicacionSaldo
 	private AplicacionSaldoDTOAssembler() {
 	}
 
-	public static DTOAssembler<AplicacionSaldoDominio, AplicacionSaldoDTO> getInstance() {
+	public static DTOAssembler<AplicacionSaldoDominio, AplicacionSaldoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -32,8 +32,8 @@ public class AplicacionSaldoDTOAssembler implements DTOAssembler<AplicacionSaldo
 						PagoDominio.obtenerValorDefecto(), UtilNumero.CERO_DECIMAL));
 
 		return new AplicacionSaldoDTO(dominioTmp.getId(),
-				SaldoFavorDTOAssembler.getInstance().convertirADTO(dominioTmp.getSaldoFavor()),
-				PagoDTOAssembler.getInstance().convertirADTO(dominioTmp.getPago()), dominioTmp.getValorAplicado());
+				SaldoFavorDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSaldoFavor()),
+				PagoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPago()), dominioTmp.getValorAplicado());
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class AplicacionSaldoDTOAssembler implements DTOAssembler<AplicacionSaldo
 		AplicacionSaldoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new AplicacionSaldoDTO());
 
 		return new AplicacionSaldoDominio(dtoTmp.getId(),
-				SaldoFavorDTOAssembler.getInstance().convertirADominio(dtoTmp.getSaldoFavor()),
-				PagoDTOAssembler.getInstance().convertirADominio(dtoTmp.getPago()), dtoTmp.getValorAplicado());
+				SaldoFavorDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSaldoFavor()),
+				PagoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPago()), dtoTmp.getValorAplicado());
 	}
 
 	@Override

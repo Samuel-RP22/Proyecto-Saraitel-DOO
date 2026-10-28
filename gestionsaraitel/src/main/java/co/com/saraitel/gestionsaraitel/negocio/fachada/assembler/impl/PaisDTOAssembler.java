@@ -14,7 +14,7 @@ public class PaisDTOAssembler implements DTOAssembler<PaisDominio, PaisDTO> {
 	private PaisDTOAssembler() {
 	}
 
-	public static DTOAssembler<PaisDominio, PaisDTO> getInstance() {
+	public static DTOAssembler<PaisDominio, PaisDTO> obtenerInstancia() {
 		return instancia;
 	}
 

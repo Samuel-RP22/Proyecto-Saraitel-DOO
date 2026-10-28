@@ -12,7 +12,7 @@ public class ProcesoCompraEntidadAssembler implements EntidadAssembler<ProcesoCo
 	private ProcesoCompraEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ProcesoCompraDominio, ProcesoCompraEntidad> getInstance() {
+	public static EntidadAssembler<ProcesoCompraDominio, ProcesoCompraEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,9 +21,9 @@ public class ProcesoCompraEntidadAssembler implements EntidadAssembler<ProcesoCo
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProcesoCompraDominio.obtenerValorDefecto());
 		return new ProcesoCompraEntidad(dominioTmp.getId(),
-				ClienteEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCliente()),
-				EmpleadoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getEmpleado()),
-				EstadoProcesoCompraEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getEstado()),
+				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()),
+				EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEmpleado()),
+				EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEstado()),
 				dominioTmp.getFechaInicio(), dominioTmp.getFechaActualizacion(), dominioTmp.getTotal());
 	}
 
@@ -31,9 +31,9 @@ public class ProcesoCompraEntidadAssembler implements EntidadAssembler<ProcesoCo
 	public ProcesoCompraDominio convertirADominio(ProcesoCompraEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ProcesoCompraEntidad());
 		return new ProcesoCompraDominio(entidadTmp.getId(),
-				ClienteEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCliente()),
-				EmpleadoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getEmpleado()),
-				EstadoProcesoCompraEntidadAssembler.getInstance().convertirADominio(entidadTmp.getEstado()),
+				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()),
+				EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEmpleado()),
+				EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEstado()),
 				entidadTmp.getFechaInicio(), entidadTmp.getFechaActualizacion(), entidadTmp.getTotal());
 	}
 }

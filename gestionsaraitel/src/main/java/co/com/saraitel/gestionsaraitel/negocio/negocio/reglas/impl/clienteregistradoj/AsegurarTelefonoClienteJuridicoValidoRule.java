@@ -9,7 +9,6 @@ public class AsegurarTelefonoClienteJuridicoValidoRule implements Rule<String> {
 
 	private static final Rule<String> instancia = new AsegurarTelefonoClienteJuridicoValidoRule();
 
-	private static final String FORMATO_TELEFONO = "^[0-9]+$";
 
 	private AsegurarTelefonoClienteJuridicoValidoRule() {
 	}
@@ -42,7 +41,7 @@ public class AsegurarTelefonoClienteJuridicoValidoRule implements Rule<String> {
 	}
 
 	private void validarFormato(String dato) {
-		if (!UtilTexto.formatoEsValido(dato, FORMATO_TELEFONO)) {
+		if (!UtilTexto.formatoEsValido(dato, UtilTexto.SOLO_NUMEROS)) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.FORMATO_TELEFONO_CLIENTE_JURIDICO_NO_VALIDO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

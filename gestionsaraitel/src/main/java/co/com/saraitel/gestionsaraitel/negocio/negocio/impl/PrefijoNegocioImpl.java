@@ -19,26 +19,26 @@ public class PrefijoNegocioImpl implements PrefijoNegocio {
 
 	@Override
 	public List<PrefijoDominio> consultarPorFiltro(final PrefijoDominio filtro) {
-		var entidadFiltro = PrefijoEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = PrefijoEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerPrefijoDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(PrefijoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PrefijoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<PrefijoDominio> consultarTodos() {
 		return daoFactory.obtenerPrefijoDao().consultarTodos().stream()
-				.map(PrefijoEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(PrefijoEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public PrefijoDominio consultarPorid(final UUID id) {
+	public PrefijoDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerPrefijoDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return PrefijoDominio.obtenerValorDefecto();
 		}
 
-		return PrefijoEntidadAssembler.getInstance().convertirADominio(entidad);
+		return PrefijoEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

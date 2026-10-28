@@ -12,7 +12,7 @@ public class ClienteEntidadAssembler implements EntidadAssembler<ClienteDominio,
 	private ClienteEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ClienteDominio, ClienteEntidad> getInstance() {
+	public static EntidadAssembler<ClienteDominio, ClienteEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

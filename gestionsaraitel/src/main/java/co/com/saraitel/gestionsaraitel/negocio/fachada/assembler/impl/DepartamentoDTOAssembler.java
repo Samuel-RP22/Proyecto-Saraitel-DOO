@@ -18,7 +18,7 @@ public class DepartamentoDTOAssembler implements DTOAssembler<DepartamentoDomini
 	private DepartamentoDTOAssembler() {
 	}
 
-	public static DTOAssembler<DepartamentoDominio, DepartamentoDTO> getInstance() {
+	public static DTOAssembler<DepartamentoDominio, DepartamentoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,7 +27,7 @@ public class DepartamentoDTOAssembler implements DTOAssembler<DepartamentoDomini
 		DepartamentoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DepartamentoDominio.obtenerValorDefecto());
 
-		PaisDTO paisDTO = PaisDTOAssembler.getInstance().convertirADTO(dominioTmp.getPais());
+		PaisDTO paisDTO = PaisDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPais());
 
 		return new DepartamentoDTO(dominioTmp.getId(), dominioTmp.getNombre(), paisDTO);
 	}
@@ -36,7 +36,7 @@ public class DepartamentoDTOAssembler implements DTOAssembler<DepartamentoDomini
 	public DepartamentoDominio convertirADominio(DepartamentoDTO dto) {
 		DepartamentoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DepartamentoDTO());
 
-		PaisDominio paisDominio = PaisDTOAssembler.getInstance().convertirADominio(dtoTmp.getPais());
+		PaisDominio paisDominio = PaisDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPais());
 
 		return new DepartamentoDominio(dtoTmp.getId(), dtoTmp.getNombre(), paisDominio);
 	}

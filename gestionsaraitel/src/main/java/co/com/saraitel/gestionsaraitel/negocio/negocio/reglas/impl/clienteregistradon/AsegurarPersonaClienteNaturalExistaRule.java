@@ -26,7 +26,7 @@ public class AsegurarPersonaClienteNaturalExistaRule implements Rule<Object> {
 
 		var personaExistente = daoFactory.obtenerPersonaDao().consultarPorId(idPersona);
 
-		if (personaExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(personaExistente.getId())) {
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoNNegocioImpl.PERSONA_CLIENTE_NATURAL_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

@@ -20,7 +20,7 @@ public class ProductoDTOAssembler implements DTOAssembler<ProductoDominio, Produ
 	private ProductoDTOAssembler() {
 	}
 
-	public static DTOAssembler<ProductoDominio, ProductoDTO> getInstance() {
+	public static DTOAssembler<ProductoDominio, ProductoDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,9 +29,9 @@ public class ProductoDTOAssembler implements DTOAssembler<ProductoDominio, Produ
 		ProductoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProductoDominio.obtenerValorDefecto());
 
-		MarcaDTO marcaDTO = MarcaDTOAssembler.getInstance().convertirADTO(dominioTmp.getMarca());
+		MarcaDTO marcaDTO = MarcaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getMarca());
 
-		CategoriaDTO categoriaDTO = CategoriaDTOAssembler.getInstance().convertirADTO(dominioTmp.getCategoria());
+		CategoriaDTO categoriaDTO = CategoriaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCategoria());
 
 		return new ProductoDTO(dominioTmp.getId(), marcaDTO, categoriaDTO, dominioTmp.getModelo(),
 				dominioTmp.getNombre(), dominioTmp.getDescripcion());
@@ -41,9 +41,9 @@ public class ProductoDTOAssembler implements DTOAssembler<ProductoDominio, Produ
 	public ProductoDominio convertirADominio(ProductoDTO dto) {
 		ProductoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new ProductoDTO());
 
-		MarcaDominio marcaDominio = MarcaDTOAssembler.getInstance().convertirADominio(dtoTmp.getMarca());
+		MarcaDominio marcaDominio = MarcaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getMarca());
 
-		CategoriaDominio categoriaDominio = CategoriaDTOAssembler.getInstance()
+		CategoriaDominio categoriaDominio = CategoriaDTOAssembler.obtenerInstancia()
 				.convertirADominio(dtoTmp.getCategoria());
 
 		return new ProductoDominio(dtoTmp.getId(), marcaDominio, categoriaDominio, dtoTmp.getModelo(),

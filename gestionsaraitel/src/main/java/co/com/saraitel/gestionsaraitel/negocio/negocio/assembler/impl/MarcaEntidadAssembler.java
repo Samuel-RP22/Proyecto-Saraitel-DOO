@@ -13,7 +13,7 @@ public class MarcaEntidadAssembler implements EntidadAssembler<MarcaDominio, Mar
 	private MarcaEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<MarcaDominio, MarcaEntidad> getInstance() {
+	public static EntidadAssembler<MarcaDominio, MarcaEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

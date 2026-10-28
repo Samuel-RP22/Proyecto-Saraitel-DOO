@@ -30,24 +30,11 @@ public class SedeNegocioImpl implements SedeNegocio {
 		AsegurarNitNuevaSedeNoExistaRule.obtenerInstancia().ejecutar(datos.getNit(), daoFactory);
 		AsegurarDireccionNuevaSedeNoExistaRule.obtenerInstancia().ejecutar(datos.getDireccion(), daoFactory);
 
-		var sedeEntidad = SedeEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var sedeEntidad = SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
-		sedeEntidad.setId(generarIdSedeUnico());
+		sedeEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerSedeDao().consultarPorId(id).getId()));
 
 		daoFactory.obtenerSedeDao().crear(sedeEntidad);
-	}
-
-	private UUID generarIdSedeUnico() {
-		UUID id;
-		boolean existe;
-
-		do {
-			id = UUID.randomUUID();
-			var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(id);
-			existe = !sedeExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
 	}
 
 	@Override
@@ -55,7 +42,7 @@ public class SedeNegocioImpl implements SedeNegocio {
 
 		var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(id);
 
-		if (sedeExistente.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(sedeExistente.getId())) {
 			return;
 		}
 
@@ -98,33 +85,33 @@ public class SedeNegocioImpl implements SedeNegocio {
 					daoFactory);
 		}
 
-		var entidadActualizada = SedeEntidadAssembler.getInstance().convertirAEntidad(datosActualizados);
+		var entidadActualizada = SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(datosActualizados);
 
 		daoFactory.obtenerSedeDao().actualizar(id, entidadActualizada);
 	}
 
 	@Override
 	public List<SedeDominio> consultarPorFiltro(final SedeDominio filtro) {
-		var entidadFiltro = SedeEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerSedeDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(SedeEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(SedeEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<SedeDominio> consultarTodos() {
 		return daoFactory.obtenerSedeDao().consultarTodos().stream()
-				.map(SedeEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(SedeEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public SedeDominio consultarPorid(final UUID id) {
+	public SedeDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerSedeDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return SedeDominio.obtenerValorDefecto();
 		}
 
-		return SedeEntidadAssembler.getInstance().convertirADominio(entidad);
+		return SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

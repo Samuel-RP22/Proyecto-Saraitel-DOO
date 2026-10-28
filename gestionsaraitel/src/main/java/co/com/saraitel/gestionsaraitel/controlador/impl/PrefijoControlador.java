@@ -14,9 +14,6 @@ import co.com.saraitel.gestionsaraitel.dto.PrefijoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.PrefijoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.PrefijoFachadaImpl;
 
-// ...../api/v1/prefijos
-// ...../api/v1/prefijos/{id}
-
 @RestController
 @RequestMapping("/api/v1/prefijos")
 public class PrefijoControlador extends AbstractRestController {

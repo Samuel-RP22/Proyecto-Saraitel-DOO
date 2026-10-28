@@ -13,7 +13,7 @@ public class IngresoInventarioEntidadAssembler
 	private IngresoInventarioEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<IngresoInventarioDominio, IngresoInventarioEntidad> getInstance() {
+	public static EntidadAssembler<IngresoInventarioDominio, IngresoInventarioEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -23,8 +23,8 @@ public class IngresoInventarioEntidadAssembler
 				IngresoInventarioDominio.obtenerValorDefecto());
 
 		return new IngresoInventarioEntidad(dominioTmp.getId(),
-				SedeEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getSede()),
-				EstadoInventarioEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getEstado()),
+				SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSede()),
+				EstadoInventarioEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEstado()),
 				dominioTmp.getFechaLlegada(), dominioTmp.getTotal());
 	}
 
@@ -33,8 +33,8 @@ public class IngresoInventarioEntidadAssembler
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new IngresoInventarioEntidad());
 
 		return new IngresoInventarioDominio(entidadTmp.getId(),
-				SedeEntidadAssembler.getInstance().convertirADominio(entidadTmp.getSede()),
-				EstadoInventarioEntidadAssembler.getInstance().convertirADominio(entidadTmp.getEstado()),
+				SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSede()),
+				EstadoInventarioEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEstado()),
 				entidadTmp.getFechaLlegada(), entidadTmp.getTotal());
 	}
 }

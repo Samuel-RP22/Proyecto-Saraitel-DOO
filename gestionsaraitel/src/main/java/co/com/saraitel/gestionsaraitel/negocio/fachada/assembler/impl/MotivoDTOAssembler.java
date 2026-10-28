@@ -16,7 +16,7 @@ public class MotivoDTOAssembler implements DTOAssembler<MotivoDominio, MotivoDTO
 	private MotivoDTOAssembler() {
 	}
 
-	public static DTOAssembler<MotivoDominio, MotivoDTO> getInstance() {
+	public static DTOAssembler<MotivoDominio, MotivoDTO> obtenerInstancia() {
 		return instancia;
 	}
 

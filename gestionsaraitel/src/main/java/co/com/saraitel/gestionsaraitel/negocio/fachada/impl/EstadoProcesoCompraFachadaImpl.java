@@ -22,7 +22,7 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 		daoFactory.iniciarTransaccion();
 
 		try {
-			var estadoProcesoCompraDominio = EstadoProcesoCompraDTOAssembler.getInstance().convertirADominio(datos);
+			var estadoProcesoCompraDominio = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			estadoProcesoCompraNegocio.registrarInformacionNuevoEstadoProcesoCompra(estadoProcesoCompraDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -43,9 +43,9 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
 
 		try {
-			var filtroDominio = EstadoProcesoCompraDTOAssembler.getInstance().convertirADominio(filtro);
+			var filtroDominio = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaEstadosProcesoCompra = estadoProcesoCompraNegocio.consultarPorFiltro(filtroDominio);
-			return EstadoProcesoCompraDTOAssembler.getInstance().convertirADTO(listaEstadosProcesoCompra);
+			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -63,7 +63,7 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 
 		try {
 			var listaEstadosProcesoCompra = estadoProcesoCompraNegocio.consultarTodos();
-			return EstadoProcesoCompraDTOAssembler.getInstance().convertirADTO(listaEstadosProcesoCompra);
+			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {
@@ -80,8 +80,8 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
 
 		try {
-			var estadoProcesoCompraDominio = estadoProcesoCompraNegocio.consultarPorid(id);
-			return EstadoProcesoCompraDTOAssembler.getInstance().convertirADTO(estadoProcesoCompraDominio);
+			var estadoProcesoCompraDominio = estadoProcesoCompraNegocio.consultarPorId(id);
+			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(estadoProcesoCompraDominio);
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (Exception excepcion) {

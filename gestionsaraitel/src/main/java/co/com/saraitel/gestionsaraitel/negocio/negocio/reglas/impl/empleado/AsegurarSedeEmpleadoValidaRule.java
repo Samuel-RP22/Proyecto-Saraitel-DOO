@@ -26,7 +26,7 @@ public class AsegurarSedeEmpleadoValidaRule implements Rule<UUID> {
 	}
 
 	private void validarObligatoriedad(UUID dato) {
-		if (dato.equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(dato)) {
 			var mensajeUsuario = CatalogoMensajes.EmpleadoNegocioImpl.SEDE_EMPLEADO_OBLIGATORIA;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

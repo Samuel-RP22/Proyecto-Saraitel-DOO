@@ -17,5 +17,5 @@ public interface PersonaNegocio {
 
 	List<PersonaDominio> consultarTodos();
 
-	PersonaDominio consultarPorid(UUID id);
+	PersonaDominio consultarPorId(UUID id);
 }

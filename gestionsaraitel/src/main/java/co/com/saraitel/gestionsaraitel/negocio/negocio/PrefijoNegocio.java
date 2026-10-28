@@ -11,5 +11,5 @@ public interface PrefijoNegocio {
 
 	List<PrefijoDominio> consultarTodos();
 
-	PrefijoDominio consultarPorid(UUID id);
+	PrefijoDominio consultarPorId(UUID id);
 }

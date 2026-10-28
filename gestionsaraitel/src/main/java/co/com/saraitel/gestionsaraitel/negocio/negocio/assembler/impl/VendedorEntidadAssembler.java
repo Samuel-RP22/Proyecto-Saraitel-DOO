@@ -12,7 +12,7 @@ public class VendedorEntidadAssembler implements EntidadAssembler<VendedorDomini
 	private VendedorEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<VendedorDominio, VendedorEntidad> getInstance() {
+	public static EntidadAssembler<VendedorDominio, VendedorEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,13 +21,13 @@ public class VendedorEntidadAssembler implements EntidadAssembler<VendedorDomini
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				VendedorDominio.obtenerValorDefecto());
 		return new VendedorEntidad(dominioTmp.getId(),
-				EmpleadoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getEmpleado()));
+				EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEmpleado()));
 	}
 
 	@Override
 	public VendedorDominio convertirADominio(VendedorEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new VendedorEntidad());
 		return new VendedorDominio(entidadTmp.getId(),
-				EmpleadoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getEmpleado()));
+				EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEmpleado()));
 	}
 }

@@ -16,7 +16,7 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 	private DevolucionDTOAssembler() {
 	}
 
-	public static DTOAssembler<DevolucionDominio, DevolucionDTO> getInstance() {
+	public static DTOAssembler<DevolucionDominio, DevolucionDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -27,8 +27,8 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 				DevolucionDominio.obtenerValorDefecto());
 
 		return new DevolucionDTO(dominioTmp.getId(),
-				DetalleCompraDTOAssembler.getInstance().convertirADTO(dominioTmp.getDetalleCompra()),
-				MotivoDTOAssembler.getInstance().convertirADTO(dominioTmp.getMotivo()), dominioTmp.getFechaDevolucion(),
+				DetalleCompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getDetalleCompra()),
+				MotivoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getMotivo()), dominioTmp.getFechaDevolucion(),
 				dominioTmp.getCantidad(), dominioTmp.getMontoDevolucion(), dominioTmp.getEstado());
 	}
 
@@ -38,8 +38,8 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 		DevolucionDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DevolucionDTO());
 
 		return new DevolucionDominio(dtoTmp.getId(),
-				DetalleCompraDTOAssembler.getInstance().convertirADominio(dtoTmp.getDetalleCompra()),
-				MotivoDTOAssembler.getInstance().convertirADominio(dtoTmp.getMotivo()), dtoTmp.getFechaDevolucion(),
+				DetalleCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getDetalleCompra()),
+				MotivoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getMotivo()), dtoTmp.getFechaDevolucion(),
 				dtoTmp.getCantidad(), dtoTmp.getMontoDevolucion(), dtoTmp.getEstado());
 	}
 

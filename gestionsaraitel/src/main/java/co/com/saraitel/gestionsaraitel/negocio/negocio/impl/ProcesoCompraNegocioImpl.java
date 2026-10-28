@@ -48,19 +48,24 @@ public class ProcesoCompraNegocioImpl implements ProcesoCompraNegocio {
 
 		var idCliente = datos.getCliente().getId();
 
-		if (idCliente.equals(UtilUUID.obtenerUUIDDefecto())) {
-			idCliente = registrarClienteNoRegistrado();
+		if (UtilUUID.esValorDefecto(idCliente)) {
+			idCliente = obtenerClienteGenerico().getCliente().getId();
 		} else {
 			AsegurarClienteProcesoCompraExistaRule.obtenerInstancia().ejecutar(idCliente, daoFactory);
 		}
 
+		var esClienteGenerico = esClienteGenerico(idCliente);
+
 		var ahora = UtilFecha.obtenerFechaHoraActual();
 
-		AsegurarClienteNoTengaProcesoCompraConMismaFechaInicioRule.obtenerInstancia().ejecutar(idCliente, ahora,
-				daoFactory);
+		if (!esClienteGenerico) {
+			AsegurarClienteNoTengaProcesoCompraConMismaFechaInicioRule.obtenerInstancia().ejecutar(idCliente, ahora,
+					daoFactory);
+			AsegurarClienteNoTengaProcesoCompraConMismaFechaActualizacionRule.obtenerInstancia().ejecutar(idCliente,
+					ahora, daoFactory);
+		}
+
 		AsegurarEmpleadoNoTengaProcesoCompraConMismaFechaInicioRule.obtenerInstancia().ejecutar(idEmpleado, ahora,
-				daoFactory);
-		AsegurarClienteNoTengaProcesoCompraConMismaFechaActualizacionRule.obtenerInstancia().ejecutar(idCliente, ahora,
 				daoFactory);
 		AsegurarEmpleadoNoTengaProcesoCompraConMismaFechaActualizacionRule.obtenerInstancia().ejecutar(idEmpleado,
 				ahora, daoFactory);
@@ -71,46 +76,32 @@ public class ProcesoCompraNegocioImpl implements ProcesoCompraNegocio {
 		var empleado = new EmpleadoEntidad();
 		empleado.setId(idEmpleado);
 
-		var procesoCompraEntidad = new ProcesoCompraEntidad(generarIdProcesoCompraUnico(), cliente, empleado,
+		var procesoCompraEntidad = new ProcesoCompraEntidad(UtilUUID.generarIdUnico(id -> daoFactory.obtenerProcesoCompraDao().consultarPorId(id).getId()), cliente, empleado,
 				obtenerEstadoInicial(), ahora, ahora, UtilNumero.CERO_DECIMAL);
 
 		daoFactory.obtenerProcesoCompraDao().crear(procesoCompraEntidad);
 	}
 
-	private UUID generarIdProcesoCompraUnico() {
-		UUID id;
-		boolean existe;
+	// Solo existe un cliente no registrado (el genérico, Consumidor final), creado con el script de la base de
+	// datos. Aquí únicamente se consulta; nunca se crea.
+	private ClienteNoRegistradoEntidad obtenerClienteGenerico() {
+		var genericos = daoFactory.obtenerClienteNoRegistradoDao().consultarTodos();
 
-		do {
-			id = UUID.randomUUID();
-			var procesoCompraExistente = daoFactory.obtenerProcesoCompraDao().consultarPorId(id);
-			existe = !procesoCompraExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
+		if (genericos.isEmpty()) {
+			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.CLIENTE_GENERICO_NO_CONFIGURADO;
+			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
+		}
+		return genericos.get(0);
 	}
 
-	private UUID registrarClienteNoRegistrado() {
-		UUID idCliente;
+	private boolean esClienteGenerico(final UUID idCliente) {
+		var cliente = new ClienteEntidad();
+		cliente.setId(idCliente);
 
-		do {
-			idCliente = UUID.randomUUID();
-		} while (!daoFactory.obtenerClienteDao().consultarPorId(idCliente).getId()
-				.equals(UtilUUID.obtenerUUIDDefecto()));
+		var filtro = new ClienteNoRegistradoEntidad();
+		filtro.setCliente(cliente);
 
-		UUID idClienteNoRegistrado;
-
-		do {
-			idClienteNoRegistrado = UUID.randomUUID();
-		} while (!daoFactory.obtenerClienteNoRegistradoDao().consultarPorId(idClienteNoRegistrado).getId()
-				.equals(UtilUUID.obtenerUUIDDefecto()));
-
-		var cliente = new ClienteEntidad(idCliente, false);
-		daoFactory.obtenerClienteDao().crear(cliente);
-		daoFactory.obtenerClienteNoRegistradoDao()
-				.crear(new ClienteNoRegistradoEntidad(idClienteNoRegistrado, cliente));
-
-		return idCliente;
+		return !daoFactory.obtenerClienteNoRegistradoDao().consultarPorFiltro(filtro).isEmpty();
 	}
 
 	private EstadoProcesoCompraEntidad obtenerEstadoInicial() {
@@ -127,26 +118,26 @@ public class ProcesoCompraNegocioImpl implements ProcesoCompraNegocio {
 
 	@Override
 	public List<ProcesoCompraDominio> consultarPorFiltro(final ProcesoCompraDominio filtro) {
-		var entidadFiltro = ProcesoCompraEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = ProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 		return daoFactory.obtenerProcesoCompraDao().consultarPorFiltro(entidadFiltro).stream()
 				.map(this::anularSiSuperoTiempoMaximoEnProceso)
-				.map(ProcesoCompraEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ProcesoCompraEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<ProcesoCompraDominio> consultarTodos() {
 		return daoFactory.obtenerProcesoCompraDao().consultarTodos().stream()
 				.map(this::anularSiSuperoTiempoMaximoEnProceso)
-				.map(ProcesoCompraEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(ProcesoCompraEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public ProcesoCompraDominio consultarPorid(final UUID id) {
+	public ProcesoCompraDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerProcesoCompraDao().consultarPorId(id);
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return ProcesoCompraDominio.obtenerValorDefecto();
 		}
-		return ProcesoCompraEntidadAssembler.getInstance()
+		return ProcesoCompraEntidadAssembler.obtenerInstancia()
 				.convertirADominio(anularSiSuperoTiempoMaximoEnProceso(entidad));
 	}
 

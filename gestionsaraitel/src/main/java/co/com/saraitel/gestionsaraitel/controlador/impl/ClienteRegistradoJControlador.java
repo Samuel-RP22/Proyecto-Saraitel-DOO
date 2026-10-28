@@ -15,20 +15,20 @@ import co.com.saraitel.gestionsaraitel.controlador.respuesta.RespuestaOk;
 import co.com.saraitel.gestionsaraitel.dto.ClienteRegistradoJDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.ClienteRegistradoJFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.ClienteRegistradoJFachadaImpl;
-
-// ...../api/v1/clientes-juridicos
-// ...../api/v1/clientes-juridicos/{id}
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 
 @RestController
 @RequestMapping("/api/v1/clientes-juridicos")
-public class ClienteJuridicoControlador extends AbstractRestController {
+public class ClienteRegistradoJControlador extends AbstractRestController {
 
 	private ClienteRegistradoJFachada fachada = new ClienteRegistradoJFachadaImpl();
 
 	@PostMapping
-	public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoClienteJuridico(@RequestBody ClienteRegistradoJDTO datos) {
+	public ResponseEntity<RespuestaOk<String>> registrarInformacionNuevoClienteJuridico(
+			@RequestBody ClienteRegistradoJDTO datos) {
 		fachada.registrarInformacionNuevoClienteJuridico(datos);
-		RespuestaOk<String> respuesta = RespuestaOk.crear("Se ha registrado la información del nuevo cliente jurídico de forma exitosa");
+		var mensajeRespuesta = CatalogoMensajes.ClienteRegistradoJControlador.USUARIO_EXITO_CLIENTE_JURIDICO_REGISTRADO;
+		RespuestaOk<String> respuesta = RespuestaOk.crear(mensajeRespuesta);
 		return ResponseEntity.ok(respuesta);
 	}
 

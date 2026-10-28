@@ -12,7 +12,7 @@ public class DetalleIngresoEntidadAssembler implements EntidadAssembler<DetalleI
 	private DetalleIngresoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<DetalleIngresoDominio, DetalleIngresoEntidad> getInstance() {
+	public static EntidadAssembler<DetalleIngresoDominio, DetalleIngresoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -22,8 +22,8 @@ public class DetalleIngresoEntidadAssembler implements EntidadAssembler<DetalleI
 				DetalleIngresoDominio.obtenerValorDefecto());
 
 		return new DetalleIngresoEntidad(dominioTmp.getId(),
-				IngresoInventarioEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getIngresoInventario()),
-				ProductoSedeEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getProductoSede()),
+				IngresoInventarioEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getIngresoInventario()),
+				ProductoSedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getProductoSede()),
 				dominioTmp.getCantidad(), dominioTmp.getCostoUnitario(), dominioTmp.getSubtotal());
 	}
 
@@ -32,8 +32,8 @@ public class DetalleIngresoEntidadAssembler implements EntidadAssembler<DetalleI
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DetalleIngresoEntidad());
 
 		return new DetalleIngresoDominio(entidadTmp.getId(),
-				IngresoInventarioEntidadAssembler.getInstance().convertirADominio(entidadTmp.getIngresoInventario()),
-				ProductoSedeEntidadAssembler.getInstance().convertirADominio(entidadTmp.getProductoSede()),
+				IngresoInventarioEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getIngresoInventario()),
+				ProductoSedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProductoSede()),
 				entidadTmp.getCantidad(), entidadTmp.getCostoUnitario(), entidadTmp.getSubtotal());
 	}
 }

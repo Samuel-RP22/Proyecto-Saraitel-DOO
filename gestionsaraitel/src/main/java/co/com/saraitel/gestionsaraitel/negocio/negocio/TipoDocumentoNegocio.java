@@ -11,5 +11,5 @@ public interface TipoDocumentoNegocio {
 
 	List<TipoDocumentoDominio> consultarTodos();
 
-	TipoDocumentoDominio consultarPorid(UUID id);
+	TipoDocumentoDominio consultarPorId(UUID id);
 }

@@ -12,7 +12,7 @@ public class ProductoSedeEntidadAssembler implements EntidadAssembler<ProductoSe
 	private ProductoSedeEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ProductoSedeDominio, ProductoSedeEntidad> getInstance() {
+	public static EntidadAssembler<ProductoSedeDominio, ProductoSedeEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -22,8 +22,8 @@ public class ProductoSedeEntidadAssembler implements EntidadAssembler<ProductoSe
 				ProductoSedeDominio.obtenerValorDefecto());
 
 		return new ProductoSedeEntidad.Builder().id(dominioTmp.getId())
-				.producto(ProductoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getProducto()))
-				.sede(SedeEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getSede()))
+				.producto(ProductoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getProducto()))
+				.sede(SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSede()))
 				.precio(dominioTmp.getPrecio()).tieneOferta(dominioTmp.getTieneOferta()).oferta(dominioTmp.getOferta())
 				.precioTrasOferta(dominioTmp.getPrecioTrasOferta()).stock(dominioTmp.getStock())
 				.stockGarantia(dominioTmp.getStockGarantia()).construir();
@@ -34,8 +34,8 @@ public class ProductoSedeEntidadAssembler implements EntidadAssembler<ProductoSe
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ProductoSedeEntidad());
 
 		return new ProductoSedeDominio.Builder().id(entidadTmp.getId())
-				.producto(ProductoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getProducto()))
-				.sede(SedeEntidadAssembler.getInstance().convertirADominio(entidadTmp.getSede()))
+				.producto(ProductoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProducto()))
+				.sede(SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSede()))
 				.precio(entidadTmp.getPrecio()).tieneOferta(entidadTmp.getTieneOferta()).oferta(entidadTmp.getOferta())
 				.precioTrasOferta(entidadTmp.getPrecioTrasOferta()).stock(entidadTmp.getStock())
 				.stockGarantia(entidadTmp.getStockGarantia()).construir();

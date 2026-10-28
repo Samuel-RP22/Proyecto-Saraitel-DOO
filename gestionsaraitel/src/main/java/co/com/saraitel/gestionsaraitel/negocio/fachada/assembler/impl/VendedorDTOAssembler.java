@@ -18,7 +18,7 @@ public class VendedorDTOAssembler implements DTOAssembler<VendedorDominio, Vende
 	private VendedorDTOAssembler() {
 	}
 
-	public static DTOAssembler<VendedorDominio, VendedorDTO> getInstance() {
+	public static DTOAssembler<VendedorDominio, VendedorDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,7 +29,7 @@ public class VendedorDTOAssembler implements DTOAssembler<VendedorDominio, Vende
 				new VendedorDominio(UtilUUID.obtenerUUIDDefecto(), EmpleadoDominio.obtenerValorDefecto()));
 
 		return new VendedorDTO(dominioTmp.getId(),
-				EmpleadoDTOAssembler.getInstance().convertirADTO(dominioTmp.getEmpleado()));
+				EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getEmpleado()));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class VendedorDTOAssembler implements DTOAssembler<VendedorDominio, Vende
 		VendedorDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new VendedorDTO());
 
 		return new VendedorDominio(dtoTmp.getId(),
-				EmpleadoDTOAssembler.getInstance().convertirADominio(dtoTmp.getEmpleado()));
+				EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEmpleado()));
 	}
 
 	@Override

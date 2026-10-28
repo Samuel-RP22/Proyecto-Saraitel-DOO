@@ -11,11 +11,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.TipoDocumentoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class TipoDocumentoPostgreSqlDAO extends SqlDAO implements TipoDocumentoDAO {
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Tipo\" FROM saraitel.\"TipoDocumento\"";
 
 	public TipoDocumentoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -28,7 +27,7 @@ public class TipoDocumentoPostgreSqlDAO extends SqlDAO implements TipoDocumentoD
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new TipoDocumentoEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new TipoDocumentoEntidad());
 	}
 
 	@Override
@@ -36,18 +35,18 @@ public class TipoDocumentoPostgreSqlDAO extends SqlDAO implements TipoDocumentoD
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new TipoDocumentoEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conTexto("\"Tipo\"",
+		var consulta = new FiltroSql(CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conTexto("\"Tipo\"",
 				filtroSeguro.getTipo());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar tipos de documento.",
-				"Error NO CONTROLADO al consultar tipos de documento.");
+				CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_TIPOS_DE_DOCUMENTO,
+				CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPOS_DE_DOCUMENTO);
 	}
 
 	@Override
 	public List<TipoDocumentoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar tipos de documento.",
-				"Error NO CONTROLADO al consultar tipos de documento.");
+		return ejecutarConsulta(CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_TIPOS_DE_DOCUMENTO,
+				CatalogoMensajesSql.TipoDocumentoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPOS_DE_DOCUMENTO);
 	}
 
 	private TipoDocumentoEntidad mapear(final ResultSet resultados) throws SQLException {

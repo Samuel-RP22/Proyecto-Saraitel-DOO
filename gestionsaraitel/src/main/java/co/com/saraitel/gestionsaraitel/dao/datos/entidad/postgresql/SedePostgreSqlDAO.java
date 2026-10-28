@@ -12,20 +12,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CiudadEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
-
-	private static final String SQL_CREAR = "INSERT INTO saraitel.\"Sede\" "
-			+ "(\"id\", \"Ciudad_id\", \"Nombre\", \"Nit\", \"Direccion\", \"EsActiva\") "
-			+ "VALUES (?, ?, ?, ?, ?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Ciudad_id\", \"Nombre\", \"Nit\", \"Direccion\", \"EsActiva\" "
-			+ "FROM saraitel.\"Sede\"";
-
-	private static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Sede\" "
-			+ "SET \"Ciudad_id\" = ?, \"Nombre\" = ?, \"Nit\" = ?, " + "\"Direccion\" = ?, \"EsActiva\" = ? "
-			+ "WHERE \"id\" = ?";
 
 	public SedePostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -33,8 +23,8 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 
 	@Override
 	public void crear(final SedeEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear sede",
-				"Error NO CONTROLADO al crear sede", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.SedePostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_SEDE,
+				CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_SEDE, entidad.getId(),
 				entidad.getCiudad().getId(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
 				entidad.getEsActiva());
 	}
@@ -46,34 +36,34 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new SedeEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new SedeEntidad());
 	}
 
 	@Override
 	public List<SedeEntidad> consultarPorFiltro(final SedeEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new SedeEntidad());
 
-		var consulta = new FiltroSql(SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoMensajesSql.SedePostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Ciudad_id\"", filtroSeguro.getCiudad().getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre()).conTexto("\"Nit\"", filtroSeguro.getNit())
 				.conTexto("\"Direccion\"", filtroSeguro.getDireccion())
 				.conBooleano("\"EsActiva\"", filtroSeguro.getEsActiva(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				"Error al consultar sedes.",
-				"Error NO CONTROLADO al consultar sedes.");
+				CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES,
+				CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES);
 	}
 
 	@Override
 	public List<SedeEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar sedes.",
-				"Error NO CONTROLADO al consultar sedes.");
+		return ejecutarConsulta(CatalogoMensajesSql.SedePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES,
+				CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final SedeEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar sede.",
-				"Error NO CONTROLADO al actualizar sede.", entidad.getCiudad().getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.SedePostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_SEDE,
+				CatalogoMensajesSql.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_SEDE, entidad.getCiudad().getId(),
 				entidad.getNombre(), entidad.getNit(), entidad.getDireccion(), entidad.getEsActiva(), id);
 	}
 

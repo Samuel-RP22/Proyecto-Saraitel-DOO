@@ -10,41 +10,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PaisDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PaisEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
-
-	private static final String SQL_CREAR = """
-			INSERT INTO saraitel."Pais"
-			("id", "Nombre")
-			VALUES (?, ?)
-			""";
-
-	private static final String SQL_CONSULTAR_POR_ID = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Pais"
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_CONSULTAR_POR_FILTRO = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Pais"
-			""";
-
-	private static final String SQL_CONSULTAR_TODOS = """
-			SELECT "id", "Nombre"
-			FROM saraitel."Pais"
-			""";
-
-	private static final String SQL_ACTUALIZAR = """
-			UPDATE saraitel."Pais"
-			SET "Nombre" = ?
-			WHERE "id" = ?
-			""";
-
-	private static final String SQL_ELIMINAR = """
-			DELETE FROM saraitel."Pais"
-			WHERE "id" = ?
-			""";
 
 	public PaisPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -52,49 +21,45 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void crear(final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_CREAR, "Error al crear el país", "Error NO CONTROLADO al crear el país",
+		ejecutarActualizacion(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAIS, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAIS,
 				entidad.getId(), entidad.getNombre());
 	}
 
 	@Override
 	public PaisEntidad consultarPorId(final UUID id) {
-		List<PaisEntidad> resultado = ejecutarConsulta(SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				"Error al consultar el país", "Error NO CONTROLADO al consultar el país");
+		List<PaisEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS);
 
-		if (resultado.isEmpty()) {
-			return new PaisEntidad();
-		} else {
-			return resultado.get(0);
-		}
+		return obtenerPrimeroOValorDefecto(resultado, new PaisEntidad());
 	}
 
 	@Override
 	public List<PaisEntidad> consultarPorFiltro(final PaisEntidad filtro) {
 
-		PaisEntidad filtroSeguro = filtro == null ? new PaisEntidad() : filtro;
+		PaisEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PaisEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				"Error al consultar países", "Error NO CONTROLADO al consultar países");
+				CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES);
 	}
 
 	@Override
 	public List<PaisEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR_TODOS, List.of(), this::mapear, "Error al consultar los países",
-				"Error NO CONTROLADO al consultar los países");
+		return ejecutarConsulta(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES,
+				CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PaisEntidad entidad) {
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el país",
-				"Error NO CONTROLADO al actualizar el país", entidad.getNombre(), id);
+		ejecutarActualizacion(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PAIS,
+				CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PAIS, entidad.getNombre(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(SQL_ELIMINAR, "Error al eliminar el país", "Error NO CONTROLADO al eliminar el país", id);
+		ejecutarActualizacion(CatalogoMensajesSql.PaisPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PAIS, CatalogoMensajesSql.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PAIS, id);
 	}
 
 	private PaisEntidad mapear(final ResultSet resultados) throws SQLException {

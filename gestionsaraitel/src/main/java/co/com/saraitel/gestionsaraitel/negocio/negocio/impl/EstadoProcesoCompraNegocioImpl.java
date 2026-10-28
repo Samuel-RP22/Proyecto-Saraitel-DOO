@@ -27,48 +27,35 @@ public class EstadoProcesoCompraNegocioImpl implements EstadoProcesoCompraNegoci
 		AsegurarCodigoNuevoEstadoProcesoCompraNoExistaRule.obtenerInstancia().ejecutar(datos.getCodigo(), daoFactory);
 		AsegurarNombreNuevoEstadoProcesoCompraNoExistaRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
 
-		var estadoProcesoCompraEntidad = EstadoProcesoCompraEntidadAssembler.getInstance().convertirAEntidad(datos);
+		var estadoProcesoCompraEntidad = EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 
-		estadoProcesoCompraEntidad.setId(generarIdEstadoProcesoCompraUnico());
+		estadoProcesoCompraEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerEstadoProcesoCompraDao().consultarPorId(id).getId()));
 
 		daoFactory.obtenerEstadoProcesoCompraDao().crear(estadoProcesoCompraEntidad);
 	}
 
-	private UUID generarIdEstadoProcesoCompraUnico() {
-		UUID id;
-		boolean existe;
-
-		do {
-			id = UUID.randomUUID();
-			var estadoExistente = daoFactory.obtenerEstadoProcesoCompraDao().consultarPorId(id);
-			existe = !estadoExistente.getId().equals(UtilUUID.obtenerUUIDDefecto());
-		} while (existe);
-
-		return id;
-	}
-
 	@Override
 	public List<EstadoProcesoCompraDominio> consultarPorFiltro(final EstadoProcesoCompraDominio filtro) {
-		var entidadFiltro = EstadoProcesoCompraEntidadAssembler.getInstance().convertirAEntidad(filtro);
+		var entidadFiltro = EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerEstadoProcesoCompraDao().consultarPorFiltro(entidadFiltro).stream()
-				.map(EstadoProcesoCompraEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(EstadoProcesoCompraEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
 	public List<EstadoProcesoCompraDominio> consultarTodos() {
 		return daoFactory.obtenerEstadoProcesoCompraDao().consultarTodos().stream()
-				.map(EstadoProcesoCompraEntidadAssembler.getInstance()::convertirADominio).toList();
+				.map(EstadoProcesoCompraEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
 
 	@Override
-	public EstadoProcesoCompraDominio consultarPorid(final UUID id) {
+	public EstadoProcesoCompraDominio consultarPorId(final UUID id) {
 		var entidad = daoFactory.obtenerEstadoProcesoCompraDao().consultarPorId(id);
 
-		if (entidad.getId().equals(UtilUUID.obtenerUUIDDefecto())) {
+		if (UtilUUID.esValorDefecto(entidad.getId())) {
 			return EstadoProcesoCompraDominio.obtenerValorDefecto();
 		}
 
-		return EstadoProcesoCompraEntidadAssembler.getInstance().convertirADominio(entidad);
+		return EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 }

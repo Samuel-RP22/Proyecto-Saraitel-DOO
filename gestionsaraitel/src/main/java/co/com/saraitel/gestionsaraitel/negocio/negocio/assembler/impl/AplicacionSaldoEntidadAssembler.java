@@ -13,7 +13,7 @@ public class AplicacionSaldoEntidadAssembler
 	private AplicacionSaldoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<AplicacionSaldoDominio, AplicacionSaldoEntidad> getInstance() {
+	public static EntidadAssembler<AplicacionSaldoDominio, AplicacionSaldoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -22,8 +22,8 @@ public class AplicacionSaldoEntidadAssembler
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				AplicacionSaldoDominio.obtenerValorDefecto());
 		return new AplicacionSaldoEntidad(dominioTmp.getId(),
-				SaldoFavorEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getSaldoFavor()),
-				PagoEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPago()),
+				SaldoFavorEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSaldoFavor()),
+				PagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPago()),
 				dominioTmp.getValorAplicado());
 	}
 
@@ -31,8 +31,8 @@ public class AplicacionSaldoEntidadAssembler
 	public AplicacionSaldoDominio convertirADominio(AplicacionSaldoEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new AplicacionSaldoEntidad());
 		return new AplicacionSaldoDominio(entidadTmp.getId(),
-				SaldoFavorEntidadAssembler.getInstance().convertirADominio(entidadTmp.getSaldoFavor()),
-				PagoEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPago()),
+				SaldoFavorEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSaldoFavor()),
+				PagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPago()),
 				entidadTmp.getValorAplicado());
 	}
 }

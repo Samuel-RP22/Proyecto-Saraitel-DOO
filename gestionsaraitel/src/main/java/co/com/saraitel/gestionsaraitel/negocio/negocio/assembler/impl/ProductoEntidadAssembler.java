@@ -12,7 +12,7 @@ public class ProductoEntidadAssembler implements EntidadAssembler<ProductoDomini
 	private ProductoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<ProductoDominio, ProductoEntidad> getInstance() {
+	public static EntidadAssembler<ProductoDominio, ProductoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -22,8 +22,8 @@ public class ProductoEntidadAssembler implements EntidadAssembler<ProductoDomini
 				ProductoDominio.obtenerValorDefecto());
 
 		return new ProductoEntidad(dominioTmp.getId(),
-				MarcaEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getMarca()),
-				CategoriaEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getCategoria()),
+				MarcaEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getMarca()),
+				CategoriaEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCategoria()),
 				dominioTmp.getModelo(), dominioTmp.getNombre(), dominioTmp.getDescripcion());
 	}
 
@@ -32,8 +32,8 @@ public class ProductoEntidadAssembler implements EntidadAssembler<ProductoDomini
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ProductoEntidad());
 
 		return new ProductoDominio(entidadTmp.getId(),
-				MarcaEntidadAssembler.getInstance().convertirADominio(entidadTmp.getMarca()),
-				CategoriaEntidadAssembler.getInstance().convertirADominio(entidadTmp.getCategoria()),
+				MarcaEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getMarca()),
+				CategoriaEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCategoria()),
 				entidadTmp.getModelo(), entidadTmp.getNombre(), entidadTmp.getDescripcion());
 	}
 }

@@ -12,7 +12,7 @@ public class MetodoPagoEntidadAssembler implements EntidadAssembler<MetodoPagoDo
 	private MetodoPagoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<MetodoPagoDominio, MetodoPagoEntidad> getInstance() {
+	public static EntidadAssembler<MetodoPagoDominio, MetodoPagoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 

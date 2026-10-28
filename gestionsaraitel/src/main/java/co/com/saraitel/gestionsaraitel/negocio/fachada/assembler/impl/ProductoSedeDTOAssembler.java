@@ -20,7 +20,7 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 	private ProductoSedeDTOAssembler() {
 	}
 
-	public static DTOAssembler<ProductoSedeDominio, ProductoSedeDTO> getInstance() {
+	public static DTOAssembler<ProductoSedeDominio, ProductoSedeDTO> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -29,9 +29,9 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 		ProductoSedeDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProductoSedeDominio.obtenerValorDefecto());
 
-		ProductoDTO productoDTO = ProductoDTOAssembler.getInstance().convertirADTO(dominioTmp.getProducto());
+		ProductoDTO productoDTO = ProductoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProducto());
 
-		SedeDTO sedeDTO = SedeDTOAssembler.getInstance().convertirADTO(dominioTmp.getSede());
+		SedeDTO sedeDTO = SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede());
 
 		return new ProductoSedeDTO.Builder().id(dominioTmp.getId()).producto(productoDTO).sede(sedeDTO)
 				.precio(dominioTmp.getPrecio()).tieneOferta(dominioTmp.getTieneOferta()).oferta(dominioTmp.getOferta())
@@ -43,9 +43,9 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 	public ProductoSedeDominio convertirADominio(ProductoSedeDTO dto) {
 		ProductoSedeDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new ProductoSedeDTO());
 
-		ProductoDominio productoDominio = ProductoDTOAssembler.getInstance().convertirADominio(dtoTmp.getProducto());
+		ProductoDominio productoDominio = ProductoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProducto());
 
-		SedeDominio sedeDominio = SedeDTOAssembler.getInstance().convertirADominio(dtoTmp.getSede());
+		SedeDominio sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede());
 
 		return new ProductoSedeDominio.Builder().id(dtoTmp.getId()).producto(productoDominio).sede(sedeDominio)
 				.precio(dtoTmp.getPrecio()).tieneOferta(dtoTmp.getTieneOferta()).oferta(dtoTmp.getOferta())

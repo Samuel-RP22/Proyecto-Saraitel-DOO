@@ -13,20 +13,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CategoriaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.MarcaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoEntidad;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
-
-	private static final String SQL_INSERTAR = "INSERT INTO saraitel.\"Producto\" "
-			+ "(\"id\", \"Marca_id\", \"Categoria_id\", " + "\"Modelo\", \"Nombre\", \"Descripcion\") "
-			+ "VALUES (?, ?, ?, ?, ?, ?)";
-
-	private static final String SQL_CONSULTAR = "SELECT \"id\", \"Marca_id\", \"Categoria_id\", "
-			+ "\"Modelo\", \"Nombre\", \"Descripcion\" " + "FROM saraitel.\"Producto\"";
-
-	private static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Producto\" "
-			+ "SET \"Marca_id\" = ?, \"Categoria_id\" = ?, " + "\"Modelo\" = ?, \"Nombre\" = ?, \"Descripcion\" = ? "
-			+ "WHERE \"id\" = ?";
 
 	public ProductoPostgreSqlDAO(final Connection conexion) {
 		super(conexion);
@@ -34,8 +24,8 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 	@Override
 	public void crear(final ProductoEntidad entidad) {
-		ejecutarActualizacion(SQL_INSERTAR, "Error al crear el producto.",
-				"Error NO CONTROLADO al crear el producto.", entidad.getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO,
+				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO, entidad.getId(),
 				entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(),
 				entidad.getNombre(), entidad.getDescripcion());
 	}
@@ -47,7 +37,7 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 		var resultados = consultarPorFiltro(filtro);
 
-		return resultados.isEmpty() ? new ProductoEntidad() : resultados.get(0);
+		return obtenerPrimeroOValorDefecto(resultados, new ProductoEntidad());
 	}
 
 	@Override
@@ -55,7 +45,7 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProductoEntidad());
 
-		var sentencia = new FiltroSql(SQL_CONSULTAR);
+		var sentencia = new FiltroSql(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_CONSULTAR);
 
 		sentencia.conId("\"id\"", filtroSeguro.getId());
 		sentencia.conId("\"Marca_id\"", filtroSeguro.getMarca().getId());
@@ -65,21 +55,21 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 		sentencia.conTexto("\"Descripcion\"", filtroSeguro.getDescripcion());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				"Error al consultar productos.",
-				"Error NO CONTROLADO al consultar productos.");
+				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
+				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public List<ProductoEntidad> consultarTodos() {
-		return ejecutarConsulta(SQL_CONSULTAR, List.of(), this::mapear, "Error al consultar productos.",
-				"Error NO CONTROLADO al consultar productos.");
+		return ejecutarConsulta(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
+				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoEntidad entidad) {
 
-		ejecutarActualizacion(SQL_ACTUALIZAR, "Error al actualizar el producto.",
-				"Error NO CONTROLADO al actualizar el producto.", entidad.getMarca().getId(),
+		ejecutarActualizacion(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO,
+				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO, entidad.getMarca().getId(),
 				entidad.getCategoria().getId(), entidad.getModelo(), entidad.getNombre(),
 				entidad.getDescripcion(), id);
 	}

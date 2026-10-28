@@ -12,7 +12,7 @@ public class DepartamentoEntidadAssembler implements EntidadAssembler<Departamen
 	private DepartamentoEntidadAssembler() {
 	}
 
-	public static EntidadAssembler<DepartamentoDominio, DepartamentoEntidad> getInstance() {
+	public static EntidadAssembler<DepartamentoDominio, DepartamentoEntidad> obtenerInstancia() {
 		return instancia;
 	}
 
@@ -21,13 +21,13 @@ public class DepartamentoEntidadAssembler implements EntidadAssembler<Departamen
 		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DepartamentoDominio.obtenerValorDefecto());
 		return new DepartamentoEntidad(dominioTmp.getId(), dominioTmp.getNombre(),
-				PaisEntidadAssembler.getInstance().convertirAEntidad(dominioTmp.getPais()));
+				PaisEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPais()));
 	}
 
 	@Override
 	public DepartamentoDominio convertirADominio(DepartamentoEntidad entidad) {
 		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DepartamentoEntidad());
 		return new DepartamentoDominio(entidadTmp.getId(), entidadTmp.getNombre(),
-				PaisEntidadAssembler.getInstance().convertirADominio(entidadTmp.getPais()));
+				PaisEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPais()));
 	}
 }
