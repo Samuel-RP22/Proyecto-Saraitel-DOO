@@ -11,6 +11,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -31,22 +35,35 @@ public class SeguridadConfiguracion {
 	private static final String ACCESO_DENEGADO = "/acceso-denegado.html";
 	private static final String LOGOUT = "/logout";
 	private static final String LOGIN_LOGOUT_INVALIDO = "/login?error";
-	private static final String LOGIN_LOGOUT_EXITOSO = "/login?logout";
 	private static final String PROCESO_COMPRA = "/proceso-compra.html";
 	private static final String SOLICITUD_AUTORIZACION_NO_ENCONTRADA = "authorization_request_not_found";
 	private static final String STATE_INVALIDO = "invalid_state_parameter";
+	private static final String PARAMETRO_PROMPT = "prompt";
+	private static final String SELECCIONAR_CUENTA = "select_account";
 
 	@Bean
-	SecurityFilterChain filtroSeguridad(HttpSecurity http) {
+	SecurityFilterChain filtroSeguridad(HttpSecurity http, ClientRegistrationRepository repositorioClientes) {
 		http.authorizeHttpRequests(
 				autorizacion -> autorizacion.requestMatchers(ACCESO_DENEGADO).permitAll().anyRequest().authenticated())
 				.oauth2Login(
-						oauth -> oauth.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
+						oauth -> oauth
+								.authorizationEndpoint(autorizacion -> autorizacion
+										.authorizationRequestResolver(resolverConSeleccionDeCuenta(repositorioClientes)))
+								.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
 								.defaultSuccessUrl(PROCESO_COMPRA, true).failureHandler(this::manejarFalloDeIngreso))
 				.csrf(csrf -> csrf.spa()).cors(Customizer.withDefaults())
-				.logout(logout -> logout.logoutUrl(LOGOUT).logoutSuccessUrl(LOGIN_LOGOUT_EXITOSO));
+				.logout(logout -> logout.logoutUrl(LOGOUT).logoutSuccessUrl(PROCESO_COMPRA));
 
 		return http.build();
+	}
+
+	private OAuth2AuthorizationRequestResolver resolverConSeleccionDeCuenta(
+			ClientRegistrationRepository repositorioClientes) {
+		var resolver = new DefaultOAuth2AuthorizationRequestResolver(repositorioClientes,
+				OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI);
+		resolver.setAuthorizationRequestCustomizer(solicitud -> solicitud
+				.additionalParameters(parametros -> parametros.put(PARAMETRO_PROMPT, SELECCIONAR_CUENTA)));
+		return resolver;
 	}
 
 	private OidcUser validarEmpleadoActivo(OidcUserRequest solicitud) {

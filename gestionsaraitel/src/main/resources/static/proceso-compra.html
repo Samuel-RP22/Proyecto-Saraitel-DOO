@@ -302,13 +302,25 @@ async function cargarTodo() {
   }
 }
 
+async function cerrarSesion(ev) {
+  ev.target.disabled = true;
+  try {
+    await fetch("/logout", { method: "POST", credentials: "include", redirect: "manual", headers: construirEncabezados(null, leerCookie("XSRF-TOKEN")) });
+    location.assign("/proceso-compra.html");
+  } catch {
+    ev.target.disabled = false;
+    mostrar($("msgConfirmar"), "err", "No se pudo cerrar la sesión. Revisa que el backend esté encendido.");
+  }
+}
+
 const opcionEmpleadoSinSesion = (e) => `<option value="${esc(e.id)}">${esc(nombreEmpleado(e))} · ${esc(e.sede.nombre)}</option>`;
 
 function pintarSesion() {
   const activos = datos.empleados.filter((e) => e.esActivo);
   if (sesion.autenticado) {
     $("sesion").innerHTML = `<span>Atiende: <strong>${esc(nombreEmpleado(sesion.empleado))}</strong> · ${esc(sesion.empleado.sede.nombre)}</span>
-      <form method="post" action="/logout" style="margin:0"><button class="small" type="submit">Cerrar sesión</button></form>`;
+      <button class="small" type="button" id="btnCerrarSesion">Cerrar sesión</button>`;
+    $("btnCerrarSesion").addEventListener("click", cerrarSesion);
     return;
   }
   const opciones = activos.map(opcionEmpleadoSinSesion).join("");
