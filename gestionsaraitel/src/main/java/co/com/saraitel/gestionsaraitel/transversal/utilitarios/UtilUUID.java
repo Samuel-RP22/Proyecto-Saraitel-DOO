@@ -6,6 +6,7 @@ import java.util.function.UnaryOperator;
 public final class UtilUUID {
 
 	private static final UUID UUID_DEFECTO = new UUID(0L, 0L);
+	private static final String UUID_DEFECTO_TEXTO = "00000000-0000-0000-0000-000000000000";
 
 	private UtilUUID() {
 	}
@@ -19,7 +20,8 @@ public final class UtilUUID {
 	}
 
 	public static String obtenerValorDefectoComoTexto(final String UUIDTexto) {
-		return UtilTexto.esVacia(UUIDTexto) ? UUID_DEFECTO.toString() : UtilTexto.quitarEspaciosEnBlanco(UUIDTexto);
+		var textoSanitizado = UtilTexto.quitarEspaciosEnBlanco(UUIDTexto);
+		return UtilTexto.esVacia(textoSanitizado) ? UUID_DEFECTO_TEXTO : textoSanitizado;
 	}
 
 	public static UUID convertirAUUID(final String UUIDTexto) {
@@ -37,7 +39,7 @@ public final class UtilUUID {
 	public static UUID obtenerValorDefecto(final UUID valor) {
 		return obtenerValorDefecto(valor, obtenerUUIDDefecto());
 	}
-	
+
 	public static boolean esValorDefecto(final UUID valor) {
 		return obtenerUUIDDefecto().equals(obtenerValorDefecto(valor));
 	}
