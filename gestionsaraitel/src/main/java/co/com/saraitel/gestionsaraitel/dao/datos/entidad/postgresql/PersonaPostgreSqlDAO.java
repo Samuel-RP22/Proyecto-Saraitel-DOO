@@ -13,7 +13,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.TipoDocumentoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
@@ -24,8 +25,8 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 
 	@Override
 	public void crear(final PersonaEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.PersonaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PERSONA,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PERSONA, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PERSONA,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PERSONA, entidad.getId(),
 				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
 				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
 				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
@@ -46,7 +47,7 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PersonaEntidad());
 
-		var consulta = new FiltroSql(CatalogoMensajesSql.PersonaPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"TipoDocumento_id\"", filtroSeguro.getTipoDocumento().getId())
 				.conId("\"Prefijo_id\"", filtroSeguro.getPrefijo().getId())
 				.conTexto("\"NumeroDocumento\"", filtroSeguro.getNumeroDocumento())
@@ -56,20 +57,20 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
 	}
 
 	@Override
 	public List<PersonaEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.PersonaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
+		return ejecutarConsulta(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PersonaEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.PersonaPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PERSONA,
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PERSONA,
 				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
 				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
 				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
@@ -77,8 +78,8 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoMensajesSql.PersonaPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PERSONA,
-				CatalogoMensajesSql.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PERSONA, id);
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PERSONA,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PERSONA, id);
 	}
 
 	private PersonaEntidad mapear(final ResultSet resultados) throws SQLException {

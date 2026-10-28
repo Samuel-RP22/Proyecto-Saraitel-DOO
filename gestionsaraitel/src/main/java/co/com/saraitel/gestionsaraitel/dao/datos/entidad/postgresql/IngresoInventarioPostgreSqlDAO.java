@@ -14,7 +14,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.IngresoInventarioEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInventarioDAO {
@@ -25,8 +26,8 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 	@Override
 	public void crear(final IngresoInventarioEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO,
-				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO, entidad.getId(),
 				entidad.getSede().getId(), entidad.getEstado().getId(),
 				Timestamp.valueOf(entidad.getFechaLlegada()), entidad.getTotal());
 	}
@@ -46,7 +47,7 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new IngresoInventarioEntidad());
 
-		var sentencia = new FiltroSql(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR);
+		var sentencia = new FiltroSql(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR);
 
 		sentencia.conId("\"id\"", filtroSeguro.getId());
 		sentencia.conId("\"Sede_id\"", filtroSeguro.getSede().getId());
@@ -54,14 +55,14 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 		sentencia.conFechaHora("\"FechaLlegada\"", filtroSeguro.getFechaLlegada());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
-				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	@Override
 	public List<IngresoInventarioEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
-				CatalogoMensajesSql.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
+		return ejecutarConsulta(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	private IngresoInventarioEntidad mapear(final ResultSet resultados) throws SQLException {

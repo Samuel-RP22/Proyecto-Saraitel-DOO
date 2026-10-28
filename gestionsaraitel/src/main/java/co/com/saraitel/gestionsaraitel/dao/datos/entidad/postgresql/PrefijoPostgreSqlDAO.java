@@ -11,7 +11,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.PrefijoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class PrefijoPostgreSqlDAO extends SqlDAO implements PrefijoDAO {
@@ -35,18 +36,18 @@ public class PrefijoPostgreSqlDAO extends SqlDAO implements PrefijoDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PrefijoEntidad());
 
-		var consulta = new FiltroSql(CatalogoMensajesSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"",
+		var consulta = new FiltroSql(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"",
 				filtroSeguro.getCodigo());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajesSql.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
-				CatalogoMensajesSql.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
+				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
+				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
 	}
 
 	@Override
 	public List<PrefijoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
-				CatalogoMensajesSql.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
+		return ejecutarConsulta(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
+				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
 	}
 
 	private PrefijoEntidad mapear(final ResultSet resultados) throws SQLException {

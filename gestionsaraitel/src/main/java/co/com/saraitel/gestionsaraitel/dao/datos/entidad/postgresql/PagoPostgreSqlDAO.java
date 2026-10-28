@@ -12,7 +12,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PagoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
@@ -23,16 +24,16 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 	@Override
 	public void crear(final PagoEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.PagoPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAGO,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.PagoPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAGO,
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO, entidad.getId(),
 				entidad.getCompra().getId(), entidad.getMontoPagado(), entidad.getFechaPago());
 	}
 
 	@Override
 	public PagoEntidad consultarPorId(final UUID id) {
-		List<PagoEntidad> resultado = ejecutarConsulta(CatalogoMensajesSql.PagoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGO);
+		List<PagoEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.PagoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO,
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGO);
 
 		return obtenerPrimeroOValorDefecto(resultado, new PagoEntidad());
 	}
@@ -42,20 +43,20 @@ public class PagoPostgreSqlDAO extends SqlDAO implements PagoDAO {
 
 		PagoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PagoEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.PagoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PagoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Compra_id\"", filtroSeguro.getCompra().getId())
 				.conDecimal("\"MontoPagado\"", filtroSeguro.getMontoPagado())
 				.conFechaHora("\"FechaPago\"", filtroSeguro.getFechaPago());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS);
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS,
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS);
 	}
 
 	@Override
 	public List<PagoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.PagoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS,
-				CatalogoMensajesSql.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS);
+		return ejecutarConsulta(CatalogoSentenciasSql.PagoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS,
+				CatalogoMensajes.PagoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS);
 	}
 
 	private PagoEntidad mapear(final ResultSet resultados) throws SQLException {

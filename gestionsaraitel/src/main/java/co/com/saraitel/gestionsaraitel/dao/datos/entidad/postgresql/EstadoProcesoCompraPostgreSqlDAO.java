@@ -11,7 +11,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoProcesoCompraDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
@@ -24,9 +25,9 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
     @Override
     public void crear(final EstadoProcesoCompraEntidad entidad) {
         ejecutarActualizacion(
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CREAR,
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
-				CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
+                CatalogoSentenciasSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CREAR,
+                CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
+				CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
                 entidad.getId(),
                 entidad.getCodigo(),
                 entidad.getNombre()
@@ -36,11 +37,11 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
     @Override
     public EstadoProcesoCompraEntidad consultarPorId(final UUID id) {
         List<EstadoProcesoCompraEntidad> resultado = ejecutarConsulta(
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID,
+                CatalogoSentenciasSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_ID,
                 List.of(id),
                 this::mapear,
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
-				CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA
+                CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA,
+				CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA
         );
 
         return obtenerPrimeroOValorDefecto(resultado, new EstadoProcesoCompraEntidad());
@@ -52,7 +53,7 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
 
     	EstadoProcesoCompraEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new EstadoProcesoCompraEntidad());
 
-        FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+        FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
                 .conId("\"id\"", filtroSeguro.getId())
                 .conTexto("\"Codigo\"", filtroSeguro.getCodigo())
                 .conTexto("\"Nombre\"", filtroSeguro.getNombre());
@@ -61,19 +62,19 @@ public class EstadoProcesoCompraPostgreSqlDAO extends SqlDAO
                 filtroSql.getSentencia(),
                 filtroSql.getParametros(),
                 this::mapear,
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA,
-				CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA
+                CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA,
+				CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA
         );
     }
 
     @Override
     public List<EstadoProcesoCompraEntidad> consultarTodos() {
         return ejecutarConsulta(
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_TODOS,
+                CatalogoSentenciasSql.EstadoProcesoCompraPostgreSqlDAO.SQL_CONSULTAR_TODOS,
                 List.of(),
                 this::mapear,
-                CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA,
-				CatalogoMensajesSql.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA
+                CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA,
+				CatalogoMensajes.EstadoProcesoCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA
         );
     }
 

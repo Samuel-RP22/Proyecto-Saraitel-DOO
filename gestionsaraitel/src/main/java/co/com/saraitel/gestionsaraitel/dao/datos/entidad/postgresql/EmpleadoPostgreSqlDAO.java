@@ -13,7 +13,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EmpleadoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.SedeEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
@@ -24,8 +25,8 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 
 	@Override
 	public void crear(final EmpleadoEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.EmpleadoPostgreSqlDAO.SQL_CREAR, CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_EMPLEADO,
-				CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_EMPLEADO, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.EmpleadoPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_EMPLEADO,
+				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_EMPLEADO, entidad.getId(),
 				entidad.getSede().getId(), entidad.getPersona().getId(), entidad.getEsActivo());
 	}
 
@@ -43,27 +44,27 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 	public List<EmpleadoEntidad> consultarPorFiltro(final EmpleadoEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new EmpleadoEntidad());
 
-		var consulta = new FiltroSql(CatalogoMensajesSql.EmpleadoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoSentenciasSql.EmpleadoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Sede_id\"", filtroSeguro.getSede().getId())
 				.conId("\"Persona_id\"", filtroSeguro.getPersona().getId())
 				.conTextoIgnorandoMayusculas("\"Correo\"", filtroSeguro.getPersona().getCorreo())
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_EMPLEADOS,
-				CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS);
+				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_EMPLEADOS,
+				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS);
 	}
 
 	@Override
 	public List<EmpleadoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.EmpleadoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_EMPLEADOS,
-				CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS);
+		return ejecutarConsulta(CatalogoSentenciasSql.EmpleadoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_EMPLEADOS,
+				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final EmpleadoEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.EmpleadoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_EMPLEADO,
-				CatalogoMensajesSql.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_EMPLEADO, entidad.getSede().getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.EmpleadoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_EMPLEADO,
+				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_EMPLEADO, entidad.getSede().getId(),
 				entidad.getPersona().getId(), entidad.getEsActivo(), id);
 	}
 

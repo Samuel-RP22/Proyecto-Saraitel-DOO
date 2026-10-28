@@ -12,7 +12,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CiudadEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.DepartamentoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class CiudadPostgreSqlDAO extends SqlDAO implements CiudadDAO {
@@ -35,19 +36,19 @@ public class CiudadPostgreSqlDAO extends SqlDAO implements CiudadDAO {
 	public List<CiudadEntidad> consultarPorFiltro(final CiudadEntidad filtro) {
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new CiudadEntidad());
 
-		var consulta = new FiltroSql(CatalogoMensajesSql.CiudadPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoSentenciasSql.CiudadPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"Departamento_id\"", filtroSeguro.getDepartamento().getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajesSql.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDADES,
-				CatalogoMensajesSql.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES);
+				CatalogoMensajes.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDADES,
+				CatalogoMensajes.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES);
 	}
 
 	@Override
 	public List<CiudadEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.CiudadPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDADES,
-				CatalogoMensajesSql.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES);
+		return ejecutarConsulta(CatalogoSentenciasSql.CiudadPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDADES,
+				CatalogoMensajes.CiudadPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES);
 	}
 
 	private CiudadEntidad mapear(final ResultSet resultados) throws SQLException {

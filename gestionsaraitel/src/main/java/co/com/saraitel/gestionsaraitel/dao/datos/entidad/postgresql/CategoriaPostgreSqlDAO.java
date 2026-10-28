@@ -11,7 +11,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CategoriaDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CategoriaEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 
@@ -23,8 +24,8 @@ public class CategoriaPostgreSqlDAO extends SqlDAO implements CategoriaDAO {
 
 	@Override
 	public void crear(final CategoriaEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.CategoriaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CATEGORIA,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CATEGORIA, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.CategoriaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CATEGORIA,
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CATEGORIA, entidad.getId(),
 				entidad.getNombre(),
 				entidad.getIdCategoriaPadre(),
 				entidad.getNivel());
@@ -45,7 +46,7 @@ public class CategoriaPostgreSqlDAO extends SqlDAO implements CategoriaDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new CategoriaEntidad());
 
-		var sentencia = new FiltroSql(CatalogoMensajesSql.CategoriaPostgreSqlDAO.SQL_CONSULTAR);
+		var sentencia = new FiltroSql(CatalogoSentenciasSql.CategoriaPostgreSqlDAO.SQL_CONSULTAR);
 
 		sentencia.conId("\"id\"", filtroSeguro.getId());
 		sentencia.conTexto("\"Nombre\"", filtroSeguro.getNombre());
@@ -53,28 +54,28 @@ public class CategoriaPostgreSqlDAO extends SqlDAO implements CategoriaDAO {
 		sentencia.conEntero("\"Nivel\"", filtroSeguro.getNivel());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CATEGORIAS,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CATEGORIAS);
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CATEGORIAS,
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CATEGORIAS);
 	}
 
 	@Override
 	public List<CategoriaEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.CategoriaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CATEGORIAS,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CATEGORIAS);
+		return ejecutarConsulta(CatalogoSentenciasSql.CategoriaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CATEGORIAS,
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CATEGORIAS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final CategoriaEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.CategoriaPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CATEGORIA,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CATEGORIA, entidad.getNombre(),
+		ejecutarActualizacion(CatalogoSentenciasSql.CategoriaPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CATEGORIA,
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CATEGORIA, entidad.getNombre(),
 				entidad.getIdCategoriaPadre(),
 				entidad.getNivel(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoMensajesSql.CategoriaPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CATEGORIA,
-				CatalogoMensajesSql.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CATEGORIA, id);
+		ejecutarActualizacion(CatalogoSentenciasSql.CategoriaPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CATEGORIA,
+				CatalogoMensajes.CategoriaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CATEGORIA, id);
 	}
 
 	private CategoriaEntidad mapear(final ResultSet resultados) throws SQLException {

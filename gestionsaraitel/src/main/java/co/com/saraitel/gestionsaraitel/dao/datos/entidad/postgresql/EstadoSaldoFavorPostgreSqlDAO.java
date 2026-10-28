@@ -11,7 +11,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.EstadoSaldoFavorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.FiltroSql;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoSaldoFavorEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldoFavorDAO {
@@ -22,18 +23,18 @@ public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldo
 
 	@Override
 	public void crear(final EstadoSaldoFavorEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CREAR,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
+		ejecutarActualizacion(CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_SALDO_A_FAVOR,
 				entidad.getId(), entidad.getCodigo(), entidad.getNombre());
 	}
 
 	@Override
 	public EstadoSaldoFavorEntidad consultarPorId(final UUID id) {
 		List<EstadoSaldoFavorEntidad> resultado = ejecutarConsulta(
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR);
+				CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR);
 
 		return obtenerPrimeroOValorDefecto(resultado, new EstadoSaldoFavorEntidad());
 	}
@@ -44,21 +45,21 @@ public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldo
 		EstadoSaldoFavorEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
 				new EstadoSaldoFavorEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
 				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"", filtroSeguro.getCodigo())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
 	}
 
 	@Override
 	public List<EstadoSaldoFavorEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+		return ejecutarConsulta(CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
 				this::mapear,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
-				CatalogoMensajesSql.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR,
+				CatalogoMensajes.EstadoSaldoFavorPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR);
 	}
 
 	private EstadoSaldoFavorEntidad mapear(final ResultSet resultados) throws SQLException {

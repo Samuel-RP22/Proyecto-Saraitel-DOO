@@ -4,13 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Procesos de compra · Saraitel</title>
-<!--
-  Herramienta de un solo archivo (HTML + CSS + JS en línea, sin React, sin build, sin dependencias).
-  Va en src/main/resources/static/ y se abre en http://localhost:986/proceso-compra.html
-  Endpoints: /api/v1/procesos-compra (GET, GET/{id}, POST) · /empleados (GET, GET /actual)
-             /clientes-naturales y /clientes-juridicos (GET, POST) · /personas · /prefijos
-             /tipos-documento · /estados-proceso-compra (GET)
--->
 <style>
   :root {
     --bg: #f6f7f9; --panel: #fff; --text: #1d2330; --muted: #5f6b7d; --border: #dde1e7;
@@ -81,12 +74,11 @@
 </header>
 
 <main>
-  <nav class="tabs" role="tablist">
+  <div class="tabs" role="tablist">
     <button role="tab" id="tab-registrar" aria-controls="vista-registrar">Registrar compra</button>
     <button role="tab" id="tab-consultar" aria-controls="vista-consultar">Consultar procesos</button>
-  </nav>
+  </div>
 
-  <!-- ===================== REGISTRAR ===================== -->
   <section class="panel" id="vista-registrar" role="tabpanel" aria-labelledby="tab-registrar">
     <div class="pasos" id="pasos"></div>
 
@@ -136,7 +128,7 @@
         <button type="button" data-ir="nuevo">Atrás</button>
         <button class="primary" type="submit">Registrar cliente natural</button>
       </div>
-      <div class="msg" role="status"></div>
+      <output class="msg"></output>
     </form>
 
     <form data-paso="juridico" id="formJuridico" hidden novalidate>
@@ -152,7 +144,7 @@
         <button type="button" data-ir="nuevo">Atrás</button>
         <button class="primary" type="submit">Registrar cliente jurídico</button>
       </div>
-      <div class="msg" role="status"></div>
+      <output class="msg"></output>
     </form>
 
     <div data-paso="confirmar" hidden>
@@ -167,22 +159,19 @@
         <button type="button" id="btnAtrasConfirmar">Atrás</button>
         <button class="primary" type="button" id="btnCrearProceso">Crear proceso de compra</button>
       </div>
-      <div class="msg" id="msgConfirmar" role="status"></div>
+      <output class="msg" id="msgConfirmar"></output>
     </div>
   </section>
 
-  <!-- ===================== CONSULTAR ===================== -->
   <section class="panel" id="vista-consultar" role="tabpanel" aria-labelledby="tab-consultar" hidden>
     <h2>Consultar procesos de compra</h2>
     <form id="formConsultar">
-      <!-- Modo por filtros: Cliente, Atendido por y Estado -->
       <div class="grid" id="filtrosNormales">
         <div><label for="fCliente">Cliente</label><input id="fCliente" list="dlClientes" placeholder="Todos" autocomplete="off"></div>
         <div><label for="fEmpleado">Atendido por</label><select id="fEmpleado"></select></div>
         <div><label for="fEstado">Estado</label><select id="fEstado"></select></div>
         <div class="boton-id"><button type="button" id="btnModoId">Consultar por ID</button></div>
       </div>
-      <!-- Modo por ID: solo el campo del id, a todo lo ancho -->
       <div id="filtroId" hidden>
         <label for="fId">Id del proceso</label>
         <input id="fId" class="campo-id" placeholder="00000000-0000-0000-0000-000000000000" spellcheck="false" autocomplete="off" maxlength="36">
@@ -192,7 +181,7 @@
         <button type="button" id="btnQuitarFiltros">Quitar filtros</button>
         <button type="button" id="btnModoFiltros" hidden>Volver a filtros</button>
       </div>
-      <div class="msg" id="msgConsultar" role="status"></div>
+      <output class="msg" id="msgConsultar"></output>
     </form>
     <div class="table-wrap">
       <table>
@@ -205,63 +194,88 @@
 </main>
 <datalist id="dlClientes"></datalist>
 
-<script>
-const UUID_VACIO = "00000000-0000-0000-0000-000000000000", UUID_RE = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
-const $ = (id) => document.getElementById(id), $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
-const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const sinTildes = (t) => String(t ?? "").normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+<script type="module">
+const UUID_VACIO = "00000000-0000-0000-0000-000000000000";
+const UUID_RE = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
+const $ = (id) => document.getElementById(id);
+const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+const ENTIDADES_HTML = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (t) => String(t ?? "").replaceAll(/[&<>"']/g, (c) => ENTIDADES_HTML[c]);
+const sinTildes = (t) => String(t ?? "").normalize("NFD").replaceAll(/\p{Diacritic}/gu, "").toLowerCase();
 
-// Estado de la página (en memoria; lo que vale la pena compartir va en la URL)
 const datos = { clientes: [], empleados: [], estados: new Map(), personas: [], prefijos: [], tipos: [] };
 const sesion = { empleado: null, autenticado: false };
-const compra = { cliente: null }; // {id, esClienteRegistrado, etiqueta}
+const compra = { cliente: null };
 
-// ---------- Preferencias del navegador (localStorage) ----------
-const ls = { get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-             set(k, v) { try { localStorage.setItem(k, v); } catch {} }, del(k) { try { localStorage.removeItem(k); } catch {} } };
-// El HTML lo sirve el mismo Spring Boot, así que el API está en el mismo servidor (ruta relativa).
+const ls = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch { } },
+  del(k) { try { localStorage.removeItem(k); } catch { } }
+};
 const api = (ruta) => "/api/v1" + ruta;
-ls.del("saraitel.apiBase"); // se borra la URL que se haya guardado antes en el navegador
+ls.del("saraitel.apiBase");
 
-// ---------- CSRF: Spring Security deja el token en la cookie XSRF-TOKEN ----------
-// En cada POST/PUT/DELETE hay que devolverlo en el encabezado X-XSRF-TOKEN; si no, responde 403.
 const leerCookie = (nombre) => {
   const par = document.cookie.split("; ").find((c) => c.startsWith(nombre + "="));
   return par ? decodeURIComponent(par.substring(nombre.length + 1)) : null;
 };
-const METODOS_SEGUROS = ["GET", "HEAD", "OPTIONS"];
+const METODOS_SEGUROS = new Set(["GET", "HEAD", "OPTIONS"]);
 
-// ---------- HTTP: entiende RespuestaOk / RespuestaError ----------
+function construirEncabezados(cuerpo, tokenCsrf) {
+  const encabezados = { Accept: "application/json" };
+  if (cuerpo) {
+    encabezados["Content-Type"] = "application/json";
+  }
+  if (tokenCsrf) {
+    encabezados["X-XSRF-TOKEN"] = tokenCsrf;
+  }
+  return encabezados;
+}
+
+function mensajeRespuestaNoJson(res) {
+  const sinSesion = res.redirected || res.status === 401 || res.status === 403;
+  return sinSesion ? "Tu sesión no está activa. Inicia sesión y vuelve a intentar." : "El servidor no respondió JSON (HTTP " + res.status + ").";
+}
+
+function construirMensajeError(cuerpo, estadoHttp) {
+  const mensaje = (cuerpo.mensajes || []).join("\n") || "Error HTTP " + estadoHttp;
+  return cuerpo.correlationId ? mensaje + "\nCódigo: " + cuerpo.correlationId : mensaje;
+}
+
 async function llamar(ruta, opciones = {}) {
   const metodo = (opciones.method || "GET").toUpperCase();
-  const tokenCsrf = METODOS_SEGUROS.includes(metodo) ? null : leerCookie("XSRF-TOKEN");
+  const tokenCsrf = METODOS_SEGUROS.has(metodo) ? null : leerCookie("XSRF-TOKEN");
   let res;
   try {
-    res = await fetch(api(ruta), { credentials: "include", ...opciones, headers: { Accept: "application/json",
-      ...(opciones.body ? { "Content-Type": "application/json" } : {}),
-      ...(tokenCsrf ? { "X-XSRF-TOKEN": tokenCsrf } : {}) } });
-  } catch { throw new Error("No se pudo conectar con el servidor. Revisa que el backend esté encendido."); }
-  if (!(res.headers.get("content-type") || "").includes("json"))
-    throw new Error(res.redirected || res.status === 401 || res.status === 403 ? "Tu sesión no está activa. Inicia sesión y vuelve a intentar." : "El servidor no respondió JSON (HTTP " + res.status + ").");
+    res = await fetch(api(ruta), { credentials: "include", ...opciones, headers: construirEncabezados(opciones.body, tokenCsrf) });
+  } catch {
+    throw new Error("No se pudo conectar con el servidor. Revisa que el backend esté encendido.");
+  }
+  if (!(res.headers.get("content-type") || "").includes("json")) {
+    throw new Error(mensajeRespuestaNoJson(res));
+  }
   const cuerpo = await res.json();
-  if (!res.ok || cuerpo.estado === "ERROR") throw new Error(construirMensajeError(cuerpo, res.status));
+  if (!res.ok || cuerpo.estado === "ERROR") {
+    throw new Error(construirMensajeError(cuerpo, res.status));
+  }
   return cuerpo;
 }
 const mostrar = (el, tipo, texto) => { el.className = "msg " + tipo; el.textContent = texto; };
 const ocultar = (el) => { el.className = "msg"; el.textContent = ""; };
 
-function construirMensajeError(cuerpo, estadoHttp) {
-	  const mensaje = (cuerpo.mensajes || []).join("\n") || "Error HTTP " + estadoHttp;
-	  return cuerpo.correlationId ? mensaje + "\nCódigo: " + cuerpo.correlationId : mensaje;
-	}
-
-// ---------- Formatos ----------
 const pesos = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0, maximumFractionDigits: 2 });
-const aFecha = (v) => Array.isArray(v) ? new Date(v[0], v[1] - 1, v[2], v[3] || 0, v[4] || 0, v[5] || 0) : (v ? new Date(v) : null);
-const fechaTexto = (v) => { const f = aFecha(v); return !f || isNaN(f) || f.getFullYear() <= 1800 ? "—" : f.toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" }); };
+const aFecha = (v) => {
+  if (Array.isArray(v)) {
+    return new Date(v[0], v[1] - 1, v[2], v[3] || 0, v[4] || 0, v[5] || 0);
+  }
+  return v ? new Date(v) : null;
+};
+const fechaTexto = (v) => {
+  const f = aFecha(v);
+  return !f || Number.isNaN(f.getTime()) || f.getFullYear() <= 1800 ? "—" : f.toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" });
+};
 const nombreEmpleado = (e) => e ? `${e.persona.nombre} ${e.persona.apellido}`.trim() : "—";
 
-// ---------- Carga de catálogos ----------
 async function cargarTodo() {
   const pedir = (r) => llamar(r).then((x) => x.datos).catch((e) => { console.warn(r, e.message); return null; });
   const [nat, jur, emp, est, per, pre, tip, actual] = await Promise.all(["/clientes-naturales", "/clientes-juridicos",
@@ -272,30 +286,39 @@ async function cargarTodo() {
       nombre: `${n.persona.nombre} ${n.persona.apellido}`, documento: n.persona.numeroDocumento })),
     ...(jur || []).map((j) => ({ clienteId: j.clienteRegistrado.cliente.id, tipo: "Jurídico", nombre: j.razonSocial, documento: "NIT " + j.nit }))
   ].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
-  datos.empleados = emp || []; datos.personas = per || []; datos.prefijos = pre || []; datos.tipos = tip || [];
+  datos.empleados = emp || [];
+  datos.personas = per || [];
+  datos.prefijos = pre || [];
+  datos.tipos = tip || [];
   datos.estados = new Map((est || []).map((e) => [e.id, e]));
 
   sesion.autenticado = Array.isArray(actual) && actual.length > 0;
   sesion.empleado = sesion.autenticado ? actual[0] : datos.empleados.find((e) => e.id === ls.get("saraitel.empleadoDev")) || null;
-  pintarSesion(); pintarCatalogos(); filtrarClientes();
-  if (!nat || !emp) mostrar($("msgConfirmar"), "warn", "Algunos datos no se pudieron cargar. Revisa que el backend esté encendido y recarga la página.");
+  pintarSesion();
+  pintarCatalogos();
+  filtrarClientes();
+  if (!nat || !emp) {
+    mostrar($("msgConfirmar"), "warn", "Algunos datos no se pudieron cargar. Revisa que el backend esté encendido y recarga la página.");
+  }
 }
+
+const opcionEmpleadoSinSesion = (e) => `<option value="${esc(e.id)}">${esc(nombreEmpleado(e))} · ${esc(e.sede.nombre)}</option>`;
 
 function pintarSesion() {
   const activos = datos.empleados.filter((e) => e.esActivo);
   if (sesion.autenticado) {
-    // Cerrar sesión: formulario POST normal a /logout (Spring Security), funciona aun sin JavaScript.
     $("sesion").innerHTML = `<span>Atiende: <strong>${esc(nombreEmpleado(sesion.empleado))}</strong> · ${esc(sesion.empleado.sede.nombre)}</span>
       <form method="post" action="/logout" style="margin:0"><button class="small" type="submit">Cerrar sesión</button></form>`;
     return;
   }
-  // Sin login (seguridad desactivada en desarrollo): se escoge el empleado a mano.
+  const opciones = activos.map(opcionEmpleadoSinSesion).join("");
   $("sesion").innerHTML = `<label for="empleadoDev" style="margin:0">Sin sesión · atiende:</label>
-    <select id="empleadoDev" style="width:auto"><option value="">Escoge un empleado</option>${activos.map((e) =>
-      `<option value="${esc(e.id)}">${esc(nombreEmpleado(e))} · ${esc(e.sede.nombre)}</option>`).join("")}</select>`;
+    <select id="empleadoDev" style="width:auto"><option value="">Escoge un empleado</option>${opciones}</select>`;
   $("empleadoDev").value = sesion.empleado?.id || "";
   $("empleadoDev").addEventListener("change", (ev) => {
-    sesion.empleado = datos.empleados.find((e) => e.id === ev.target.value) || null; ls.set("saraitel.empleadoDev", ev.target.value); pintarResumen();
+    sesion.empleado = datos.empleados.find((e) => e.id === ev.target.value) || null;
+    ls.set("saraitel.empleadoDev", ev.target.value);
+    pintarResumen();
   });
 }
 
@@ -310,20 +333,16 @@ function pintarCatalogos() {
   leerFiltrosURL();
 }
 
-// ---------- Validación y sanitización en el front end ----------
-// Espejo de las reglas *ValidoRule del negocio: mismos límites, formatos, mensajes y orden (obligatoriedad → formato → longitud).
-// Es una ayuda para el usuario (respuesta inmediata y menos viajes al servidor); el backend sigue validando y sanitizando siempre,
-// porque nunca se debe confiar en lo que llega del navegador. Si cambia un límite o un formato en el backend, hay que cambiarlo aquí también.
 const limpiar = {
-  // NFC, espacios simples y sin caracteres de control ni invisibles (cero ancho, marcas de dirección…)
-  texto: (t) => String(t ?? "").normalize("NFC").replace(/\s+/g, " ").replace(/[\p{Cc}\p{Cf}]/gu, "").trim(),
-  sinEspacios: (t) => limpiar.texto(t).replace(/ /g, ""),
-  telefono: (t) => limpiar.sinEspacios(t).replace(/[().-]/g, ""),   // "300 123-4567" → "3001234567"
-  documento: (t) => limpiar.sinEspacios(t).replace(/\./g, ""),      // "1.036.600.002" → "1036600002"
+  texto: (t) => String(t ?? "").normalize("NFC").replaceAll(/\s+/g, " ").replaceAll(/[\p{Cc}\p{Cf}]/gu, "").trim(),
+  sinEspacios: (t) => limpiar.texto(t).replaceAll(" ", ""),
+  telefono: (t) => limpiar.sinEspacios(t).replaceAll(/[().-]/g, ""),
+  documento: (t) => limpiar.sinEspacios(t).replaceAll(".", ""),
 };
-const SOLO_LETRAS = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/, SOLO_DIGITOS = /^[0-9]+$/, CORREO_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+const SOLO_LETRAS = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
+const SOLO_DIGITOS = /^\d+$/;
+const CORREO_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const REGLAS = {
-  // Cliente natural (reglas de Persona)
   nTipoDoc: { uuid: true, obligatorio: "El tipo de documento de la persona es obligatorio" },
   nDocumento: { sanear: limpiar.documento, min: 5, max: 15, patron: /^[A-Za-z0-9]+$/,
     obligatorio: "El número de documento de la persona es obligatorio",
@@ -346,12 +365,11 @@ const REGLAS = {
     obligatorio: "El correo electrónico de la persona es obligatorio",
     longitud: "La longitud del correo debe estar entre 6 y 100 caracteres",
     formato: "El formato del correo electrónico no es válido" },
-  // Cliente jurídico (reglas de ClienteRegistradoJ)
-  jNit: { sanear: limpiar.sinEspacios, min: 9, max: 12, patron: /^[0-9]{9,10}(-[0-9])?$/,
+  jNit: { sanear: limpiar.sinEspacios, min: 9, max: 12, patron: /^\d{9,10}(-\d)?$/,
     obligatorio: "El NIT del cliente jurídico es obligatorio para llevar a cabo la operación deseada",
     longitud: "La longitud del NIT del cliente jurídico no es valida, asegurese que este entre 9 y 12 caracteres",
     formato: "El formato del NIT del cliente jurídico no es valido, asegurese que posea entre 9 y 10 dígitos y, opcionalmente, el dígito de verificación separado por un guion (ejemplo: 900123456-7)" },
-  jRazon: { sanear: limpiar.texto, min: 2, max: 100, patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9 .,&\-]+$/,
+  jRazon: { sanear: limpiar.texto, min: 2, max: 100, patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9 .,&-]+$/,
     obligatorio: "La razón social del cliente jurídico es obligatoria para llevar a cabo la operación deseada",
     longitud: "La longitud de la razón social del cliente jurídico no es valida, asegurese que este entre 2 y 100",
     formato: "El formato de la razón social del cliente jurídico no es valido, asegurese que solo posea letras, números, espacios y los símbolos . , & -" },
@@ -365,255 +383,465 @@ const REGLAS = {
     longitud: "La longitud del correo del cliente jurídico no es valida, asegurese que este entre 6 y 100",
     formato: "El formato del correo del cliente jurídico no es valido, asegurese que tenga una estructura como nombre@dominio.com" },
 };
-// Devuelve el mensaje del primer error (vacío si el valor es válido), en el mismo orden que el backend.
+
 function validarCampo(r, valor) {
-  if (r.uuid) return valor && UUID_RE.test(valor) && valor !== UUID_VACIO ? "" : r.obligatorio;
-  if (!valor) return r.obligatorio;
-  if (!r.patron.test(valor)) return r.formato;
+  if (r.uuid) {
+    return valor && UUID_RE.test(valor) && valor !== UUID_VACIO ? "" : r.obligatorio;
+  }
+  if (!valor) {
+    return r.obligatorio;
+  }
+  if (!r.patron.test(valor)) {
+    return r.formato;
+  }
   return valor.length < r.min || valor.length > r.max ? r.longitud : "";
 }
+
 function marcarError(el, mensaje) {
   let p = $("err-" + el.id);
-  if (!p) { p = Object.assign(document.createElement("p"), { id: "err-" + el.id, className: "campo-error" }); el.after(p); }
-  p.textContent = mensaje; p.hidden = !mensaje;
-  if (mensaje) { el.setAttribute("aria-invalid", "true"); el.setAttribute("aria-describedby", p.id); } else el.removeAttribute("aria-invalid");
-}
-// Valida (y, por defecto, deja sanitizado en el campo) los ids indicados. Devuelve los valores ya limpios.
-function validarCampos(ids, { escribir = true, enfocar = true } = {}) {
-  const valores = {}; let primero = null;
-  for (const id of ids) {
-    const el = $(id), r = REGLAS[id], valor = r.sanear ? r.sanear(el.value) : el.value;
-    if (escribir && r.sanear) el.value = valor;
-    const error = validarCampo(r, valor); marcarError(el, error); valores[id] = valor;
-    if (error && !primero) primero = el;
+  if (!p) {
+    p = Object.assign(document.createElement("p"), { id: "err-" + el.id, className: "campo-error" });
+    el.after(p);
   }
-  if (enfocar) primero?.focus();
+  p.textContent = mensaje;
+  p.hidden = !mensaje;
+  if (mensaje) {
+    el.setAttribute("aria-invalid", "true");
+    el.setAttribute("aria-describedby", p.id);
+  } else {
+    el.removeAttribute("aria-invalid");
+  }
+}
+
+function validarCampos(ids, { escribir = true, enfocar = true } = {}) {
+  const valores = {};
+  let primero = null;
+  for (const id of ids) {
+    const el = $(id);
+    const r = REGLAS[id];
+    const valor = r.sanear ? r.sanear(el.value) : el.value;
+    if (escribir && r.sanear) {
+      el.value = valor;
+    }
+    const error = validarCampo(r, valor);
+    marcarError(el, error);
+    valores[id] = valor;
+    if (error && !primero) {
+      primero = el;
+    }
+  }
+  if (enfocar) {
+    primero?.focus();
+  }
   return { ok: !primero, valores };
 }
+
 function quitarErrores(form) {
-  $$(".campo-error", form).forEach((p) => p.hidden = true); $$("[aria-invalid]", form).forEach((el) => el.removeAttribute("aria-invalid"));
+  $$(".campo-error", form).forEach((p) => { p.hidden = true; });
+  $$("[aria-invalid]", form).forEach((el) => el.removeAttribute("aria-invalid"));
   delete form.dataset.intentado;
 }
-for (const [id, r] of Object.entries(REGLAS)) {
-  const el = $(id); el.required = true;
-  // Tope generoso para lo que se escribe o pega sin limpiar (los separadores y espacios sobrantes se quitan después);
-  // el límite exacto se valida ya con el valor limpio. Con maxlength igual al máximo, pegar "900.123.456-7" lo cortaría.
-  if (r.max) el.maxLength = r.max * 2;
-  // Al salir del campo se limpia el valor, sin mostrar errores (así el diseño no se mueve bajo el cursor).
-  if (r.sanear) el.addEventListener("blur", () => { el.value = r.sanear(el.value); });
-  // Tras el primer intento de envío, los errores se actualizan mientras se escribe, sin tocar lo que el usuario teclea.
-  const revalidar = () => { if (el.form?.dataset.intentado) validarCampos([id], { escribir: false, enfocar: false }); };
-  el.addEventListener("input", revalidar); el.addEventListener("change", revalidar);
-}
-$("buscarCliente").maxLength = $("fCliente").maxLength = 200; // un nombre completo mide como máximo 101
 
-// ---------- Asistente "Registrar compra" ----------
+for (const [id, r] of Object.entries(REGLAS)) {
+  const el = $(id);
+  el.required = true;
+  if (r.max) {
+    el.maxLength = r.max * 2;
+  }
+  if (r.sanear) {
+    el.addEventListener("blur", () => { el.value = r.sanear(el.value); });
+  }
+  const revalidar = () => {
+    if (el.form?.dataset.intentado) {
+      validarCampos([id], { escribir: false, enfocar: false });
+    }
+  };
+  el.addEventListener("input", revalidar);
+  el.addEventListener("change", revalidar);
+}
+$("buscarCliente").maxLength = $("fCliente").maxLength = 200;
+
 const PASOS = { tipo: "1. Tipo de cliente", buscar: "2. Cliente", nuevo: "2. Cliente nuevo", natural: "3. Datos", juridico: "3. Datos", confirmar: "Confirmar" };
 let historial = ["tipo"];
+let procesoCreado = false;
+let personaExistente = null;
+
+function actualizarHistorial(paso) {
+  if (paso === "tipo") {
+    historial = ["tipo"];
+    return;
+  }
+  const i = historial.indexOf(paso);
+  historial = i >= 0 ? historial.slice(0, i + 1) : [...historial, paso];
+}
+
 function irA(paso) {
-  // Si se vuelve a un paso anterior, se recorta el historial para que el camino de pasos quede bien.
-  if (paso === "tipo") historial = ["tipo"];
-  else { const i = historial.indexOf(paso); historial = i >= 0 ? historial.slice(0, i + 1) : [...historial, paso]; }
-  // Los datos de cliente natural/jurídico se borran solo al volver al inicio de "Registrar compra".
-  if (paso === "tipo") limpiarFormulariosCliente();
-  $$("[data-paso]").forEach((el) => el.hidden = el.dataset.paso !== paso);
+  actualizarHistorial(paso);
+  if (paso === "tipo") {
+    limpiarFormulariosCliente();
+  }
+  $$("[data-paso]").forEach((el) => { el.hidden = el.dataset.paso !== paso; });
   const ruta = [...new Set(historial.map((p) => PASOS[p]))];
   $("pasos").innerHTML = ruta.map((t, i) => `<span ${i === ruta.length - 1 ? 'aria-current="step"' : ""}>${esc(t)}</span>`).join("<span>›</span>");
-  if (paso === "buscar") $("buscarCliente").focus();
-  if (paso === "confirmar") { procesoCreado = false; $("btnCrearProceso").disabled = false; ocultar($("msgConfirmar")); pintarResumen(); }
+  if (paso === "buscar") {
+    $("buscarCliente").focus();
+  }
+  if (paso === "confirmar") {
+    procesoCreado = false;
+    $("btnCrearProceso").disabled = false;
+    ocultar($("msgConfirmar"));
+    pintarResumen();
+  }
 }
+
 document.addEventListener("click", (ev) => {
-  const b = ev.target.closest("[data-ir]"); if (!b) return;
-  if (b.hasAttribute("data-no-registrado")) compra.cliente = { id: UUID_VACIO, esClienteRegistrado: false, etiqueta: "Consumidor final (cliente genérico)" };
+  const b = ev.target.closest("[data-ir]");
+  if (!b) {
+    return;
+  }
+  if (b.dataset.noRegistrado !== undefined) {
+    compra.cliente = { id: UUID_VACIO, esClienteRegistrado: false, etiqueta: "Consumidor final (cliente genérico)" };
+  }
   irA(b.dataset.ir);
 });
-// true cuando el proceso ya se creó: la pantalla de Confirmar se queda con los datos y "Atrás" vuelve al inicio.
-let procesoCreado = false;
+
 $("btnAtrasConfirmar").addEventListener("click", () => {
   if (procesoCreado) {
-    procesoCreado = false; compra.cliente = null; $("buscarCliente").value = ""; filtrarClientes();
-    return irA("tipo");
+    procesoCreado = false;
+    compra.cliente = null;
+    $("buscarCliente").value = "";
+    filtrarClientes();
+    irA("tipo");
+    return;
   }
   irA(compra.cliente?.esClienteRegistrado ? "buscar" : "tipo");
 });
 
+const itemCliente = (c) => `<li><button type="button" data-cliente="${esc(c.clienteId)}">
+      <span>${esc(c.nombre)}</span><small>${esc(c.tipo)} · ${esc(c.documento)}</small></button></li>`;
+
 function filtrarClientes() {
   const q = sinTildes(limpiar.texto($("buscarCliente").value));
   const lista = datos.clientes.filter((c) => !q || sinTildes(c.nombre + " " + c.documento).includes(q)).slice(0, 50);
-  $("listaClientes").innerHTML = lista.length ? lista.map((c) => `<li><button type="button" data-cliente="${esc(c.clienteId)}">
-      <span>${esc(c.nombre)}</span><small>${esc(c.tipo)} · ${esc(c.documento)}</small></button></li>`).join("")
+  $("listaClientes").innerHTML = lista.length ? lista.map(itemCliente).join("")
     : `<li class="hint" style="padding:10px 12px">No hay clientes registrados que coincidan.</li>`;
 }
 $("buscarCliente").addEventListener("input", filtrarClientes);
 $("listaClientes").addEventListener("click", (ev) => {
-  const b = ev.target.closest("[data-cliente]"); if (!b) return;
+  const b = ev.target.closest("[data-cliente]");
+  if (!b) {
+    return;
+  }
   seleccionarCliente(datos.clientes.find((c) => c.clienteId === b.dataset.cliente));
 });
+
 function seleccionarCliente(c) {
   compra.cliente = { id: c.clienteId, esClienteRegistrado: true, etiqueta: `${c.nombre} · ${c.tipo} · ${c.documento}` };
   irA("confirmar");
 }
 
 function ponerValoresPorDefectoCliente() {
-  const col = datos.prefijos.find((p) => p.codigo === "+57"); if (col) $("nPrefijo").value = $("jPrefijo").value = col.id;
-  const cc = datos.tipos.find((t) => sinTildes(t.tipo).startsWith("cedula de ciudadania")); if (cc) $("nTipoDoc").value = cc.id;
+  const col = datos.prefijos.find((p) => p.codigo === "+57");
+  if (col) {
+    $("nPrefijo").value = $("jPrefijo").value = col.id;
+  }
+  const cc = datos.tipos.find((t) => sinTildes(t.tipo).startsWith("cedula de ciudadania"));
+  if (cc) {
+    $("nTipoDoc").value = cc.id;
+  }
 }
+
 function limpiarFormulariosCliente() {
-  for (const form of [$("formNatural"), $("formJuridico")]) { form.reset(); quitarErrores(form); ocultar(form.querySelector(".msg")); }
-  personaExistente = null; $("datosPersona").hidden = false; $("nTipoDoc").disabled = false; $("personaEncontrada").textContent = "";
+  for (const form of [$("formNatural"), $("formJuridico")]) {
+    form.reset();
+    quitarErrores(form);
+    ocultar(form.querySelector(".msg"));
+  }
+  personaExistente = null;
+  $("datosPersona").hidden = false;
+  $("nTipoDoc").disabled = false;
+  $("personaEncontrada").textContent = "";
   ponerValoresPorDefectoCliente();
 }
 
-// Cliente natural: si el documento ya es de una persona registrada, se reutiliza.
-let personaExistente = null;
 $("nDocumento").addEventListener("input", () => {
   const doc = limpiar.documento($("nDocumento").value);
   personaExistente = doc ? datos.personas.find((p) => p.numeroDocumento === doc) || null : null;
-  $("datosPersona").hidden = !!personaExistente; $("nTipoDoc").disabled = !!personaExistente;
+  $("datosPersona").hidden = !!personaExistente;
+  $("nTipoDoc").disabled = !!personaExistente;
   $("personaEncontrada").textContent = personaExistente ? `Persona ya registrada: ${personaExistente.nombre} ${personaExistente.apellido}. Se usará como cliente natural.` : "";
 });
 
 async function enviarCliente(form, ruta, cuerpo, buscar) {
-  const msg = form.querySelector(".msg"), btn = form.querySelector("[type=submit]"); ocultar(msg); btn.disabled = true;
+  const msg = form.querySelector(".msg");
+  const btn = form.querySelector("[type=submit]");
+  ocultar(msg);
+  btn.disabled = true;
   try {
     const r = await llamar(ruta, { method: "POST", body: JSON.stringify(cuerpo) });
-    await cargarTodo(); limpiarFormulariosCliente();
+    await cargarTodo();
+    limpiarFormulariosCliente();
     const nuevo = datos.clientes.find(buscar);
     mostrar(msg, "ok", r.mensajes.join("\n"));
-    if (nuevo) seleccionarCliente(nuevo);
-  } catch (e) { mostrar(msg, "err", e.message); } finally { btn.disabled = false; }
+    if (nuevo) {
+      seleccionarCliente(nuevo);
+    }
+  } catch (e) {
+    mostrar(msg, "err", e.message);
+  } finally {
+    btn.disabled = false;
+  }
 }
+
 $("formNatural").addEventListener("submit", (ev) => {
   ev.preventDefault();
-  const form = ev.target, msg = form.querySelector(".msg"); form.dataset.intentado = "1";
-  // Si el documento ya es de una persona registrada solo se valida el documento; si no, todos los campos (en el orden de la pantalla).
-  const { ok, valores: v } = validarCampos(personaExistente ? ["nDocumento"]
-    : ["nTipoDoc", "nDocumento", "nNombre", "nApellido", "nPrefijo", "nTelefono", "nCorreo"]);
-  if (!ok) return mostrar(msg, "err", "Revisa los campos con error.");
+  const form = ev.target;
+  const msg = form.querySelector(".msg");
+  form.dataset.intentado = "1";
+  const campos = personaExistente ? ["nDocumento"] : ["nTipoDoc", "nDocumento", "nNombre", "nApellido", "nPrefijo", "nTelefono", "nCorreo"];
+  const { ok, valores: v } = validarCampos(campos);
+  if (!ok) {
+    mostrar(msg, "err", "Revisa los campos con error.");
+    return;
+  }
   const doc = v.nDocumento;
   const persona = personaExistente ? { id: personaExistente.id } : {
     tipoDocumento: { id: v.nTipoDoc }, prefijo: { id: v.nPrefijo }, numeroDocumento: doc,
     nombre: v.nNombre, apellido: v.nApellido, telefono: v.nTelefono, correo: v.nCorreo };
   enviarCliente(form, "/clientes-naturales", { persona }, (c) => c.tipo === "Natural" && c.documento === doc);
 });
+
 $("formJuridico").addEventListener("submit", (ev) => {
   ev.preventDefault();
-  const form = ev.target, msg = form.querySelector(".msg"); form.dataset.intentado = "1";
+  const form = ev.target;
+  const msg = form.querySelector(".msg");
+  form.dataset.intentado = "1";
   const { ok, valores: v } = validarCampos(["jNit", "jRazon", "jPrefijo", "jTelefono", "jCorreo"]);
-  if (!ok) return mostrar(msg, "err", "Revisa los campos con error.");
+  if (!ok) {
+    mostrar(msg, "err", "Revisa los campos con error.");
+    return;
+  }
   enviarCliente(form, "/clientes-juridicos", { nit: v.jNit, razonSocial: v.jRazon, prefijo: { id: v.jPrefijo },
     telefono: v.jTelefono, correo: v.jCorreo }, (c) => c.documento === "NIT " + v.jNit);
 });
-// Ya no se guardan borradores: se eliminan los que hayan quedado guardados en el navegador.
-ls.del("saraitel.borrador.formNatural"); ls.del("saraitel.borrador.formJuridico");
+ls.del("saraitel.borrador.formNatural");
+ls.del("saraitel.borrador.formJuridico");
 
 function pintarResumen() {
   $("resCliente").textContent = compra.cliente?.etiqueta || "—";
   $("resEmpleado").textContent = sesion.empleado ? `${nombreEmpleado(sesion.empleado)} · ${sesion.empleado.sede.nombre}` : "Escoge el empleado arriba (sin sesión)";
 }
+
 $("btnCrearProceso").addEventListener("click", async (ev) => {
-  const msg = $("msgConfirmar"); ocultar(msg);
-  if (!compra.cliente) return mostrar(msg, "err", "Escoge primero el cliente.");
-  if (!sesion.empleado) return mostrar(msg, "err", "No hay un empleado que atienda. Inicia sesión o escógelo arriba.");
+  const msg = $("msgConfirmar");
+  ocultar(msg);
+  if (!compra.cliente) {
+    mostrar(msg, "err", "Escoge primero el cliente.");
+    return;
+  }
+  if (!sesion.empleado) {
+    mostrar(msg, "err", "No hay un empleado que atienda. Inicia sesión o escógelo arriba.");
+    return;
+  }
   ev.target.disabled = true;
   let creado = false;
   try {
     const r = await llamar("/procesos-compra", { method: "POST", body: JSON.stringify({
       cliente: { id: compra.cliente.id, esClienteRegistrado: compra.cliente.esClienteRegistrado }, empleado: { id: sesion.empleado.id } }) });
-    // Se queda en Confirmar con los datos registrados; "Atrás" lleva al inicio de "Registrar compra".
-    creado = procesoCreado = true;
+    creado = true;
+    procesoCreado = true;
     mostrar(msg, "ok", r.mensajes.join("\n"));
-    // La tabla de "Consultar" queda vacía para no mostrar resultados viejos; se consulta solo con el botón.
-    ocultar($("msgConsultar")); $("tbody").innerHTML = `<tr><td colspan="7" class="hint">Aún no has consultado.</td></tr>`;
-  } catch (e) { mostrar(msg, "err", e.message); } finally { ev.target.disabled = creado; } // ya creado: no se puede repetir
+    ocultar($("msgConsultar"));
+    $("tbody").innerHTML = `<tr><td colspan="7" class="hint">Aún no has consultado.</td></tr>`;
+  } catch (e) {
+    mostrar(msg, "err", e.message);
+  } finally {
+    ev.target.disabled = creado;
+  }
 });
 
-// ---------- Consultar (los filtros viven en la URL para poder compartir la consulta) ----------
-// Consultar por ID muestra solo el campo del id; "Volver a filtros" regresa a Cliente, Atendido por y Estado.
 let modoId = false;
+let vistaActual = "registrar";
+
 function ponerModoId(activo, enfocar = true) {
   modoId = activo;
-  $("filtrosNormales").hidden = activo; $("filtroId").hidden = !activo; $("btnModoFiltros").hidden = !activo;
+  $("filtrosNormales").hidden = activo;
+  $("filtroId").hidden = !activo;
+  $("btnModoFiltros").hidden = !activo;
   ocultar($("msgConsultar"));
-  if (activo && enfocar) $("fId").focus();
+  if (activo && enfocar) {
+    $("fId").focus();
+  }
 }
 $("btnModoId").addEventListener("click", () => { ponerModoId(true); escribirURL(); });
 $("btnModoFiltros").addEventListener("click", () => { $("fId").value = ""; ponerModoId(false); escribirURL(); });
 
+function resolverCliente(texto) {
+  if (!texto) {
+    return "";
+  }
+  const encontrado = datos.clientes.find((x) => limpiar.texto(x.nombre) === texto);
+  if (encontrado) {
+    return encontrado.clienteId;
+  }
+  return UUID_RE.test(texto) ? texto : "?";
+}
+
 function filtros() {
-  if (modoId) return { id: limpiar.sinEspacios($("fId").value), cliente: "", empleado: "", estado: "" };
-  const c = limpiar.texto($("fCliente").value);
-  const cliente = c ? (datos.clientes.find((x) => limpiar.texto(x.nombre) === c)?.clienteId || (UUID_RE.test(c) ? c : "?")) : "";
+  if (modoId) {
+    return { id: limpiar.sinEspacios($("fId").value), cliente: "", empleado: "", estado: "" };
+  }
+  const cliente = resolverCliente(limpiar.texto($("fCliente").value));
   return { id: "", cliente, empleado: $("fEmpleado").value, estado: $("fEstado").value };
 }
+
 function escribirURL() {
-  const q = new URLSearchParams({ vista: vistaActual }); Object.entries(filtros()).forEach(([k, v]) => v && v !== "?" && q.set(k, v));
+  const q = new URLSearchParams({ vista: vistaActual });
+  for (const [k, v] of Object.entries(filtros())) {
+    if (v && v !== "?") {
+      q.set(k, v);
+    }
+  }
   history.replaceState(null, "", location.pathname + "?" + q);
 }
+
 function leerFiltrosURL() {
   const q = new URLSearchParams(location.search);
-  $("fId").value = q.get("id") || ""; $("fEmpleado").value = q.get("empleado") || ""; $("fEstado").value = q.get("estado") || "";
-  const c = q.get("cliente"); $("fCliente").value = c ? datos.clientes.find((x) => x.clienteId === c)?.nombre || c : "";
+  $("fId").value = q.get("id") || "";
+  $("fEmpleado").value = q.get("empleado") || "";
+  $("fEstado").value = q.get("estado") || "";
+  const c = q.get("cliente");
+  $("fCliente").value = c ? datos.clientes.find((x) => x.clienteId === c)?.nombre || c : "";
   ponerModoId(!!q.get("id"), false);
 }
-async function consultar() {
-  const msg = $("msgConsultar"); ocultar(msg); escribirURL();
-  const f = filtros();
-  if (f.cliente === "?") return mostrar(msg, "err", "Escoge un cliente de la lista o déjalo vacío.");
-  if (modoId && !f.id) return mostrar(msg, "err", "Escribe el id del proceso que quieres consultar.");
-  if (f.id && !UUID_RE.test(f.id)) return mostrar(msg, "err", "El id del proceso no es un UUID válido.");
-  $("btnConsultar").disabled = true; $("tbody").innerHTML = `<tr><td colspan="7" class="hint">Consultando…</td></tr>`;
-  try {
-    let lista;
-    if (f.id) lista = (await llamar("/procesos-compra/" + f.id)).datos.filter((p) => p.id !== UUID_VACIO);
-    else {
-      const q = new URLSearchParams();
-      if (f.cliente) q.set("cliente.id", f.cliente); if (f.empleado) q.set("empleado.id", f.empleado); if (f.estado) q.set("estado.id", f.estado);
-      lista = (await llamar("/procesos-compra" + (q.toString() ? "?" + q : ""))).datos;
-    }
-    mostrar(msg, lista.length ? "ok" : "warn", lista.length ? `${lista.length} ${lista.length === 1 ? "proceso encontrado" : "procesos encontrados"}.` : "No hay procesos de compra con esos filtros.");
-    pintarTabla(lista);
-  } catch (e) { mostrar(msg, "err", e.message); $("tbody").innerHTML = ""; } finally { $("btnConsultar").disabled = false; }
+
+function validarFiltros(f) {
+  if (f.cliente === "?") {
+    return "Escoge un cliente de la lista o déjalo vacío.";
+  }
+  if (modoId && !f.id) {
+    return "Escribe el id del proceso que quieres consultar.";
+  }
+  if (f.id && !UUID_RE.test(f.id)) {
+    return "El id del proceso no es un UUID válido.";
+  }
+  return "";
 }
-function pintarTabla(lista) {
-  lista.sort((a, b) => aFecha(b.fechaInicio) - aFecha(a.fechaInicio));
-  $("tbody").innerHTML = lista.map((p) => {
-    const est = datos.estados.get(p.estado.id) || {}, cli = datos.clientes.find((c) => c.clienteId === p.cliente.id);
-    const emp = datos.empleados.find((e) => e.id === p.empleado.id);
-    return `<tr><td><span class="badge ${esc(est.codigo)}">${esc(est.nombre || "—")}</span></td>
-      <td>${cli ? esc(cli.nombre) + ` <small class="hint">${esc(cli.tipo)}</small>` : 'Consumidor final <small class="hint">Genérico</small>'}</td>
+
+async function buscarProcesos(f) {
+  if (f.id) {
+    const respuesta = await llamar("/procesos-compra/" + f.id);
+    return respuesta.datos.filter((p) => p.id !== UUID_VACIO);
+  }
+  const q = new URLSearchParams();
+  if (f.cliente) {
+    q.set("cliente.id", f.cliente);
+  }
+  if (f.empleado) {
+    q.set("empleado.id", f.empleado);
+  }
+  if (f.estado) {
+    q.set("estado.id", f.estado);
+  }
+  const parametros = q.toString() ? "?" + q : "";
+  const respuesta = await llamar("/procesos-compra" + parametros);
+  return respuesta.datos;
+}
+
+function mensajeResultado(cantidad) {
+  if (!cantidad) {
+    return "No hay procesos de compra con esos filtros.";
+  }
+  const texto = cantidad === 1 ? "proceso encontrado" : "procesos encontrados";
+  return `${cantidad} ${texto}.`;
+}
+
+async function consultar() {
+  const msg = $("msgConsultar");
+  ocultar(msg);
+  escribirURL();
+  const f = filtros();
+  const error = validarFiltros(f);
+  if (error) {
+    mostrar(msg, "err", error);
+    return;
+  }
+  $("btnConsultar").disabled = true;
+  $("tbody").innerHTML = `<tr><td colspan="7" class="hint">Consultando…</td></tr>`;
+  try {
+    const lista = await buscarProcesos(f);
+    mostrar(msg, lista.length ? "ok" : "warn", mensajeResultado(lista.length));
+    pintarTabla(lista);
+  } catch (e) {
+    mostrar(msg, "err", e.message);
+    $("tbody").innerHTML = "";
+  } finally {
+    $("btnConsultar").disabled = false;
+  }
+}
+
+const celdaCliente = (cli) => cli ? esc(cli.nombre) + ` <small class="hint">${esc(cli.tipo)}</small>` : 'Consumidor final <small class="hint">Genérico</small>';
+
+function filaProceso(p) {
+  const est = datos.estados.get(p.estado.id) || {};
+  const cli = datos.clientes.find((c) => c.clienteId === p.cliente.id);
+  const emp = datos.empleados.find((e) => e.id === p.empleado.id);
+  return `<tr><td><span class="badge ${esc(est.codigo)}">${esc(est.nombre || "—")}</span></td>
+      <td>${celdaCliente(cli)}</td>
       <td>${esc(nombreEmpleado(emp))}</td><td>${fechaTexto(p.fechaInicio)}</td><td>${fechaTexto(p.fechaActualizacion)}</td>
       <td>${pesos.format(Number(p.total || 0))}</td>
       <td><code title="${esc(p.id)}">${esc(p.id.slice(0, 8))}…</code> <button class="small" type="button" data-copiar="${esc(p.id)}">Copiar</button></td></tr>`;
-  }).join("") || `<tr><td colspan="7" class="hint">Sin resultados.</td></tr>`;
+}
+
+function pintarTabla(lista) {
+  lista.sort((a, b) => aFecha(b.fechaInicio) - aFecha(a.fechaInicio));
+  $("tbody").innerHTML = lista.map(filaProceso).join("") || `<tr><td colspan="7" class="hint">Sin resultados.</td></tr>`;
 }
 $("formConsultar").addEventListener("submit", (ev) => { ev.preventDefault(); consultar(); });
-// Quitar filtros: solo limpia los campos; no consulta.
-$("btnQuitarFiltros").addEventListener("click", () => { ["fId", "fCliente"].forEach((i) => $(i).value = ""); $("fEmpleado").value = $("fEstado").value = ""; ocultar($("msgConsultar")); escribirURL(); });
+$("btnQuitarFiltros").addEventListener("click", () => {
+  ["fId", "fCliente"].forEach((i) => { $(i).value = ""; });
+  $("fEmpleado").value = $("fEstado").value = "";
+  ocultar($("msgConsultar"));
+  escribirURL();
+});
 
-// ---------- Copiar al portapapeles ----------
 async function copiar(texto, boton) {
-  try { await navigator.clipboard.writeText(texto); } catch { const t = document.createElement("textarea"); t.value = texto; document.body.append(t); t.select(); document.execCommand("copy"); t.remove(); }
-  const antes = boton.textContent; boton.textContent = "¡Copiado!"; setTimeout(() => boton.textContent = antes, 1200);
+  try {
+    await navigator.clipboard.writeText(texto);
+  } catch {
+    const t = document.createElement("textarea");
+    t.value = texto;
+    document.body.append(t);
+    t.select();
+    document.execCommand("copy");
+    t.remove();
+  }
+  const antes = boton.textContent;
+  boton.textContent = "¡Copiado!";
+  setTimeout(() => { boton.textContent = antes; }, 1200);
 }
-document.addEventListener("click", (ev) => { const b = ev.target.closest("[data-copiar]"); if (b) copiar(b.dataset.copiar, b); });
+document.addEventListener("click", (ev) => {
+  const b = ev.target.closest("[data-copiar]");
+  if (b) {
+    copiar(b.dataset.copiar, b);
+  }
+});
 
-// ---------- Pestañas ----------
-let vistaActual = "registrar";
 function cambiarVista(v) {
   vistaActual = v;
-  for (const n of ["registrar", "consultar"]) { $("tab-" + n).setAttribute("aria-selected", n === v); $("vista-" + n).hidden = n !== v; }
+  for (const n of ["registrar", "consultar"]) {
+    $("tab-" + n).setAttribute("aria-selected", n === v);
+    $("vista-" + n).hidden = n !== v;
+  }
   escribirURL();
 }
 $("tab-registrar").addEventListener("click", () => cambiarVista("registrar"));
 $("tab-consultar").addEventListener("click", () => cambiarVista("consultar"));
 
-// ---------- Arranque ----------
-(async () => {
-  irA("tipo");
-  const vista = new URLSearchParams(location.search).get("vista") === "consultar" ? "consultar" : "registrar";
-  await cargarTodo(); cambiarVista(vista);
-})();
+irA("tipo");
+const vistaInicial = new URLSearchParams(location.search).get("vista") === "consultar" ? "consultar" : "registrar";
+await cargarTodo();
+cambiarVista(vistaInicial);
 </script>
 </body>
 </html>

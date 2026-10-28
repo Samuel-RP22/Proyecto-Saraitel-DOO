@@ -370,18 +370,11 @@ public final class CatalogoMensajes {
 
 		public static final String USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL = "Se ha presentado un problema tratando de abrir la conexión contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ABRIENDO_CONEXION_POSTGRESQL = "Se ha presentado un problema NO CONTROLADO tratando de abrir la conexión contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-	}
-
-	public static final class PoolConexionesPostgreSql {
-
-		private PoolConexionesPostgreSql() {
-		}
-
 		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_POOL_CONEXIONES_POSTGRESQL = "Se ha presentado un problema tratando de preparar las conexiones contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_CONFIGURACION_CONEXION_POSTGRESQL_INCOMPLETA = "No es posible conectarse con la fuente de información porque su configuración está incompleta, por favor contacte al administrador de la aplicación";
 		public static final String TECNICO_ERROR_VARIABLE_ENTORNO_NO_DEFINIDA = "No está definida o está vacía la variable de entorno: ";
 	}
-	
+
 	public static final class FiltroSql {
 
 		private FiltroSql() {
@@ -389,5 +382,469 @@ public final class CatalogoMensajes {
 
 		public static final String TECNICO_ERROR_LIMITE_INFERIOR_MAYOR_QUE_SUPERIOR = "El límite inferior no puede ser mayor al superior en ";
 		public static final String TECNICO_ERROR_FECHA_INICIAL_POSTERIOR_A_FINAL = "La fecha inicial no puede ser posterior a la final en ";
+	}
+
+	public static final class AdministradorPostgreSqlDAO {
+
+		private AdministradorPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_ADMINISTRADOR = "Se ha presentado un problema tratando de registrar la información del administrador. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ADMINISTRADOR = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del administrador. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ADMINISTRADORES = "Se ha presentado un problema tratando de consultar la información de los administradores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ADMINISTRADORES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los administradores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class AplicacionSaldoPostgreSqlDAO {
+
+		private AplicacionSaldoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_APLICACION_DE_SALDO = "Se ha presentado un problema tratando de registrar la información de la aplicación de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_APLICACION_DE_SALDO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la aplicación de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACION_DE_SALDO = "Se ha presentado un problema tratando de consultar la información de la aplicación de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACION_DE_SALDO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de la aplicación de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACIONES_DE_SALDO = "Se ha presentado un problema tratando de consultar la información de las aplicaciones de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACIONES_DE_SALDO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las aplicaciones de saldo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class CategoriaPostgreSqlDAO {
+
+		private CategoriaPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CATEGORIA = "Se ha presentado un problema tratando de registrar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CATEGORIA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CATEGORIAS = "Se ha presentado un problema tratando de consultar la información de las categorías. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CATEGORIAS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las categorías. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CATEGORIA = "Se ha presentado un problema tratando de modificar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CATEGORIA = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_CATEGORIA = "Se ha presentado un problema tratando de eliminar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CATEGORIA = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información de la categoría. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class CiudadPostgreSqlDAO {
+
+		private CiudadPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDADES = "Se ha presentado un problema tratando de consultar la información de las ciudades. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las ciudades. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClienteNoRegistradoPostgreSqlDAO {
+
+		private ClienteNoRegistradoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_NO_REGISTRADO = "Se ha presentado un problema tratando de registrar la información del cliente no registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_NO_REGISTRADO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del cliente no registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_NO_REGISTRADOS = "Se ha presentado un problema tratando de consultar la información de los clientes no registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_NO_REGISTRADOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los clientes no registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClientePostgreSqlDAO {
+
+		private ClientePostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE = "Se ha presentado un problema tratando de registrar la información del cliente. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del cliente. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES = "Se ha presentado un problema tratando de consultar la información de los clientes. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los clientes. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE = "Se ha presentado un problema tratando de eliminar la información del cliente. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del cliente. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClienteRegistradoJPostgreSqlDAO {
+
+		private ClienteRegistradoJPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema tratando de registrar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS = "Se ha presentado un problema tratando de consultar la información de los clientes registrados jurídicos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los clientes registrados jurídicos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema tratando de modificar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema tratando de eliminar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del cliente registrado jurídico. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClienteRegistradoNPostgreSqlDAO {
+
+		private ClienteRegistradoNPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema tratando de registrar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS = "Se ha presentado un problema tratando de consultar la información de los clientes registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los clientes registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema tratando de eliminar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ClienteRegistradoPostgreSqlDAO {
+
+		private ClienteRegistradoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema tratando de registrar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS = "Se ha presentado un problema tratando de consultar la información de los clientes registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los clientes registrados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema tratando de eliminar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del cliente registrado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class CompraPostgreSqlDAO {
+
+		private CompraPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_COMPRA = "Se ha presentado un problema tratando de registrar la información de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_COMPRA = "Se ha presentado un problema tratando de consultar la información de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_COMPRAS = "Se ha presentado un problema tratando de consultar la información de las compras. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_COMPRAS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las compras. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class DepartamentoPostgreSqlDAO {
+
+		private DepartamentoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTOS = "Se ha presentado un problema tratando de consultar la información de los departamentos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los departamentos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class DetalleCompraPostgreSqlDAO {
+
+		private DetalleCompraPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema tratando de registrar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema tratando de consultar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DE_LA_COMPRA = "Se ha presentado un problema tratando de consultar la información de los detalles de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DE_LA_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los detalles de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema tratando de modificar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema tratando de eliminar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_DETALLE_DE_LA_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del detalle de la compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class DetalleIngresoPostgreSqlDAO {
+
+		private DetalleIngresoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema tratando de registrar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema tratando de consultar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DETALLES_DEL_INGRESO = "Se ha presentado un problema tratando de consultar la información de los detalles del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DETALLES_DEL_INGRESO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los detalles del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema tratando de modificar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema tratando de eliminar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_DETALLE_DEL_INGRESO = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del detalle del ingreso. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class DevolucionPostgreSqlDAO {
+
+		private DevolucionPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_DEVOLUCION = "Se ha presentado un problema tratando de registrar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DEVOLUCION = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCION = "Se ha presentado un problema tratando de consultar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCION = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCIONES = "Se ha presentado un problema tratando de consultar la información de las devoluciones. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCIONES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las devoluciones. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DEVOLUCION = "Se ha presentado un problema tratando de modificar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DEVOLUCION = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información de la devolución. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EmpleadoPostgreSqlDAO {
+
+		private EmpleadoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_EMPLEADO = "Se ha presentado un problema tratando de registrar la información del empleado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_EMPLEADO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del empleado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_EMPLEADOS = "Se ha presentado un problema tratando de consultar la información de los empleados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los empleados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_EMPLEADO = "Se ha presentado un problema tratando de modificar la información del empleado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_EMPLEADO = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del empleado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EstadoCompraPostgreSqlDAO {
+
+		private EstadoCompraPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_COMPRA = "Se ha presentado un problema tratando de registrar la información del estado de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del estado de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información del estado de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del estado de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información de los estados de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los estados de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EstadoInventarioPostgreSqlDAO {
+
+		private EstadoInventarioPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DEL_INVENTARIO = "Se ha presentado un problema tratando de registrar la información del estado del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DEL_INVENTARIO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del estado del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DEL_INVENTARIO = "Se ha presentado un problema tratando de consultar la información del estado del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DEL_INVENTARIO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del estado del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_INVENTARIO = "Se ha presentado un problema tratando de consultar la información de los estados del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_INVENTARIO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los estados del inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EstadoProcesoCompraPostgreSqlDAO {
+
+		private EstadoProcesoCompraPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de registrar la información del estado del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del estado del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información del estado del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del estado del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información de los estados del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DEL_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los estados del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class EstadoSaldoFavorPostgreSqlDAO {
+
+		private EstadoSaldoFavorPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_ESTADO_DE_SALDO_A_FAVOR = "Se ha presentado un problema tratando de registrar la información del estado de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_ESTADO_DE_SALDO_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del estado de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR = "Se ha presentado un problema tratando de consultar la información del estado de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_DE_SALDO_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del estado de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR = "Se ha presentado un problema tratando de consultar la información de los estados de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_DE_SALDO_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los estados de saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class FacturaPostgreSqlDAO {
+
+		private FacturaPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_FACTURA = "Se ha presentado un problema tratando de registrar la información de la factura. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_FACTURA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la factura. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_FACTURA = "Se ha presentado un problema tratando de consultar la información de la factura. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_FACTURA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de la factura. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_FACTURAS = "Se ha presentado un problema tratando de consultar la información de las facturas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_FACTURAS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las facturas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class IngresoInventarioPostgreSqlDAO {
+
+		private IngresoInventarioPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO = "Se ha presentado un problema tratando de registrar la información del ingreso de inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del ingreso de inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO = "Se ha presentado un problema tratando de consultar la información de los ingresos de inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los ingresos de inventario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class MarcaPostgreSqlDAO {
+
+		private MarcaPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_MARCA = "Se ha presentado un problema tratando de registrar la información de la marca. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_MARCA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la marca. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS = "Se ha presentado un problema tratando de consultar la información de las marcas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MARCAS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las marcas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class MetodoPagoPostgreSqlDAO {
+
+		private MetodoPagoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_METODO_DE_PAGO = "Se ha presentado un problema tratando de registrar la información del método de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_METODO_DE_PAGO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del método de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_METODO_DE_PAGO = "Se ha presentado un problema tratando de consultar la información del método de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_METODO_DE_PAGO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del método de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_METODOS_DE_PAGO = "Se ha presentado un problema tratando de consultar la información de los métodos de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_METODOS_DE_PAGO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los métodos de pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class MotivoPostgreSqlDAO {
+
+		private MotivoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVO = "Se ha presentado un problema tratando de consultar la información del motivo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del motivo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS = "Se ha presentado un problema tratando de consultar la información de los motivos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los motivos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class PagoNormalPostgreSqlDAO {
+
+		private PagoNormalPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PAGO_NORMAL = "Se ha presentado un problema tratando de registrar la información del pago normal. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO_NORMAL = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del pago normal. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO_NORMAL = "Se ha presentado un problema tratando de consultar la información del pago normal. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGO_NORMAL = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del pago normal. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS_NORMALES = "Se ha presentado un problema tratando de consultar la información de los pagos normales. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS_NORMALES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los pagos normales. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class PagoPostgreSqlDAO {
+
+		private PagoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PAGO = "Se ha presentado un problema tratando de registrar la información del pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO = "Se ha presentado un problema tratando de consultar la información del pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del pago. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS = "Se ha presentado un problema tratando de consultar la información de los pagos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los pagos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class PaisPostgreSqlDAO {
+
+		private PaisPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PAIS = "Se ha presentado un problema tratando de registrar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS = "Se ha presentado un problema tratando de consultar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES = "Se ha presentado un problema tratando de consultar la información de los países. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los países. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PAIS = "Se ha presentado un problema tratando de modificar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_PAIS = "Se ha presentado un problema tratando de eliminar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información del país. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class PersonaPostgreSqlDAO {
+
+		private PersonaPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PERSONA = "Se ha presentado un problema tratando de registrar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PERSONA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS = "Se ha presentado un problema tratando de consultar la información de las personas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las personas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA = "Se ha presentado un problema tratando de modificar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PERSONA = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_PERSONA = "Se ha presentado un problema tratando de eliminar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PERSONA = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la información de la persona. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class PrefijoPostgreSqlDAO {
+
+		private PrefijoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS = "Se ha presentado un problema tratando de consultar la información de los prefijos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los prefijos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ProcesoCompraPostgreSqlDAO {
+
+		private ProcesoCompraPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de registrar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PROCESOS_DE_COMPRA = "Se ha presentado un problema tratando de consultar la información de los procesos de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESOS_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los procesos de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema tratando de modificar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PROCESO_DE_COMPRA = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del proceso de compra. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ProductoPostgreSqlDAO {
+
+		private ProductoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO = "Se ha presentado un problema tratando de registrar la información del producto. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del producto. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS = "Se ha presentado un problema tratando de consultar la información de los productos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los productos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO = "Se ha presentado un problema tratando de modificar la información del producto. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del producto. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class ProductoSedePostgreSqlDAO {
+
+		private ProductoSedePostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema tratando de registrar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema tratando de consultar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS_POR_SEDE = "Se ha presentado un problema tratando de consultar la información de los productos por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS_POR_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los productos por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema tratando de modificar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO_POR_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información del producto por sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class SaldoFavorPostgreSqlDAO {
+
+		private SaldoFavorPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_SALDO_A_FAVOR = "Se ha presentado un problema tratando de registrar la información del saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_SALDO_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_SALDO_A_FAVOR = "Se ha presentado un problema tratando de consultar la información del saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SALDO_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información del saldo a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_SALDOS_A_FAVOR = "Se ha presentado un problema tratando de consultar la información de los saldos a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SALDOS_A_FAVOR = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los saldos a favor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class SedePostgreSqlDAO {
+
+		private SedePostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_SEDE = "Se ha presentado un problema tratando de registrar la información de la sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información de la sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES = "Se ha presentado un problema tratando de consultar la información de las sedes. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de las sedes. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_SEDE = "Se ha presentado un problema tratando de modificar la información de la sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_SEDE = "Se ha presentado un problema NO CONTROLADO tratando de modificar la información de la sede. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class TipoDocumentoPostgreSqlDAO {
+
+		private TipoDocumentoPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_TIPOS_DE_DOCUMENTO = "Se ha presentado un problema tratando de consultar la información de los tipos de documento. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TIPOS_DE_DOCUMENTO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los tipos de documento. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+	}
+
+	public static final class VendedorPostgreSqlDAO {
+
+		private VendedorPostgreSqlDAO() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_VENDEDOR = "Se ha presentado un problema tratando de registrar la información del vendedor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_VENDEDOR = "Se ha presentado un problema NO CONTROLADO tratando de registrar la información del vendedor. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_VENDEDORES = "Se ha presentado un problema tratando de consultar la información de los vendedores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_VENDEDORES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los vendedores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
 }

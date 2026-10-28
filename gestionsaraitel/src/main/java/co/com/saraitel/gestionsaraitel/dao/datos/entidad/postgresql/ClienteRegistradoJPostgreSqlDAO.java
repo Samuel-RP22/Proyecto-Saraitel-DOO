@@ -14,7 +14,8 @@ import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoJEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PrefijoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRegistradoJDAO {
@@ -25,8 +26,8 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoJEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO_JURIDICO,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO_JURIDICO, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO_JURIDICO, entidad.getId(),
 				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
 				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
@@ -47,7 +48,7 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteRegistradoJEntidad());
 
-		var consulta = new FiltroSql(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		var consulta = new FiltroSql(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ClienteRegistrado_id\"", filtroSeguro.getClienteRegistrado().getId())
 				.conId("\"Prefijo_id\"", filtroSeguro.getPrefijo().getId())
 				.conTexto("\"Telefono\"", filtroSeguro.getTelefono()).conTexto("\"Nit\"", filtroSeguro.getNit())
@@ -57,22 +58,22 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
 		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
 	}
 
 	@Override
 	public List<ClienteRegistradoJEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
+		return ejecutarConsulta(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS_JURIDICOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ClienteRegistradoJEntidad entidad) {
 
-		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
+		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
 				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(),
 				entidad.getTelefono(), entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(),
 				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
@@ -80,8 +81,8 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO,
-				CatalogoMensajesSql.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO, id);
+		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO,
+				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO_JURIDICO, id);
 	}
 
 	private ClienteRegistradoJEntidad mapear(final ResultSet resultados) throws SQLException {

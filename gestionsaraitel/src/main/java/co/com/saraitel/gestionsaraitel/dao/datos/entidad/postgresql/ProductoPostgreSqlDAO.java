@@ -13,7 +13,8 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.sql.SqlDAO;
 import co.com.saraitel.gestionsaraitel.entidad.CategoriaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.MarcaEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProductoEntidad;
-import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajesSql;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoSentenciasSql;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
 public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
@@ -24,8 +25,8 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 	@Override
 	public void crear(final ProductoEntidad entidad) {
-		ejecutarActualizacion(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO,
-				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO, entidad.getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO, entidad.getId(),
 				entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(),
 				entidad.getNombre(), entidad.getDescripcion());
 	}
@@ -45,7 +46,7 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProductoEntidad());
 
-		var sentencia = new FiltroSql(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_CONSULTAR);
+		var sentencia = new FiltroSql(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR);
 
 		sentencia.conId("\"id\"", filtroSeguro.getId());
 		sentencia.conId("\"Marca_id\"", filtroSeguro.getMarca().getId());
@@ -55,21 +56,21 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 		sentencia.conTexto("\"Descripcion\"", filtroSeguro.getDescripcion());
 
 		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
-				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
-				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public List<ProductoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
-				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
+		return ejecutarConsulta(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoEntidad entidad) {
 
-		ejecutarActualizacion(CatalogoMensajesSql.ProductoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO,
-				CatalogoMensajesSql.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO, entidad.getMarca().getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO, entidad.getMarca().getId(),
 				entidad.getCategoria().getId(), entidad.getModelo(), entidad.getNombre(),
 				entidad.getDescripcion(), id);
 	}

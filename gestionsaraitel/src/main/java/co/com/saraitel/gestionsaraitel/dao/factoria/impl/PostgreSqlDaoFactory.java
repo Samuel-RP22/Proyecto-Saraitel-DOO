@@ -2,6 +2,9 @@ package co.com.saraitel.gestionsaraitel.dao.factoria.impl;
 
 import java.sql.SQLException;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AdministradorDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AplicacionSaldoDAO;
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.CategoriaDAO;
@@ -78,8 +81,20 @@ import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 
 public class PostgreSqlDaoFactory extends DAOFactory {
+
+	private static final String VARIABLE_URL = "DATABASE_URL";
+	private static final String VARIABLE_USUARIO = "DATABASE_USER";
+	private static final String VARIABLE_CONTRASENA = "DATABASE_PASSWORD";
+	private static final String NOMBRE_POOL = "PoolGestionSaraitel";
+	private static final int MAXIMO_CONEXIONES = 10;
+	private static final int MINIMO_CONEXIONES_INACTIVAS = 2;
+	private static final long TIEMPO_MAXIMO_ESPERA_MILISEGUNDOS = 30_000L;
+
+	private static HikariDataSource fuenteDatos;
 
 	public PostgreSqlDaoFactory() {
 		abrirConexion();
@@ -88,7 +103,7 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 	@Override
 	protected void abrirConexion() {
 		try {
-			setConexion(PoolConexionesPostgreSql.obtenerConexion());
+			setConexion(obtenerFuenteDatos().getConnection());
 		} catch (GestionSaraitelExcepcion excepcion) {
 			throw excepcion;
 		} catch (SQLException excepcion) {
@@ -98,6 +113,41 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ABRIENDO_CONEXION_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
+	}
+
+	private static synchronized HikariDataSource obtenerFuenteDatos() {
+		if (UtilObjeto.esNulo(fuenteDatos)) {
+			fuenteDatos = crearFuenteDatos();
+		}
+		return fuenteDatos;
+	}
+
+	private static HikariDataSource crearFuenteDatos() {
+		var configuracion = new HikariConfig();
+		configuracion.setPoolName(NOMBRE_POOL);
+		configuracion.setJdbcUrl(obtenerVariableEntorno(VARIABLE_URL));
+		configuracion.setUsername(obtenerVariableEntorno(VARIABLE_USUARIO));
+		configuracion.setPassword(obtenerVariableEntorno(VARIABLE_CONTRASENA));
+		configuracion.setMaximumPoolSize(MAXIMO_CONEXIONES);
+		configuracion.setMinimumIdle(MINIMO_CONEXIONES_INACTIVAS);
+		configuracion.setConnectionTimeout(TIEMPO_MAXIMO_ESPERA_MILISEGUNDOS);
+		try {
+			return new HikariDataSource(configuracion);
+		} catch (Exception excepcion) {
+			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_CREANDO_POOL_CONEXIONES_POSTGRESQL;
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		}
+	}
+
+	private static String obtenerVariableEntorno(final String nombreVariable) {
+		var valor = System.getenv(nombreVariable);
+		if (UtilTexto.esVacia(valor)) {
+			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_CONFIGURACION_CONEXION_POSTGRESQL_INCOMPLETA;
+			var mensajeTecnico = UtilTexto.concatenar(
+					CatalogoMensajes.PostgreSqlDaoFactory.TECNICO_ERROR_VARIABLE_ENTORNO_NO_DEFINIDA, nombreVariable);
+			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, mensajeTecnico);
+		}
+		return valor;
 	}
 
 	@Override
