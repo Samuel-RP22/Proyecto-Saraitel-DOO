@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -18,7 +19,7 @@ public class EmpleadoDominio {
 		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(sede, SedeDominio.obtenerValorDefecto());
 		this.persona = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(persona,
 				PersonaDominio.obtenerValorDefecto());
-		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
+		this.esActivo = UtilBoolean.obtenerValorDefectoVerdadero(esActivo);
 	}
 
 	public static EmpleadoDominio obtenerValorDefecto() {

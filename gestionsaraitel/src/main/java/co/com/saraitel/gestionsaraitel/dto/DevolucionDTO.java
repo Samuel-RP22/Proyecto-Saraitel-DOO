@@ -31,7 +31,7 @@ public class DevolucionDTO {
 	}
 
 	public DevolucionDTO(final UUID id, final DetalleCompraDTO detalleCompra, final MotivoDTO motivo,
-			final LocalDateTime fechaDevolucion, final int cantidad, final BigDecimal montoDevolucion,
+			final LocalDateTime fechaDevolucion, final Integer cantidad, final BigDecimal montoDevolucion,
 			final String estado) {
 		setId(id);
 		setDetalleCompra(detalleCompra);
@@ -79,7 +79,7 @@ public class DevolucionDTO {
 	}
 
 	public void setCantidad(final Integer cantidad) {
-		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad, 1);
 	}
 
 	public BigDecimal getMontoDevolucion() {

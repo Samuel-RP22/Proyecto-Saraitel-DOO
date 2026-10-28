@@ -2,7 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -18,7 +18,7 @@ public class MarcaEntidad {
 		setEsActivo(true);
 	}
 
-	public MarcaEntidad(final UUID id, final String nombre, final boolean esActivo) {
+	public MarcaEntidad(final UUID id, final String nombre, final Boolean esActivo) {
 		setId(id);
 		setNombre(nombre);
 		setEsActivo(esActivo);
@@ -45,6 +45,6 @@ public class MarcaEntidad {
 	}
 
 	public void setEsActivo(final Boolean esActivo) {
-		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
+		this.esActivo = UtilBoolean.obtenerValorDefectoVerdadero(esActivo);
 	}
 }

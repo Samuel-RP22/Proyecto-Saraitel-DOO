@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -19,7 +20,7 @@ public class EmpleadoDTO {
 		setEsActivo(true);
 	}
 
-	public EmpleadoDTO(final UUID id, final SedeDTO sede, final PersonaDTO persona, final boolean esActivo) {
+	public EmpleadoDTO(final UUID id, final SedeDTO sede, final PersonaDTO persona, final Boolean esActivo) {
 		setId(id);
 		setSede(sede);
 		setPersona(persona);
@@ -55,6 +56,6 @@ public class EmpleadoDTO {
 	}
 
 	public void setEsActivo(final Boolean esActivo) {
-		this.esActivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActivo, true);
+		this.esActivo = UtilBoolean.obtenerValorDefectoVerdadero(esActivo);
 	}
 }

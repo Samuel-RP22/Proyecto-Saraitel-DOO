@@ -244,11 +244,16 @@ async function llamar(ruta, opciones = {}) {
   if (!(res.headers.get("content-type") || "").includes("json"))
     throw new Error(res.redirected || res.status === 401 || res.status === 403 ? "Tu sesión no está activa. Inicia sesión y vuelve a intentar." : "El servidor no respondió JSON (HTTP " + res.status + ").");
   const cuerpo = await res.json();
-  if (!res.ok || cuerpo.estado === "ERROR") throw new Error((cuerpo.mensajes || []).join("\n") || "Error HTTP " + res.status);
+  if (!res.ok || cuerpo.estado === "ERROR") throw new Error(construirMensajeError(cuerpo, res.status));
   return cuerpo;
 }
 const mostrar = (el, tipo, texto) => { el.className = "msg " + tipo; el.textContent = texto; };
 const ocultar = (el) => { el.className = "msg"; el.textContent = ""; };
+
+function construirMensajeError(cuerpo, estadoHttp) {
+	  const mensaje = (cuerpo.mensajes || []).join("\n") || "Error HTTP " + estadoHttp;
+	  return cuerpo.correlationId ? mensaje + "\nCódigo: " + cuerpo.correlationId : mensaje;
+	}
 
 // ---------- Formatos ----------
 const pesos = new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0, maximumFractionDigits: 2 });

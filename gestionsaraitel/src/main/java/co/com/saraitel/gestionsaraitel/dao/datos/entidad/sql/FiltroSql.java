@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -47,16 +48,17 @@ public final class FiltroSql {
 		return this;
 	}
 
-	public FiltroSql conEntero(final String columna, final int valor) {
-		if (UtilNumero.diferenteQue(valor, 0)) {
+	public FiltroSql conEntero(final String columna, final Integer valor) {
+		if (UtilNumero.diferenteQue(valor, UtilNumero.CERO_INTEGER)) {
 			agregar(columna, valor);
 		}
 		return this;
 	}
 
-	public FiltroSql conBooleano(final String columna, final boolean valor, final boolean valorDefecto) {
-		if (valor != valorDefecto) {
-			agregar(columna, valor);
+	public FiltroSql conBooleano(final String columna, final Boolean valor, final Boolean valorDefecto) {
+		var valorSanitizado = UtilBoolean.obtenerValorDefecto(valor, valorDefecto);
+		if (!valorSanitizado.equals(valorDefecto)) {
+			agregar(columna, valorSanitizado);
 		}
 		return this;
 	}
@@ -75,24 +77,22 @@ public final class FiltroSql {
 		return this;
 	}
 
-	public FiltroSql conEnteroDesde(final String columna, final int desde) {
-		agregarCondicion(columna, ">=", desde);
+	public FiltroSql conEnteroDesde(final String columna, final Integer desde) {
+		agregarCondicion(columna, ">=", UtilNumero.obtenerValorDefecto(desde));
 		return this;
 	}
 
-	public FiltroSql conEnteroHasta(final String columna, final int hasta) {
-		agregarCondicion(columna, "<=", hasta);
+	public FiltroSql conEnteroHasta(final String columna, final Integer hasta) {
+		agregarCondicion(columna, "<=", UtilNumero.obtenerValorDefecto(hasta));
 		return this;
 	}
 
-	public FiltroSql conEnteroEntre(final String columna, final int desde, final int hasta) {
-		if (desde > hasta) {
+	public FiltroSql conEnteroEntre(final String columna, final Integer desde, final Integer hasta) {
+		if (UtilNumero.mayorQue(desde, hasta)) {
 			throw new IllegalArgumentException(UtilTexto
 					.concatenar(CatalogoMensajes.FiltroSql.TECNICO_ERROR_LIMITE_INFERIOR_MAYOR_QUE_SUPERIOR, columna));
 		}
-		agregarCondicion(columna, ">=", desde);
-		agregarCondicion(columna, "<=", hasta);
-		return this;
+		return conEnteroDesde(columna, desde).conEnteroHasta(columna, hasta);
 	}
 
 	public FiltroSql conDecimalDesde(final String columna, final BigDecimal desde) {

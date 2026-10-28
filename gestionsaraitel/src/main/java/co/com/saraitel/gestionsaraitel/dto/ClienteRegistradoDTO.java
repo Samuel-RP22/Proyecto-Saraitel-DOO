@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -17,7 +18,7 @@ public class ClienteRegistradoDTO {
 		setClienteNaturalDefecto(true);
 	}
 
-	public ClienteRegistradoDTO(final UUID id, final ClienteDTO cliente, final boolean clienteNaturalDefecto) {
+	public ClienteRegistradoDTO(final UUID id, final ClienteDTO cliente, final Boolean clienteNaturalDefecto) {
 		setId(id);
 		setCliente(cliente);
 		setClienteNaturalDefecto(clienteNaturalDefecto);
@@ -44,6 +45,6 @@ public class ClienteRegistradoDTO {
 	}
 
 	public void setClienteNaturalDefecto(final Boolean clienteNaturalDefecto) {
-		this.clienteNaturalDefecto = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(clienteNaturalDefecto, true);
+		this.clienteNaturalDefecto = UtilBoolean.obtenerValorDefectoVerdadero(clienteNaturalDefecto);
 	}
 }

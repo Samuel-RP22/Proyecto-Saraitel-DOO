@@ -26,7 +26,7 @@ public class DetalleCompraEntidad {
 	}
 
 	public DetalleCompraEntidad(final UUID id, final ProcesoCompraEntidad procesoCompra,
-			final ProductoSedeEntidad productoSede, final int cantidad, final BigDecimal precioUnitario,
+			final ProductoSedeEntidad productoSede, final Integer cantidad, final BigDecimal precioUnitario,
 			final BigDecimal subtotal) {
 		setId(id);
 		setProcesoCompra(procesoCompra);
@@ -67,7 +67,7 @@ public class DetalleCompraEntidad {
 	}
 
 	public void setCantidad(final Integer cantidad) {
-		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad, 1);
 	}
 
 	public BigDecimal getPrecioUnitario() {

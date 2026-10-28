@@ -1,7 +1,5 @@
 package co.com.saraitel.gestionsaraitel.dao.factoria.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.AdministradorDAO;
@@ -78,13 +76,10 @@ import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.TipoDocument
 import co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql.VendedorPostgreSqlDAO;
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
+import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
 
 public class PostgreSqlDaoFactory extends DAOFactory {
-
-	private static final String URL = System.getenv("DATABASE_URL");
-	private static final String USUARIO = System.getenv("DATABASE_USER");
-	private static final String CONTRASENA = System.getenv("DATABASE_PASSWORD");
 
 	public PostgreSqlDaoFactory() {
 		abrirConexion();
@@ -93,8 +88,9 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 	@Override
 	protected void abrirConexion() {
 		try {
-			Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-			setConexion(conexion);
+			setConexion(PoolConexionesPostgreSql.obtenerConexion());
+		} catch (GestionSaraitelExcepcion excepcion) {
+			throw excepcion;
 		} catch (SQLException excepcion) {
 			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);

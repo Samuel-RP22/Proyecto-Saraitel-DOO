@@ -3,6 +3,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
@@ -26,11 +27,11 @@ public class ProductoSedeDominio {
 		this.sede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(builder.sede,
 				SedeDominio.obtenerValorDefecto());
 		this.precio = UtilNumero.obtenerValorDefecto(builder.precio);
-		this.tieneOferta = builder.tieneOferta;
-		this.oferta = builder.oferta;
+		this.tieneOferta = UtilBoolean.obtenerValorDefectoFalso(builder.tieneOferta);
+		this.oferta = UtilNumero.obtenerValorDefecto(builder.oferta);
 		this.precioTrasOferta = UtilNumero.obtenerValorDefecto(builder.precioTrasOferta);
-		this.stock = builder.stock;
-		this.stockGarantia = builder.stockGarantia;
+		this.stock = UtilNumero.obtenerValorDefecto(builder.stock);
+		this.stockGarantia = UtilNumero.obtenerValorDefecto(builder.stockGarantia);
 	}
 
 	public static ProductoSedeDominio obtenerValorDefecto() {
@@ -43,11 +44,11 @@ public class ProductoSedeDominio {
 		private ProductoDominio producto;
 		private SedeDominio sede;
 		private BigDecimal precio;
-		private boolean tieneOferta;
-		private int oferta;
+		private Boolean tieneOferta;
+		private Integer oferta;
 		private BigDecimal precioTrasOferta;
-		private int stock;
-		private int stockGarantia;
+		private Integer stock;
+		private Integer stockGarantia;
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
@@ -55,10 +56,10 @@ public class ProductoSedeDominio {
 			this.sede = SedeDominio.obtenerValorDefecto();
 			this.precio = UtilNumero.CERO_DECIMAL;
 			this.tieneOferta = false;
-			this.oferta = 0;
+			this.oferta = UtilNumero.CERO_INTEGER;
 			this.precioTrasOferta = UtilNumero.CERO_DECIMAL;
-			this.stock = 0;
-			this.stockGarantia = 0;
+			this.stock = UtilNumero.CERO_INTEGER;
+			this.stockGarantia = UtilNumero.CERO_INTEGER;
 		}
 
 		public Builder id(final UUID id) {
@@ -81,12 +82,12 @@ public class ProductoSedeDominio {
 			return this;
 		}
 
-		public Builder tieneOferta(final boolean tieneOferta) {
+		public Builder tieneOferta(final Boolean tieneOferta) {
 			this.tieneOferta = tieneOferta;
 			return this;
 		}
 
-		public Builder oferta(final int oferta) {
+		public Builder oferta(final Integer oferta) {
 			this.oferta = oferta;
 			return this;
 		}
@@ -96,12 +97,12 @@ public class ProductoSedeDominio {
 			return this;
 		}
 
-		public Builder stock(final int stock) {
+		public Builder stock(final Integer stock) {
 			this.stock = stock;
 			return this;
 		}
 
-		public Builder stockGarantia(final int stockGarantia) {
+		public Builder stockGarantia(final Integer stockGarantia) {
 			this.stockGarantia = stockGarantia;
 			return this;
 		}

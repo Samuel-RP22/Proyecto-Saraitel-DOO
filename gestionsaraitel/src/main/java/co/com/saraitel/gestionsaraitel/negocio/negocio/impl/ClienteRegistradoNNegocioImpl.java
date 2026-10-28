@@ -34,7 +34,6 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 		UUID idPersona;
 
 		if (UtilUUID.esValorDefecto(persona.getId())) {
-			// Persona nueva: se valida igual que en el registro de personas y se crea en esta transacción.
 			ValidarDatosRegistrarInformacionNuevaPersonaRule.obtenerInstancia().ejecutar(persona);
 
 			AsegurarNumeroDocumentoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getNumeroDocumento(),

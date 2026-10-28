@@ -2,7 +2,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -17,7 +17,7 @@ public class CategoriaDominio {
 		this.id = UtilUUID.obtenerValorDefecto(id);
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(nombre);
 		this.categoriaPadre = categoriaPadre;
-		this.nivel = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(nivel, 1);
+		this.nivel = UtilNumero.obtenerValorDefecto(nivel, 1);
 	}
 
 	public static CategoriaDominio obtenerValorDefecto() {

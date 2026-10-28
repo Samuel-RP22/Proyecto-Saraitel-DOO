@@ -2,7 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteEntidad {
@@ -15,7 +15,7 @@ public class ClienteEntidad {
 		setEsClienteRegistrado(true);
 	}
 
-	public ClienteEntidad(final UUID id, final boolean esClienteRegistrado) {
+	public ClienteEntidad(final UUID id, final Boolean esClienteRegistrado) {
 		setId(id);
 		setEsClienteRegistrado(esClienteRegistrado);
 	}
@@ -33,6 +33,6 @@ public class ClienteEntidad {
 	}
 
 	public void setEsClienteRegistrado(final Boolean esClienteRegistrado) {
-		this.esClienteRegistrado = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esClienteRegistrado, true);
+		this.esClienteRegistrado = UtilBoolean.obtenerValorDefectoVerdadero(esClienteRegistrado);
 	}
 }

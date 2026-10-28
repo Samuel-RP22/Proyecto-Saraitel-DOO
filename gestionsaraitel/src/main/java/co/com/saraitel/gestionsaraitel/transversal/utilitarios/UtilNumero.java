@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public final class UtilNumero {
 
 	public static final BigDecimal CERO_DECIMAL = BigDecimal.ZERO;
+	public static final Integer CERO_INTEGER = 0;
 
 	private UtilNumero() {
 	}
@@ -17,28 +18,33 @@ public final class UtilNumero {
 		return obtenerValorDefecto(valor, CERO_DECIMAL);
 	}
 
-	public static boolean mayorQue(final int numeroUno, final int numeroDos) {
-		return numeroUno > numeroDos;
+	public static Integer obtenerValorDefecto(final Integer valor) {
+		return obtenerValorDefecto(valor, CERO_INTEGER);
 	}
 
-	public static boolean menorQue(final int numeroUno, final int numeroDos) {
-		return numeroUno < numeroDos;
+	public static boolean mayorQue(final Integer numeroUno, final Integer numeroDos) {
+		return obtenerValorDefecto(numeroUno).compareTo(obtenerValorDefecto(numeroDos)) > 0;
 	}
 
-	public static boolean mayorIgualQue(final int numeroUno, final int numeroDos) {
-		return numeroUno >= numeroDos;
+	public static boolean menorQue(final Integer numeroUno, final Integer numeroDos) {
+		return obtenerValorDefecto(numeroUno).compareTo(obtenerValorDefecto(numeroDos)) < 0;
 	}
 
-	public static boolean menorIgualQue(final int numeroUno, final int numeroDos) {
-		return numeroUno <= numeroDos;
+	public static boolean mayorIgualQue(final Integer numeroUno, final Integer numeroDos) {
+		return obtenerValorDefecto(numeroUno).compareTo(obtenerValorDefecto(numeroDos)) >= 0;
 	}
 
-	public static boolean diferenteQue(final int numeroUno, final int numeroDos) {
-		return numeroUno != numeroDos;
+	public static boolean menorIgualQue(final Integer numeroUno, final Integer numeroDos) {
+		return obtenerValorDefecto(numeroUno).compareTo(obtenerValorDefecto(numeroDos)) <= 0;
 	}
 
-	public static boolean estaEntreXyY(final int numero, final int limiteInferior, final int limiteSuperior) {
-		return numero >= limiteInferior && numero <= limiteSuperior;
+	public static boolean diferenteQue(final Integer numeroUno, final Integer numeroDos) {
+		return obtenerValorDefecto(numeroUno).compareTo(obtenerValorDefecto(numeroDos)) != 0;
+	}
+
+	public static boolean estaEntreXyY(final Integer numero, final Integer limiteInferior,
+			final Integer limiteSuperior) {
+		return mayorIgualQue(numero, limiteInferior) && menorIgualQue(numero, limiteSuperior);
 	}
 
 	public static boolean mayorQue(final BigDecimal numeroUno, final BigDecimal numeroDos) {
@@ -63,9 +69,6 @@ public final class UtilNumero {
 
 	public static boolean estaEntreXyY(final BigDecimal numero, final BigDecimal limiteInferior,
 			final BigDecimal limiteSuperior) {
-		var numeroSanitizado = obtenerValorDefecto(numero);
-		return numeroSanitizado.compareTo(obtenerValorDefecto(limiteInferior)) >= 0
-				&& numeroSanitizado.compareTo(obtenerValorDefecto(limiteSuperior)) <= 0;
+		return mayorIgualQue(numero, limiteInferior) && menorIgualQue(numero, limiteSuperior);
 	}
-
 }

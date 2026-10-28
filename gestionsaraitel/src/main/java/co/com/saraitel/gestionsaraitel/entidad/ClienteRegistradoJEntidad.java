@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
@@ -43,8 +44,8 @@ public class ClienteRegistradoJEntidad {
 		private String nit;
 		private String razonSocial;
 		private String correo;
-		private boolean correoConfirmado;
-		private boolean telefonoConfirmado;
+		private Boolean correoConfirmado;
+		private Boolean telefonoConfirmado;
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
@@ -93,12 +94,12 @@ public class ClienteRegistradoJEntidad {
 			return this;
 		}
 
-		public Builder correoConfirmado(final boolean correoConfirmado) {
+		public Builder correoConfirmado(final Boolean correoConfirmado) {
 			this.correoConfirmado = correoConfirmado;
 			return this;
 		}
 
-		public Builder telefonoConfirmado(final boolean telefonoConfirmado) {
+		public Builder telefonoConfirmado(final Boolean telefonoConfirmado) {
 			this.telefonoConfirmado = telefonoConfirmado;
 			return this;
 		}
@@ -169,15 +170,15 @@ public class ClienteRegistradoJEntidad {
 		return correoConfirmado;
 	}
 
-	public void setCorreoConfirmado(final boolean correoConfirmado) {
-		this.correoConfirmado = correoConfirmado;
+	public void setCorreoConfirmado(final Boolean correoConfirmado) {
+		this.correoConfirmado = UtilBoolean.obtenerValorDefectoFalso(correoConfirmado);
 	}
 
 	public boolean getTelefonoConfirmado() {
 		return telefonoConfirmado;
 	}
 
-	public void setTelefonoConfirmado(final boolean telefonoConfirmado) {
-		this.telefonoConfirmado = telefonoConfirmado;
+	public void setTelefonoConfirmado(final Boolean telefonoConfirmado) {
+		this.telefonoConfirmado = UtilBoolean.obtenerValorDefectoFalso(telefonoConfirmado);
 	}
 }

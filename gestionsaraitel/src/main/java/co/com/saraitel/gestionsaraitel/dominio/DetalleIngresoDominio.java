@@ -24,7 +24,7 @@ public class DetalleIngresoDominio {
 				IngresoInventarioDominio.obtenerValorDefecto());
 		this.productoSede = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(productoSede,
 				ProductoSedeDominio.obtenerValorDefecto());
-		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad, 1);
 		this.costoUnitario = UtilNumero.obtenerValorDefecto(costoUnitario);
 		this.subtotal = UtilNumero.obtenerValorDefecto(subtotal);
 	}

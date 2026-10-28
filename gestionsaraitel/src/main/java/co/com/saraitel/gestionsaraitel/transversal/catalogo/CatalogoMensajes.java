@@ -371,6 +371,16 @@ public final class CatalogoMensajes {
 		public static final String USUARIO_ERROR_PROBLEMA_ABRIENDO_CONEXION_POSTGRESQL = "Se ha presentado un problema tratando de abrir la conexión contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ABRIENDO_CONEXION_POSTGRESQL = "Se ha presentado un problema NO CONTROLADO tratando de abrir la conexión contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
+
+	public static final class PoolConexionesPostgreSql {
+
+		private PoolConexionesPostgreSql() {
+		}
+
+		public static final String USUARIO_ERROR_PROBLEMA_CREANDO_POOL_CONEXIONES_POSTGRESQL = "Se ha presentado un problema tratando de preparar las conexiones contra la fuente de información en la cual se iba a tratar de llevar a cabo la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_CONFIGURACION_CONEXION_POSTGRESQL_INCOMPLETA = "No es posible conectarse con la fuente de información porque su configuración está incompleta, por favor contacte al administrador de la aplicación";
+		public static final String TECNICO_ERROR_VARIABLE_ENTORNO_NO_DEFINIDA = "No está definida o está vacía la variable de entorno: ";
+	}
 	
 	public static final class FiltroSql {
 

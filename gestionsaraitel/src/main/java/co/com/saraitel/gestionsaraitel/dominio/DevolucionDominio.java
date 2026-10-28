@@ -28,7 +28,7 @@ public class DevolucionDominio {
 				DetalleCompraDominio.obtenerValorDefecto());
 		this.motivo = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(motivo, MotivoDominio.obtenerValorDefecto());
 		this.fechaDevolucion = UtilFecha.obtenerValorDefecto(fechaDevolucion);
-		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad, 1);
 		this.montoDevolucion = UtilNumero.obtenerValorDefecto(montoDevolucion);
 		this.estado = UtilTexto.quitarEspaciosEnBlanco(estado);
 	}

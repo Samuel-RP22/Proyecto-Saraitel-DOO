@@ -2,7 +2,7 @@ package co.com.saraitel.gestionsaraitel.entidad;
 
 import java.util.UUID;
 
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilNumero;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
@@ -20,7 +20,7 @@ public class CategoriaEntidad {
 		setNivel(1);
 	}
 
-	public CategoriaEntidad(final UUID id, final String nombre, final UUID idCategoriaPadre, final int nivel) {
+	public CategoriaEntidad(final UUID id, final String nombre, final UUID idCategoriaPadre, final Integer nivel) {
 		setId(id);
 		setNombre(nombre);
 		setIdCategoriaPadre(idCategoriaPadre);
@@ -56,6 +56,6 @@ public class CategoriaEntidad {
 	}
 
 	public void setNivel(final Integer nivel) {
-		this.nivel = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(nivel, 1);
+		this.nivel = UtilNumero.obtenerValorDefecto(nivel, 1);
 	}
 }

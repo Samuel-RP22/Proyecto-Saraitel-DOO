@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dto;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
@@ -25,7 +26,7 @@ public class SedeDTO {
 	}
 
 	public SedeDTO(final UUID id, final CiudadDTO ciudad, final String nombre, final String nit, final String direccion,
-			final boolean esActiva) {
+			final Boolean esActiva) {
 		setId(id);
 		setCiudad(ciudad);
 		setNombre(nombre);
@@ -79,6 +80,6 @@ public class SedeDTO {
 	}
 
 	public void setEsActiva(final Boolean esActiva) {
-		this.esActiva = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(esActiva, true);
+		this.esActiva = UtilBoolean.obtenerValorDefectoVerdadero(esActiva);
 	}
 }

@@ -26,7 +26,7 @@ public class DetalleIngresoDTO {
 	}
 
 	public DetalleIngresoDTO(final UUID id, final IngresoInventarioDTO ingresoInventario,
-			final ProductoSedeDTO productoSede, final int cantidad, final BigDecimal costoUnitario,
+			final ProductoSedeDTO productoSede, final Integer cantidad, final BigDecimal costoUnitario,
 			final BigDecimal subtotal) {
 		setId(id);
 		setIngresoInventario(ingresoInventario);
@@ -66,7 +66,7 @@ public class DetalleIngresoDTO {
 	}
 
 	public void setCantidad(final Integer cantidad) {
-		this.cantidad = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(cantidad, 1);
+		this.cantidad = UtilNumero.obtenerValorDefecto(cantidad, 1);
 	}
 
 	public BigDecimal getCostoUnitario() {

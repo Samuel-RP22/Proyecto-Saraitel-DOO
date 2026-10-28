@@ -2,6 +2,7 @@ package co.com.saraitel.gestionsaraitel.dominio;
 
 import java.util.UUID;
 
+import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilBoolean;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
@@ -30,8 +31,8 @@ public class PersonaDominio {
 		this.nombre = UtilTexto.quitarEspaciosEnBlanco(builder.nombre);
 		this.apellido = UtilTexto.quitarEspaciosEnBlanco(builder.apellido);
 		this.correo = UtilTexto.quitarEspaciosEnBlanco(builder.correo);
-		this.telefonoConfirmado = builder.telefonoConfirmado;
-		this.correoConfirmado = builder.correoConfirmado;
+		this.telefonoConfirmado = UtilBoolean.obtenerValorDefectoFalso(builder.telefonoConfirmado);
+		this.correoConfirmado = UtilBoolean.obtenerValorDefectoFalso(builder.correoConfirmado);
 	}
 
 	public static PersonaDominio obtenerValorDefecto() {
@@ -48,8 +49,8 @@ public class PersonaDominio {
 		private String nombre;
 		private String apellido;
 		private String correo;
-		private boolean telefonoConfirmado;
-		private boolean correoConfirmado;
+		private Boolean telefonoConfirmado;
+		private Boolean correoConfirmado;
 
 		public Builder() {
 			this.id = UtilUUID.obtenerUUIDDefecto();
@@ -104,12 +105,12 @@ public class PersonaDominio {
 			return this;
 		}
 
-		public Builder telefonoConfirmado(final boolean telefonoConfirmado) {
+		public Builder telefonoConfirmado(final Boolean telefonoConfirmado) {
 			this.telefonoConfirmado = telefonoConfirmado;
 			return this;
 		}
 
-		public Builder correoConfirmado(final boolean correoConfirmado) {
+		public Builder correoConfirmado(final Boolean correoConfirmado) {
 			this.correoConfirmado = correoConfirmado;
 			return this;
 		}
