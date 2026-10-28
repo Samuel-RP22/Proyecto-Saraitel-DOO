@@ -19,6 +19,8 @@ public class AsegurarNumeroDocumentoNuevaPersonaNoExistaRule implements Rule<Obj
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var numeroDocumentoPersona = (String) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

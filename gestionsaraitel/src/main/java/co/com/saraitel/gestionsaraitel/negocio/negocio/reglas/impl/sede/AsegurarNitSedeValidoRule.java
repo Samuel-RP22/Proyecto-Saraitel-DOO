@@ -18,6 +18,8 @@ public class AsegurarNitSedeValidoRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var nitSede = datos[0];
 
 		validarObligatoriedad(nitSede);

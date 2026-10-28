@@ -24,6 +24,8 @@ public class AsegurarClienteNoEsteSiendoUtilizadoRule implements Rule<Object> {
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var idCliente = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

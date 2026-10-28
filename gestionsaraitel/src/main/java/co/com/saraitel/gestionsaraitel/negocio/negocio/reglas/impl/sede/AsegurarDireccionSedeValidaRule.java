@@ -20,6 +20,8 @@ public class AsegurarDireccionSedeValidaRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var direccionSede = datos[0];
 
 		validarObligatoriedad(direccionSede);

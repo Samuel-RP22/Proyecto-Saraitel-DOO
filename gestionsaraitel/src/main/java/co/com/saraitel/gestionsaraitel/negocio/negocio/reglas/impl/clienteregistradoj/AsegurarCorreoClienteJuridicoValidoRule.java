@@ -18,6 +18,8 @@ public class AsegurarCorreoClienteJuridicoValidoRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var correoClienteJuridico = datos[0];
 
 		validarObligatoriedad(correoClienteJuridico);

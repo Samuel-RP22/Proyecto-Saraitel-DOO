@@ -20,6 +20,8 @@ public class AsegurarPrefijoClienteJuridicoValidoRule implements Rule<UUID> {
 
 	@Override
 	public void ejecutar(UUID... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var idPrefijo = UtilUUID.obtenerValorDefecto(datos[0]);
 
 		validarObligatoriedad(idPrefijo);

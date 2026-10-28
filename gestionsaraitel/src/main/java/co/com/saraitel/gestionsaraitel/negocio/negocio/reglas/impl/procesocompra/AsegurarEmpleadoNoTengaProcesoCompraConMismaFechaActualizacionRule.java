@@ -23,6 +23,8 @@ public class AsegurarEmpleadoNoTengaProcesoCompraConMismaFechaActualizacionRule 
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 3);
+
 		var idEmpleado = (UUID) datos[0];
 		var fecha = (LocalDateTime) datos[1];
 		var daoFactory = (DAOFactory) datos[2];

@@ -20,9 +20,13 @@ public class AsegurarEmpleadoProcesoCompraEsteActivoRule implements Rule<Object>
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var idEmpleado = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
+
 		var empleadoExistente = daoFactory.obtenerEmpleadoDao().consultarPorId(idEmpleado);
+
 		if (!empleadoExistente.getEsActivo()) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.EMPLEADO_PROCESO_COMPRA_NO_ACTIVO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);

@@ -18,6 +18,8 @@ public class AsegurarTelefonoPersonaValidoRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var telefonoPersona = datos[0];
 
 		validarObligatoriedad(telefonoPersona);

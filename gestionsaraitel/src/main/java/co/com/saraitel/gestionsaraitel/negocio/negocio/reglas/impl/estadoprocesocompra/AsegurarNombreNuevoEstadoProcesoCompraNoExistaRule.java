@@ -19,6 +19,8 @@ public class AsegurarNombreNuevoEstadoProcesoCompraNoExistaRule implements Rule<
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var nombreEstadoProcesoCompra = (String) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

@@ -18,6 +18,8 @@ public class AsegurarNitClienteJuridicoValidoRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var nitClienteJuridico = datos[0];
 
 		validarObligatoriedad(nitClienteJuridico);

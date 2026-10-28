@@ -20,6 +20,8 @@ public class AsegurarClienteProcesoCompraValidoRule implements Rule<UUID> {
 
 	@Override
 	public void ejecutar(UUID... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var idCliente = UtilUUID.obtenerValorDefecto(datos[0]);
 
 		validarObligatoriedad(idCliente);

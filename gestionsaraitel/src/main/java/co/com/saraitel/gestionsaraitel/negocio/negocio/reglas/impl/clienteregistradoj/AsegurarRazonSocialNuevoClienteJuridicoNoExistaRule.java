@@ -19,6 +19,8 @@ public class AsegurarRazonSocialNuevoClienteJuridicoNoExistaRule implements Rule
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var razonSocialClienteJuridico = (String) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

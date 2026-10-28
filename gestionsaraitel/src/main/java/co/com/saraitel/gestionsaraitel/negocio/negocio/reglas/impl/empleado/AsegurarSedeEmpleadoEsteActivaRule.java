@@ -20,9 +20,13 @@ public class AsegurarSedeEmpleadoEsteActivaRule implements Rule<Object> {
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var idSede = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
+
 		var sedeExistente = daoFactory.obtenerSedeDao().consultarPorId(idSede);
+
 		if (!sedeExistente.getEsActiva()) {
 			var mensajeUsuario = CatalogoMensajes.EmpleadoNegocioImpl.SEDE_EMPLEADO_NO_ACTIVA;
 

@@ -21,6 +21,8 @@ public class AsegurarPrefijoClienteJuridicoExistaRule implements Rule<Object> {
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var idPrefijo = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

@@ -16,6 +16,8 @@ public class ValidarDatosRegistrarInformacionNuevoClienteJuridicoRule implements
 
 	@Override
 	public void ejecutar(ClienteRegistradoJDominio... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var dominio = datos[0];
 
 		AsegurarNitClienteJuridicoValidoRule.obtenerInstancia().ejecutar(dominio.getNit());

@@ -19,6 +19,8 @@ public class AsegurarNitNuevoClienteJuridicoNoExistaRule implements Rule<Object>
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var nitClienteJuridico = (String) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 

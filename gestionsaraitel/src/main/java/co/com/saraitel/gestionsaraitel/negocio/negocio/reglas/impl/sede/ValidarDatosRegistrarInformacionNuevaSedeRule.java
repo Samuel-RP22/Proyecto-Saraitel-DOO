@@ -16,6 +16,8 @@ public class ValidarDatosRegistrarInformacionNuevaSedeRule implements Rule<SedeD
 
 	@Override
 	public void ejecutar(SedeDominio... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var dominio = datos[0];
 
 		AsegurarCiudadSedeValidaRule.obtenerInstancia().ejecutar(dominio.getCiudad().getId());

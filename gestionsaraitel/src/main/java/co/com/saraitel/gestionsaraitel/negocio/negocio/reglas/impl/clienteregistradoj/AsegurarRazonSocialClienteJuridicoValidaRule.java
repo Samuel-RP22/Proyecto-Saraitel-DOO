@@ -20,6 +20,8 @@ public class AsegurarRazonSocialClienteJuridicoValidaRule implements Rule<String
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var razonSocialClienteJuridico = datos[0];
 
 		validarObligatoriedad(razonSocialClienteJuridico);

@@ -187,6 +187,15 @@ public final class CatalogoMensajes {
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS = "Se ha presentado un problema inesperado tratando de consultar la información de los clientes jurídicos, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
 
+	public static final class Rule {
+
+		private Rule() {
+		}
+
+		public static final String USUARIO_ERROR_DATOS_INCOMPLETOS_PARA_VALIDAR_REGLA = "Se ha presentado un problema tratando de validar la información de la operación deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String TECNICO_ERROR_CANTIDAD_DATOS_REGLA_NO_VALIDA = "La regla de negocio no recibió la cantidad de datos que necesita para ejecutarse";
+	}
+
 	public static final class SedeNegocioImpl {
 		private SedeNegocioImpl() {
 		}

@@ -20,6 +20,8 @@ public class AsegurarTipoDocumentoPersonaValidoRule implements Rule<UUID> {
 
 	@Override
 	public void ejecutar(UUID... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var idTipoDocumento = UtilUUID.obtenerValorDefecto(datos[0]);
 
 		validarObligatoriedad(idTipoDocumento);

@@ -20,6 +20,8 @@ public class AsegurarCiudadSedeValidaRule implements Rule<UUID> {
 
 	@Override
 	public void ejecutar(UUID... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var idCiudad = UtilUUID.obtenerValorDefecto(datos[0]);
 
 		validarObligatoriedad(idCiudad);

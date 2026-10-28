@@ -16,6 +16,8 @@ public class ValidarDatosRegistrarInformacionNuevaPersonaRule implements Rule<Pe
 
 	@Override
 	public void ejecutar(PersonaDominio... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var dominio = datos[0];
 
 		AsegurarTipoDocumentoPersonaValidoRule.obtenerInstancia().ejecutar(dominio.getTipoDocumento().getId());

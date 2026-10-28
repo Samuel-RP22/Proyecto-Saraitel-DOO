@@ -20,6 +20,8 @@ public class AsegurarCodigoEstadoProcesoCompraValidoRule implements Rule<String>
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var codigoEstadoProcesoCompra = datos[0];
 
 		validarObligatoriedad(codigoEstadoProcesoCompra);

@@ -25,6 +25,8 @@ public class AsegurarProcesoCompraEnProcesoSeaAnuladoTrasCincoMinutosRule implem
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var procesoCompra = (ProcesoCompraEntidad) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 		var estadoEnProceso = consultarEstadoPorCodigo(CODIGO_ESTADO_EN_PROCESO, daoFactory);

@@ -16,6 +16,8 @@ public class ValidarDatosRegistrarInformacionNuevoEstadoProcesoCompraRule implem
 
 	@Override
 	public void ejecutar(EstadoProcesoCompraDominio... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var dominio = datos[0];
 
 		AsegurarCodigoEstadoProcesoCompraValidoRule.obtenerInstancia().ejecutar(dominio.getCodigo());

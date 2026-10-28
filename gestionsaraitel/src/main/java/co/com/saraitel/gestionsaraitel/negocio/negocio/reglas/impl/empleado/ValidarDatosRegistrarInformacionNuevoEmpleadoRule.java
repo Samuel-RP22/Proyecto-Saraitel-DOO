@@ -16,6 +16,8 @@ public class ValidarDatosRegistrarInformacionNuevoEmpleadoRule implements Rule<E
 
 	@Override
 	public void ejecutar(EmpleadoDominio... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var dominio = datos[0];
 
 		AsegurarSedeEmpleadoValidaRule.obtenerInstancia().ejecutar(dominio.getSede().getId());

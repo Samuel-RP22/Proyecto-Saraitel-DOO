@@ -20,6 +20,8 @@ public class AsegurarApellidoPersonaValidoRule implements Rule<String> {
 
 	@Override
 	public void ejecutar(String... datos) {
+		Rule.asegurarCantidadDatos(datos, 1);
+
 		var apellidoPersona = datos[0];
 
 		validarObligatoriedad(apellidoPersona);

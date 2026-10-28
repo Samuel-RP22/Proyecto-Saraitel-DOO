@@ -21,6 +21,8 @@ public class AsegurarPersonaEmpleadoExistaRule implements Rule<Object> {
 
 	@Override
 	public void ejecutar(Object... datos) {
+		Rule.asegurarCantidadDatos(datos, 2);
+
 		var idPersona = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 
