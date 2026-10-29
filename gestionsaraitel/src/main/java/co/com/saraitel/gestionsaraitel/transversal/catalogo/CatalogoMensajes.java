@@ -169,6 +169,7 @@ public final class CatalogoMensajes {
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESOS_COMPRA_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los procesos de compra con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESOS_COMPRA = "Se ha presentado un problema inesperado tratando de consultar la información de los procesos de compra, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PROCESO_COMPRA_POR_ID = "Se ha presentado un problema inesperado tratando de consultar la información del proceso de compra, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
+		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ANULANDO_PROCESOS_COMPRA_VENCIDOS = "Se ha presentado un problema inesperado tratando de anular los procesos de compra que superaron el tiempo máximo en proceso, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
 
 	public static final class ClienteRegistradoNFachadaImpl {
@@ -275,6 +276,7 @@ public final class CatalogoMensajes {
 		public static final String EMPLEADO_PROCESO_COMPRA_NO_ACTIVO = "El empleado asignado al proceso de compra no se encuentra activo, asegúrese de seleccionar un empleado activo";
 
 		public static final String ESTADO_INICIAL_PROCESO_COMPRA_NO_CONFIGURADO = "No es posible registrar el proceso de compra porque no existe el estado inicial En proceso (código EP), por favor contacte al administrador de la aplicación";
+		public static final String ESTADO_ANULADO_PROCESO_COMPRA_NO_CONFIGURADO = "No es posible anular los procesos de compra vencidos porque no existe el estado Anulado (código AN), por favor contacte al administrador de la aplicación";
 		public static final String CLIENTE_GENERICO_NO_CONFIGURADO = "No es posible registrar el proceso de compra con un cliente no registrado porque el cliente genérico (Consumidor final) no está configurado en la base de datos, por favor contacte al administrador de la aplicación";
 	}
 

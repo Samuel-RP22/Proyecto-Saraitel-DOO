@@ -14,4 +14,6 @@ public interface ProcesoCompraFachada {
 	List<ProcesoCompraDTO> consultarTodos();
 
 	ProcesoCompraDTO consultarPorId(UUID id);
+
+	void anularProcesosCompraVencidos();
 }

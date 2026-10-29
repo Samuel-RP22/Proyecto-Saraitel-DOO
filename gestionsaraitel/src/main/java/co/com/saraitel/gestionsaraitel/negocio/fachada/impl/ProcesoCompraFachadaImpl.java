@@ -109,4 +109,26 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 			daoFactory.cerrarConexion();
 		}
 	}
+
+	@Override
+	public void anularProcesosCompraVencidos() {
+		var daoFactory = DAOFactory.obtenerFactoria();
+		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
+
+		daoFactory.iniciarTransaccion();
+
+		try {
+			procesoCompraNegocio.anularProcesosCompraVencidos();
+			daoFactory.confirmarTransaccion();
+		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
+			throw excepcion;
+		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
+			var mensajeUsuario = CatalogoMensajes.ProcesoCompraFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ANULANDO_PROCESOS_COMPRA_VENCIDOS;
+			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+		} finally {
+			daoFactory.cerrarConexion();
+		}
+	}
 }
