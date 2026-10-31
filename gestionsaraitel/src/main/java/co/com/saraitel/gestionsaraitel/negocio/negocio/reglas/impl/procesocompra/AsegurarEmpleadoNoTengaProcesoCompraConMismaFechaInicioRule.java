@@ -24,20 +24,15 @@ public class AsegurarEmpleadoNoTengaProcesoCompraConMismaFechaInicioRule impleme
 	@Override
 	public void ejecutar(Object... datos) {
 		Rule.asegurarCantidadDatos(datos, 3);
-
 		var idEmpleado = (UUID) datos[0];
 		var fecha = (LocalDateTime) datos[1];
 		var daoFactory = (DAOFactory) datos[2];
-
 		var empleadoFiltro = new EmpleadoEntidad();
 		empleadoFiltro.setId(idEmpleado);
-
 		var entidadFiltro = new ProcesoCompraEntidad();
 		entidadFiltro.setEmpleado(empleadoFiltro);
 		entidadFiltro.setFechaInicio(fecha);
-
 		var resultados = daoFactory.obtenerProcesoCompraDao().consultarPorFiltro(entidadFiltro);
-
 		if (!resultados.isEmpty()) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.EMPLEADO_YA_TIENE_PROCESO_COMPRA_CON_LA_MISMA_FECHA_INICIO;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
