@@ -23,14 +23,10 @@ public class EstadoProcesoCompraNegocioImpl implements EstadoProcesoCompraNegoci
 	@Override
 	public void registrarInformacionNuevoEstadoProcesoCompra(final EstadoProcesoCompraDominio datos) {
 		ValidarDatosRegistrarInformacionNuevoEstadoProcesoCompraRule.obtenerInstancia().ejecutar(datos);
-
 		AsegurarCodigoNuevoEstadoProcesoCompraNoExistaRule.obtenerInstancia().ejecutar(datos.getCodigo(), daoFactory);
 		AsegurarNombreNuevoEstadoProcesoCompraNoExistaRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
-
 		var estadoProcesoCompraEntidad = EstadoProcesoCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
-
 		estadoProcesoCompraEntidad.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerEstadoProcesoCompraDao().consultarPorId(id).getId()));
-
 		daoFactory.obtenerEstadoProcesoCompraDao().crear(estadoProcesoCompraEntidad);
 	}
 

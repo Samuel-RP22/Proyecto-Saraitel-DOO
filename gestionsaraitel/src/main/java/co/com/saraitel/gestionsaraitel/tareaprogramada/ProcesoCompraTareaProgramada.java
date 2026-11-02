@@ -13,7 +13,8 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class ProcesoCompraTareaProgramada {
 
 	private static final long INTERVALO_REVISION_MILISEGUNDOS = 15_000L;
-	private static final GestionSaraitelLogger LOGGER = GestionSaraitelLogger.obtener(ProcesoCompraTareaProgramada.class);
+	private static final GestionSaraitelLogger LOGGER = GestionSaraitelLogger
+			.obtener(ProcesoCompraTareaProgramada.class);
 	private final ProcesoCompraFachada fachada = new ProcesoCompraFachadaImpl();
 
 	@Scheduled(fixedDelay = INTERVALO_REVISION_MILISEGUNDOS)

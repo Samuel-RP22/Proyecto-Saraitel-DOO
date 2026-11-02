@@ -45,12 +45,11 @@ public class SeguridadConfiguracion {
 	SecurityFilterChain filtroSeguridad(HttpSecurity http, ClientRegistrationRepository repositorioClientes) {
 		http.authorizeHttpRequests(
 				autorizacion -> autorizacion.requestMatchers(ACCESO_DENEGADO).permitAll().anyRequest().authenticated())
-				.oauth2Login(
-						oauth -> oauth
-								.authorizationEndpoint(autorizacion -> autorizacion
-										.authorizationRequestResolver(resolverConSeleccionDeCuenta(repositorioClientes)))
-								.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
-								.defaultSuccessUrl(PROCESO_COMPRA, true).failureHandler(this::manejarFalloDeIngreso))
+				.oauth2Login(oauth -> oauth
+						.authorizationEndpoint(autorizacion -> autorizacion
+								.authorizationRequestResolver(resolverConSeleccionDeCuenta(repositorioClientes)))
+						.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
+						.defaultSuccessUrl(PROCESO_COMPRA, true).failureHandler(this::manejarFalloDeIngreso))
 				.csrf(csrf -> csrf.spa()).cors(Customizer.withDefaults())
 				.logout(logout -> logout.logoutUrl(LOGOUT).logoutSuccessUrl(PROCESO_COMPRA));
 

@@ -136,10 +136,8 @@ public class ProcesoCompraNegocioImpl implements ProcesoCompraNegocio {
 	public void anularProcesosCompraVencidos() {
 		var filtro = new ProcesoCompraEntidad();
 		filtro.setEstado(obtenerEstadoInicial());
-
 		var procesosEnProceso = daoFactory.obtenerProcesoCompraDao().consultarPorFiltro(filtro);
 		var estadoAnulado = obtenerEstadoAnulado();
-
 		for (var procesoCompra : procesosEnProceso) {
 			if (superoTiempoMaximoEnProceso(procesoCompra)) {
 				anular(procesoCompra, estadoAnulado);
