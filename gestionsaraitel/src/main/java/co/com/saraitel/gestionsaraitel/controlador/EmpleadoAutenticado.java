@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 import co.com.saraitel.gestionsaraitel.dto.EmpleadoDTO;
+import co.com.saraitel.gestionsaraitel.negocio.fachada.EmpleadoFachada;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.impl.EmpleadoFachadaImpl;
 import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelControladorExcepcion;
@@ -15,9 +16,21 @@ public final class EmpleadoAutenticado {
 
 	private EmpleadoAutenticado() {
 	}
+	
+	private static EmpleadoFachada fachada = new EmpleadoFachadaImpl();
+	private static EmpleadoDTO filtro = new EmpleadoDTO();
 
 	public static boolean esEmpleadoActivo(final OidcUser usuario) {
 		return !UtilObjeto.esNulo(usuario) && buscarEmpleadoActivo(usuario.getEmail()).isPresent();
+	}
+
+	public static Optional<EmpleadoDTO> buscarEmpleadoActivo(final String correo) {
+		if (UtilTexto.esVacia(correo)) {
+			return Optional.empty();
+		}
+		filtro.getPersona().setCorreo(correo);
+		return fachada.consultarPorFiltro(filtro).stream().filter(EmpleadoDTO::getEsActivo)
+				.findFirst();
 	}
 
 	public static Optional<EmpleadoDTO> obtenerUsuario(final OidcUser usuario) {
@@ -30,15 +43,5 @@ public final class EmpleadoAutenticado {
 			throw GestionSaraitelControladorExcepcion.crear(mensajeUsuario);
 		}
 		return empleado;
-	}
-
-	public static Optional<EmpleadoDTO> buscarEmpleadoActivo(final String correo) {
-		if (UtilTexto.esVacia(correo)) {
-			return Optional.empty();
-		}
-		var filtro = new EmpleadoDTO();
-		filtro.getPersona().setCorreo(correo);
-		return new EmpleadoFachadaImpl().consultarPorFiltro(filtro).stream().filter(EmpleadoDTO::getEsActivo)
-				.findFirst();
 	}
 }

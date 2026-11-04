@@ -43,6 +43,14 @@ public final class GestionSaraitelLogger {
 		logger.error(mensaje, argumentos);
 	}
 
+	private void registrarExcepcionPropia(final GestionSaraitelExcepcion excepcion) {
+		if (CAPAS_CON_FALLAS_ESPERADAS.contains(excepcion.getCapa())) {
+			advertencia(REGLA_INCUMPLIDA, excepcion.getCapa(), excepcion.getMensajeTecnico());
+		} else {
+			error(FALLA_CAPA, excepcion.getCapa(), excepcion.getMensajeTecnico(), excepcion);
+		}
+	}
+
 	public void registrarExcepcion(final Exception excepcion) {
 		if (excepcion instanceof GestionSaraitelExcepcion excepcionPropia) {
 			registrarExcepcionPropia(excepcionPropia);
@@ -58,14 +66,6 @@ public final class GestionSaraitelLogger {
 			registrarExcepcion(excepcion);
 		} finally {
 			ContextoLog.establecerCorrelationId(correlationIdAnterior);
-		}
-	}
-
-	private void registrarExcepcionPropia(final GestionSaraitelExcepcion excepcion) {
-		if (CAPAS_CON_FALLAS_ESPERADAS.contains(excepcion.getCapa())) {
-			advertencia(REGLA_INCUMPLIDA, excepcion.getCapa(), excepcion.getMensajeTecnico());
-		} else {
-			error(FALLA_CAPA, excepcion.getCapa(), excepcion.getMensajeTecnico(), excepcion);
 		}
 	}
 }

@@ -31,8 +31,8 @@ public class EmpleadoControlador extends AbstractRestController {
 
 	@GetMapping("/actual")
 	public ResponseEntity<RespuestaOk<EmpleadoDTO>> consultarEmpleadoActual(@AuthenticationPrincipal OidcUser usuario) {
-		var empleados = EmpleadoAutenticado.obtenerUsuario(usuario).map(List::of).orElse(List.of());
-		RespuestaOk<EmpleadoDTO> respuesta = RespuestaOk.crear(empleados);
+		var empleado = EmpleadoAutenticado.obtenerUsuario(usuario).map(List::of).orElse(List.of());
+		RespuestaOk<EmpleadoDTO> respuesta = RespuestaOk.crear(empleado);
 		return ResponseEntity.ok(respuesta);
 	}
 }

@@ -34,7 +34,7 @@ public class SeguridadConfiguracion {
 	private static final String CODIGO_EMPLEADO_NO_ACTIVO = "empleado_no_activo";
 	private static final String ACCESO_DENEGADO = "/acceso-denegado.html";
 	private static final String LOGOUT = "/logout";
-	private static final String LOGIN_LOGOUT_INVALIDO = "/login?error";
+	private static final String LOGIN_ERROR = "/login?error";
 	private static final String PROCESO_COMPRA = "/proceso-compra.html";
 	private static final String SOLICITUD_AUTORIZACION_NO_ENCONTRADA = "authorization_request_not_found";
 	private static final String STATE_INVALIDO = "invalid_state_parameter";
@@ -47,7 +47,7 @@ public class SeguridadConfiguracion {
 				autorizacion -> autorizacion.requestMatchers(ACCESO_DENEGADO).permitAll().anyRequest().authenticated())
 				.oauth2Login(oauth -> oauth
 						.authorizationEndpoint(autorizacion -> autorizacion
-								.authorizationRequestResolver(resolverConSeleccionDeCuenta(repositorioClientes)))
+								.authorizationRequestResolver(seleccionarCuenta(repositorioClientes)))
 						.userInfoEndpoint(usuario -> usuario.oidcUserService(this::validarEmpleadoActivo))
 						.defaultSuccessUrl(PROCESO_COMPRA, true).failureHandler(this::manejarFalloDeIngreso))
 				.csrf(csrf -> csrf.spa()).cors(Customizer.withDefaults())
@@ -56,8 +56,7 @@ public class SeguridadConfiguracion {
 		return http.build();
 	}
 
-	private OAuth2AuthorizationRequestResolver resolverConSeleccionDeCuenta(
-			ClientRegistrationRepository repositorioClientes) {
+	private OAuth2AuthorizationRequestResolver seleccionarCuenta(ClientRegistrationRepository repositorioClientes) {
 		var resolver = new DefaultOAuth2AuthorizationRequestResolver(repositorioClientes,
 				OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI);
 		resolver.setAuthorizationRequestCustomizer(solicitud -> solicitud
@@ -86,7 +85,7 @@ public class SeguridadConfiguracion {
 			cerrarSesionAnterior(request);
 			response.sendRedirect(PROCESO_COMPRA);
 		} else {
-			response.sendRedirect(LOGIN_LOGOUT_INVALIDO);
+			response.sendRedirect(LOGIN_ERROR);
 		}
 	}
 
