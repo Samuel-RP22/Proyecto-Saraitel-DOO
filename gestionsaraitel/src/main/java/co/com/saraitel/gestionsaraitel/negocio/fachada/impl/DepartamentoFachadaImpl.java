@@ -18,14 +18,18 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 	public List<DepartamentoDTO> consultarPorFiltro(DepartamentoDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var departamentoNegocio = new DepartamentoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = DepartamentoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaDepartamentos = departamentoNegocio.consultarPorFiltro(filtroDominio);
-			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
+			var resultado = DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.DepartamentoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -37,13 +41,17 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 	public List<DepartamentoDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var departamentoNegocio = new DepartamentoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaDepartamentos = departamentoNegocio.consultarTodos();
-			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
+			var resultado = DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(listaDepartamentos);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.DepartamentoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -55,13 +63,17 @@ public class DepartamentoFachadaImpl implements DepartamentoFachada {
 	public DepartamentoDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var departamentoNegocio = new DepartamentoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var departamentoDominio = departamentoNegocio.consultarPorId(id);
-			return DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(departamentoDominio);
+			var resultado = DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(departamentoDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.DepartamentoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

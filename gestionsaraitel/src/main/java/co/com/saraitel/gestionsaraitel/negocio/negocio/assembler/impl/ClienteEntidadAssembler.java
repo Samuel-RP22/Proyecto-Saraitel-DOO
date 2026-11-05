@@ -18,14 +18,18 @@ public class ClienteEntidadAssembler implements EntidadAssembler<ClienteDominio,
 
 	@Override
 	public ClienteEntidad convertirAEntidad(ClienteDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ClienteDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ClienteDominio.obtenerValorDefecto());
+
 		return new ClienteEntidad(dominioTmp.getId(), dominioTmp.getEsClienteRegistrado());
 	}
 
 	@Override
 	public ClienteDominio convertirADominio(ClienteEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteEntidad());
+
+		ClienteEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteEntidad());
+
 		return new ClienteDominio(entidadTmp.getId(), entidadTmp.getEsClienteRegistrado());
 	}
 }

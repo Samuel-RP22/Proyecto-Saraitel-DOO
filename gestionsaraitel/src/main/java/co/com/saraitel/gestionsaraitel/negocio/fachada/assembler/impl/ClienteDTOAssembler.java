@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class ClienteDTOAssembler implements DTOAssembler<ClienteDominio, Cliente
 
 	@Override
 	public ClienteDTO convertirADTO(ClienteDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ClienteDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ClienteDominio.obtenerValorDefecto());
 
 		return new ClienteDTO(dominioTmp.getId(), dominioTmp.getEsClienteRegistrado());
@@ -30,14 +30,16 @@ public class ClienteDTOAssembler implements DTOAssembler<ClienteDominio, Cliente
 
 	@Override
 	public ClienteDominio convertirADominio(ClienteDTO dto) {
-		var dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new ClienteDTO());
+
+		ClienteDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new ClienteDTO());
 
 		return new ClienteDominio(dtoTmp.getId(), dtoTmp.getEsClienteRegistrado());
 	}
 
 	@Override
 	public List<ClienteDTO> convertirADTO(List<ClienteDominio> listaDominios) {
-		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
+
+		List<ClienteDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<ClienteDominio>());
 
 		return listaDominiosTmp.stream().map(this::convertirADTO).toList();

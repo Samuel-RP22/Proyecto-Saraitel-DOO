@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class EstadoProcesoCompraDTOAssembler
 
 	@Override
 	public EstadoProcesoCompraDTO convertirADTO(EstadoProcesoCompraDominio dominio) {
+
 		EstadoProcesoCompraDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoProcesoCompraDominio.obtenerValorDefecto());
 
@@ -31,6 +31,7 @@ public class EstadoProcesoCompraDTOAssembler
 
 	@Override
 	public EstadoProcesoCompraDominio convertirADominio(EstadoProcesoCompraDTO dto) {
+
 		EstadoProcesoCompraDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new EstadoProcesoCompraDTO());
 

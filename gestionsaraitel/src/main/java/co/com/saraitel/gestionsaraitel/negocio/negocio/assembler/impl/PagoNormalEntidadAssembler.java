@@ -18,8 +18,10 @@ public class PagoNormalEntidadAssembler implements EntidadAssembler<PagoNormalDo
 
 	@Override
 	public PagoNormalEntidad convertirAEntidad(PagoNormalDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		PagoNormalDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoNormalDominio.obtenerValorDefecto());
+
 		return new PagoNormalEntidad(dominioTmp.getId(),
 				MetodoPagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getMetodoPago()),
 				PagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPago()),
@@ -28,7 +30,10 @@ public class PagoNormalEntidadAssembler implements EntidadAssembler<PagoNormalDo
 
 	@Override
 	public PagoNormalDominio convertirADominio(PagoNormalEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PagoNormalEntidad());
+
+		PagoNormalEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new PagoNormalEntidad());
+
 		return new PagoNormalDominio(entidadTmp.getId(),
 				MetodoPagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getMetodoPago()),
 				PagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPago()),

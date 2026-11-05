@@ -18,11 +18,10 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 	public void registrarInformacionNuevoEstadoProcesoCompra(EstadoProcesoCompraDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
-			var estadoProcesoCompraDominio = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(datos);
+			daoFactory.iniciarTransaccion();
+			var estadoProcesoCompraDominio = EstadoProcesoCompraDTOAssembler.obtenerInstancia()
+					.convertirADominio(datos);
 			estadoProcesoCompraNegocio.registrarInformacionNuevoEstadoProcesoCompra(estadoProcesoCompraDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -41,14 +40,18 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 	public List<EstadoProcesoCompraDTO> consultarPorFiltro(EstadoProcesoCompraDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaEstadosProcesoCompra = estadoProcesoCompraNegocio.consultarPorFiltro(filtroDominio);
-			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
+			var resultado = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_PROCESO_COMPRA_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -60,13 +63,17 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 	public List<EstadoProcesoCompraDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaEstadosProcesoCompra = estadoProcesoCompraNegocio.consultarTodos();
-			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
+			var resultado = EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaEstadosProcesoCompra);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADOS_PROCESO_COMPRA;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -78,13 +85,18 @@ public class EstadoProcesoCompraFachadaImpl implements EstadoProcesoCompraFachad
 	public EstadoProcesoCompraDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var estadoProcesoCompraNegocio = new EstadoProcesoCompraNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var estadoProcesoCompraDominio = estadoProcesoCompraNegocio.consultarPorId(id);
-			return EstadoProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(estadoProcesoCompraDominio);
+			var resultado = EstadoProcesoCompraDTOAssembler.obtenerInstancia()
+					.convertirADTO(estadoProcesoCompraDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EstadoProcesoCompraFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_ESTADO_PROCESO_COMPRA_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

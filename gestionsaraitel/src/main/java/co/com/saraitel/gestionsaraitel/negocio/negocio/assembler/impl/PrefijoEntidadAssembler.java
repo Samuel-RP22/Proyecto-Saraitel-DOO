@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl;
 
 import co.com.saraitel.gestionsaraitel.dominio.PrefijoDominio;
@@ -19,14 +18,18 @@ public class PrefijoEntidadAssembler implements EntidadAssembler<PrefijoDominio,
 
 	@Override
 	public PrefijoEntidad convertirAEntidad(PrefijoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		PrefijoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PrefijoDominio.obtenerValorDefecto());
+
 		return new PrefijoEntidad(dominioTmp.getId(), dominioTmp.getCodigo());
 	}
 
 	@Override
 	public PrefijoDominio convertirADominio(PrefijoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PrefijoEntidad());
+
+		PrefijoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PrefijoEntidad());
+
 		return new PrefijoDominio(entidadTmp.getId(), entidadTmp.getCodigo());
 	}
 }

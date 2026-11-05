@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -25,29 +24,31 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 
 	@Override
 	public void crear(final PersonaEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PERSONA,
-				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PERSONA, entidad.getId(),
-				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PERSONA,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PERSONA,
+				entidad.getId(), entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
 				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
 				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado());
 	}
 
 	@Override
 	public PersonaEntidad consultarPorId(final UUID id) {
-		var filtro = new PersonaEntidad();
+		PersonaEntidad filtro = new PersonaEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<PersonaEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new PersonaEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new PersonaEntidad());
 	}
 
 	@Override
 	public List<PersonaEntidad> consultarPorFiltro(final PersonaEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PersonaEntidad());
+		PersonaEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PersonaEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId())
 				.conId("\"TipoDocumento_id\"", filtroSeguro.getTipoDocumento().getId())
 				.conId("\"Prefijo_id\"", filtroSeguro.getPrefijo().getId())
 				.conTexto("\"NumeroDocumento\"", filtroSeguro.getNumeroDocumento())
@@ -56,46 +57,45 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 				.conBooleano("\"TelefonoConfirmado\"", filtroSeguro.getTelefonoConfirmado(), false)
 				.conBooleano("\"CorreoConfirmado\"", filtroSeguro.getCorreoConfirmado(), false);
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
 	}
 
 	@Override
 	public List<PersonaEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
+		return ejecutarConsulta(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PERSONAS,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PERSONAS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PersonaEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA,
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PERSONA,
-				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(),
-				entidad.getNumeroDocumento(), entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(),
-				entidad.getCorreo(), entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
+				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(), entidad.getNumeroDocumento(),
+				entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(), entidad.getCorreo(),
+				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PERSONA,
+		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ELIMINAR,
+				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PERSONA,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PERSONA, id);
 	}
 
 	private PersonaEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new PersonaEntidad();
-
+		PersonaEntidad entidad = new PersonaEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-
-		var tipoDocumento = new TipoDocumentoEntidad();
+		TipoDocumentoEntidad tipoDocumento = new TipoDocumentoEntidad();
 		tipoDocumento.setId(leerUUID(resultados, "TipoDocumento_id"));
 		entidad.setTipoDocumento(tipoDocumento);
-
-		var prefijo = new PrefijoEntidad();
+		PrefijoEntidad prefijo = new PrefijoEntidad();
 		prefijo.setId(leerUUID(resultados, "Prefijo_id"));
 		entidad.setPrefijo(prefijo);
-
 		entidad.setNumeroDocumento(resultados.getString("NumeroDocumento"));
 		entidad.setTelefono(resultados.getString("Telefono"));
 		entidad.setNombre(resultados.getString("Nombre"));

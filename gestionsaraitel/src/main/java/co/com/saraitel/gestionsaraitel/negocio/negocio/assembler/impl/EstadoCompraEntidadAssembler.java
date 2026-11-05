@@ -18,14 +18,19 @@ public class EstadoCompraEntidadAssembler implements EntidadAssembler<EstadoComp
 
 	@Override
 	public EstadoCompraEntidad convertirAEntidad(EstadoCompraDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		EstadoCompraDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoCompraDominio.obtenerValorDefecto());
+
 		return new EstadoCompraEntidad(dominioTmp.getId(), dominioTmp.getCodigo(), dominioTmp.getNombre());
 	}
 
 	@Override
 	public EstadoCompraDominio convertirADominio(EstadoCompraEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EstadoCompraEntidad());
+
+		EstadoCompraEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new EstadoCompraEntidad());
+
 		return new EstadoCompraDominio(entidadTmp.getId(), entidadTmp.getCodigo(), entidadTmp.getNombre());
 	}
 }

@@ -18,14 +18,18 @@ public class MotivoEntidadAssembler implements EntidadAssembler<MotivoDominio, M
 
 	@Override
 	public MotivoEntidad convertirAEntidad(MotivoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		MotivoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				MotivoDominio.obtenerValorDefecto());
+
 		return new MotivoEntidad(dominioTmp.getId(), dominioTmp.getNombre());
 	}
 
 	@Override
 	public MotivoDominio convertirADominio(MotivoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new MotivoEntidad());
+
+		MotivoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new MotivoEntidad());
+
 		return new MotivoDominio(entidadTmp.getId(), entidadTmp.getNombre());
 	}
 }

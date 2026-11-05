@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl;
 
 import co.com.saraitel.gestionsaraitel.dominio.TipoDocumentoDominio;
@@ -19,14 +18,19 @@ public class TipoDocumentoEntidadAssembler implements EntidadAssembler<TipoDocum
 
 	@Override
 	public TipoDocumentoEntidad convertirAEntidad(TipoDocumentoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		TipoDocumentoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				TipoDocumentoDominio.obtenerValorDefecto());
+
 		return new TipoDocumentoEntidad(dominioTmp.getId(), dominioTmp.getTipo());
 	}
 
 	@Override
 	public TipoDocumentoDominio convertirADominio(TipoDocumentoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new TipoDocumentoEntidad());
+
+		TipoDocumentoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new TipoDocumentoEntidad());
+
 		return new TipoDocumentoDominio(entidadTmp.getId(), entidadTmp.getTipo());
 	}
 }

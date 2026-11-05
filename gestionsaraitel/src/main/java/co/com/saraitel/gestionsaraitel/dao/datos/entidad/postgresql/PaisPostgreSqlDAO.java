@@ -22,14 +22,17 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 	@Override
 	public void crear(final PaisEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAIS, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAIS,
-				entidad.getId(), entidad.getNombre());
+		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAIS,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAIS, entidad.getId(),
+				entidad.getNombre());
 	}
 
 	@Override
 	public PaisEntidad consultarPorId(final UUID id) {
-		List<PaisEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS);
+		List<PaisEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_ID,
+				List.of(id), this::mapear, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS);
 
 		return obtenerPrimeroOValorDefecto(resultado, new PaisEntidad());
 	}
@@ -39,34 +42,39 @@ public class PaisPostgreSqlDAO extends SqlDAO implements PaisDAO {
 
 		PaisEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PaisEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES);
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES);
 	}
 
 	@Override
 	public List<PaisEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES,
+		return ejecutarConsulta(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAISES,
 				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final PaisEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PAIS,
-				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PAIS, entidad.getNombre(), id);
+		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PAIS,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PAIS,
+				entidad.getNombre(), id);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PAIS, CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PAIS, id);
+		ejecutarActualizacion(CatalogoSentenciasSql.PaisPostgreSqlDAO.SQL_ELIMINAR,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_PAIS,
+				CatalogoMensajes.PaisPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PAIS, id);
 	}
 
 	private PaisEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		PaisEntidad entidad = new PaisEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setNombre(resultados.getString("Nombre"));
 

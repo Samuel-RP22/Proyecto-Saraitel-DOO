@@ -18,7 +18,8 @@ public class ProductoSedeEntidadAssembler implements EntidadAssembler<ProductoSe
 
 	@Override
 	public ProductoSedeEntidad convertirAEntidad(ProductoSedeDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ProductoSedeDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProductoSedeDominio.obtenerValorDefecto());
 
 		return new ProductoSedeEntidad.Builder().id(dominioTmp.getId())
@@ -31,7 +32,9 @@ public class ProductoSedeEntidadAssembler implements EntidadAssembler<ProductoSe
 
 	@Override
 	public ProductoSedeDominio convertirADominio(ProductoSedeEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ProductoSedeEntidad());
+
+		ProductoSedeEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new ProductoSedeEntidad());
 
 		return new ProductoSedeDominio.Builder().id(entidadTmp.getId())
 				.producto(ProductoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProducto()))

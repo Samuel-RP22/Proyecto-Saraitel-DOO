@@ -18,10 +18,8 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public void registrarInformacionNuevoEmpleado(EmpleadoDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var empleadoDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			empleadoNegocio.registrarInformacionNuevoEmpleado(empleadoDominio);
 			daoFactory.confirmarTransaccion();
@@ -41,10 +39,8 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public void modificarInformacionEmpleadoExistente(UUID id, EmpleadoDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var empleadoDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			empleadoNegocio.modificarInformacionEmpleadoExistente(id, empleadoDominio);
 			daoFactory.confirmarTransaccion();
@@ -64,10 +60,8 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public void darBajaInformacionEmpleadoExistente(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			empleadoNegocio.darBajaInformacionEmpleadoExistente(id);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -86,14 +80,18 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public List<EmpleadoDTO> consultarPorFiltro(EmpleadoDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = EmpleadoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaEmpleados = empleadoNegocio.consultarPorFiltro(filtroDominio);
-			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
+			var resultado = EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EmpleadoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -105,13 +103,17 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public List<EmpleadoDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaEmpleados = empleadoNegocio.consultarTodos();
-			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
+			var resultado = EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(listaEmpleados);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EmpleadoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -123,13 +125,17 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	public EmpleadoDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var empleadoDominio = empleadoNegocio.consultarPorId(id);
-			return EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(empleadoDominio);
+			var resultado = EmpleadoDTOAssembler.obtenerInstancia().convertirADTO(empleadoDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.EmpleadoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADO_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

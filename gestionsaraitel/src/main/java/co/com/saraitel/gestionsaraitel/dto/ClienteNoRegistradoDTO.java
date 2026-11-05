@@ -22,8 +22,8 @@ public class ClienteNoRegistradoDTO {
 		setNumeroDocumento(UtilTexto.VACIA);
 	}
 
-	public ClienteNoRegistradoDTO(final UUID id, final ClienteDTO cliente, final String nombre,
-			final String apellido, final String numeroDocumento) {
+	public ClienteNoRegistradoDTO(final UUID id, final ClienteDTO cliente, final String nombre, final String apellido,
+			final String numeroDocumento) {
 		setId(id);
 		setCliente(cliente);
 		setNombre(nombre);

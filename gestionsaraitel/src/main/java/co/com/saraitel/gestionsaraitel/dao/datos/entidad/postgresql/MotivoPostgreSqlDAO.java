@@ -22,7 +22,8 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 
 	@Override
 	public MotivoEntidad consultarPorId(final UUID id) {
-		List<MotivoEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+		List<MotivoEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_ID,
+				List.of(id), this::mapear,
 				CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVO,
 				CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVO);
 
@@ -31,10 +32,11 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 
 	@Override
 	public List<MotivoEntidad> consultarPorFiltro(final MotivoEntidad filtro) {
+
 		MotivoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new MotivoEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS,
@@ -43,11 +45,13 @@ public class MotivoPostgreSqlDAO extends SqlDAO implements MotivoDAO {
 
 	@Override
 	public List<MotivoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS,
+		return ejecutarConsulta(CatalogoSentenciasSql.MotivoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+				CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MOTIVOS,
 				CatalogoMensajes.MotivoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MOTIVOS);
 	}
 
 	private MotivoEntidad mapear(final ResultSet resultados) throws SQLException {
+
 		return new MotivoEntidad(leerUUID(resultados, "id"), resultados.getString("Nombre"));
 	}
 }

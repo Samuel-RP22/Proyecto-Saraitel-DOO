@@ -19,7 +19,8 @@ public class ClienteRegistradoJEntidadAssembler
 
 	@Override
 	public ClienteRegistradoJEntidad convertirAEntidad(ClienteRegistradoJDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ClienteRegistradoJDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				new ClienteRegistradoJDominio.Builder().construir());
 
 		return new ClienteRegistradoJEntidad.Builder().id(dominioTmp.getId())
@@ -33,7 +34,8 @@ public class ClienteRegistradoJEntidadAssembler
 
 	@Override
 	public ClienteRegistradoJDominio convertirADominio(ClienteRegistradoJEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+
+		ClienteRegistradoJEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
 				new ClienteRegistradoJEntidad.Builder().construir());
 
 		return new ClienteRegistradoJDominio.Builder().id(entidadTmp.getId())

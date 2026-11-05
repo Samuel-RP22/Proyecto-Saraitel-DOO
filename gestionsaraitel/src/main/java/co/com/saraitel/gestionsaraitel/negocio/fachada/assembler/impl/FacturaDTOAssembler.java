@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -30,7 +29,8 @@ public class FacturaDTOAssembler implements DTOAssembler<FacturaDominio, Factura
 						co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha.FECHA_HORA_DEFECTO));
 
 		return new FacturaDTO(dominioTmp.getId(),
-				CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()), dominioTmp.getFechaEmision());
+				CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()),
+				dominioTmp.getFechaEmision());
 	}
 
 	@Override

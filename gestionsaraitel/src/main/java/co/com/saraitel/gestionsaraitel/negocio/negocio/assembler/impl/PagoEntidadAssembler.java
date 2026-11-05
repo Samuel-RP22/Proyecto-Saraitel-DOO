@@ -18,8 +18,10 @@ public class PagoEntidadAssembler implements EntidadAssembler<PagoDominio, PagoE
 
 	@Override
 	public PagoEntidad convertirAEntidad(PagoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		PagoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoDominio.obtenerValorDefecto());
+
 		return new PagoEntidad(dominioTmp.getId(),
 				CompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCompra()),
 				dominioTmp.getMontoPagado(), dominioTmp.getFechaPago());
@@ -27,7 +29,9 @@ public class PagoEntidadAssembler implements EntidadAssembler<PagoDominio, PagoE
 
 	@Override
 	public PagoDominio convertirADominio(PagoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PagoEntidad());
+
+		PagoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PagoEntidad());
+
 		return new PagoDominio(entidadTmp.getId(),
 				CompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCompra()),
 				entidadTmp.getMontoPagado(), entidadTmp.getFechaPago());

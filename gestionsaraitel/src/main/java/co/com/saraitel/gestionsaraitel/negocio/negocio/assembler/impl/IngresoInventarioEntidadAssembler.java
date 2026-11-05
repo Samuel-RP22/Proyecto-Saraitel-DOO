@@ -19,7 +19,8 @@ public class IngresoInventarioEntidadAssembler
 
 	@Override
 	public IngresoInventarioEntidad convertirAEntidad(IngresoInventarioDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		IngresoInventarioDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				IngresoInventarioDominio.obtenerValorDefecto());
 
 		return new IngresoInventarioEntidad(dominioTmp.getId(),
@@ -30,7 +31,9 @@ public class IngresoInventarioEntidadAssembler
 
 	@Override
 	public IngresoInventarioDominio convertirADominio(IngresoInventarioEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new IngresoInventarioEntidad());
+
+		IngresoInventarioEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new IngresoInventarioEntidad());
 
 		return new IngresoInventarioDominio(entidadTmp.getId(),
 				SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSede()),

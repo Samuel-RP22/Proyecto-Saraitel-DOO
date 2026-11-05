@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl;
 
 import co.com.saraitel.gestionsaraitel.dominio.EstadoProcesoCompraDominio;
@@ -9,8 +8,7 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 public class EstadoProcesoCompraEntidadAssembler
 		implements EntidadAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraEntidad> {
 
-	private static final EntidadAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraEntidad> 
-	instancia = new EstadoProcesoCompraEntidadAssembler();
+	private static final EntidadAssembler<EstadoProcesoCompraDominio, EstadoProcesoCompraEntidad> instancia = new EstadoProcesoCompraEntidadAssembler();
 
 	private EstadoProcesoCompraEntidadAssembler() {
 	}
@@ -21,14 +19,19 @@ public class EstadoProcesoCompraEntidadAssembler
 
 	@Override
 	public EstadoProcesoCompraEntidad convertirAEntidad(EstadoProcesoCompraDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		EstadoProcesoCompraDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoProcesoCompraDominio.obtenerValorDefecto());
+
 		return new EstadoProcesoCompraEntidad(dominioTmp.getId(), dominioTmp.getCodigo(), dominioTmp.getNombre());
 	}
 
 	@Override
 	public EstadoProcesoCompraDominio convertirADominio(EstadoProcesoCompraEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EstadoProcesoCompraEntidad());
+
+		EstadoProcesoCompraEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new EstadoProcesoCompraEntidad());
+
 		return new EstadoProcesoCompraDominio(entidadTmp.getId(), entidadTmp.getCodigo(), entidadTmp.getNombre());
 	}
 }

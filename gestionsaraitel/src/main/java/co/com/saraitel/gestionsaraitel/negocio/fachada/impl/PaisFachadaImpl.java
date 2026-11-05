@@ -18,14 +18,18 @@ public class PaisFachadaImpl implements PaisFachada {
 	public List<PaisDTO> consultarPorFiltro(PaisDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var paisNegocio = new PaisNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = PaisDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaPaises = paisNegocio.consultarPorFiltro(filtroDominio);
-			return PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
+			var resultado = PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PaisFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -37,13 +41,17 @@ public class PaisFachadaImpl implements PaisFachada {
 	public List<PaisDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var paisNegocio = new PaisNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaPaises = paisNegocio.consultarTodos();
-			return PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
+			var resultado = PaisDTOAssembler.obtenerInstancia().convertirADTO(listaPaises);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PaisFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAISES;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -55,13 +63,17 @@ public class PaisFachadaImpl implements PaisFachada {
 	public PaisDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var paisNegocio = new PaisNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var paisDominio = paisNegocio.consultarPorId(id);
-			return PaisDTOAssembler.obtenerInstancia().convertirADTO(paisDominio);
+			var resultado = PaisDTOAssembler.obtenerInstancia().convertirADTO(paisDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PaisFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

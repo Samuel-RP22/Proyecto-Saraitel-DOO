@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class TipoDocumentoDTOAssembler implements DTOAssembler<TipoDocumentoDomi
 
 	@Override
 	public TipoDocumentoDTO convertirADTO(TipoDocumentoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		TipoDocumentoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				TipoDocumentoDominio.obtenerValorDefecto());
 
 		return new TipoDocumentoDTO(dominioTmp.getId(), dominioTmp.getTipo());
@@ -30,7 +30,8 @@ public class TipoDocumentoDTOAssembler implements DTOAssembler<TipoDocumentoDomi
 
 	@Override
 	public TipoDocumentoDominio convertirADominio(TipoDocumentoDTO dto) {
-		var dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new TipoDocumentoDTO());
+
+		TipoDocumentoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new TipoDocumentoDTO());
 
 		return new TipoDocumentoDominio(dtoTmp.getId(), dtoTmp.getTipo());
 	}
@@ -38,7 +39,7 @@ public class TipoDocumentoDTOAssembler implements DTOAssembler<TipoDocumentoDomi
 	@Override
 	public List<TipoDocumentoDTO> convertirADTO(List<TipoDocumentoDominio> listaDominios) {
 
-		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
+		List<TipoDocumentoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<TipoDocumentoDominio>());
 
 		return listaDominiosTmp.stream().map(this::convertirADTO).toList();

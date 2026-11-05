@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -26,7 +25,8 @@ public class PagoDTOAssembler implements DTOAssembler<PagoDominio, PagoDTO> {
 		PagoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PagoDominio.obtenerValorDefecto());
 
-		return new PagoDTO(dominioTmp.getId(), CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()),
+		return new PagoDTO(dominioTmp.getId(),
+				CompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCompra()),
 				dominioTmp.getMontoPagado(), dominioTmp.getFechaPago());
 	}
 
@@ -35,8 +35,9 @@ public class PagoDTOAssembler implements DTOAssembler<PagoDominio, PagoDTO> {
 
 		PagoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PagoDTO());
 
-		return new PagoDominio(dtoTmp.getId(), CompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCompra()),
-				dtoTmp.getMontoPagado(), dtoTmp.getFechaPago());
+		return new PagoDominio(dtoTmp.getId(),
+				CompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCompra()), dtoTmp.getMontoPagado(),
+				dtoTmp.getFechaPago());
 	}
 
 	@Override

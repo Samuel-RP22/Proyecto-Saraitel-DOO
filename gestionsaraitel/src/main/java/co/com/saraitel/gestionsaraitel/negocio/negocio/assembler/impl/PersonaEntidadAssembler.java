@@ -18,11 +18,13 @@ public class PersonaEntidadAssembler implements EntidadAssembler<PersonaDominio,
 
 	@Override
 	public PersonaEntidad convertirAEntidad(PersonaDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		PersonaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PersonaDominio.obtenerValorDefecto());
+
 		return new PersonaEntidad.Builder().id(dominioTmp.getId())
-				.tipoDocumento(
-						TipoDocumentoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getTipoDocumento()))
+				.tipoDocumento(TipoDocumentoEntidadAssembler.obtenerInstancia()
+						.convertirAEntidad(dominioTmp.getTipoDocumento()))
 				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPrefijo()))
 				.numeroDocumento(dominioTmp.getNumeroDocumento()).telefono(dominioTmp.getTelefono())
 				.nombre(dominioTmp.getNombre()).apellido(dominioTmp.getApellido()).correo(dominioTmp.getCorreo())
@@ -32,10 +34,12 @@ public class PersonaEntidadAssembler implements EntidadAssembler<PersonaDominio,
 
 	@Override
 	public PersonaDominio convertirADominio(PersonaEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PersonaEntidad());
+
+		PersonaEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PersonaEntidad());
+
 		return new PersonaDominio.Builder().id(entidadTmp.getId())
-				.tipoDocumento(
-						TipoDocumentoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getTipoDocumento()))
+				.tipoDocumento(TipoDocumentoEntidadAssembler.obtenerInstancia()
+						.convertirADominio(entidadTmp.getTipoDocumento()))
 				.prefijo(PrefijoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPrefijo()))
 				.numeroDocumento(entidadTmp.getNumeroDocumento()).telefono(entidadTmp.getTelefono())
 				.nombre(entidadTmp.getNombre()).apellido(entidadTmp.getApellido()).correo(entidadTmp.getCorreo())

@@ -18,15 +18,20 @@ public class AdministradorEntidadAssembler implements EntidadAssembler<Administr
 
 	@Override
 	public AdministradorEntidad convertirAEntidad(AdministradorDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		AdministradorDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				AdministradorDominio.obtenerValorDefecto());
+
 		return new AdministradorEntidad(dominioTmp.getId(),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEmpleado()));
 	}
 
 	@Override
 	public AdministradorDominio convertirADominio(AdministradorEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new AdministradorEntidad());
+
+		AdministradorEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new AdministradorEntidad());
+
 		return new AdministradorDominio(entidadTmp.getId(),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEmpleado()));
 	}

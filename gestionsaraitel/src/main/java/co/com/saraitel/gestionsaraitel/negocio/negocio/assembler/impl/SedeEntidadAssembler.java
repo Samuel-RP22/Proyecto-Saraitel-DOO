@@ -18,18 +18,22 @@ public class SedeEntidadAssembler implements EntidadAssembler<SedeDominio, SedeE
 
 	@Override
 	public SedeEntidad convertirAEntidad(SedeDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		SedeDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				SedeDominio.obtenerValorDefecto());
+
 		return new SedeEntidad(dominioTmp.getId(),
-				CiudadEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCiudad()), dominioTmp.getNombre(),
-				dominioTmp.getNit(), dominioTmp.getDireccion(), dominioTmp.getEsActiva());
+				CiudadEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCiudad()),
+				dominioTmp.getNombre(), dominioTmp.getNit(), dominioTmp.getDireccion(), dominioTmp.getEsActiva());
 	}
 
 	@Override
 	public SedeDominio convertirADominio(SedeEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new SedeEntidad());
+
+		SedeEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new SedeEntidad());
+
 		return new SedeDominio(entidadTmp.getId(),
-				CiudadEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCiudad()), entidadTmp.getNombre(),
-				entidadTmp.getNit(), entidadTmp.getDireccion(), entidadTmp.getEsActiva());
+				CiudadEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCiudad()),
+				entidadTmp.getNombre(), entidadTmp.getNit(), entidadTmp.getDireccion(), entidadTmp.getEsActiva());
 	}
 }

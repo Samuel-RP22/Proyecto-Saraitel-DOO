@@ -187,7 +187,7 @@ public final class CatalogoMensajes {
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_CLIENTE_JURIDICO = "Se ha presentado un problema inesperado tratando de registrar la información del nuevo cliente jurídico, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS = "Se ha presentado un problema inesperado tratando de consultar la información de los clientes jurídicos, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
-	
+
 	public static final class ProcesoCompraTareaProgramada {
 
 		private ProcesoCompraTareaProgramada() {

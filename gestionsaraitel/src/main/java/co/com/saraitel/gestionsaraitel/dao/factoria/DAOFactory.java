@@ -46,6 +46,9 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilSQL;
 
 public abstract class DAOFactory {
 
+	protected DAOFactory() {
+	}
+
 	private Connection conexion;
 	private static final FactoriaEnum FACTORIA = FactoriaEnum.POSTGRESQL;
 
@@ -56,13 +59,6 @@ public abstract class DAOFactory {
 			var mensajeUsuario = CatalogoMensajes.DAOFactory.USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario);
 		}
-	}
-
-	protected DAOFactory() {
-	}
-
-	protected DAOFactory(Connection conexion) {
-		this.conexion = conexion;
 	}
 
 	protected Connection getConexion() {

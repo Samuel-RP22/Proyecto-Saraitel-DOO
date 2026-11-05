@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class EstadoSaldoFavorDTOAssembler implements DTOAssembler<EstadoSaldoFav
 
 	@Override
 	public EstadoSaldoFavorDTO convertirADTO(EstadoSaldoFavorDominio dominio) {
+
 		EstadoSaldoFavorDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoSaldoFavorDominio.obtenerValorDefecto());
 
@@ -30,6 +30,7 @@ public class EstadoSaldoFavorDTOAssembler implements DTOAssembler<EstadoSaldoFav
 
 	@Override
 	public EstadoSaldoFavorDominio convertirADominio(EstadoSaldoFavorDTO dto) {
+
 		EstadoSaldoFavorDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new EstadoSaldoFavorDTO());
 

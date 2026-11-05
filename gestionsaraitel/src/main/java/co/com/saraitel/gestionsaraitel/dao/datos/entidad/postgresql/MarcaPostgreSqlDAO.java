@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -23,44 +22,46 @@ public class MarcaPostgreSqlDAO extends SqlDAO implements MarcaDAO {
 
 	@Override
 	public void crear(final MarcaEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_MARCA,
-				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_MARCA, entidad.getId(), entidad.getNombre(),
-				entidad.getEsActivo());
+		ejecutarActualizacion(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_MARCA,
+				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_MARCA, entidad.getId(),
+				entidad.getNombre(), entidad.getEsActivo());
 	}
 
 	@Override
 	public MarcaEntidad consultarPorId(final UUID id) {
-		var filtro = new MarcaEntidad();
+		MarcaEntidad filtro = new MarcaEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<MarcaEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new MarcaEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new MarcaEntidad());
 	}
 
 	@Override
 	public List<MarcaEntidad> consultarPorFiltro(final MarcaEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new MarcaEntidad());
+		MarcaEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new MarcaEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
-				.conTexto("\"Nombre\"", filtroSeguro.getNombre())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Nombre\"", filtroSeguro.getNombre())
 				.conBooleano("\"EsActivo\"", filtroSeguro.getEsActivo(), true);
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS,
 				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MARCAS);
 	}
 
 	@Override
 	public List<MarcaEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS,
+		return ejecutarConsulta(CatalogoSentenciasSql.MarcaPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_MARCAS,
 				CatalogoMensajes.MarcaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_MARCAS);
 	}
 
 	private MarcaEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new MarcaEntidad();
+		MarcaEntidad entidad = new MarcaEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setNombre(resultados.getString("Nombre"));
 		entidad.setEsActivo(resultados.getBoolean("EsActivo"));

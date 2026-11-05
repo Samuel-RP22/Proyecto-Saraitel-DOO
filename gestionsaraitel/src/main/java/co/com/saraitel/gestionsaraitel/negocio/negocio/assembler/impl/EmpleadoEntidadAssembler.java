@@ -18,8 +18,10 @@ public class EmpleadoEntidadAssembler implements EntidadAssembler<EmpleadoDomini
 
 	@Override
 	public EmpleadoEntidad convertirAEntidad(EmpleadoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		EmpleadoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EmpleadoDominio.obtenerValorDefecto());
+
 		return new EmpleadoEntidad(dominioTmp.getId(),
 				SedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSede()),
 				PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPersona()),
@@ -28,7 +30,10 @@ public class EmpleadoEntidadAssembler implements EntidadAssembler<EmpleadoDomini
 
 	@Override
 	public EmpleadoDominio convertirADominio(EmpleadoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EmpleadoEntidad());
+
+		EmpleadoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new EmpleadoEntidad());
+
 		return new EmpleadoDominio(entidadTmp.getId(),
 				SedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSede()),
 				PersonaEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPersona()),

@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -24,7 +23,8 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 
 	@Override
 	public void crear(final SedeEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CREAR, CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_SEDE,
+		ejecutarActualizacion(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_SEDE,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_SEDE, entidad.getId(),
 				entidad.getCiudad().getId(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
 				entidad.getEsActiva());
@@ -32,52 +32,55 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 
 	@Override
 	public SedeEntidad consultarPorId(final UUID id) {
-		var filtro = new SedeEntidad();
+		SedeEntidad filtro = new SedeEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<SedeEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new SedeEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new SedeEntidad());
 	}
 
 	@Override
 	public List<SedeEntidad> consultarPorFiltro(final SedeEntidad filtro) {
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new SedeEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
-				.conId("\"Ciudad_id\"", filtroSeguro.getCiudad().getId())
+		SedeEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new SedeEntidad());
+
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"Ciudad_id\"", filtroSeguro.getCiudad().getId())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre()).conTexto("\"Nit\"", filtroSeguro.getNit())
 				.conTexto("\"Direccion\"", filtroSeguro.getDireccion())
 				.conBooleano("\"EsActiva\"", filtroSeguro.getEsActiva(), true);
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES);
 	}
 
 	@Override
 	public List<SedeEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES,
+		return ejecutarConsulta(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_SEDES,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final SedeEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_SEDE,
-				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_SEDE, entidad.getCiudad().getId(),
-				entidad.getNombre(), entidad.getNit(), entidad.getDireccion(), entidad.getEsActiva(), id);
+		ejecutarActualizacion(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_SEDE,
+				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_SEDE,
+				entidad.getCiudad().getId(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
+				entidad.getEsActiva(), id);
 	}
 
 	private SedeEntidad mapear(final ResultSet resultados) throws SQLException {
-		var entidad = new SedeEntidad();
 
+		SedeEntidad entidad = new SedeEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setNombre(resultados.getString("Nombre"));
 		entidad.setNit(resultados.getString("Nit"));
 		entidad.setDireccion(resultados.getString("Direccion"));
 		entidad.setEsActiva(resultados.getBoolean("EsActiva"));
-
-		var ciudad = new CiudadEntidad();
+		CiudadEntidad ciudad = new CiudadEntidad();
 		ciudad.setId(leerUUID(resultados, "Ciudad_id"));
 		entidad.setCiudad(ciudad);
 

@@ -1,12 +1,9 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.saraitel.gestionsaraitel.dominio.ClienteDominio;
 import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoDominio;
-import co.com.saraitel.gestionsaraitel.dto.ClienteDTO;
 import co.com.saraitel.gestionsaraitel.dto.ClienteRegistradoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
@@ -24,22 +21,24 @@ public class ClienteRegistradoDTOAssembler implements DTOAssembler<ClienteRegist
 
 	@Override
 	public ClienteRegistradoDTO convertirADTO(ClienteRegistradoDominio dominio) {
+
 		ClienteRegistradoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ClienteRegistradoDominio.obtenerValorDefecto());
 
-		ClienteDTO clienteDTO = ClienteDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCliente());
-
-		return new ClienteRegistradoDTO(dominioTmp.getId(), clienteDTO, dominioTmp.getClienteNaturalDefecto());
+		return new ClienteRegistradoDTO(dominioTmp.getId(),
+				ClienteDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getCliente()),
+				dominioTmp.getClienteNaturalDefecto());
 	}
 
 	@Override
 	public ClienteRegistradoDominio convertirADominio(ClienteRegistradoDTO dto) {
+
 		ClienteRegistradoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new ClienteRegistradoDTO());
 
-		ClienteDominio clienteDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCliente());
-
-		return new ClienteRegistradoDominio(dtoTmp.getId(), clienteDominio, dtoTmp.getClienteNaturalDefecto());
+		return new ClienteRegistradoDominio(dtoTmp.getId(),
+				ClienteDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getCliente()),
+				dtoTmp.getClienteNaturalDefecto());
 	}
 
 	@Override

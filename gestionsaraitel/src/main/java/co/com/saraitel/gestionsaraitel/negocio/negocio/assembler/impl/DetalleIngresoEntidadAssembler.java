@@ -18,21 +18,26 @@ public class DetalleIngresoEntidadAssembler implements EntidadAssembler<DetalleI
 
 	@Override
 	public DetalleIngresoEntidad convertirAEntidad(DetalleIngresoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		DetalleIngresoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DetalleIngresoDominio.obtenerValorDefecto());
 
 		return new DetalleIngresoEntidad(dominioTmp.getId(),
-				IngresoInventarioEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getIngresoInventario()),
+				IngresoInventarioEntidadAssembler.obtenerInstancia()
+						.convertirAEntidad(dominioTmp.getIngresoInventario()),
 				ProductoSedeEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getProductoSede()),
 				dominioTmp.getCantidad(), dominioTmp.getCostoUnitario(), dominioTmp.getSubtotal());
 	}
 
 	@Override
 	public DetalleIngresoDominio convertirADominio(DetalleIngresoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DetalleIngresoEntidad());
+
+		DetalleIngresoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new DetalleIngresoEntidad());
 
 		return new DetalleIngresoDominio(entidadTmp.getId(),
-				IngresoInventarioEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getIngresoInventario()),
+				IngresoInventarioEntidadAssembler.obtenerInstancia()
+						.convertirADominio(entidadTmp.getIngresoInventario()),
 				ProductoSedeEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProductoSede()),
 				entidadTmp.getCantidad(), entidadTmp.getCostoUnitario(), entidadTmp.getSubtotal());
 	}

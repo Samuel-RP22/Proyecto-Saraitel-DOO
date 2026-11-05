@@ -19,18 +19,23 @@ public class ClienteNoRegistradoEntidadAssembler
 
 	@Override
 	public ClienteNoRegistradoEntidad convertirAEntidad(ClienteNoRegistradoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ClienteNoRegistradoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ClienteNoRegistradoDominio.obtenerValorDefecto());
+
 		return new ClienteNoRegistradoEntidad(dominioTmp.getId(),
-				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()), dominioTmp.getNombre(),
-				dominioTmp.getApellido(), dominioTmp.getNumeroDocumento());
+				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()),
+				dominioTmp.getNombre(), dominioTmp.getApellido(), dominioTmp.getNumeroDocumento());
 	}
 
 	@Override
 	public ClienteNoRegistradoDominio convertirADominio(ClienteNoRegistradoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteNoRegistradoEntidad());
+
+		ClienteNoRegistradoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new ClienteNoRegistradoEntidad());
+
 		return new ClienteNoRegistradoDominio(entidadTmp.getId(),
-				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()), entidadTmp.getNombre(),
-				entidadTmp.getApellido(), entidadTmp.getNumeroDocumento());
+				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()),
+				entidadTmp.getNombre(), entidadTmp.getApellido(), entidadTmp.getNumeroDocumento());
 	}
 }

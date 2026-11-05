@@ -18,8 +18,10 @@ public class DevolucionEntidadAssembler implements EntidadAssembler<DevolucionDo
 
 	@Override
 	public DevolucionEntidad convertirAEntidad(DevolucionDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		DevolucionDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DevolucionDominio.obtenerValorDefecto());
+
 		return new DevolucionEntidad(dominioTmp.getId(),
 				DetalleCompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getDetalleCompra()),
 				MotivoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getMotivo()),
@@ -29,7 +31,10 @@ public class DevolucionEntidadAssembler implements EntidadAssembler<DevolucionDo
 
 	@Override
 	public DevolucionDominio convertirADominio(DevolucionEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DevolucionEntidad());
+
+		DevolucionEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new DevolucionEntidad());
+
 		return new DevolucionDominio(entidadTmp.getId(),
 				DetalleCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getDetalleCompra()),
 				MotivoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getMotivo()),

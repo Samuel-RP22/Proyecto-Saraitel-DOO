@@ -18,7 +18,8 @@ public class DetalleCompraEntidadAssembler implements EntidadAssembler<DetalleCo
 
 	@Override
 	public DetalleCompraEntidad convertirAEntidad(DetalleCompraDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		DetalleCompraDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DetalleCompraDominio.obtenerValorDefecto());
 
 		return new DetalleCompraEntidad(dominioTmp.getId(),
@@ -29,7 +30,9 @@ public class DetalleCompraEntidadAssembler implements EntidadAssembler<DetalleCo
 
 	@Override
 	public DetalleCompraDominio convertirADominio(DetalleCompraEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DetalleCompraEntidad());
+
+		DetalleCompraEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new DetalleCompraEntidad());
 
 		return new DetalleCompraDominio(entidadTmp.getId(),
 				ProcesoCompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getProcesoCompra()),

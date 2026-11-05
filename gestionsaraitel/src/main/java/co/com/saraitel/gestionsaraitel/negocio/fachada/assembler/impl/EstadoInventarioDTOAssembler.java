@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class EstadoInventarioDTOAssembler implements DTOAssembler<EstadoInventar
 
 	@Override
 	public EstadoInventarioDTO convertirADTO(EstadoInventarioDominio dominio) {
+
 		EstadoInventarioDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoInventarioDominio.obtenerValorDefecto());
 
@@ -30,6 +30,7 @@ public class EstadoInventarioDTOAssembler implements DTOAssembler<EstadoInventar
 
 	@Override
 	public EstadoInventarioDominio convertirADominio(EstadoInventarioDTO dto) {
+
 		EstadoInventarioDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new EstadoInventarioDTO());
 

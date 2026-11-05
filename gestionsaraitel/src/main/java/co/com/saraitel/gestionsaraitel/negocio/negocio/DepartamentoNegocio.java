@@ -6,9 +6,9 @@ import java.util.UUID;
 import co.com.saraitel.gestionsaraitel.dominio.DepartamentoDominio;
 
 public interface DepartamentoNegocio {
-	
+
 	List<DepartamentoDominio> consultarPorFiltro(DepartamentoDominio filtro);
-	
+
 	List<DepartamentoDominio> consultarTodos();
 
 	DepartamentoDominio consultarPorId(UUID id);

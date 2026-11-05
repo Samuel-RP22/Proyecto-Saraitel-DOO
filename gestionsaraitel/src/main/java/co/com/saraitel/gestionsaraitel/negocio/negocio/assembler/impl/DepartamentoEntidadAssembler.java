@@ -18,15 +18,20 @@ public class DepartamentoEntidadAssembler implements EntidadAssembler<Departamen
 
 	@Override
 	public DepartamentoEntidad convertirAEntidad(DepartamentoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		DepartamentoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DepartamentoDominio.obtenerValorDefecto());
+
 		return new DepartamentoEntidad(dominioTmp.getId(), dominioTmp.getNombre(),
 				PaisEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPais()));
 	}
 
 	@Override
 	public DepartamentoDominio convertirADominio(DepartamentoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new DepartamentoEntidad());
+
+		DepartamentoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new DepartamentoEntidad());
+
 		return new DepartamentoDominio(entidadTmp.getId(), entidadTmp.getNombre(),
 				PaisEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPais()));
 	}

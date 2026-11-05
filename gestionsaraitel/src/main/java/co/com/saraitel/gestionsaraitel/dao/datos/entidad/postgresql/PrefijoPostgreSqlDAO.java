@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -23,36 +22,37 @@ public class PrefijoPostgreSqlDAO extends SqlDAO implements PrefijoDAO {
 
 	@Override
 	public PrefijoEntidad consultarPorId(final UUID id) {
-		var filtro = new PrefijoEntidad();
+		PrefijoEntidad filtro = new PrefijoEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<PrefijoEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new PrefijoEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new PrefijoEntidad());
 	}
 
 	@Override
 	public List<PrefijoEntidad> consultarPorFiltro(final PrefijoEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PrefijoEntidad());
+		PrefijoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PrefijoEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"",
-				filtroSeguro.getCodigo());
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"", filtroSeguro.getCodigo());
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
 				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
 	}
 
 	@Override
 	public List<PrefijoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
+		return ejecutarConsulta(CatalogoSentenciasSql.PrefijoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PREFIJOS,
 				CatalogoMensajes.PrefijoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS);
 	}
 
 	private PrefijoEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new PrefijoEntidad();
+		PrefijoEntidad entidad = new PrefijoEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setCodigo(resultados.getString("Codigo"));
 

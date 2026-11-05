@@ -18,8 +18,10 @@ public class FacturaEntidadAssembler implements EntidadAssembler<FacturaDominio,
 
 	@Override
 	public FacturaEntidad convertirAEntidad(FacturaDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		FacturaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				FacturaDominio.obtenerValorDefecto());
+
 		return new FacturaEntidad(dominioTmp.getId(),
 				CompraEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCompra()),
 				dominioTmp.getFechaEmision());
@@ -27,7 +29,9 @@ public class FacturaEntidadAssembler implements EntidadAssembler<FacturaDominio,
 
 	@Override
 	public FacturaDominio convertirADominio(FacturaEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new FacturaEntidad());
+
+		FacturaEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new FacturaEntidad());
+
 		return new FacturaDominio(entidadTmp.getId(),
 				CompraEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCompra()),
 				entidadTmp.getFechaEmision());

@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -25,17 +24,19 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public void crear(final ProductoSedeEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CREAR, CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO_POR_SEDE,
-				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO_POR_SEDE, entidad.getId(),
-				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO_POR_SEDE,
+				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO_POR_SEDE,
+				entidad.getId(), entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
 				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
 				entidad.getStockGarantia());
 	}
 
 	@Override
 	public ProductoSedeEntidad consultarPorId(final UUID id) {
-		List<ProductoSedeEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTO_POR_SEDE,
+		List<ProductoSedeEntidad> resultado = ejecutarConsulta(
+				CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTO_POR_SEDE,
 				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTO_POR_SEDE);
 
 		return obtenerPrimeroOValorDefecto(resultado, new ProductoSedeEntidad());
@@ -43,10 +44,12 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public List<ProductoSedeEntidad> consultarPorFiltro(final ProductoSedeEntidad filtro) {
-		ProductoSedeEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProductoSedeEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conId("\"Producto_id\"", filtroSeguro.getProducto().getId())
+		ProductoSedeEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new ProductoSedeEntidad());
+
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"Producto_id\"", filtroSeguro.getProducto().getId())
 				.conId("\"Sede_id\"", filtroSeguro.getSede().getId()).conEntero("\"Oferta\"", filtroSeguro.getOferta())
 				.conEntero("\"Stock\"", filtroSeguro.getStock())
 				.conEntero("\"StockGarantia\"", filtroSeguro.getStockGarantia());
@@ -58,23 +61,25 @@ public class ProductoSedePostgreSqlDAO extends SqlDAO implements ProductoSedeDAO
 
 	@Override
 	public List<ProductoSedeEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS_POR_SEDE,
+		return ejecutarConsulta(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear,
+				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS_POR_SEDE,
 				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS_POR_SEDE);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoSedeEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO_POR_SEDE,
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoSedePostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO_POR_SEDE,
 				CatalogoMensajes.ProductoSedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO_POR_SEDE,
-				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(),
-				entidad.getTieneOferta(), entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(),
-				entidad.getStockGarantia(), id);
+				entidad.getProducto().getId(), entidad.getSede().getId(), entidad.getPrecio(), entidad.getTieneOferta(),
+				entidad.getOferta(), entidad.getPrecioTrasOferta(), entidad.getStock(), entidad.getStockGarantia(), id);
 	}
 
 	private ProductoSedeEntidad mapear(final ResultSet resultados) throws SQLException {
+
 		ProductoEntidad producto = new ProductoEntidad();
 		producto.setId(leerUUID(resultados, "Producto_id"));
-
 		SedeEntidad sede = new SedeEntidad();
 		sede.setId(leerUUID(resultados, "Sede_id"));
 

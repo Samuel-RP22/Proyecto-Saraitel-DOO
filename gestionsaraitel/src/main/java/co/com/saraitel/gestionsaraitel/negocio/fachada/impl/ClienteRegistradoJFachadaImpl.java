@@ -18,10 +18,8 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	public void registrarInformacionNuevoClienteJuridico(ClienteRegistradoJDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var dominio = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			negocio.registrarInformacionNuevoClienteJuridico(dominio);
 			daoFactory.confirmarTransaccion();
@@ -41,13 +39,18 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	public List<ClienteRegistradoJDTO> consultarPorFiltro(ClienteRegistradoJDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADominio(filtro);
-			return ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia()
+					.convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -59,12 +62,16 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	public List<ClienteRegistradoJDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
-
 		try {
-			return ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
+			daoFactory.iniciarTransaccion();
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -76,12 +83,16 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	public ClienteRegistradoJDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
-
 		try {
-			return ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
+			daoFactory.iniciarTransaccion();
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_JURIDICOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

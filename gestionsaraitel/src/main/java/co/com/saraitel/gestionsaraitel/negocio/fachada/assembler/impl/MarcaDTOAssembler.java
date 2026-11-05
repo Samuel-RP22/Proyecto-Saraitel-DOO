@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class MarcaDTOAssembler implements DTOAssembler<MarcaDominio, MarcaDTO> {
 
 	@Override
 	public MarcaDTO convertirADTO(MarcaDominio dominio) {
+
 		MarcaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				MarcaDominio.obtenerValorDefecto());
 
@@ -30,6 +30,7 @@ public class MarcaDTOAssembler implements DTOAssembler<MarcaDominio, MarcaDTO> {
 
 	@Override
 	public MarcaDominio convertirADominio(MarcaDTO dto) {
+
 		MarcaDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new MarcaDTO());
 
 		return new MarcaDominio(dtoTmp.getId(), dtoTmp.getNombre(), dtoTmp.getEsActivo());
@@ -37,6 +38,7 @@ public class MarcaDTOAssembler implements DTOAssembler<MarcaDominio, MarcaDTO> {
 
 	@Override
 	public List<MarcaDTO> convertirADTO(List<MarcaDominio> listaDominios) {
+
 		List<MarcaDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<MarcaDominio>());
 

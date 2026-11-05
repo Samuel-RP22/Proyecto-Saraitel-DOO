@@ -21,8 +21,11 @@ public class ClienteRegistradoEntidadAssembler
 
 	@Override
 	public ClienteRegistradoEntidad convertirAEntidad(ClienteRegistradoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio, new ClienteRegistradoDominio(
-				UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(), false));
+
+		ClienteRegistradoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+				new ClienteRegistradoDominio(UtilUUID.obtenerUUIDDefecto(), ClienteDominio.obtenerValorDefecto(),
+						false));
+
 		return new ClienteRegistradoEntidad(dominioTmp.getId(),
 				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()),
 				dominioTmp.getClienteNaturalDefecto());
@@ -30,7 +33,10 @@ public class ClienteRegistradoEntidadAssembler
 
 	@Override
 	public ClienteRegistradoDominio convertirADominio(ClienteRegistradoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ClienteRegistradoEntidad());
+
+		ClienteRegistradoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new ClienteRegistradoEntidad());
+
 		return new ClienteRegistradoDominio(entidadTmp.getId(),
 				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()),
 				entidadTmp.getClienteNaturalDefecto());

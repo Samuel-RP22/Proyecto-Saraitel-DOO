@@ -18,10 +18,8 @@ public class SedeFachadaImpl implements SedeFachada {
 	public void registrarInformacionNuevaSede(SedeDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			sedeNegocio.registrarInformacionNuevaSede(sedeDominio);
 			daoFactory.confirmarTransaccion();
@@ -41,10 +39,8 @@ public class SedeFachadaImpl implements SedeFachada {
 	public void modificarInformacionSedeExistente(UUID id, SedeDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			sedeNegocio.modificarInformacionSedeExistente(id, sedeDominio);
 			daoFactory.confirmarTransaccion();
@@ -64,14 +60,18 @@ public class SedeFachadaImpl implements SedeFachada {
 	public List<SedeDTO> consultarPorFiltro(SedeDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaSedes = sedeNegocio.consultarPorFiltro(filtroDominio);
-			return SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
+			var resultado = SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.SedeFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -83,13 +83,17 @@ public class SedeFachadaImpl implements SedeFachada {
 	public List<SedeDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaSedes = sedeNegocio.consultarTodos();
-			return SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
+			var resultado = SedeDTOAssembler.obtenerInstancia().convertirADTO(listaSedes);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.SedeFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDES;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -101,13 +105,17 @@ public class SedeFachadaImpl implements SedeFachada {
 	public SedeDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var sedeNegocio = new SedeNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var sedeDominio = sedeNegocio.consultarPorId(id);
-			return SedeDTOAssembler.obtenerInstancia().convertirADTO(sedeDominio);
+			var resultado = SedeDTOAssembler.obtenerInstancia().convertirADTO(sedeDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.SedeFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_SEDE_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

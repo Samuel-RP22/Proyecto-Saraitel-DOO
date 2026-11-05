@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -28,63 +27,67 @@ public class ClienteRegistradoNPostgreSqlDAO extends SqlDAO implements ClienteRe
 
 	@Override
 	public void crear(final ClienteRegistradoNEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO,
-				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO, entidad.getId(),
-				entidad.getClienteRegistrado().getId(), entidad.getPersona().getId());
+		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE_REGISTRADO,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE_REGISTRADO,
+				entidad.getId(), entidad.getClienteRegistrado().getId(), entidad.getPersona().getId());
 	}
 
 	@Override
 	public ClienteRegistradoNEntidad consultarPorId(final UUID id) {
-		var filtro = new ClienteRegistradoNEntidad();
+		ClienteRegistradoNEntidad filtro = new ClienteRegistradoNEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<ClienteRegistradoNEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new ClienteRegistradoNEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new ClienteRegistradoNEntidad());
 	}
 
 	@Override
 	public List<ClienteRegistradoNEntidad> consultarPorFiltro(final ClienteRegistradoNEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteRegistradoNEntidad());
+		ClienteRegistradoNEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new ClienteRegistradoNEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId())
 				.conId("\"ClienteRegistrado_id\"", filtroSeguro.getClienteRegistrado().getId())
 				.conId("\"Persona_id\"", filtroSeguro.getPersona().getId());
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
-				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS, CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS);
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS);
 	}
 
 	@Override
 	public List<ClienteRegistradoNEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS,
+		return ejecutarConsulta(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_CONSULTAR, List.of(),
+				this::mapear,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_REGISTRADOS,
 				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_REGISTRADOS);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO,
-				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO, id);
+		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoNPostgreSqlDAO.SQL_ELIMINAR,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE_REGISTRADO,
+				CatalogoMensajes.ClienteRegistradoNPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE_REGISTRADO,
+				id);
 	}
 
 	private ClienteRegistradoNEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new ClienteRegistradoNEntidad();
+		ClienteRegistradoNEntidad entidad = new ClienteRegistradoNEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-
-		var cliente = new ClienteEntidad(leerUUID(resultados, "Cliente_id"), true);
-		var clienteRegistrado = new ClienteRegistradoEntidad(leerUUID(resultados, "ClienteRegistrado_id"), cliente,
-				true);
+		ClienteEntidad cliente = new ClienteEntidad(leerUUID(resultados, "Cliente_id"), true);
+		ClienteRegistradoEntidad clienteRegistrado = new ClienteRegistradoEntidad(
+				leerUUID(resultados, "ClienteRegistrado_id"), cliente, true);
 		entidad.setClienteRegistrado(clienteRegistrado);
-
-		var tipoDocumento = new TipoDocumentoEntidad();
+		TipoDocumentoEntidad tipoDocumento = new TipoDocumentoEntidad();
 		tipoDocumento.setId(leerUUID(resultados, "TipoDocumento_id"));
-
-		var prefijo = new PrefijoEntidad();
+		PrefijoEntidad prefijo = new PrefijoEntidad();
 		prefijo.setId(leerUUID(resultados, "Prefijo_id"));
-
-		var persona = new PersonaEntidad();
+		PersonaEntidad persona = new PersonaEntidad();
 		persona.setId(leerUUID(resultados, "Persona_id"));
 		persona.setTipoDocumento(tipoDocumento);
 		persona.setPrefijo(prefijo);

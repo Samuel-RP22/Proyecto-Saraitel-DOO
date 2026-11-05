@@ -18,15 +18,20 @@ public class CategoriaEntidadAssembler implements EntidadAssembler<CategoriaDomi
 
 	@Override
 	public CategoriaEntidad convertirAEntidad(CategoriaDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		CategoriaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CategoriaDominio.obtenerValorDefecto());
+
 		return new CategoriaEntidad(dominioTmp.getId(), dominioTmp.getNombre(), dominioTmp.getIdCategoriaPadre(),
 				dominioTmp.getNivel());
 	}
 
 	@Override
 	public CategoriaDominio convertirADominio(CategoriaEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new CategoriaEntidad());
+
+		CategoriaEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new CategoriaEntidad());
+
 		return new CategoriaDominio(entidadTmp.getId(), entidadTmp.getNombre(), entidadTmp.getIdCategoriaPadre(),
 				entidadTmp.getNivel());
 	}

@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class PrefijoDTOAssembler implements DTOAssembler<PrefijoDominio, Prefijo
 
 	@Override
 	public PrefijoDTO convertirADTO(PrefijoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		PrefijoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				PrefijoDominio.obtenerValorDefecto());
 
 		return new PrefijoDTO(dominioTmp.getId(), dominioTmp.getCodigo());
@@ -30,7 +30,8 @@ public class PrefijoDTOAssembler implements DTOAssembler<PrefijoDominio, Prefijo
 
 	@Override
 	public PrefijoDominio convertirADominio(PrefijoDTO dto) {
-		var dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PrefijoDTO());
+
+		PrefijoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new PrefijoDTO());
 
 		return new PrefijoDominio(dtoTmp.getId(), dtoTmp.getCodigo());
 	}
@@ -38,7 +39,7 @@ public class PrefijoDTOAssembler implements DTOAssembler<PrefijoDominio, Prefijo
 	@Override
 	public List<PrefijoDTO> convertirADTO(List<PrefijoDominio> listaDominios) {
 
-		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
+		List<PrefijoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<PrefijoDominio>());
 
 		return listaDominiosTmp.stream().map(this::convertirADTO).toList();

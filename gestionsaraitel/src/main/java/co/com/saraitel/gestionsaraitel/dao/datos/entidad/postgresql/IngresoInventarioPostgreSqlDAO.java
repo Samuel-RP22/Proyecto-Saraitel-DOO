@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -26,61 +25,58 @@ public class IngresoInventarioPostgreSqlDAO extends SqlDAO implements IngresoInv
 
 	@Override
 	public void crear(final IngresoInventarioEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO,
-				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO, entidad.getId(),
-				entidad.getSede().getId(), entidad.getEstado().getId(),
+		ejecutarActualizacion(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_INGRESO_DE_INVENTARIO,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_INGRESO_DE_INVENTARIO,
+				entidad.getId(), entidad.getSede().getId(), entidad.getEstado().getId(),
 				Timestamp.valueOf(entidad.getFechaLlegada()), entidad.getTotal());
 	}
 
 	@Override
 	public IngresoInventarioEntidad consultarPorId(final UUID id) {
-		var filtro = new IngresoInventarioEntidad();
+		IngresoInventarioEntidad filtro = new IngresoInventarioEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<IngresoInventarioEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new IngresoInventarioEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new IngresoInventarioEntidad());
 	}
 
 	@Override
 	public List<IngresoInventarioEntidad> consultarPorFiltro(final IngresoInventarioEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new IngresoInventarioEntidad());
+		IngresoInventarioEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new IngresoInventarioEntidad());
 
-		var sentencia = new FiltroSql(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR);
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"Sede_id\"", filtroSeguro.getSede().getId())
+				.conId("\"EstadoInventario_id\"", filtroSeguro.getEstado().getId())
+				.conFechaHora("\"FechaLlegada\"", filtroSeguro.getFechaLlegada());
 
-		sentencia.conId("\"id\"", filtroSeguro.getId());
-		sentencia.conId("\"Sede_id\"", filtroSeguro.getSede().getId());
-		sentencia.conId("\"EstadoInventario_id\"", filtroSeguro.getEstado().getId());
-		sentencia.conFechaHora("\"FechaLlegada\"", filtroSeguro.getFechaLlegada());
-
-		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
 				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	@Override
 	public List<IngresoInventarioEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
+		return ejecutarConsulta(CatalogoSentenciasSql.IngresoInventarioPostgreSqlDAO.SQL_CONSULTAR, List.of(),
+				this::mapear,
+				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_INGRESOS_DE_INVENTARIO,
 				CatalogoMensajes.IngresoInventarioPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_INGRESOS_DE_INVENTARIO);
 	}
 
 	private IngresoInventarioEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new IngresoInventarioEntidad();
-
+		IngresoInventarioEntidad entidad = new IngresoInventarioEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-
-		var sede = new SedeEntidad();
+		SedeEntidad sede = new SedeEntidad();
 		sede.setId(leerUUID(resultados, "Sede_id"));
 		entidad.setSede(sede);
-
-		var estado = new EstadoInventarioEntidad();
+		EstadoInventarioEntidad estado = new EstadoInventarioEntidad();
 		estado.setId(leerUUID(resultados, "EstadoInventario_id"));
 		entidad.setEstado(estado);
-
 		entidad.setFechaLlegada(leerFechaHora(resultados, "FechaLlegada"));
-
 		entidad.setTotal(resultados.getBigDecimal("Total"));
 
 		return entidad;

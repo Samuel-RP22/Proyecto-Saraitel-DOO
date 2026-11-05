@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl;
 
 import co.com.saraitel.gestionsaraitel.dominio.EstadoSaldoFavorDominio;
@@ -20,7 +19,8 @@ public class EstadoSaldoFavorEntidadAssembler
 
 	@Override
 	public EstadoSaldoFavorEntidad convertirAEntidad(EstadoSaldoFavorDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		EstadoSaldoFavorDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoSaldoFavorDominio.obtenerValorDefecto());
 
 		return new EstadoSaldoFavorEntidad(dominioTmp.getId(), dominioTmp.getCodigo(), dominioTmp.getNombre());
@@ -28,7 +28,9 @@ public class EstadoSaldoFavorEntidadAssembler
 
 	@Override
 	public EstadoSaldoFavorDominio convertirADominio(EstadoSaldoFavorEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EstadoSaldoFavorEntidad());
+
+		EstadoSaldoFavorEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new EstadoSaldoFavorEntidad());
 
 		return new EstadoSaldoFavorDominio(entidadTmp.getId(), entidadTmp.getCodigo(), entidadTmp.getNombre());
 	}

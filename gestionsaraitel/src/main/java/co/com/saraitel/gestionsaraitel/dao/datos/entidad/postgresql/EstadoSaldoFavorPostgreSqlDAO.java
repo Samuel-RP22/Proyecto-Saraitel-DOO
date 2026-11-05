@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -45,7 +44,8 @@ public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldo
 		EstadoSaldoFavorEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
 				new EstadoSaldoFavorEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+		FiltroSql filtroSql = new FiltroSql(
+				CatalogoSentenciasSql.EstadoSaldoFavorPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
 				.conId("\"id\"", filtroSeguro.getId()).conTexto("\"Codigo\"", filtroSeguro.getCodigo())
 				.conTexto("\"Nombre\"", filtroSeguro.getNombre());
 
@@ -65,7 +65,6 @@ public class EstadoSaldoFavorPostgreSqlDAO extends SqlDAO implements EstadoSaldo
 	private EstadoSaldoFavorEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		EstadoSaldoFavorEntidad entidad = new EstadoSaldoFavorEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setCodigo(resultados.getString("Codigo"));
 		entidad.setNombre(resultados.getString("Nombre"));

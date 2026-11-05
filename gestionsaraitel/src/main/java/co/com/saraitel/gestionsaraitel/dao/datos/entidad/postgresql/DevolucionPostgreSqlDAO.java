@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -25,17 +24,18 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 	@Override
 	public void crear(final DevolucionEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_DEVOLUCION,
-				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DEVOLUCION, entidad.getId(),
-				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
-				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
-				entidad.getEstado());
+		ejecutarActualizacion(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_DEVOLUCION,
+				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_DEVOLUCION,
+				entidad.getId(), entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
+				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(), entidad.getEstado());
 	}
 
 	@Override
 	public DevolucionEntidad consultarPorId(final UUID id) {
-		List<DevolucionEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCION,
+		List<DevolucionEntidad> resultado = ejecutarConsulta(
+				CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCION,
 				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCION);
 
 		return obtenerPrimeroOValorDefecto(resultado, new DevolucionEntidad());
@@ -44,9 +44,11 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 	@Override
 	public List<DevolucionEntidad> consultarPorFiltro(final DevolucionEntidad filtro) {
 
-		DevolucionEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new DevolucionEntidad());
+		DevolucionEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new DevolucionEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId())
 				.conId("\"DetalleCompra_id\"", filtroSeguro.getDetalleCompra().getId())
 				.conId("\"Motivo_id\"", filtroSeguro.getMotivo().getId())
 				.conFechaHora("\"FechaDevolucion\"", filtroSeguro.getFechaDevolucion())
@@ -61,38 +63,30 @@ public class DevolucionPostgreSqlDAO extends SqlDAO implements DevolucionDAO {
 
 	@Override
 	public List<DevolucionEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear, CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCIONES,
+		return ejecutarConsulta(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear, CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEVOLUCIONES,
 				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEVOLUCIONES);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final DevolucionEntidad entidad) {
-
-		ejecutarActualizacion(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DEVOLUCION,
+		ejecutarActualizacion(CatalogoSentenciasSql.DevolucionPostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DEVOLUCION,
 				CatalogoMensajes.DevolucionPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DEVOLUCION,
-				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(),
-				entidad.getFechaDevolucion(), entidad.getCantidad(), entidad.getMontoDevolucion(),
-				entidad.getEstado(), id);
+				entidad.getDetalleCompra().getId(), entidad.getMotivo().getId(), entidad.getFechaDevolucion(),
+				entidad.getCantidad(), entidad.getMontoDevolucion(), entidad.getEstado(), id);
 	}
 
 	private DevolucionEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		DevolucionEntidad entidad = new DevolucionEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
-
 		DetalleCompraEntidad detalleCompra = new DetalleCompraEntidad();
-
 		detalleCompra.setId(leerUUID(resultados, "DetalleCompra_id"));
-
 		entidad.setDetalleCompra(detalleCompra);
-
 		MotivoEntidad motivo = new MotivoEntidad();
-
 		motivo.setId(leerUUID(resultados, "Motivo_id"));
-
 		entidad.setMotivo(motivo);
-
 		entidad.setFechaDevolucion(leerFechaHora(resultados, "FechaDevolucion"));
 		entidad.setCantidad(resultados.getInt("Cantidad"));
 		entidad.setMontoDevolucion(resultados.getBigDecimal("MontoDevolucion"));

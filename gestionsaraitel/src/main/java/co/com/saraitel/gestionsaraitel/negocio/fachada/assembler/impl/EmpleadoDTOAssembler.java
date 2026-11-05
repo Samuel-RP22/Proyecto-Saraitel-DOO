@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -26,8 +25,10 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 		EmpleadoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EmpleadoDominio.obtenerValorDefecto());
 
-		return new EmpleadoDTO(dominioTmp.getId(), SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede()),
-				PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona()), dominioTmp.getEsActivo());
+		return new EmpleadoDTO(dominioTmp.getId(),
+				SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede()),
+				PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona()),
+				dominioTmp.getEsActivo());
 	}
 
 	@Override
@@ -35,7 +36,8 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 
 		EmpleadoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new EmpleadoDTO());
 
-		return new EmpleadoDominio(dtoTmp.getId(), SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede()),
+		return new EmpleadoDominio(dtoTmp.getId(),
+				SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede()),
 				PersonaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPersona()), dtoTmp.getEsActivo());
 	}
 

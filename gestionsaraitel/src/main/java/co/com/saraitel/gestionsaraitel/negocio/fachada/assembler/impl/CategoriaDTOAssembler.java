@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class CategoriaDTOAssembler implements DTOAssembler<CategoriaDominio, Cat
 
 	@Override
 	public CategoriaDTO convertirADTO(CategoriaDominio dominio) {
+
 		CategoriaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CategoriaDominio.obtenerValorDefecto());
 
@@ -31,6 +31,7 @@ public class CategoriaDTOAssembler implements DTOAssembler<CategoriaDominio, Cat
 
 	@Override
 	public CategoriaDominio convertirADominio(CategoriaDTO dto) {
+
 		CategoriaDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new CategoriaDTO());
 
 		return new CategoriaDominio(dtoTmp.getId(), dtoTmp.getNombre(), dtoTmp.getIdCategoriaPadre(),

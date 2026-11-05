@@ -25,13 +25,13 @@ public final class FiltroSql {
 		this.sentenciaBase = sentenciaBase;
 	}
 
-	private void agregarCondicion(final String columna, final String operador, final Object valor) {
-		condiciones.add(columna + " " + operador + " ?");
+	private void agregarCondicion(final String columna, final OperadorSql operador, final Object valor) {
+		condiciones.add(UtilTexto.concatenar(columna, " ", operador.getSimbolo(), " ?"));
 		parametros.add(valor);
 	}
 
 	private void agregar(final String columna, final Object valor) {
-		agregarCondicion(columna, "=", valor);
+		agregarCondicion(columna, OperadorSql.IGUAL, valor);
 	}
 
 	public FiltroSql conId(final String columna, final UUID valor) {
@@ -78,12 +78,12 @@ public final class FiltroSql {
 	}
 
 	public FiltroSql conEnteroDesde(final String columna, final Integer desde) {
-		agregarCondicion(columna, ">=", UtilNumero.obtenerValorDefecto(desde));
+		agregarCondicion(columna, OperadorSql.MAYOR_O_IGUAL, UtilNumero.obtenerValorDefecto(desde));
 		return this;
 	}
 
 	public FiltroSql conEnteroHasta(final String columna, final Integer hasta) {
-		agregarCondicion(columna, "<=", UtilNumero.obtenerValorDefecto(hasta));
+		agregarCondicion(columna, OperadorSql.MENOR_O_IGUAL, UtilNumero.obtenerValorDefecto(hasta));
 		return this;
 	}
 
@@ -97,14 +97,14 @@ public final class FiltroSql {
 
 	public FiltroSql conDecimalDesde(final String columna, final BigDecimal desde) {
 		if (!UtilObjeto.esNulo(desde)) {
-			agregarCondicion(columna, ">=", desde);
+			agregarCondicion(columna, OperadorSql.MAYOR_O_IGUAL, desde);
 		}
 		return this;
 	}
 
 	public FiltroSql conDecimalHasta(final String columna, final BigDecimal hasta) {
 		if (!UtilObjeto.esNulo(hasta)) {
-			agregarCondicion(columna, "<=", hasta);
+			agregarCondicion(columna, OperadorSql.MENOR_O_IGUAL, hasta);
 		}
 		return this;
 	}
@@ -119,14 +119,14 @@ public final class FiltroSql {
 
 	public FiltroSql conFechaHoraDesde(final String columna, final LocalDateTime desde) {
 		if (!UtilObjeto.esNulo(desde)) {
-			agregarCondicion(columna, ">=", desde);
+			agregarCondicion(columna, OperadorSql.MAYOR_O_IGUAL, desde);
 		}
 		return this;
 	}
 
 	public FiltroSql conFechaHoraHasta(final String columna, final LocalDateTime hasta) {
 		if (!UtilObjeto.esNulo(hasta)) {
-			agregarCondicion(columna, "<=", hasta);
+			agregarCondicion(columna, OperadorSql.MENOR_O_IGUAL, hasta);
 		}
 		return this;
 	}
@@ -151,7 +151,7 @@ public final class FiltroSql {
 		if (condiciones.isEmpty()) {
 			return sentenciaBase;
 		}
-		return sentenciaBase + " WHERE " + String.join(" AND ", condiciones);
+		return UtilTexto.concatenar(sentenciaBase, " WHERE ", String.join(" AND ", condiciones));
 	}
 
 	public List<Object> getParametros() {

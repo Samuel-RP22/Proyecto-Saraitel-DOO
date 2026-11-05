@@ -19,8 +19,10 @@ public class AplicacionSaldoEntidadAssembler
 
 	@Override
 	public AplicacionSaldoEntidad convertirAEntidad(AplicacionSaldoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		AplicacionSaldoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				AplicacionSaldoDominio.obtenerValorDefecto());
+
 		return new AplicacionSaldoEntidad(dominioTmp.getId(),
 				SaldoFavorEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getSaldoFavor()),
 				PagoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getPago()),
@@ -29,7 +31,10 @@ public class AplicacionSaldoEntidadAssembler
 
 	@Override
 	public AplicacionSaldoDominio convertirADominio(AplicacionSaldoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new AplicacionSaldoEntidad());
+
+		AplicacionSaldoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new AplicacionSaldoEntidad());
+
 		return new AplicacionSaldoDominio(entidadTmp.getId(),
 				SaldoFavorEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getSaldoFavor()),
 				PagoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getPago()),

@@ -22,49 +22,53 @@ public class ClientePostgreSqlDAO extends SqlDAO implements ClienteDAO {
 
 	@Override
 	public void crear(final ClienteEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE,
-				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE, entidad.getId(),
-				entidad.getEsClienteRegistrado());
+		ejecutarActualizacion(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_CLIENTE,
+				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_CLIENTE,
+				entidad.getId(), entidad.getEsClienteRegistrado());
 	}
 
 	@Override
 	public ClienteEntidad consultarPorId(final UUID id) {
-		var filtro = new ClienteEntidad();
+		ClienteEntidad filtro = new ClienteEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<ClienteEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new ClienteEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new ClienteEntidad());
 	}
 
 	@Override
 	public List<ClienteEntidad> consultarPorFiltro(final ClienteEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteEntidad());
+		ClienteEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ClienteEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId())
 				.conBooleano("\"EsClienteRegistrado\"", filtroSeguro.getEsClienteRegistrado(), false);
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES,
 				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES);
 	}
 
 	@Override
 	public List<ClienteEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES,
+		return ejecutarConsulta(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES,
 				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES);
 	}
 
 	@Override
 	public void eliminar(final UUID id) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_ELIMINAR, CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE,
+		ejecutarActualizacion(CatalogoSentenciasSql.ClientePostgreSqlDAO.SQL_ELIMINAR,
+				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ELIMINANDO_CLIENTE,
 				CatalogoMensajes.ClientePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_CLIENTE, id);
 	}
 
 	private ClienteEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new ClienteEntidad();
+		ClienteEntidad entidad = new ClienteEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
 		entidad.setEsClienteRegistrado(resultados.getBoolean("EsClienteRegistrado"));
 

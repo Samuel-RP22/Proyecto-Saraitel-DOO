@@ -8,26 +8,28 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisEntidad> {
 
 	private static final EntidadAssembler<PaisDominio, PaisEntidad> instancia = new PaisEntidadAssembler();
-	
-	private PaisEntidadAssembler() {	
+
+	private PaisEntidadAssembler() {
 	}
-	
+
 	public static EntidadAssembler<PaisDominio, PaisEntidad> obtenerInstancia() {
 		return instancia;
 	}
-	
-	
+
 	@Override
 	public PaisEntidad convertirAEntidad(PaisDominio dominio) {
-	    var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-	            dominio, PaisDominio.obtenerValorDefecto());
-	    return new PaisEntidad(dominioTmp.getId(), dominioTmp.getNombre());
+
+		PaisDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+				PaisDominio.obtenerValorDefecto());
+
+		return new PaisEntidad(dominioTmp.getId(), dominioTmp.getNombre());
 	}
 
 	@Override
 	public PaisDominio convertirADominio(PaisEntidad entidad) {
-	    var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
-	            entidad, new PaisEntidad());
-	    return new PaisDominio(entidadTmp.getId(), entidadTmp.getNombre());
+
+		PaisEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PaisEntidad());
+
+		return new PaisDominio(entidadTmp.getId(), entidadTmp.getNombre());
 	}
 }

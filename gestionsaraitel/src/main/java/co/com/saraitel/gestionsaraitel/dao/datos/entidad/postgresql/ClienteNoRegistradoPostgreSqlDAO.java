@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -33,45 +32,44 @@ public class ClienteNoRegistradoPostgreSqlDAO extends SqlDAO implements ClienteN
 
 	@Override
 	public ClienteNoRegistradoEntidad consultarPorId(final UUID id) {
-		var filtro = new ClienteNoRegistradoEntidad();
+		ClienteNoRegistradoEntidad filtro = new ClienteNoRegistradoEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<ClienteNoRegistradoEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new ClienteNoRegistradoEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new ClienteNoRegistradoEntidad());
 	}
 
 	@Override
 	public List<ClienteNoRegistradoEntidad> consultarPorFiltro(final ClienteNoRegistradoEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+		ClienteNoRegistradoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
 				new ClienteNoRegistradoEntidad());
 
-		var consulta = new FiltroSql(CatalogoSentenciasSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR).conId("\"id\"", filtroSeguro.getId())
-				.conId("\"Cliente_id\"", filtroSeguro.getCliente().getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"Cliente_id\"", filtroSeguro.getCliente().getId())
 				.conTexto("\"NumeroDocumento\"", filtroSeguro.getNumeroDocumento());
 
-		return ejecutarConsulta(consulta.getSentencia(), consulta.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_NO_REGISTRADOS,
 				CatalogoMensajes.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_NO_REGISTRADOS);
 	}
 
 	@Override
 	public List<ClienteNoRegistradoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+		return ejecutarConsulta(CatalogoSentenciasSql.ClienteNoRegistradoPostgreSqlDAO.SQL_CONSULTAR, List.of(),
+				this::mapear,
 				CatalogoMensajes.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CLIENTES_NO_REGISTRADOS,
 				CatalogoMensajes.ClienteNoRegistradoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_NO_REGISTRADOS);
 	}
 
 	private ClienteNoRegistradoEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new ClienteNoRegistradoEntidad();
+		ClienteNoRegistradoEntidad entidad = new ClienteNoRegistradoEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-
-		var cliente = new ClienteEntidad();
+		ClienteEntidad cliente = new ClienteEntidad();
 		cliente.setId(leerUUID(resultados, "Cliente_id"));
 		entidad.setCliente(cliente);
-
 		entidad.setNombre(resultados.getString("Nombre"));
 		entidad.setApellido(resultados.getString("Apellido"));
 		entidad.setNumeroDocumento(resultados.getString("NumeroDocumento"));

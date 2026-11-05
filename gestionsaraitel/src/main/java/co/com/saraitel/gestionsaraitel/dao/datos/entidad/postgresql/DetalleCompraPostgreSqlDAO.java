@@ -68,7 +68,6 @@ public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraD
 
 	@Override
 	public void actualizar(final UUID id, final DetalleCompraEntidad entidad) {
-
 		ejecutarActualizacion(CatalogoSentenciasSql.DetalleCompraPostgreSqlDAO.SQL_ACTUALIZAR,
 				CatalogoMensajes.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_DETALLE_DE_LA_COMPRA,
 				CatalogoMensajes.DetalleCompraPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_DETALLE_DE_LA_COMPRA,
@@ -87,21 +86,13 @@ public class DetalleCompraPostgreSqlDAO extends SqlDAO implements DetalleCompraD
 	private DetalleCompraEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		DetalleCompraEntidad entidad = new DetalleCompraEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
-
 		ProcesoCompraEntidad procesoCompra = new ProcesoCompraEntidad();
-
 		procesoCompra.setId(leerUUID(resultados, "ProcesoCompra_id"));
-
 		entidad.setProcesoCompra(procesoCompra);
-
 		ProductoSedeEntidad productoSede = new ProductoSedeEntidad();
-
 		productoSede.setId(leerUUID(resultados, "ProductoSede_id"));
-
 		entidad.setProductoSede(productoSede);
-
 		entidad.setCantidad(resultados.getInt("Cantidad"));
 		entidad.setPrecioUnitario(resultados.getBigDecimal("PrecioUnitario"));
 		entidad.setSubtotal(resultados.getBigDecimal("Subtotal"));

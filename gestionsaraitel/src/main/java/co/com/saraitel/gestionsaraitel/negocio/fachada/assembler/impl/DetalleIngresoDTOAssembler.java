@@ -1,15 +1,10 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import co.com.saraitel.gestionsaraitel.dominio.DetalleIngresoDominio;
-import co.com.saraitel.gestionsaraitel.dominio.IngresoInventarioDominio;
-import co.com.saraitel.gestionsaraitel.dominio.ProductoSedeDominio;
 import co.com.saraitel.gestionsaraitel.dto.DetalleIngresoDTO;
-import co.com.saraitel.gestionsaraitel.dto.IngresoInventarioDTO;
-import co.com.saraitel.gestionsaraitel.dto.ProductoSedeDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -26,30 +21,24 @@ public class DetalleIngresoDTOAssembler implements DTOAssembler<DetalleIngresoDo
 
 	@Override
 	public DetalleIngresoDTO convertirADTO(DetalleIngresoDominio dominio) {
+
 		DetalleIngresoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DetalleIngresoDominio.obtenerValorDefecto());
 
-		IngresoInventarioDTO ingresoInventarioDTO = IngresoInventarioDTOAssembler.obtenerInstancia()
-				.convertirADTO(dominioTmp.getIngresoInventario());
-
-		ProductoSedeDTO productoSedeDTO = ProductoSedeDTOAssembler.obtenerInstancia()
-				.convertirADTO(dominioTmp.getProductoSede());
-
-		return new DetalleIngresoDTO(dominioTmp.getId(), ingresoInventarioDTO, productoSedeDTO,
+		return new DetalleIngresoDTO(dominioTmp.getId(),
+				IngresoInventarioDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getIngresoInventario()),
+				ProductoSedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProductoSede()),
 				dominioTmp.getCantidad(), dominioTmp.getCostoUnitario(), dominioTmp.getSubtotal());
 	}
 
 	@Override
 	public DetalleIngresoDominio convertirADominio(DetalleIngresoDTO dto) {
+
 		DetalleIngresoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DetalleIngresoDTO());
 
-		IngresoInventarioDominio ingresoInventarioDominio = IngresoInventarioDTOAssembler.obtenerInstancia()
-				.convertirADominio(dtoTmp.getIngresoInventario());
-
-		ProductoSedeDominio productoSedeDominio = ProductoSedeDTOAssembler.obtenerInstancia()
-				.convertirADominio(dtoTmp.getProductoSede());
-
-		return new DetalleIngresoDominio(dtoTmp.getId(), ingresoInventarioDominio, productoSedeDominio,
+		return new DetalleIngresoDominio(dtoTmp.getId(),
+				IngresoInventarioDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getIngresoInventario()),
+				ProductoSedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProductoSede()),
 				dtoTmp.getCantidad(), dtoTmp.getCostoUnitario(), dtoTmp.getSubtotal());
 	}
 

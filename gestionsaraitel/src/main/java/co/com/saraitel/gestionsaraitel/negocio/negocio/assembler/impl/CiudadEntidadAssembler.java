@@ -18,15 +18,19 @@ public class CiudadEntidadAssembler implements EntidadAssembler<CiudadDominio, C
 
 	@Override
 	public CiudadEntidad convertirAEntidad(CiudadDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		CiudadDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CiudadDominio.obtenerValorDefecto());
+
 		return new CiudadEntidad(dominioTmp.getId(), dominioTmp.getNombre(),
 				DepartamentoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getDepartamento()));
 	}
 
 	@Override
 	public CiudadDominio convertirADominio(CiudadEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new CiudadEntidad());
+
+		CiudadEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new CiudadEntidad());
+
 		return new CiudadDominio(entidadTmp.getId(), entidadTmp.getNombre(),
 				DepartamentoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getDepartamento()));
 	}

@@ -1,13 +1,10 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import co.com.saraitel.gestionsaraitel.dominio.CiudadDominio;
-import co.com.saraitel.gestionsaraitel.dominio.DepartamentoDominio;
 import co.com.saraitel.gestionsaraitel.dto.CiudadDTO;
-import co.com.saraitel.gestionsaraitel.dto.DepartamentoDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -24,27 +21,26 @@ public class CiudadDTOAssembler implements DTOAssembler<CiudadDominio, CiudadDTO
 
 	@Override
 	public CiudadDTO convertirADTO(CiudadDominio dominio) {
+
 		CiudadDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				CiudadDominio.obtenerValorDefecto());
 
-		DepartamentoDTO departamentoDTO = DepartamentoDTOAssembler.obtenerInstancia()
-				.convertirADTO(dominioTmp.getDepartamento());
-
-		return new CiudadDTO(dominioTmp.getId(), dominioTmp.getNombre(), departamentoDTO);
+		return new CiudadDTO(dominioTmp.getId(), dominioTmp.getNombre(),
+				DepartamentoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getDepartamento()));
 	}
 
 	@Override
 	public CiudadDominio convertirADominio(CiudadDTO dto) {
+
 		CiudadDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new CiudadDTO());
 
-		DepartamentoDominio departamentoDominio = DepartamentoDTOAssembler.obtenerInstancia()
-				.convertirADominio(dtoTmp.getDepartamento());
-
-		return new CiudadDominio(dtoTmp.getId(), dtoTmp.getNombre(), departamentoDominio);
+		return new CiudadDominio(dtoTmp.getId(), dtoTmp.getNombre(),
+				DepartamentoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getDepartamento()));
 	}
 
 	@Override
 	public List<CiudadDTO> convertirADTO(List<CiudadDominio> listaDominios) {
+
 		List<CiudadDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<CiudadDominio>());
 

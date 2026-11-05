@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -39,7 +38,8 @@ public class CompraDTOAssembler implements DTOAssembler<CompraDominio, CompraDTO
 
 		return new CompraDominio(dtoTmp.getId(),
 				ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProcesoCompra()),
-				EstadoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEstado()), dtoTmp.getFechaCompra());
+				EstadoCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEstado()),
+				dtoTmp.getFechaCompra());
 	}
 
 	@Override

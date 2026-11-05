@@ -18,10 +18,8 @@ public class ClienteFachadaImpl implements ClienteFachada {
 	public void registrarInformacionNuevoCliente(ClienteDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var clienteDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			clienteNegocio.registrarInformacionNuevoCliente(clienteDominio);
 			daoFactory.confirmarTransaccion();
@@ -41,10 +39,8 @@ public class ClienteFachadaImpl implements ClienteFachada {
 	public void darBajaInformacionClienteExistente(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			clienteNegocio.darBajaInformacionClienteExistente(id);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -63,14 +59,18 @@ public class ClienteFachadaImpl implements ClienteFachada {
 	public List<ClienteDTO> consultarPorFiltro(ClienteDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = ClienteDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaClientes = clienteNegocio.consultarPorFiltro(filtroDominio);
-			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
+			var resultado = ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -82,13 +82,17 @@ public class ClienteFachadaImpl implements ClienteFachada {
 	public List<ClienteDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaClientes = clienteNegocio.consultarTodos();
-			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
+			var resultado = ClienteDTOAssembler.obtenerInstancia().convertirADTO(listaClientes);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTES;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -100,13 +104,17 @@ public class ClienteFachadaImpl implements ClienteFachada {
 	public ClienteDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var clienteNegocio = new ClienteNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var clienteDominio = clienteNegocio.consultarPorId(id);
-			return ClienteDTOAssembler.obtenerInstancia().convertirADTO(clienteDominio);
+			var resultado = ClienteDTOAssembler.obtenerInstancia().convertirADTO(clienteDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

@@ -18,14 +18,19 @@ public class MetodoPagoEntidadAssembler implements EntidadAssembler<MetodoPagoDo
 
 	@Override
 	public MetodoPagoEntidad convertirAEntidad(MetodoPagoDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		MetodoPagoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				MetodoPagoDominio.obtenerValorDefecto());
+
 		return new MetodoPagoEntidad(dominioTmp.getId(), dominioTmp.getNombre(), dominioTmp.getEsActivo());
 	}
 
 	@Override
 	public MetodoPagoDominio convertirADominio(MetodoPagoEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new MetodoPagoEntidad());
+
+		MetodoPagoEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new MetodoPagoEntidad());
+
 		return new MetodoPagoDominio(entidadTmp.getId(), entidadTmp.getNombre(), entidadTmp.getEsActivo());
 	}
 }

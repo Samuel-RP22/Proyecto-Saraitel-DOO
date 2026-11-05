@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl;
 
 import co.com.saraitel.gestionsaraitel.dominio.MarcaDominio;
@@ -19,14 +18,18 @@ public class MarcaEntidadAssembler implements EntidadAssembler<MarcaDominio, Mar
 
 	@Override
 	public MarcaEntidad convertirAEntidad(MarcaDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		MarcaDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				MarcaDominio.obtenerValorDefecto());
+
 		return new MarcaEntidad(dominioTmp.getId(), dominioTmp.getNombre(), dominioTmp.getEsActivo());
 	}
 
 	@Override
 	public MarcaDominio convertirADominio(MarcaEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new MarcaEntidad());
+
+		MarcaEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new MarcaEntidad());
+
 		return new MarcaDominio(entidadTmp.getId(), entidadTmp.getNombre(), entidadTmp.getEsActivo());
 	}
 }

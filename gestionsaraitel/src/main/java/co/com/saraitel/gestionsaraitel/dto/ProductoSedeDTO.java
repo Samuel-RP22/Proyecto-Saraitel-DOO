@@ -43,7 +43,7 @@ public class ProductoSedeDTO {
 		private SedeDTO sede;
 		private BigDecimal precio;
 		private Boolean tieneOferta;
-		private Integer oferta = UtilNumero.CERO_INTEGER;
+		private Integer oferta;
 		private BigDecimal precioTrasOferta;
 		private Integer stock;
 		private Integer stockGarantia;

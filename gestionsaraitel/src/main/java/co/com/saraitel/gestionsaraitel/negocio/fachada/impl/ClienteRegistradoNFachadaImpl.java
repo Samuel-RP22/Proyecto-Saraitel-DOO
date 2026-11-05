@@ -18,10 +18,8 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 	public void registrarInformacionNuevoClienteNatural(ClienteRegistradoNDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var dominio = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			negocio.registrarInformacionNuevoClienteNatural(dominio);
 			daoFactory.confirmarTransaccion();
@@ -41,13 +39,18 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 	public List<ClienteRegistradoNDTO> consultarPorFiltro(ClienteRegistradoNDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADominio(filtro);
-			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			var resultado = ClienteRegistradoNDTOAssembler.obtenerInstancia()
+					.convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoNFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_NATURALS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -59,12 +62,16 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 	public List<ClienteRegistradoNDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
-
 		try {
-			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
+			daoFactory.iniciarTransaccion();
+			var resultado = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoNFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_NATURALS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -76,12 +83,16 @@ public class ClienteRegistradoNFachadaImpl implements ClienteRegistradoNFachada 
 	public ClienteRegistradoNDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var negocio = new ClienteRegistradoNNegocioImpl(daoFactory);
-
 		try {
-			return ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
+			daoFactory.iniciarTransaccion();
+			var resultado = ClienteRegistradoNDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoNFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CLIENTE_NATURALS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

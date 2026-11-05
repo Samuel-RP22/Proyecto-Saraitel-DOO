@@ -1,15 +1,10 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.saraitel.gestionsaraitel.dominio.ProductoDominio;
 import co.com.saraitel.gestionsaraitel.dominio.ProductoSedeDominio;
-import co.com.saraitel.gestionsaraitel.dominio.SedeDominio;
-import co.com.saraitel.gestionsaraitel.dto.ProductoDTO;
 import co.com.saraitel.gestionsaraitel.dto.ProductoSedeDTO;
-import co.com.saraitel.gestionsaraitel.dto.SedeDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -26,14 +21,13 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 
 	@Override
 	public ProductoSedeDTO convertirADTO(ProductoSedeDominio dominio) {
+
 		ProductoSedeDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProductoSedeDominio.obtenerValorDefecto());
 
-		ProductoDTO productoDTO = ProductoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProducto());
-
-		SedeDTO sedeDTO = SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede());
-
-		return new ProductoSedeDTO.Builder().id(dominioTmp.getId()).producto(productoDTO).sede(sedeDTO)
+		return new ProductoSedeDTO.Builder().id(dominioTmp.getId())
+				.producto(ProductoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getProducto()))
+				.sede(SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede()))
 				.precio(dominioTmp.getPrecio()).tieneOferta(dominioTmp.getTieneOferta()).oferta(dominioTmp.getOferta())
 				.precioTrasOferta(dominioTmp.getPrecioTrasOferta()).stock(dominioTmp.getStock())
 				.stockGarantia(dominioTmp.getStockGarantia()).construir();
@@ -41,13 +35,12 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 
 	@Override
 	public ProductoSedeDominio convertirADominio(ProductoSedeDTO dto) {
+
 		ProductoSedeDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new ProductoSedeDTO());
 
-		ProductoDominio productoDominio = ProductoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProducto());
-
-		SedeDominio sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede());
-
-		return new ProductoSedeDominio.Builder().id(dtoTmp.getId()).producto(productoDominio).sede(sedeDominio)
+		return new ProductoSedeDominio.Builder().id(dtoTmp.getId())
+				.producto(ProductoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getProducto()))
+				.sede(SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede()))
 				.precio(dtoTmp.getPrecio()).tieneOferta(dtoTmp.getTieneOferta()).oferta(dtoTmp.getOferta())
 				.precioTrasOferta(dtoTmp.getPrecioTrasOferta()).stock(dtoTmp.getStock())
 				.stockGarantia(dtoTmp.getStockGarantia()).construir();

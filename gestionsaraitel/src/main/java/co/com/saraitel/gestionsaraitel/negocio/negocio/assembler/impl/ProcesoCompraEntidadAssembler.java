@@ -18,8 +18,10 @@ public class ProcesoCompraEntidadAssembler implements EntidadAssembler<ProcesoCo
 
 	@Override
 	public ProcesoCompraEntidad convertirAEntidad(ProcesoCompraDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		ProcesoCompraDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				ProcesoCompraDominio.obtenerValorDefecto());
+
 		return new ProcesoCompraEntidad(dominioTmp.getId(),
 				ClienteEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getCliente()),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEmpleado()),
@@ -29,7 +31,10 @@ public class ProcesoCompraEntidadAssembler implements EntidadAssembler<ProcesoCo
 
 	@Override
 	public ProcesoCompraDominio convertirADominio(ProcesoCompraEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new ProcesoCompraEntidad());
+
+		ProcesoCompraEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new ProcesoCompraEntidad());
+
 		return new ProcesoCompraDominio(entidadTmp.getId(),
 				ClienteEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getCliente()),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEmpleado()),

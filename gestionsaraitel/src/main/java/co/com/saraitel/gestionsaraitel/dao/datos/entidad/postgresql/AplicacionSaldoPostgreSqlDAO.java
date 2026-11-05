@@ -24,15 +24,19 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 
 	@Override
 	public void crear(final AplicacionSaldoEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_APLICACION_DE_SALDO,
-				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_APLICACION_DE_SALDO, entidad.getId(), entidad.getSaldoFavor().getId(),
-				entidad.getPago().getId(), entidad.getValorAplicado());
+		ejecutarActualizacion(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_APLICACION_DE_SALDO,
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_APLICACION_DE_SALDO,
+				entidad.getId(), entidad.getSaldoFavor().getId(), entidad.getPago().getId(),
+				entidad.getValorAplicado());
 	}
 
 	@Override
 	public AplicacionSaldoEntidad consultarPorId(final UUID id) {
-		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
-				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACION_DE_SALDO, CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACION_DE_SALDO);
+		List<AplicacionSaldoEntidad> resultado = ejecutarConsulta(
+				CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACION_DE_SALDO,
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACION_DE_SALDO);
 
 		return obtenerPrimeroOValorDefecto(resultado, new AplicacionSaldoEntidad());
 	}
@@ -40,20 +44,23 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 	@Override
 	public List<AplicacionSaldoEntidad> consultarPorFiltro(final AplicacionSaldoEntidad filtro) {
 
-		AplicacionSaldoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new AplicacionSaldoEntidad());
+		AplicacionSaldoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new AplicacionSaldoEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conId("\"SaldoFavor_id\"", filtroSeguro.getSaldoFavor().getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"SaldoFavor_id\"", filtroSeguro.getSaldoFavor().getId())
 				.conId("\"Pago_id\"", filtroSeguro.getPago().getId())
 				.conDecimal("\"ValorAplicado\"", filtroSeguro.getValorAplicado());
 
 		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
-				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACIONES_DE_SALDO, CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACIONES_DE_SALDO);
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACIONES_DE_SALDO,
+				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACIONES_DE_SALDO);
 	}
 
 	@Override
 	public List<AplicacionSaldoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+		return ejecutarConsulta(CatalogoSentenciasSql.AplicacionSaldoPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear,
 				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_APLICACIONES_DE_SALDO,
 				CatalogoMensajes.AplicacionSaldoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_APLICACIONES_DE_SALDO);
 	}
@@ -61,21 +68,13 @@ public class AplicacionSaldoPostgreSqlDAO extends SqlDAO implements AplicacionSa
 	private AplicacionSaldoEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		AplicacionSaldoEntidad entidad = new AplicacionSaldoEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
-
 		SaldoFavorEntidad saldoFavor = new SaldoFavorEntidad();
-
 		saldoFavor.setId(leerUUID(resultados, "SaldoFavor_id"));
-
 		entidad.setSaldoFavor(saldoFavor);
-
 		PagoEntidad pago = new PagoEntidad();
-
 		pago.setId(leerUUID(resultados, "Pago_id"));
-
 		entidad.setPago(pago);
-
 		entidad.setValorAplicado(resultados.getBigDecimal("ValorAplicado"));
 
 		return entidad;

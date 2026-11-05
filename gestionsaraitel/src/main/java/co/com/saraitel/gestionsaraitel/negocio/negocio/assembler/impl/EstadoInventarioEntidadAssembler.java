@@ -19,14 +19,19 @@ public class EstadoInventarioEntidadAssembler
 
 	@Override
 	public EstadoInventarioEntidad convertirAEntidad(EstadoInventarioDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		EstadoInventarioDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				EstadoInventarioDominio.obtenerValorDefecto());
+
 		return new EstadoInventarioEntidad(dominioTmp.getId(), dominioTmp.getCodigo(), dominioTmp.getNombre());
 	}
 
 	@Override
 	public EstadoInventarioDominio convertirADominio(EstadoInventarioEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new EstadoInventarioEntidad());
+
+		EstadoInventarioEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new EstadoInventarioEntidad());
+
 		return new EstadoInventarioDominio(entidadTmp.getId(), entidadTmp.getCodigo(), entidadTmp.getNombre());
 	}
 }

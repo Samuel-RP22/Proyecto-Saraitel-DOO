@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -25,16 +24,17 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	@Override
 	public void crear(final PagoNormalEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CREAR, CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAGO_NORMAL,
-				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO_NORMAL, entidad.getId(),
-				entidad.getMetodoPago().getId(), entidad.getPago().getId(),
-				entidad.getMontoPagar());
+		ejecutarActualizacion(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CREAR,
+				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PAGO_NORMAL,
+				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAGO_NORMAL,
+				entidad.getId(), entidad.getMetodoPago().getId(), entidad.getPago().getId(), entidad.getMontoPagar());
 	}
 
 	@Override
 	public PagoNormalEntidad consultarPorId(final UUID id) {
-		List<PagoNormalEntidad> resultado = ejecutarConsulta(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id),
-				this::mapear, CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO_NORMAL,
+		List<PagoNormalEntidad> resultado = ejecutarConsulta(
+				CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_POR_ID, List.of(id), this::mapear,
+				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGO_NORMAL,
 				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGO_NORMAL);
 
 		return obtenerPrimeroOValorDefecto(resultado, new PagoNormalEntidad());
@@ -43,10 +43,11 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 	@Override
 	public List<PagoNormalEntidad> consultarPorFiltro(final PagoNormalEntidad filtro) {
 
-		PagoNormalEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new PagoNormalEntidad());
+		PagoNormalEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new PagoNormalEntidad());
 
-		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO).conId("\"id\"", filtroSeguro.getId())
-				.conId("\"MetodoPago_id\"", filtroSeguro.getMetodoPago().getId())
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_POR_FILTRO)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"MetodoPago_id\"", filtroSeguro.getMetodoPago().getId())
 				.conId("\"Pago_id\"", filtroSeguro.getPago().getId())
 				.conDecimal("\"MontoPagar\"", filtroSeguro.getMontoPagar());
 
@@ -57,7 +58,8 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 
 	@Override
 	public List<PagoNormalEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(), this::mapear,
+		return ejecutarConsulta(CatalogoSentenciasSql.PagoNormalPostgreSqlDAO.SQL_CONSULTAR_TODOS, List.of(),
+				this::mapear,
 				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAGOS_NORMALES,
 				CatalogoMensajes.PagoNormalPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAGOS_NORMALES);
 	}
@@ -65,21 +67,13 @@ public class PagoNormalPostgreSqlDAO extends SqlDAO implements PagoNormalDAO {
 	private PagoNormalEntidad mapear(final ResultSet resultados) throws SQLException {
 
 		PagoNormalEntidad entidad = new PagoNormalEntidad();
-
 		entidad.setId(leerUUID(resultados, "id"));
-
 		MetodoPagoEntidad metodoPago = new MetodoPagoEntidad();
-
 		metodoPago.setId(leerUUID(resultados, "MetodoPago_id"));
-
 		entidad.setMetodoPago(metodoPago);
-
 		PagoEntidad pago = new PagoEntidad();
-
 		pago.setId(leerUUID(resultados, "Pago_id"));
-
 		entidad.setPago(pago);
-
 		entidad.setMontoPagar(resultados.getBigDecimal("MontoPagar"));
 
 		return entidad;

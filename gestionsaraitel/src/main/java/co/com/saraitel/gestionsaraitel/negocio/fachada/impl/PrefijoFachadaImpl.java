@@ -18,14 +18,18 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 	public List<PrefijoDTO> consultarPorFiltro(PrefijoDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var prefijoNegocio = new PrefijoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = PrefijoDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaPrefijos = prefijoNegocio.consultarPorFiltro(filtroDominio);
-			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
+			var resultado = PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PrefijoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -37,13 +41,17 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 	public List<PrefijoDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var prefijoNegocio = new PrefijoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaPrefijos = prefijoNegocio.consultarTodos();
-			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
+			var resultado = PrefijoDTOAssembler.obtenerInstancia().convertirADTO(listaPrefijos);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PrefijoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJOS;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -55,13 +63,17 @@ public class PrefijoFachadaImpl implements PrefijoFachada {
 	public PrefijoDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var prefijoNegocio = new PrefijoNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var prefijoDominio = prefijoNegocio.consultarPorId(id);
-			return PrefijoDTOAssembler.obtenerInstancia().convertirADTO(prefijoDominio);
+			var resultado = PrefijoDTOAssembler.obtenerInstancia().convertirADTO(prefijoDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.PrefijoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PREFIJO_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

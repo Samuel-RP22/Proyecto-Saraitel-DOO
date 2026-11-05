@@ -1,13 +1,10 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import co.com.saraitel.gestionsaraitel.dominio.DepartamentoDominio;
-import co.com.saraitel.gestionsaraitel.dominio.PaisDominio;
 import co.com.saraitel.gestionsaraitel.dto.DepartamentoDTO;
-import co.com.saraitel.gestionsaraitel.dto.PaisDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -24,21 +21,21 @@ public class DepartamentoDTOAssembler implements DTOAssembler<DepartamentoDomini
 
 	@Override
 	public DepartamentoDTO convertirADTO(DepartamentoDominio dominio) {
+
 		DepartamentoDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				DepartamentoDominio.obtenerValorDefecto());
 
-		PaisDTO paisDTO = PaisDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPais());
-
-		return new DepartamentoDTO(dominioTmp.getId(), dominioTmp.getNombre(), paisDTO);
+		return new DepartamentoDTO(dominioTmp.getId(), dominioTmp.getNombre(),
+				PaisDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPais()));
 	}
 
 	@Override
 	public DepartamentoDominio convertirADominio(DepartamentoDTO dto) {
+
 		DepartamentoDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto, new DepartamentoDTO());
 
-		PaisDominio paisDominio = PaisDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPais());
-
-		return new DepartamentoDominio(dtoTmp.getId(), dtoTmp.getNombre(), paisDominio);
+		return new DepartamentoDominio(dtoTmp.getId(), dtoTmp.getNombre(),
+				PaisDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPais()));
 	}
 
 	@Override

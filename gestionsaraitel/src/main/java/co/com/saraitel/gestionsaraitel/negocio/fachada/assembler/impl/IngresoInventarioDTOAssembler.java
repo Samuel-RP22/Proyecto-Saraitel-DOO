@@ -3,12 +3,8 @@ package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.saraitel.gestionsaraitel.dominio.EstadoInventarioDominio;
 import co.com.saraitel.gestionsaraitel.dominio.IngresoInventarioDominio;
-import co.com.saraitel.gestionsaraitel.dominio.SedeDominio;
-import co.com.saraitel.gestionsaraitel.dto.EstadoInventarioDTO;
 import co.com.saraitel.gestionsaraitel.dto.IngresoInventarioDTO;
-import co.com.saraitel.gestionsaraitel.dto.SedeDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -25,30 +21,26 @@ public class IngresoInventarioDTOAssembler implements DTOAssembler<IngresoInvent
 
 	@Override
 	public IngresoInventarioDTO convertirADTO(IngresoInventarioDominio dominio) {
+
 		IngresoInventarioDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				IngresoInventarioDominio.obtenerValorDefecto());
 
-		SedeDTO sedeDTO = SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede());
-
-		EstadoInventarioDTO estadoDTO = EstadoInventarioDTOAssembler.obtenerInstancia()
-				.convertirADTO(dominioTmp.getEstado());
-
-		return new IngresoInventarioDTO(dominioTmp.getId(), sedeDTO, estadoDTO, dominioTmp.getFechaLlegada(),
-				dominioTmp.getTotal());
+		return new IngresoInventarioDTO(dominioTmp.getId(),
+				SedeDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getSede()),
+				EstadoInventarioDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getEstado()),
+				dominioTmp.getFechaLlegada(), dominioTmp.getTotal());
 	}
 
 	@Override
 	public IngresoInventarioDominio convertirADominio(IngresoInventarioDTO dto) {
+
 		IngresoInventarioDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new IngresoInventarioDTO());
 
-		SedeDominio sedeDominio = SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede());
-
-		EstadoInventarioDominio estadoDominio = EstadoInventarioDTOAssembler.obtenerInstancia()
-				.convertirADominio(dtoTmp.getEstado());
-
-		return new IngresoInventarioDominio(dtoTmp.getId(), sedeDominio, estadoDominio, dtoTmp.getFechaLlegada(),
-				dtoTmp.getTotal());
+		return new IngresoInventarioDominio(dtoTmp.getId(),
+				SedeDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getSede()),
+				EstadoInventarioDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getEstado()),
+				dtoTmp.getFechaLlegada(), dtoTmp.getTotal());
 	}
 
 	@Override

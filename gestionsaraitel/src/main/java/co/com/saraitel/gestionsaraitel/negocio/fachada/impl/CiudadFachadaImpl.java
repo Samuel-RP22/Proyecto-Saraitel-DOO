@@ -18,14 +18,18 @@ public class CiudadFachadaImpl implements CiudadFachada {
 	public List<CiudadDTO> consultarPorFiltro(CiudadDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var ciudadNegocio = new CiudadNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = CiudadDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaCiudades = ciudadNegocio.consultarPorFiltro(filtroDominio);
-			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
+			var resultado = CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.CiudadFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES_CON_FILTRO;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -37,13 +41,17 @@ public class CiudadFachadaImpl implements CiudadFachada {
 	public List<CiudadDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var ciudadNegocio = new CiudadNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaCiudades = ciudadNegocio.consultarTodos();
-			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
+			var resultado = CiudadDTOAssembler.obtenerInstancia().convertirADTO(listaCiudades);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.CiudadFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDADES;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {
@@ -55,13 +63,17 @@ public class CiudadFachadaImpl implements CiudadFachada {
 	public CiudadDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var ciudadNegocio = new CiudadNegocioImpl(daoFactory);
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var ciudadDominio = ciudadNegocio.consultarPorId(id);
-			return CiudadDTOAssembler.obtenerInstancia().convertirADTO(ciudadDominio);
+			var resultado = CiudadDTOAssembler.obtenerInstancia().convertirADTO(ciudadDominio);
+			daoFactory.confirmarTransaccion();
+			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
+			daoFactory.cancelarTransaccion();
 			throw excepcion;
 		} catch (Exception excepcion) {
+			daoFactory.cancelarTransaccion();
 			var mensajeUsuario = CatalogoMensajes.CiudadFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDAD_POR_ID;
 			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		} finally {

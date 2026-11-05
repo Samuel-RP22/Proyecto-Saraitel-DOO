@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -7,9 +6,7 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoDominio;
 import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoNDominio;
 import co.com.saraitel.gestionsaraitel.dominio.PersonaDominio;
-import co.com.saraitel.gestionsaraitel.dto.ClienteRegistradoDTO;
 import co.com.saraitel.gestionsaraitel.dto.ClienteRegistradoNDTO;
-import co.com.saraitel.gestionsaraitel.dto.PersonaDTO;
 import co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.DTOAssembler;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
 
@@ -26,29 +23,25 @@ public class ClienteRegistradoNDTOAssembler implements DTOAssembler<ClienteRegis
 
 	@Override
 	public ClienteRegistradoNDTO convertirADTO(ClienteRegistradoNDominio dominio) {
+
 		ClienteRegistradoNDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				new ClienteRegistradoNDominio(UtilUUID.obtenerUUIDDefecto(),
 						ClienteRegistradoDominio.obtenerValorDefecto(), PersonaDominio.obtenerValorDefecto()));
 
-		ClienteRegistradoDTO clienteRegistradoDTO = ClienteRegistradoDTOAssembler.obtenerInstancia()
-				.convertirADTO(dominioTmp.getClienteRegistrado());
-
-		PersonaDTO personaDTO = PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona());
-
-		return new ClienteRegistradoNDTO(dominioTmp.getId(), clienteRegistradoDTO, personaDTO);
+		return new ClienteRegistradoNDTO(dominioTmp.getId(),
+				ClienteRegistradoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getClienteRegistrado()),
+				PersonaDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getPersona()));
 	}
 
 	@Override
 	public ClienteRegistradoNDominio convertirADominio(ClienteRegistradoNDTO dto) {
+
 		ClienteRegistradoNDTO dtoTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dto,
 				new ClienteRegistradoNDTO());
 
-		ClienteRegistradoDominio clienteRegistradoDominio = ClienteRegistradoDTOAssembler.obtenerInstancia()
-				.convertirADominio(dtoTmp.getClienteRegistrado());
-
-		PersonaDominio personaDominio = PersonaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPersona());
-
-		return new ClienteRegistradoNDominio(dtoTmp.getId(), clienteRegistradoDominio, personaDominio);
+		return new ClienteRegistradoNDominio(dtoTmp.getId(),
+				ClienteRegistradoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getClienteRegistrado()),
+				PersonaDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getPersona()));
 	}
 
 	@Override

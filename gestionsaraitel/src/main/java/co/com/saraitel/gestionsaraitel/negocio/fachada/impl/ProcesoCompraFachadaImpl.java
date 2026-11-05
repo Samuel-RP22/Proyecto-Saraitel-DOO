@@ -18,10 +18,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 	public void registrarInformacionNuevoProcesoCompra(ProcesoCompraDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var procesoCompraDominio = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(datos);
 			procesoCompraNegocio.registrarInformacionNuevoProcesoCompra(procesoCompraDominio);
 			daoFactory.confirmarTransaccion();
@@ -41,10 +39,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 	public List<ProcesoCompraDTO> consultarPorFiltro(ProcesoCompraDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var filtroDominio = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADominio(filtro);
 			var listaProcesosCompra = procesoCompraNegocio.consultarPorFiltro(filtroDominio);
 			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaProcesosCompra);
@@ -66,10 +62,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 	public List<ProcesoCompraDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var listaProcesosCompra = procesoCompraNegocio.consultarTodos();
 			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(listaProcesosCompra);
 			daoFactory.confirmarTransaccion();
@@ -90,10 +84,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 	public ProcesoCompraDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			var procesoCompraDominio = procesoCompraNegocio.consultarPorId(id);
 			var resultado = ProcesoCompraDTOAssembler.obtenerInstancia().convertirADTO(procesoCompraDominio);
 			daoFactory.confirmarTransaccion();
@@ -114,10 +106,8 @@ public class ProcesoCompraFachadaImpl implements ProcesoCompraFachada {
 	public void anularProcesosCompraVencidos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var procesoCompraNegocio = new ProcesoCompraNegocioImpl(daoFactory);
-
-		daoFactory.iniciarTransaccion();
-
 		try {
+			daoFactory.iniciarTransaccion();
 			procesoCompraNegocio.anularProcesosCompraVencidos();
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {

@@ -16,7 +16,7 @@ public final class EmpleadoAutenticado {
 
 	private EmpleadoAutenticado() {
 	}
-	
+
 	private static EmpleadoFachada fachada = new EmpleadoFachadaImpl();
 	private static EmpleadoDTO filtro = new EmpleadoDTO();
 
@@ -29,8 +29,7 @@ public final class EmpleadoAutenticado {
 			return Optional.empty();
 		}
 		filtro.getPersona().setCorreo(correo);
-		return fachada.consultarPorFiltro(filtro).stream().filter(EmpleadoDTO::getEsActivo)
-				.findFirst();
+		return fachada.consultarPorFiltro(filtro).stream().filter(EmpleadoDTO::getEsActivo).findFirst();
 	}
 
 	public static Optional<EmpleadoDTO> obtenerUsuario(final OidcUser usuario) {

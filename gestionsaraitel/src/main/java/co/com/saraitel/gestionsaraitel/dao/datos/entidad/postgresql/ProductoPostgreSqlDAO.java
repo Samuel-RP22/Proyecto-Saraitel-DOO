@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.dao.datos.entidad.postgresql;
 
 import java.sql.Connection;
@@ -25,70 +24,66 @@ public class ProductoPostgreSqlDAO extends SqlDAO implements ProductoDAO {
 
 	@Override
 	public void crear(final ProductoEntidad entidad) {
-		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_INSERTAR, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO,
-				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO, entidad.getId(),
-				entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_INSERTAR,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CREANDO_PRODUCTO,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PRODUCTO,
+				entidad.getId(), entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(),
 				entidad.getNombre(), entidad.getDescripcion());
 	}
 
 	@Override
 	public ProductoEntidad consultarPorId(final UUID id) {
-		var filtro = new ProductoEntidad();
+		ProductoEntidad filtro = new ProductoEntidad();
 		filtro.setId(id);
 
-		var resultados = consultarPorFiltro(filtro);
+		List<ProductoEntidad> resultado = consultarPorFiltro(filtro);
 
-		return obtenerPrimeroOValorDefecto(resultados, new ProductoEntidad());
+		return obtenerPrimeroOValorDefecto(resultado, new ProductoEntidad());
 	}
 
 	@Override
 	public List<ProductoEntidad> consultarPorFiltro(final ProductoEntidad filtro) {
 
-		var filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro, new ProductoEntidad());
+		ProductoEntidad filtroSeguro = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(filtro,
+				new ProductoEntidad());
 
-		var sentencia = new FiltroSql(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR);
+		FiltroSql filtroSql = new FiltroSql(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR)
+				.conId("\"id\"", filtroSeguro.getId()).conId("\"Marca_id\"", filtroSeguro.getMarca().getId())
+				.conId("\"Categoria_id\"", filtroSeguro.getCategoria().getId())
+				.conTexto("\"Modelo\"", filtroSeguro.getModelo()).conTexto("\"Nombre\"", filtroSeguro.getNombre())
+				.conTexto("\"Descripcion\"", filtroSeguro.getDescripcion());
 
-		sentencia.conId("\"id\"", filtroSeguro.getId());
-		sentencia.conId("\"Marca_id\"", filtroSeguro.getMarca().getId());
-		sentencia.conId("\"Categoria_id\"", filtroSeguro.getCategoria().getId());
-		sentencia.conTexto("\"Modelo\"", filtroSeguro.getModelo());
-		sentencia.conTexto("\"Nombre\"", filtroSeguro.getNombre());
-		sentencia.conTexto("\"Descripcion\"", filtroSeguro.getDescripcion());
-
-		return ejecutarConsulta(sentencia.getSentencia(), sentencia.getParametros(), this::mapear,
+		return ejecutarConsulta(filtroSql.getSentencia(), filtroSql.getParametros(), this::mapear,
 				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
 				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public List<ProductoEntidad> consultarTodos() {
-		return ejecutarConsulta(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
+		return ejecutarConsulta(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_CONSULTAR, List.of(), this::mapear,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PRODUCTOS,
 				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PRODUCTOS);
 	}
 
 	@Override
 	public void actualizar(final UUID id, final ProductoEntidad entidad) {
-
-		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_ACTUALIZAR, CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO,
-				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO, entidad.getMarca().getId(),
-				entidad.getCategoria().getId(), entidad.getModelo(), entidad.getNombre(),
+		ejecutarActualizacion(CatalogoSentenciasSql.ProductoPostgreSqlDAO.SQL_ACTUALIZAR,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PRODUCTO,
+				CatalogoMensajes.ProductoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PRODUCTO,
+				entidad.getMarca().getId(), entidad.getCategoria().getId(), entidad.getModelo(), entidad.getNombre(),
 				entidad.getDescripcion(), id);
 	}
 
 	private ProductoEntidad mapear(final ResultSet resultados) throws SQLException {
 
-		var entidad = new ProductoEntidad();
-
+		ProductoEntidad entidad = new ProductoEntidad();
 		entidad.setId(leerUUID(resultados, "id"));
-
-		var marca = new MarcaEntidad();
+		MarcaEntidad marca = new MarcaEntidad();
 		marca.setId(leerUUID(resultados, "Marca_id"));
 		entidad.setMarca(marca);
-
-		var categoria = new CategoriaEntidad();
+		CategoriaEntidad categoria = new CategoriaEntidad();
 		categoria.setId(leerUUID(resultados, "Categoria_id"));
 		entidad.setCategoria(categoria);
-
 		entidad.setModelo(resultados.getString("Modelo"));
 		entidad.setNombre(resultados.getString("Nombre"));
 		entidad.setDescripcion(resultados.getString("Descripcion"));

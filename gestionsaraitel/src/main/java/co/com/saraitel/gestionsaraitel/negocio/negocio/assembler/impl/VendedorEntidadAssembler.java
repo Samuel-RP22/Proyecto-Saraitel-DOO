@@ -18,15 +18,20 @@ public class VendedorEntidadAssembler implements EntidadAssembler<VendedorDomini
 
 	@Override
 	public VendedorEntidad convertirAEntidad(VendedorDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		VendedorDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				VendedorDominio.obtenerValorDefecto());
+
 		return new VendedorEntidad(dominioTmp.getId(),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEmpleado()));
 	}
 
 	@Override
 	public VendedorDominio convertirADominio(VendedorEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new VendedorEntidad());
+
+		VendedorEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new VendedorEntidad());
+
 		return new VendedorDominio(entidadTmp.getId(),
 				EmpleadoEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEmpleado()));
 	}

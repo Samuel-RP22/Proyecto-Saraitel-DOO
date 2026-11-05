@@ -18,8 +18,10 @@ public class SaldoFavorEntidadAssembler implements EntidadAssembler<SaldoFavorDo
 
 	@Override
 	public SaldoFavorEntidad convertirAEntidad(SaldoFavorDominio dominio) {
-		var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+
+		SaldoFavorDominio dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
 				SaldoFavorDominio.obtenerValorDefecto());
+
 		return new SaldoFavorEntidad(dominioTmp.getId(),
 				DevolucionEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getDevolucion()),
 				EstadoSaldoFavorEntidadAssembler.obtenerInstancia().convertirAEntidad(dominioTmp.getEstado()),
@@ -28,7 +30,10 @@ public class SaldoFavorEntidadAssembler implements EntidadAssembler<SaldoFavorDo
 
 	@Override
 	public SaldoFavorDominio convertirADominio(SaldoFavorEntidad entidad) {
-		var entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new SaldoFavorEntidad());
+
+		SaldoFavorEntidad entidadTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad,
+				new SaldoFavorEntidad());
+
 		return new SaldoFavorDominio(entidadTmp.getId(),
 				DevolucionEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getDevolucion()),
 				EstadoSaldoFavorEntidadAssembler.obtenerInstancia().convertirADominio(entidadTmp.getEstado()),

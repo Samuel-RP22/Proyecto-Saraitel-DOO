@@ -82,7 +82,6 @@ import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelTransversalExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilObjeto;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilTexto;
 
 public class PostgreSqlDaoFactory extends DAOFactory {
 
@@ -125,9 +124,9 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 	private static HikariDataSource crearFuenteDatos() {
 		var configuracion = new HikariConfig();
 		configuracion.setPoolName(NOMBRE_POOL);
-		configuracion.setJdbcUrl(obtenerVariableEntorno(VARIABLE_URL));
-		configuracion.setUsername(obtenerVariableEntorno(VARIABLE_USUARIO));
-		configuracion.setPassword(obtenerVariableEntorno(VARIABLE_CONTRASENA));
+		configuracion.setJdbcUrl(System.getenv(VARIABLE_URL));
+		configuracion.setUsername(System.getenv(VARIABLE_USUARIO));
+		configuracion.setPassword(System.getenv(VARIABLE_CONTRASENA));
 		configuracion.setMaximumPoolSize(MAXIMO_CONEXIONES);
 		configuracion.setMinimumIdle(MINIMO_CONEXIONES_INACTIVAS);
 		configuracion.setConnectionTimeout(TIEMPO_MAXIMO_ESPERA_MILISEGUNDOS);
@@ -137,17 +136,6 @@ public class PostgreSqlDaoFactory extends DAOFactory {
 			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_PROBLEMA_CREANDO_POOL_CONEXIONES_POSTGRESQL;
 			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
 		}
-	}
-
-	private static String obtenerVariableEntorno(final String nombreVariable) {
-		var valor = System.getenv(nombreVariable);
-		if (UtilTexto.esVacia(valor)) {
-			var mensajeUsuario = CatalogoMensajes.PostgreSqlDaoFactory.USUARIO_ERROR_CONFIGURACION_CONEXION_POSTGRESQL_INCOMPLETA;
-			var mensajeTecnico = UtilTexto.concatenar(
-					CatalogoMensajes.PostgreSqlDaoFactory.TECNICO_ERROR_VARIABLE_ENTORNO_NO_DEFINIDA, nombreVariable);
-			throw GestionSaraitelTransversalExcepcion.crear(mensajeUsuario, mensajeTecnico);
-		}
-		return valor;
 	}
 
 	@Override

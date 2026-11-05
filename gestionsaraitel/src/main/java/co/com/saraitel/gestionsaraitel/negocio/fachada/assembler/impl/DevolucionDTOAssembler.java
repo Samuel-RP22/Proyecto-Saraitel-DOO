@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -28,8 +27,9 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 
 		return new DevolucionDTO(dominioTmp.getId(),
 				DetalleCompraDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getDetalleCompra()),
-				MotivoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getMotivo()), dominioTmp.getFechaDevolucion(),
-				dominioTmp.getCantidad(), dominioTmp.getMontoDevolucion(), dominioTmp.getEstado());
+				MotivoDTOAssembler.obtenerInstancia().convertirADTO(dominioTmp.getMotivo()),
+				dominioTmp.getFechaDevolucion(), dominioTmp.getCantidad(), dominioTmp.getMontoDevolucion(),
+				dominioTmp.getEstado());
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 
 		return new DevolucionDominio(dtoTmp.getId(),
 				DetalleCompraDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getDetalleCompra()),
-				MotivoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getMotivo()), dtoTmp.getFechaDevolucion(),
-				dtoTmp.getCantidad(), dtoTmp.getMontoDevolucion(), dtoTmp.getEstado());
+				MotivoDTOAssembler.obtenerInstancia().convertirADominio(dtoTmp.getMotivo()),
+				dtoTmp.getFechaDevolucion(), dtoTmp.getCantidad(), dtoTmp.getMontoDevolucion(), dtoTmp.getEstado());
 	}
 
 	@Override
