@@ -43,12 +43,6 @@ public class CategoriaDTOAssembler implements DTOAssembler<CategoriaDominio, Cat
 		List<CategoriaDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<CategoriaDominio>());
 
-		List<CategoriaDTO> listaDTO = new ArrayList<>();
-
-		for (CategoriaDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

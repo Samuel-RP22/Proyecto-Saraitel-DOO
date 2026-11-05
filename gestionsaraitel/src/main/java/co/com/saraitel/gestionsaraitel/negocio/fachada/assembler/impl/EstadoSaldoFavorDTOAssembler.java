@@ -42,12 +42,6 @@ public class EstadoSaldoFavorDTOAssembler implements DTOAssembler<EstadoSaldoFav
 		List<EstadoSaldoFavorDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<EstadoSaldoFavorDominio>());
 
-		List<EstadoSaldoFavorDTO> listaDTO = new ArrayList<>();
-
-		for (EstadoSaldoFavorDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

@@ -43,12 +43,6 @@ public class EstadoProcesoCompraDTOAssembler
 		List<EstadoProcesoCompraDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<EstadoProcesoCompraDominio>());
 
-		List<EstadoProcesoCompraDTO> listaDTO = new ArrayList<>();
-
-		for (EstadoProcesoCompraDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

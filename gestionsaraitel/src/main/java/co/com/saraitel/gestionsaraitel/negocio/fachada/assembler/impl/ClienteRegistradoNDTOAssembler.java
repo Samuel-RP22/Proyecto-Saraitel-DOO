@@ -57,12 +57,6 @@ public class ClienteRegistradoNDTOAssembler implements DTOAssembler<ClienteRegis
 		List<ClienteRegistradoNDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<ClienteRegistradoNDominio>());
 
-		List<ClienteRegistradoNDTO> listaDTO = new ArrayList<>();
-
-		for (ClienteRegistradoNDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

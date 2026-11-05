@@ -48,12 +48,6 @@ public class FacturaDTOAssembler implements DTOAssembler<FacturaDominio, Factura
 		List<FacturaDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<FacturaDominio>());
 
-		List<FacturaDTO> listaDTO = new ArrayList<>();
-
-		for (FacturaDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

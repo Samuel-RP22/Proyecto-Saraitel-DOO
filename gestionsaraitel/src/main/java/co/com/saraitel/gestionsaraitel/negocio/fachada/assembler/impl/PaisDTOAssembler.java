@@ -37,12 +37,6 @@ public class PaisDTOAssembler implements DTOAssembler<PaisDominio, PaisDTO> {
 		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<PaisDominio>());
 
-		List<PaisDTO> listaDTO = new ArrayList<>();
-
-		for (PaisDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

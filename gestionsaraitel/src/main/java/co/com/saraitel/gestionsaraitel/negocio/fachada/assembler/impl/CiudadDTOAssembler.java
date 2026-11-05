@@ -48,12 +48,6 @@ public class CiudadDTOAssembler implements DTOAssembler<CiudadDominio, CiudadDTO
 		List<CiudadDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<CiudadDominio>());
 
-		List<CiudadDTO> listaDTO = new ArrayList<>();
-
-		for (CiudadDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

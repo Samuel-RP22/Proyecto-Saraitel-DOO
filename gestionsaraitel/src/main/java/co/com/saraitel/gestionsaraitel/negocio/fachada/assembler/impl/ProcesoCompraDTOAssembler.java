@@ -51,12 +51,6 @@ public class ProcesoCompraDTOAssembler implements DTOAssembler<ProcesoCompraDomi
 		List<ProcesoCompraDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<ProcesoCompraDominio>());
 
-		List<ProcesoCompraDTO> listaDTO = new ArrayList<>();
-
-		for (ProcesoCompraDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

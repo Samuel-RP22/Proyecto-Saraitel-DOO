@@ -49,12 +49,6 @@ public class DetalleCompraDTOAssembler implements DTOAssembler<DetalleCompraDomi
 		List<DetalleCompraDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<DetalleCompraDominio>());
 
-		List<DetalleCompraDTO> listaDTO = new ArrayList<>();
-
-		for (DetalleCompraDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

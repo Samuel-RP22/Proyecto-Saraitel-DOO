@@ -52,12 +52,6 @@ public class AplicacionSaldoDTOAssembler implements DTOAssembler<AplicacionSaldo
 		List<AplicacionSaldoDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<AplicacionSaldoDominio>());
 
-		List<AplicacionSaldoDTO> listaDTO = new ArrayList<>();
-
-		for (AplicacionSaldoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

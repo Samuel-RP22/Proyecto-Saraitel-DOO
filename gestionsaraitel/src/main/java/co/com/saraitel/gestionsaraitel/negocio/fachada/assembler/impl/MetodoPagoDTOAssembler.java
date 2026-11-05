@@ -43,12 +43,6 @@ public class MetodoPagoDTOAssembler implements DTOAssembler<MetodoPagoDominio, M
 		List<MetodoPagoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<MetodoPagoDominio>());
 
-		List<MetodoPagoDTO> listaDTO = new ArrayList<>();
-
-		for (MetodoPagoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

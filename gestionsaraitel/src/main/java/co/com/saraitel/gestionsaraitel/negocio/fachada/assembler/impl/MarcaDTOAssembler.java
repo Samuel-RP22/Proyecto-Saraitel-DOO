@@ -40,12 +40,6 @@ public class MarcaDTOAssembler implements DTOAssembler<MarcaDominio, MarcaDTO> {
 		List<MarcaDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<MarcaDominio>());
 
-		List<MarcaDTO> listaDTO = new ArrayList<>();
-
-		for (MarcaDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

@@ -32,8 +32,7 @@ public final class UtilTexto {
 	}
 
 	public static int obtenerLongitudCadena(final String valor, final boolean quitarEspaciosBlanco) {
-		return quitarEspaciosBlanco ? obtenerLongitudCadena(quitarEspaciosEnBlanco(valor))
-				: obtenerLongitudCadena(valor);
+	    return obtenerLongitudCadena(quitarEspaciosBlanco ? quitarEspaciosEnBlanco(valor) : valor);
 	}
 
 	public static boolean longitudCadenaEsValida(final String valor, final int longitudInicial, final int longitudFinal,

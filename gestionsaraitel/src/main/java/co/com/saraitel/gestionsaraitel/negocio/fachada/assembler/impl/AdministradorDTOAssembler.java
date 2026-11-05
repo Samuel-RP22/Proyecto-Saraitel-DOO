@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.fachada.assembler.impl;
 
 import java.util.ArrayList;
@@ -47,12 +46,6 @@ public class AdministradorDTOAssembler implements DTOAssembler<AdministradorDomi
 		List<AdministradorDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<AdministradorDominio>());
 
-		List<AdministradorDTO> listaDTO = new ArrayList<>();
-
-		for (AdministradorDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

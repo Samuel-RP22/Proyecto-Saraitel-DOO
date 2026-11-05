@@ -49,12 +49,6 @@ public class DevolucionDTOAssembler implements DTOAssembler<DevolucionDominio, D
 		List<DevolucionDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<DevolucionDominio>());
 
-		List<DevolucionDTO> listaDTO = new ArrayList<>();
-
-		for (DevolucionDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

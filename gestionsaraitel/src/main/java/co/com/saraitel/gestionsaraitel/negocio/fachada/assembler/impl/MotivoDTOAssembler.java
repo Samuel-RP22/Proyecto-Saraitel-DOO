@@ -43,12 +43,6 @@ public class MotivoDTOAssembler implements DTOAssembler<MotivoDominio, MotivoDTO
 		List<MotivoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<MotivoDominio>());
 
-		List<MotivoDTO> listaDTO = new ArrayList<>();
-
-		for (MotivoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

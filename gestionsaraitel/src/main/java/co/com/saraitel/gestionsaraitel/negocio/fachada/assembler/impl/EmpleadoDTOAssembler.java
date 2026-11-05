@@ -45,12 +45,6 @@ public class EmpleadoDTOAssembler implements DTOAssembler<EmpleadoDominio, Emple
 		List<EmpleadoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<EmpleadoDominio>());
 
-		List<EmpleadoDTO> listaDTO = new ArrayList<>();
-
-		for (EmpleadoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

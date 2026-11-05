@@ -59,12 +59,6 @@ public class ProductoSedeDTOAssembler implements DTOAssembler<ProductoSedeDomini
 		List<ProductoSedeDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<ProductoSedeDominio>());
 
-		List<ProductoSedeDTO> listaDTO = new ArrayList<>();
-
-		for (ProductoSedeDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

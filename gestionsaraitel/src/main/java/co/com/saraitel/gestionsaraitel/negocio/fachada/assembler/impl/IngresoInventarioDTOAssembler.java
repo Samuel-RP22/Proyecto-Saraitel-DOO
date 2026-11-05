@@ -57,12 +57,6 @@ public class IngresoInventarioDTOAssembler implements DTOAssembler<IngresoInvent
 		List<IngresoInventarioDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<IngresoInventarioDominio>());
 
-		List<IngresoInventarioDTO> listaDTO = new ArrayList<>();
-
-		for (IngresoInventarioDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

@@ -41,12 +41,6 @@ public class PrefijoDTOAssembler implements DTOAssembler<PrefijoDominio, Prefijo
 		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<PrefijoDominio>());
 
-		List<PrefijoDTO> listaDTO = new ArrayList<>();
-
-		for (PrefijoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

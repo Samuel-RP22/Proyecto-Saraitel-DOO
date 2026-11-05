@@ -42,12 +42,6 @@ public class EstadoInventarioDTOAssembler implements DTOAssembler<EstadoInventar
 		List<EstadoInventarioDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<EstadoInventarioDominio>());
 
-		List<EstadoInventarioDTO> listaDTO = new ArrayList<>();
-
-		for (EstadoInventarioDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

@@ -47,12 +47,6 @@ public class DepartamentoDTOAssembler implements DTOAssembler<DepartamentoDomini
 		List<DepartamentoDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<DepartamentoDominio>());
 
-		List<DepartamentoDTO> listaDTO = new ArrayList<>();
-
-		for (DepartamentoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

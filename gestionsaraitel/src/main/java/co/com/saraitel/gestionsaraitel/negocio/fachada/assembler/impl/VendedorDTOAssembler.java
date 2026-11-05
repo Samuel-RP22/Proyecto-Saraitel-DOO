@@ -47,12 +47,6 @@ public class VendedorDTOAssembler implements DTOAssembler<VendedorDominio, Vende
 		List<VendedorDominio> listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<VendedorDominio>());
 
-		List<VendedorDTO> listaDTO = new ArrayList<>();
-
-		for (VendedorDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

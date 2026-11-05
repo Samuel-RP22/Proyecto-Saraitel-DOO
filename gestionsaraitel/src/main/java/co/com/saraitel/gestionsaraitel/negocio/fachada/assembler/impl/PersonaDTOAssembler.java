@@ -63,12 +63,6 @@ public class PersonaDTOAssembler implements DTOAssembler<PersonaDominio, Persona
 		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<PersonaDominio>());
 
-		List<PersonaDTO> listaDTO = new ArrayList<>();
-
-		for (PersonaDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

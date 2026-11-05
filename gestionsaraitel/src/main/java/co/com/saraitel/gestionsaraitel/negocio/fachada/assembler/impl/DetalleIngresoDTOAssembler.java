@@ -59,12 +59,6 @@ public class DetalleIngresoDTOAssembler implements DTOAssembler<DetalleIngresoDo
 		List<DetalleIngresoDominio> listaDominiosTmp = UtilObjeto
 				.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios, new ArrayList<DetalleIngresoDominio>());
 
-		List<DetalleIngresoDTO> listaDTO = new ArrayList<>();
-
-		for (DetalleIngresoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

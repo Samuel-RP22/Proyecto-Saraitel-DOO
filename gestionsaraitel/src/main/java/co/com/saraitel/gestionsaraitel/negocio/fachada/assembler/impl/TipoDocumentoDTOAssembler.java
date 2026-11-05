@@ -41,12 +41,6 @@ public class TipoDocumentoDTOAssembler implements DTOAssembler<TipoDocumentoDomi
 		var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(listaDominios,
 				new ArrayList<TipoDocumentoDominio>());
 
-		List<TipoDocumentoDTO> listaDTO = new ArrayList<>();
-
-		for (TipoDocumentoDominio dominio : listaDominiosTmp) {
-			listaDTO.add(convertirADTO(dominio));
-		}
-
-		return listaDTO;
+		return listaDominiosTmp.stream().map(this::convertirADTO).toList();
 	}
 }

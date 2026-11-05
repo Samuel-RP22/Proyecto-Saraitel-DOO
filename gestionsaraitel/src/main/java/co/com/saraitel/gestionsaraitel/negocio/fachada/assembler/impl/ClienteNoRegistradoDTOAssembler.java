@@ -63,12 +63,6 @@ public class ClienteNoRegistradoDTOAssembler
         var listaDominiosTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(
                 listaDominios, new ArrayList<ClienteNoRegistradoDominio>());
 
-        List<ClienteNoRegistradoDTO> listaDTO = new ArrayList<>();
-
-        for (ClienteNoRegistradoDominio dominio : listaDominiosTmp) {
-            listaDTO.add(convertirADTO(dominio));
-        }
-
-        return listaDTO;
+        return listaDominiosTmp.stream().map(this::convertirADTO).toList();
     }
 }
