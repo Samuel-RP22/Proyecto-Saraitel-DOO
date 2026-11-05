@@ -321,32 +321,37 @@ public final class CatalogoMensajes {
 
 		public static final String PERSONA_CLIENTE_NATURAL_NO_EXISTE = "La persona seleccionada para el cliente natural no existe, asegúrese de escoger una persona registrada o de ingresar los datos de una nueva";
 		public static final String PERSONA_YA_ES_CLIENTE_NATURAL = "La persona seleccionada ya está registrada como cliente natural, búsquela en la lista de clientes registrados";
+		public static final String CLIENTE_NATURAL_NO_EXISTE = "El cliente natural que se desea utilizar no existe, asegúrese de que el cliente natural se encuentre registrado";
+		public static final String CLIENTE_NATURAL_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_JURIDICO = "No es posible dar de baja el cliente natural deseado, debido a que su cliente registrado se encuentra asociado a un cliente jurídico";
+		public static final String CLIENTE_NATURAL_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_NO_REGISTRADO = "No es posible dar de baja el cliente natural deseado, debido a que su cliente se encuentra asociado a un cliente no registrado";
+		public static final String CLIENTE_NATURAL_ESTA_SIENDO_UTILIZADO_POR_PROCESO_COMPRA = "No es posible dar de baja el cliente natural deseado, debido a que se encuentra asociado a uno o más procesos de compra";
 	}
 
 	public static final class ClienteRegistradoJNegocioImpl {
 		private ClienteRegistradoJNegocioImpl() {
 		}
 
+		public static final String CLIENTE_JURIDICO_NO_EXISTE = "El cliente jurídico que se desea utilizar no existe, asegúrese de que el cliente jurídico se encuentre registrado";
+		public static final String CLIENTE_JURIDICO_ESTA_SIENDO_UTILIZADO_POR_PROCESO_COMPRA = "No es posible dar de baja el cliente jurídico deseado, debido a que se encuentra asociado a uno o más procesos de compra";
 		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_EL_MISMO_NIT = "Ya existe un cliente jurídico registrado con el NIT con el cual se desea crear el cliente deseado";
 		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_LA_MISMA_RAZON_SOCIAL = "Ya existe un cliente jurídico registrado con la razón social con la cual se desea crear el cliente deseado";
-
+		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_EL_MISMO_TELEFONO = "Ya existe un cliente jurídico registrado con el prefijo y teléfono con los cuales se desea crear el cliente deseado";
+		public static final String CLIENTE_JURIDICO_YA_EXISTE_CON_EL_MISMO_CORREO = "Ya existe un cliente jurídico registrado con el correo con el cual se desea crear el cliente deseado";
+		public static final String RAZON_SOCIAL_CLIENTE_JURIDICO_YA_EXISTE_EN_OTRO_CLIENTE_JURIDICO = "La razón social con la cual se desea modificar el cliente jurídico ya pertenece a otro cliente jurídico registrado";
+		public static final String TELEFONO_CLIENTE_JURIDICO_YA_EXISTE_EN_OTRO_CLIENTE_JURIDICO = "El prefijo y teléfono con los cuales se desea modificar el cliente jurídico ya pertenecen a otro cliente jurídico registrado";
+		public static final String CORREO_CLIENTE_JURIDICO_YA_EXISTE_EN_OTRO_CLIENTE_JURIDICO = "El correo con el cual se desea modificar el cliente jurídico ya pertenece a otro cliente jurídico registrado";
 		public static final String NIT_CLIENTE_JURIDICO_OBLIGATORIO = "El NIT del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
 		public static final String LONGITUD_NIT_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del NIT del cliente jurídico no es válida, asegúrese de que esté entre 9 y 12 caracteres";
 		public static final String FORMATO_NIT_CLIENTE_JURIDICO_NO_VALIDO = "El formato del NIT del cliente jurídico no es válido, asegúrese de que posea entre 9 y 10 dígitos y, opcionalmente, el dígito de verificación separado por un guion (ejemplo: 900123456-7)";
-
 		public static final String RAZON_SOCIAL_CLIENTE_JURIDICO_OBLIGATORIA = "La razón social del cliente jurídico es obligatoria para llevar a cabo la operación deseada";
-		public static final String LONGITUD_RAZON_SOCIAL_CLIENTE_JURIDICO_NO_VALIDA = "La longitud de la razón social del cliente jurídico no es válida, asegúrese de que esté entre 2 y 100";
+		public static final String LONGITUD_RAZON_SOCIAL_CLIENTE_JURIDICO_NO_VALIDA = "La longitud de la razón social del cliente jurídico no es válida, asegúrese de que esté entre 2 y 100 caracteres";
 		public static final String FORMATO_RAZON_SOCIAL_CLIENTE_JURIDICO_NO_VALIDO = "El formato de la razón social del cliente jurídico no es válido, asegúrese de que solo posea letras, números, espacios y los símbolos . , & -";
-
 		public static final String PREFIJO_CLIENTE_JURIDICO_OBLIGATORIO = "El prefijo telefónico del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
-		public static final String PREFIJO_CLIENTE_JURIDICO_NO_EXISTE = "El prefijo telefónico seleccionado para el cliente jurídico no existe";
-
 		public static final String TELEFONO_CLIENTE_JURIDICO_OBLIGATORIO = "El teléfono del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
 		public static final String LONGITUD_TELEFONO_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del teléfono del cliente jurídico no es válida, asegúrese de que esté entre 7 y 15 dígitos";
 		public static final String FORMATO_TELEFONO_CLIENTE_JURIDICO_NO_VALIDO = "El formato del teléfono del cliente jurídico no es válido, asegúrese de que solo posea números";
-
 		public static final String CORREO_CLIENTE_JURIDICO_OBLIGATORIO = "El correo del cliente jurídico es obligatorio para llevar a cabo la operación deseada";
-		public static final String LONGITUD_CORREO_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del correo del cliente jurídico no es válida, asegúrese de que esté entre 6 y 100";
+		public static final String LONGITUD_CORREO_CLIENTE_JURIDICO_NO_VALIDA = "La longitud del correo del cliente jurídico no es válida, asegúrese de que esté entre 6 y 100 caracteres";
 		public static final String FORMATO_CORREO_CLIENTE_JURIDICO_NO_VALIDO = "El formato del correo del cliente jurídico no es válido, asegúrese de que tenga una estructura como nombre@dominio.com";
 	}
 
@@ -375,6 +380,12 @@ public final class CatalogoMensajes {
 		public static final String LONGITUD_CORREO_PERSONA_NO_VALIDA = "La longitud del correo debe estar entre 6 y 100 caracteres";
 		public static final String FORMATO_CORREO_PERSONA_NO_VALIDO = "El formato del correo electrónico no es válido";
 		public static final String PREFIJO_PERSONA_OBLIGATORIO = "El prefijo telefónico de la persona es obligatorio para llevar a cabo la operación deseada";
+		public static final String PERSONA_NO_EXISTE = "La persona que se desea utilizar no existe, asegúrese de que la persona se encuentre registrada";
+		public static final String PERSONA_ESTA_SIENDO_UTILIZADA_POR_CLIENTE_NATURAL = "No es posible dar de baja la persona deseada, debido a que se encuentra asociada a un cliente natural";
+		public static final String PERSONA_ESTA_SIENDO_UTILIZADA_POR_EMPLEADO = "No es posible dar de baja la persona deseada, debido a que se encuentra asociada a un empleado";
+		public static final String NUMERO_DOCUMENTO_PERSONA_YA_EXISTE_EN_OTRA_PERSONA = "El número de documento con el cual se desea modificar la persona ya pertenece a otra persona registrada";
+		public static final String TELEFONO_PERSONA_YA_EXISTE_EN_OTRA_PERSONA = "El teléfono con el cual se desea modificar la persona ya pertenece a otra persona registrada";
+		public static final String CORREO_PERSONA_YA_EXISTE_EN_OTRA_PERSONA = "El correo con el cual se desea modificar la persona ya pertenece a otra persona registrada";
 	}
 
 	public static final class UtilSQL {

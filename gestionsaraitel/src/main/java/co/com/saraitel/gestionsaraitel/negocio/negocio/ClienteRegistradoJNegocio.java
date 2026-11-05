@@ -9,6 +9,10 @@ public interface ClienteRegistradoJNegocio {
 
 	void registrarInformacionNuevoClienteJuridico(ClienteRegistradoJDominio datos);
 
+	void modificarInformacionClienteJuridicoExistente(UUID id, ClienteRegistradoJDominio datos);
+
+	void darBajaInformacionClienteJuridicoExistente(UUID id);
+
 	List<ClienteRegistradoJDominio> consultarPorFiltro(ClienteRegistradoJDominio filtro);
 
 	List<ClienteRegistradoJDominio> consultarTodos();

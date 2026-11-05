@@ -70,7 +70,7 @@ public final class CatalogoSentenciasSql {
 
 		public static final String SQL_INSERTAR = "INSERT INTO saraitel.\"ClienteRegistradoJ\" (\"id\", \"ClienteRegistrado_id\", \"Prefijo_id\", \"Telefono\", \"Nit\", \"RazonSocial\", \"Correo\", \"TelefonoConfirmado\", \"CorreoConfirmado\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		public static final String SQL_CONSULTAR = "SELECT * FROM (SELECT j.\"id\", j.\"ClienteRegistrado_id\", j.\"Prefijo_id\", j.\"Telefono\", j.\"Nit\", j.\"RazonSocial\", j.\"Correo\", j.\"TelefonoConfirmado\", j.\"CorreoConfirmado\", cr.\"Cliente_id\" FROM saraitel.\"ClienteRegistradoJ\" j JOIN saraitel.\"ClienteRegistrado\" cr ON cr.\"id\" = j.\"ClienteRegistrado_id\") AS clientes_juridicos";
-		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"ClienteRegistradoJ\" SET \"ClienteRegistrado_id\" = ?, \"Prefijo_id\" = ?, \"Telefono\" = ?, \"Nit\" = ?, \"RazonSocial\" = ?, \"Correo\" = ?, \"TelefonoConfirmado\" = ?, \"CorreoConfirmado\" = ? WHERE \"id\" = ?";
+		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"ClienteRegistradoJ\" SET \"Prefijo_id\" = ?, \"Telefono\" = ?, \"RazonSocial\" = ?, \"Correo\" = ?, \"TelefonoConfirmado\" = (\"Prefijo_id\" = ? AND \"Telefono\" = ? AND \"TelefonoConfirmado\"), \"CorreoConfirmado\" = (\"Correo\" = ? AND \"CorreoConfirmado\") WHERE \"id\" = ?";
 		public static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"ClienteRegistradoJ\" WHERE \"id\" = ?";
 	}
 
@@ -297,7 +297,7 @@ public final class CatalogoSentenciasSql {
 
 		public static final String SQL_INSERTAR = "INSERT INTO saraitel.\"Persona\" (\"id\", \"TipoDocumento_id\", \"Prefijo_id\", \"NumeroDocumento\", \"Telefono\", \"Nombre\", \"Apellido\", \"Correo\", \"TelefonoConfirmado\", \"CorreoConfirmado\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		public static final String SQL_CONSULTAR = "SELECT \"id\", \"TipoDocumento_id\", \"Prefijo_id\", \"NumeroDocumento\", \"Telefono\", \"Nombre\", \"Apellido\", \"Correo\", \"TelefonoConfirmado\", \"CorreoConfirmado\" FROM saraitel.\"Persona\"";
-		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Persona\" SET \"TipoDocumento_id\" = ?, \"Prefijo_id\" = ?, \"NumeroDocumento\" = ?, \"Telefono\" = ?, \"Nombre\" = ?, \"Apellido\" = ?, \"Correo\" = ?, \"TelefonoConfirmado\" = ?, \"CorreoConfirmado\" = ? WHERE \"id\" = ?";
+		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Persona\" SET \"NumeroDocumento\" = ?, \"Prefijo_id\" = ?, \"Telefono\" = ?, \"Nombre\" = ?, \"Apellido\" = ?, \"Correo\" = ?, \"TelefonoConfirmado\" = (\"Prefijo_id\" = ? AND \"Telefono\" = ? AND \"TelefonoConfirmado\"), \"CorreoConfirmado\" = (\"Correo\" = ? AND \"CorreoConfirmado\") WHERE \"id\" = ?";
 		public static final String SQL_ELIMINAR = "DELETE FROM saraitel.\"Persona\" WHERE \"id\" = ?";
 	}
 

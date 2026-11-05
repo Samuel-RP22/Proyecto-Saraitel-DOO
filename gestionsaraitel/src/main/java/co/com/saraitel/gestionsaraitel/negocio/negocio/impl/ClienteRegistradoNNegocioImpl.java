@@ -5,19 +5,17 @@ import java.util.UUID;
 
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoNDominio;
+import co.com.saraitel.gestionsaraitel.dominio.PersonaDominio;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoEntidad;
-import co.com.saraitel.gestionsaraitel.entidad.ClienteRegistradoNEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.PersonaEntidad;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.ClienteRegistradoNNegocio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.ClienteRegistradoNEntidadAssembler;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.PersonaEntidadAssembler;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.AsegurarPersonaClienteNaturalExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.AsegurarPersonaNoSeaClienteNaturalRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.persona.AsegurarCorreoNuevaPersonaNoExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.persona.AsegurarNumeroDocumentoNuevaPersonaNoExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.persona.AsegurarTelefonoNuevaPersonaNoExistaRule;
-import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.persona.ValidarDatosRegistrarInformacionNuevaPersonaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.AsegurarClienteNaturalExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.AsegurarClienteNaturalNoEsteSiendoUtilizadoRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.ValidarDatosConsultarClientesNaturalesPorFiltroRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.clienteregistradon.ValidarDatosRegistrarInformacionNuevoClienteNaturalRule;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
 public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio {
@@ -30,44 +28,28 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 
 	@Override
 	public void registrarInformacionNuevoClienteNatural(final ClienteRegistradoNDominio datos) {
-		var persona = datos.getPersona();
-		UUID idPersona;
-
-		if (UtilUUID.esValorDefecto(persona.getId())) {
-			ValidarDatosRegistrarInformacionNuevaPersonaRule.obtenerInstancia().ejecutar(persona);
-
-			AsegurarNumeroDocumentoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getNumeroDocumento(),
-					daoFactory);
-			AsegurarTelefonoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getTelefono(), daoFactory);
-			AsegurarCorreoNuevaPersonaNoExistaRule.obtenerInstancia().ejecutar(persona.getCorreo(), daoFactory);
-
-			var personaEntidad = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(persona);
-			idPersona = UtilUUID.generarIdUnico(id -> daoFactory.obtenerPersonaDao().consultarPorId(id).getId());
-			personaEntidad.setId(idPersona);
-			daoFactory.obtenerPersonaDao().crear(personaEntidad);
-		} else {
-			idPersona = persona.getId();
-			AsegurarPersonaClienteNaturalExistaRule.obtenerInstancia().ejecutar(idPersona, daoFactory);
-		}
-
-		AsegurarPersonaNoSeaClienteNaturalRule.obtenerInstancia().ejecutar(idPersona, daoFactory);
-
-		var personaReferencia = new PersonaEntidad();
-		personaReferencia.setId(idPersona);
-
-		var clienteRegistrado = registrarClienteRegistrado(true);
-
-		var clienteNatural = new ClienteRegistradoNEntidad(
-				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id).getId()),
-				clienteRegistrado, personaReferencia);
-
+		ValidarDatosRegistrarInformacionNuevoClienteNaturalRule.obtenerInstancia().ejecutar(datos, daoFactory);
+		var clienteNatural = ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
+		clienteNatural.setId(
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id).getId()));
+		clienteNatural.setClienteRegistrado(registrarClienteRegistradoNatural());
+		clienteNatural.setPersona(registrarPersonaClienteNaturalSiEsNueva(datos.getPersona()));
 		daoFactory.obtenerClienteRegistradoNDao().crear(clienteNatural);
 	}
 
 	@Override
-	public List<ClienteRegistradoNDominio> consultarPorFiltro(final ClienteRegistradoNDominio filtro) {
-		var entidadFiltro = ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
+	public void darBajaInformacionClienteNaturalExistente(final UUID id) {
+		AsegurarClienteNaturalExistaRule.obtenerInstancia().ejecutar(id, daoFactory);
+		AsegurarClienteNaturalNoEsteSiendoUtilizadoRule.obtenerInstancia().ejecutar(id, daoFactory);
+		var clienteRegistrado = daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id).getClienteRegistrado();
+		daoFactory.obtenerClienteRegistradoNDao().eliminar(id);
+		eliminarClienteRegistradoNatural(clienteRegistrado);
+	}
 
+	@Override
+	public List<ClienteRegistradoNDominio> consultarPorFiltro(final ClienteRegistradoNDominio filtro) {
+		ValidarDatosConsultarClientesNaturalesPorFiltroRule.obtenerInstancia().ejecutar(filtro);
+		var entidadFiltro = ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 		return daoFactory.obtenerClienteRegistradoNDao().consultarPorFiltro(entidadFiltro).stream()
 				.map(ClienteRegistradoNEntidadAssembler.obtenerInstancia()::convertirADominio).toList();
 	}
@@ -80,25 +62,34 @@ public class ClienteRegistradoNNegocioImpl implements ClienteRegistradoNNegocio 
 
 	@Override
 	public ClienteRegistradoNDominio consultarPorId(final UUID id) {
+		AsegurarClienteNaturalExistaRule.obtenerInstancia().ejecutar(id, daoFactory);
 		var entidad = daoFactory.obtenerClienteRegistradoNDao().consultarPorId(id);
-
-		if (UtilUUID.esValorDefecto(entidad.getId())) {
-			return ClienteRegistradoNDominio.obtenerValorDefecto();
-		}
-
 		return ClienteRegistradoNEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}
 
-	private ClienteRegistradoEntidad registrarClienteRegistrado(final boolean esNatural) {
-		var cliente = new ClienteEntidad(UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()),
-				true);
+	private ClienteRegistradoEntidad registrarClienteRegistradoNatural() {
+		var cliente = new ClienteEntidad(
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()), true);
 		daoFactory.obtenerClienteDao().crear(cliente);
-
 		var clienteRegistrado = new ClienteRegistradoEntidad(
-				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()), cliente,
-				esNatural);
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()),
+				cliente, true);
 		daoFactory.obtenerClienteRegistradoDao().crear(clienteRegistrado);
-
 		return clienteRegistrado;
+	}
+
+	private PersonaEntidad registrarPersonaClienteNaturalSiEsNueva(final PersonaDominio persona) {
+		var personaEntidad = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(persona);
+		if (UtilUUID.esValorDefecto(personaEntidad.getId())) {
+			personaEntidad
+					.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerPersonaDao().consultarPorId(id).getId()));
+			daoFactory.obtenerPersonaDao().crear(personaEntidad);
+		}
+		return personaEntidad;
+	}
+
+	private void eliminarClienteRegistradoNatural(final ClienteRegistradoEntidad clienteRegistrado) {
+		daoFactory.obtenerClienteRegistradoDao().eliminar(clienteRegistrado.getId());
+		daoFactory.obtenerClienteDao().eliminar(clienteRegistrado.getCliente().getId());
 	}
 }

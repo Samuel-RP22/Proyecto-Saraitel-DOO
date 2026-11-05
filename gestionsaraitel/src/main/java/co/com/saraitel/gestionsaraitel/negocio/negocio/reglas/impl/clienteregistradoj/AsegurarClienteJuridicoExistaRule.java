@@ -8,11 +8,11 @@ import co.com.saraitel.gestionsaraitel.transversal.catalogo.CatalogoMensajes;
 import co.com.saraitel.gestionsaraitel.transversal.excepciones.GestionSaraitelNegocioExcepcion;
 import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 
-public class AsegurarPrefijoClienteJuridicoExistaRule implements Rule<Object> {
+public class AsegurarClienteJuridicoExistaRule implements Rule<Object> {
 
-	private static final Rule<Object> instancia = new AsegurarPrefijoClienteJuridicoExistaRule();
+	private static final Rule<Object> instancia = new AsegurarClienteJuridicoExistaRule();
 
-	private AsegurarPrefijoClienteJuridicoExistaRule() {
+	private AsegurarClienteJuridicoExistaRule() {
 	}
 
 	public static final Rule<Object> obtenerInstancia() {
@@ -23,13 +23,13 @@ public class AsegurarPrefijoClienteJuridicoExistaRule implements Rule<Object> {
 	public void ejecutar(Object... datos) {
 		Rule.asegurarCantidadDatos(datos, 2);
 
-		var idPrefijo = (UUID) datos[0];
+		var idClienteJuridico = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 
-		var prefijoExistente = daoFactory.obtenerPrefijoDao().consultarPorId(idPrefijo);
+		var clienteJuridicoExistente = daoFactory.obtenerClienteRegistradoJDao().consultarPorId(idClienteJuridico);
 
-		if (UtilUUID.esValorDefecto(prefijoExistente.getId())) {
-			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.PREFIJO_CLIENTE_JURIDICO_NO_EXISTE;
+		if (UtilUUID.esValorDefecto(clienteJuridicoExistente.getId())) {
+			var mensajeUsuario = CatalogoMensajes.ClienteRegistradoJNegocioImpl.CLIENTE_JURIDICO_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}
 	}

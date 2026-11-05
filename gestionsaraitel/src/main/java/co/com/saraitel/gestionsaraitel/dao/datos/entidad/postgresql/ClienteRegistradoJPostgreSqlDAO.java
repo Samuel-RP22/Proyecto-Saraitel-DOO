@@ -77,9 +77,8 @@ public class ClienteRegistradoJPostgreSqlDAO extends SqlDAO implements ClienteRe
 		ejecutarActualizacion(CatalogoSentenciasSql.ClienteRegistradoJPostgreSqlDAO.SQL_ACTUALIZAR,
 				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
 				CatalogoMensajes.ClienteRegistradoJPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_CLIENTE_REGISTRADO_JURIDICO,
-				entidad.getClienteRegistrado().getId(), entidad.getPrefijo().getId(), entidad.getTelefono(),
-				entidad.getNit(), entidad.getRazonSocial(), entidad.getCorreo(), entidad.getTelefonoConfirmado(),
-				entidad.getCorreoConfirmado(), id);
+				entidad.getPrefijo().getId(), entidad.getTelefono(), entidad.getRazonSocial(), entidad.getCorreo(),
+				entidad.getPrefijo().getId(), entidad.getTelefono(), entidad.getCorreo(), id);
 	}
 
 	@Override

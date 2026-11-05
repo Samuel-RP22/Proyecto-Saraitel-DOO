@@ -8,6 +8,8 @@ import co.com.saraitel.gestionsaraitel.dominio.ClienteRegistradoNDominio;
 public interface ClienteRegistradoNNegocio {
 
 	void registrarInformacionNuevoClienteNatural(ClienteRegistradoNDominio datos);
+	
+	void darBajaInformacionClienteNaturalExistente(UUID id);
 
 	List<ClienteRegistradoNDominio> consultarPorFiltro(ClienteRegistradoNDominio filtro);
 

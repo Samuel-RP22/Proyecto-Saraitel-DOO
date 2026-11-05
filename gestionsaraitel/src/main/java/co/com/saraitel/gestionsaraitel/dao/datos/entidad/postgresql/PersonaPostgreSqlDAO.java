@@ -74,9 +74,9 @@ public class PersonaPostgreSqlDAO extends SqlDAO implements PersonaDAO {
 		ejecutarActualizacion(CatalogoSentenciasSql.PersonaPostgreSqlDAO.SQL_ACTUALIZAR,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PERSONA,
 				CatalogoMensajes.PersonaPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PERSONA,
-				entidad.getTipoDocumento().getId(), entidad.getPrefijo().getId(), entidad.getNumeroDocumento(),
-				entidad.getTelefono(), entidad.getNombre(), entidad.getApellido(), entidad.getCorreo(),
-				entidad.getTelefonoConfirmado(), entidad.getCorreoConfirmado(), id);
+				entidad.getNumeroDocumento(), entidad.getPrefijo().getId(), entidad.getTelefono(), entidad.getNombre(),
+				entidad.getApellido(), entidad.getCorreo(), entidad.getPrefijo().getId(), entidad.getTelefono(),
+				entidad.getCorreo(), id);
 	}
 
 	@Override
