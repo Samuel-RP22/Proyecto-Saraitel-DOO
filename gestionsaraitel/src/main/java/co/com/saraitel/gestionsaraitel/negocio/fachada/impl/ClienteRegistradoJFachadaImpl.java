@@ -17,11 +17,11 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	@Override
 	public void registrarInformacionNuevoClienteJuridico(ClienteRegistradoJDTO datos) {
 		var daoFactory = DAOFactory.obtenerFactoria();
-		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
+		var clienteRegistradoJNegocio = new ClienteRegistradoJNegocioImpl(daoFactory);
 		try {
 			daoFactory.iniciarTransaccion();
-			var dominio = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADominio(datos);
-			negocio.registrarInformacionNuevoClienteJuridico(dominio);
+			var clienteRegistradoJDominio = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADominio(datos);
+			clienteRegistradoJNegocio.registrarInformacionNuevoClienteJuridico(clienteRegistradoJDominio);
 			daoFactory.confirmarTransaccion();
 		} catch (GestionSaraitelExcepcion excepcion) {
 			daoFactory.cancelarTransaccion();
@@ -38,12 +38,12 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	@Override
 	public List<ClienteRegistradoJDTO> consultarPorFiltro(ClienteRegistradoJDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
-		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
+		var clienteRegistradoJNegocio = new ClienteRegistradoJNegocioImpl(daoFactory);
 		try {
 			daoFactory.iniciarTransaccion();
 			var filtroDominio = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADominio(filtro);
-			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia()
-					.convertirADTO(negocio.consultarPorFiltro(filtroDominio));
+			var listaClientesRegistradosJ = clienteRegistradoJNegocio.consultarPorFiltro(filtroDominio);
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(listaClientesRegistradosJ);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -61,10 +61,11 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	@Override
 	public List<ClienteRegistradoJDTO> consultarTodos() {
 		var daoFactory = DAOFactory.obtenerFactoria();
-		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
+		var clienteRegistradoJNegocio = new ClienteRegistradoJNegocioImpl(daoFactory);
 		try {
 			daoFactory.iniciarTransaccion();
-			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarTodos());
+			var listaClientesRegistradosJ = clienteRegistradoJNegocio.consultarTodos();
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(listaClientesRegistradosJ);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {
@@ -82,10 +83,11 @@ public class ClienteRegistradoJFachadaImpl implements ClienteRegistradoJFachada 
 	@Override
 	public ClienteRegistradoJDTO consultarPorId(UUID id) {
 		var daoFactory = DAOFactory.obtenerFactoria();
-		var negocio = new ClienteRegistradoJNegocioImpl(daoFactory);
+		var clienteRegistradoJNegocio = new ClienteRegistradoJNegocioImpl(daoFactory);
 		try {
 			daoFactory.iniciarTransaccion();
-			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(negocio.consultarPorId(id));
+			var clienteRegistradoJDominio = clienteRegistradoJNegocio.consultarPorId(id);
+			var resultado = ClienteRegistradoJDTOAssembler.obtenerInstancia().convertirADTO(clienteRegistradoJDominio);
 			daoFactory.confirmarTransaccion();
 			return resultado;
 		} catch (GestionSaraitelExcepcion excepcion) {

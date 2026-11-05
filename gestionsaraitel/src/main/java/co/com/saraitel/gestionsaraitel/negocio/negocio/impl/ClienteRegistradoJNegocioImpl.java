@@ -35,7 +35,8 @@ public class ClienteRegistradoJNegocioImpl implements ClienteRegistradoJNegocio 
 		var clienteRegistrado = registrarClienteRegistrado(false);
 
 		var clienteJuridico = ClienteRegistradoJEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
-		clienteJuridico.setId(UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoJDao().consultarPorId(id).getId()));
+		clienteJuridico.setId(
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoJDao().consultarPorId(id).getId()));
 		clienteJuridico.setClienteRegistrado(clienteRegistrado);
 
 		daoFactory.obtenerClienteRegistradoJDao().crear(clienteJuridico);
@@ -67,13 +68,13 @@ public class ClienteRegistradoJNegocioImpl implements ClienteRegistradoJNegocio 
 	}
 
 	private ClienteRegistradoEntidad registrarClienteRegistrado(final boolean esNatural) {
-		var cliente = new ClienteEntidad(UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()),
-				true);
+		var cliente = new ClienteEntidad(
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteDao().consultarPorId(id).getId()), true);
 		daoFactory.obtenerClienteDao().crear(cliente);
 
 		var clienteRegistrado = new ClienteRegistradoEntidad(
-				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()), cliente,
-				esNatural);
+				UtilUUID.generarIdUnico(id -> daoFactory.obtenerClienteRegistradoDao().consultarPorId(id).getId()),
+				cliente, esNatural);
 		daoFactory.obtenerClienteRegistradoDao().crear(clienteRegistrado);
 
 		return clienteRegistrado;

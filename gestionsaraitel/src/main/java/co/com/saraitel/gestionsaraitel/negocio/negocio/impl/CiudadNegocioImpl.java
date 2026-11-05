@@ -1,4 +1,3 @@
-
 package co.com.saraitel.gestionsaraitel.negocio.negocio.impl;
 
 import java.util.List;
@@ -8,7 +7,8 @@ import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.dominio.CiudadDominio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.CiudadNegocio;
 import co.com.saraitel.gestionsaraitel.negocio.negocio.assembler.impl.CiudadEntidadAssembler;
-import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.ciudad.AsegurarCiudadExistaRule;
+import co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.ciudad.AsegurarNombreCiudadValidoRule;
 
 public class CiudadNegocioImpl implements CiudadNegocio {
 
@@ -20,6 +20,8 @@ public class CiudadNegocioImpl implements CiudadNegocio {
 
 	@Override
 	public List<CiudadDominio> consultarPorFiltro(final CiudadDominio filtro) {
+		AsegurarNombreCiudadValidoRule.obtenerInstancia().ejecutar(filtro.getNombre());
+
 		var entidadFiltro = CiudadEntidadAssembler.obtenerInstancia().convertirAEntidad(filtro);
 
 		return daoFactory.obtenerCiudadDao().consultarPorFiltro(entidadFiltro).stream()
@@ -34,11 +36,9 @@ public class CiudadNegocioImpl implements CiudadNegocio {
 
 	@Override
 	public CiudadDominio consultarPorId(final UUID id) {
-		var entidad = daoFactory.obtenerCiudadDao().consultarPorId(id);
+		AsegurarCiudadExistaRule.obtenerInstancia().ejecutar(id, daoFactory);
 
-		if (UtilUUID.esValorDefecto(entidad.getId())) {
-			return CiudadDominio.obtenerValorDefecto();
-		}
+		var entidad = daoFactory.obtenerCiudadDao().consultarPorId(id);
 
 		return CiudadEntidadAssembler.obtenerInstancia().convertirADominio(entidad);
 	}

@@ -206,6 +206,17 @@ public final class CatalogoMensajes {
 		public static final String TECNICO_ERROR_CANTIDAD_DATOS_REGLA_NO_VALIDA = "La regla de negocio no recibió la cantidad de datos que necesita para ejecutarse";
 	}
 
+	public static final class CiudadNegocioImpl {
+
+		private CiudadNegocioImpl() {
+		}
+
+		public static final String USUARIO_ERROR_CIUDAD_NO_EXISTE = "La ciudad que intentas consultar no existe";
+		public static final String NOMBRE_CIUDAD_OBLIGATORIO = "El nombre de la ciudad es obligatorio";
+		public static final String LONGITUD_NOMBRE_CIUDAD_NO_VALIDA = "La longitud del nombre de la ciudad debe estar entre 2 y 50 caracteres";
+		public static final String FORMATO_NOMBRE_CIUDAD_NO_VALIDO = "El nombre de la ciudad solo puede contener letras y espacios";
+	}
+
 	public static final class SedeNegocioImpl {
 		private SedeNegocioImpl() {
 		}
@@ -266,6 +277,21 @@ public final class CatalogoMensajes {
 		public static final String CLIENTE_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_REGISTRADO = "No es posible eliminar el cliente deseado, debido a que se encuentra asociado a un cliente registrado";
 		public static final String CLIENTE_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_NO_REGISTRADO = "No es posible eliminar el cliente deseado, debido a que se encuentra asociado a un cliente no registrado";
 		public static final String CLIENTE_ESTA_SIENDO_UTILIZADO_POR_PROCESO_COMPRA = "No es posible eliminar el cliente deseado, debido a que se encuentra asociado a uno o más procesos de compra";
+		public static final String CLIENTE_NO_EXISTE = "El cliente que intentas utilizar no existe";
+		public static final String CLIENTE_YA_EXISTE = "Ya existe un cliente con el identificador generado, intenta nuevamente";
+		public static final String ES_CLIENTE_REGISTRADO_OBLIGATORIO = "Es obligatorio indicar si el cliente es registrado o no";
+	}
+
+	public static final class ClienteRegistradoNegocioImpl {
+
+		private ClienteRegistradoNegocioImpl() {
+		}
+
+		public static final String CLIENTE_REGISTRADO_NO_EXISTE = "El cliente registrado que intentas utilizar no existe";
+		public static final String CLIENTE_NATURAL_DEFECTO_OBLIGATORIO = "Es obligatorio indicar si el cliente registrado es natural por defecto";
+		public static final String CLIENTE_REGISTRADO_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_NATURAL = "No se puede dar de baja el cliente registrado porque está siendo utilizado por un cliente natural";
+		public static final String CLIENTE_REGISTRADO_ESTA_SIENDO_UTILIZADO_POR_CLIENTE_JURIDICO = "No se puede dar de baja el cliente registrado porque está siendo utilizado por un cliente jurídico";
+		public static final String CLIENTE_REGISTRADO_ESTA_SIENDO_UTILIZADO_POR_PROCESO_COMPRA = "No se puede dar de baja el cliente registrado porque está siendo utilizado por un proceso de compra";
 	}
 
 	public static final class ProcesoCompraNegocioImpl {
