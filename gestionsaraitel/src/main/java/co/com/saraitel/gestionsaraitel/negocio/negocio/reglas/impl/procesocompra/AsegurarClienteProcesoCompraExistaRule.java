@@ -26,9 +26,22 @@ public class AsegurarClienteProcesoCompraExistaRule implements Rule<Object> {
 		var idCliente = (UUID) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
 
-		var clienteExistente = daoFactory.obtenerClienteDao().consultarPorId(idCliente);
+		if (UtilUUID.esValorDefecto(idCliente)) {
+			validarClienteGenericoConfigurado(daoFactory);
+		} else {
+			validarClienteExista(idCliente, daoFactory);
+		}
+	}
 
-		if (UtilUUID.esValorDefecto(clienteExistente.getId())) {
+	private void validarClienteGenericoConfigurado(DAOFactory daoFactory) {
+		if (daoFactory.obtenerClienteNoRegistradoDao().consultarTodos().isEmpty()) {
+			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.CLIENTE_GENERICO_NO_CONFIGURADO;
+			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
+		}
+	}
+
+	private void validarClienteExista(UUID idCliente, DAOFactory daoFactory) {
+		if (UtilUUID.esValorDefecto(daoFactory.obtenerClienteDao().consultarPorId(idCliente).getId())) {
 			var mensajeUsuario = CatalogoMensajes.ProcesoCompraNegocioImpl.CLIENTE_PROCESO_COMPRA_NO_EXISTE;
 			throw GestionSaraitelNegocioExcepcion.crear(mensajeUsuario);
 		}

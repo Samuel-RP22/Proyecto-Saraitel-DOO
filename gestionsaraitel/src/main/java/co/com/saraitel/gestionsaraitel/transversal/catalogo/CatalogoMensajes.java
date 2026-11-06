@@ -143,7 +143,6 @@ public final class CatalogoMensajes {
 
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_REGISTRANDO_EMPLEADO = "Se ha presentado un problema inesperado tratando de registrar la información del nuevo empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_MODIFICANDO_EMPLEADO = "Se ha presentado un problema inesperado tratando de modificar la información del empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
-		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_DANDO_DE_BAJA_EMPLEADO = "Se ha presentado un problema inesperado tratando de dar de baja la información del empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS_CON_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la información de los empleados con el filtro deseado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADOS = "Se ha presentado un problema inesperado tratando de consultar la información de los empleados, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_EMPLEADO_POR_ID = "Se ha presentado un problema inesperado tratando de consultar la información del empleado, por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
@@ -238,6 +237,11 @@ public final class CatalogoMensajes {
 		public static final String DIRECCION_SEDE_OBLIGATORIA = "La dirección de la sede es obligatoria para llevar a cabo la operación deseada";
 		public static final String LONGITUD_DIRECCION_SEDE_NO_VALIDA = "La longitud de la dirección de la sede no es válida, asegúrese de que esté entre 5 y 100";
 		public static final String FORMATO_DIRECCION_SEDE_NO_VALIDO = "El formato de la dirección de la sede no es válido, asegúrese de que solo posea letras, números, espacios y los símbolos # - . , °";
+		public static final String SEDE_NO_EXISTE = "La sede que se desea utilizar no existe, asegúrese de que la sede se encuentre registrada";
+		public static final String ES_ACTIVA_SEDE_OBLIGATORIO = "Es obligatorio indicar si la sede se encuentra activa o no para llevar a cabo la operación deseada";
+		public static final String NOMBRE_SEDE_YA_EXISTE_EN_OTRA_SEDE = "El nombre con el cual se desea modificar la sede ya pertenece a otra sede registrada";
+		public static final String NIT_SEDE_YA_EXISTE_EN_OTRA_SEDE = "El NIT con el cual se desea modificar la sede ya pertenece a otra sede registrada";
+		public static final String DIRECCION_SEDE_YA_EXISTE_EN_OTRA_SEDE = "La dirección con la cual se desea modificar la sede ya pertenece a otra sede registrada";
 	}
 
 	public static final class EmpleadoNegocioImpl {
@@ -252,6 +256,8 @@ public final class CatalogoMensajes {
 
 		public static final String PERSONA_EMPLEADO_OBLIGATORIA = "La persona del empleado es obligatoria para llevar a cabo la operación deseada";
 		public static final String PERSONA_EMPLEADO_NO_EXISTE = "La persona asignada al empleado no existe, asegúrese de registrar primero la persona";
+		public static final String EMPLEADO_NO_EXISTE = "El empleado que se desea utilizar no existe, asegúrese de que el empleado se encuentre registrado";
+		public static final String ES_ACTIVO_EMPLEADO_OBLIGATORIO = "Es obligatorio indicar si el empleado se encuentra activo o no para llevar a cabo la operación deseada";
 	}
 
 	public static final class EstadoProcesoCompraNegocioImpl {
@@ -310,9 +316,9 @@ public final class CatalogoMensajes {
 		public static final String EMPLEADO_PROCESO_COMPRA_NO_EXISTE = "El empleado asignado al proceso de compra no existe, asegúrese de seleccionar un empleado registrado";
 		public static final String EMPLEADO_PROCESO_COMPRA_NO_ACTIVO = "El empleado asignado al proceso de compra no se encuentra activo, asegúrese de seleccionar un empleado activo";
 
-		public static final String ESTADO_INICIAL_PROCESO_COMPRA_NO_CONFIGURADO = "No es posible registrar el proceso de compra porque no existe el estado inicial En proceso (código EP), por favor contacte al administrador de la aplicación";
-		public static final String ESTADO_ANULADO_PROCESO_COMPRA_NO_CONFIGURADO = "No es posible anular los procesos de compra vencidos porque no existe el estado Anulado (código AN), por favor contacte al administrador de la aplicación";
 		public static final String CLIENTE_GENERICO_NO_CONFIGURADO = "No es posible registrar el proceso de compra con un cliente no registrado porque el cliente genérico (Consumidor final) no está configurado en la base de datos, por favor contacte al administrador de la aplicación";
+		public static final String PROCESO_COMPRA_NO_EXISTE = "El proceso de compra que se desea consultar no existe, asegúrese de que el proceso de compra se encuentre registrado";
+		public static final String ESTADO_PROCESO_COMPRA_NO_EXISTE = "El estado de proceso de compra por el cual se desea filtrar no existe, asegúrese de escoger un estado registrado";
 	}
 
 	public static final class ClienteRegistradoNNegocioImpl {
@@ -904,4 +910,4 @@ public final class CatalogoMensajes {
 		public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_VENDEDORES = "Se ha presentado un problema tratando de consultar la información de los vendedores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 		public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_VENDEDORES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la información de los vendedores. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicación";
 	}
-}
+}

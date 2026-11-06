@@ -1,7 +1,5 @@
 package co.com.saraitel.gestionsaraitel.negocio.negocio.reglas.impl.procesocompra;
 
-import java.util.Optional;
-
 import co.com.saraitel.gestionsaraitel.dao.factoria.DAOFactory;
 import co.com.saraitel.gestionsaraitel.entidad.EstadoProcesoCompraEntidad;
 import co.com.saraitel.gestionsaraitel.entidad.ProcesoCompraEntidad;
@@ -10,7 +8,6 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilFecha;
 
 public class AsegurarProcesoCompraEnProcesoSeaAnuladoTrasCincoMinutosRule implements Rule<Object> {
 
-	private static final String CODIGO_ESTADO_EN_PROCESO = "EP";
 	private static final String CODIGO_ESTADO_ANULADO = "AN";
 	private static final int MINUTOS_MAXIMOS_INACTIVIDAD = 5;
 
@@ -29,28 +26,20 @@ public class AsegurarProcesoCompraEnProcesoSeaAnuladoTrasCincoMinutosRule implem
 
 		var procesoCompra = (ProcesoCompraEntidad) datos[0];
 		var daoFactory = (DAOFactory) datos[1];
-		var estadoEnProceso = consultarEstadoPorCodigo(CODIGO_ESTADO_EN_PROCESO, daoFactory);
-		if (estadoEnProceso.isEmpty() || !procesoCompra.getEstado().getId().equals(estadoEnProceso.get().getId())) {
-			return;
-		}
+
 		var fechaLimite = UtilFecha.sumarMinutos(procesoCompra.getFechaActualizacion(), MINUTOS_MAXIMOS_INACTIVIDAD);
-		if (!UtilFecha.esFechaPasada(fechaLimite)) {
-			return;
+
+		if (UtilFecha.esFechaPasada(fechaLimite)) {
+			procesoCompra.setEstado(consultarEstadoAnulado(daoFactory));
+			procesoCompra.setFechaActualizacion(UtilFecha.obtenerFechaHoraActual());
+			daoFactory.obtenerProcesoCompraDao().actualizar(procesoCompra.getId(), procesoCompra);
 		}
-		var estadoAnulado = consultarEstadoPorCodigo(CODIGO_ESTADO_ANULADO, daoFactory);
-		if (estadoAnulado.isEmpty()) {
-			return;
-		}
-		procesoCompra.setEstado(estadoAnulado.get());
-		procesoCompra.setFechaActualizacion(UtilFecha.obtenerFechaHoraActual());
-		daoFactory.obtenerProcesoCompraDao().actualizar(procesoCompra.getId(), procesoCompra);
 	}
 
-	private Optional<EstadoProcesoCompraEntidad> consultarEstadoPorCodigo(final String codigo,
-			final DAOFactory daoFactory) {
-		var filtro = new EstadoProcesoCompraEntidad();
-		filtro.setCodigo(codigo);
+	private EstadoProcesoCompraEntidad consultarEstadoAnulado(DAOFactory daoFactory) {
+		var estadoFiltro = new EstadoProcesoCompraEntidad();
+		estadoFiltro.setCodigo(CODIGO_ESTADO_ANULADO);
 
-		return daoFactory.obtenerEstadoProcesoCompraDao().consultarPorFiltro(filtro).stream().findFirst();
+		return daoFactory.obtenerEstadoProcesoCompraDao().consultarPorFiltro(estadoFiltro).get(0);
 	}
 }

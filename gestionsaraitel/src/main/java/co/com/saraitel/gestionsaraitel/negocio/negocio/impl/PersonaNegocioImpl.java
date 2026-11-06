@@ -44,10 +44,10 @@ public class PersonaNegocioImpl implements PersonaNegocio {
 	public void modificarInformacionPersonaExistente(final UUID id, final PersonaDominio datos) {
 		AsegurarPersonaExistaRule.obtenerInstancia().ejecutar(id, daoFactory);
 		ValidarDatosModificarInformacionPersonaExistenteRule.obtenerInstancia().ejecutar(datos);
-		AsegurarTelefonoPersonaNoExistaEnOtraPersonaRule.obtenerInstancia().ejecutar(id, datos.getTelefono(),
-				daoFactory);
 		AsegurarNumeroDocumentoPersonaNoExistaEnOtraPersonaRule.obtenerInstancia().ejecutar(id,
 				datos.getNumeroDocumento(), daoFactory);
+		AsegurarTelefonoPersonaNoExistaEnOtraPersonaRule.obtenerInstancia().ejecutar(id, datos.getTelefono(),
+				daoFactory);
 		AsegurarCorreoPersonaNoExistaEnOtraPersonaRule.obtenerInstancia().ejecutar(id, datos.getCorreo(), daoFactory);
 		var personaEntidad = PersonaEntidadAssembler.obtenerInstancia().convertirAEntidad(datos);
 		daoFactory.obtenerPersonaDao().actualizar(id, personaEntidad);

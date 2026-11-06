@@ -11,8 +11,6 @@ public interface EmpleadoFachada {
 
 	void modificarInformacionEmpleadoExistente(UUID id, EmpleadoDTO datos);
 
-	void darBajaInformacionEmpleadoExistente(UUID id);
-
 	List<EmpleadoDTO> consultarPorFiltro(EmpleadoDTO filtro);
 
 	List<EmpleadoDTO> consultarTodos();

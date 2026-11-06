@@ -68,8 +68,7 @@ public class SedePostgreSqlDAO extends SqlDAO implements SedeDAO {
 		ejecutarActualizacion(CatalogoSentenciasSql.SedePostgreSqlDAO.SQL_ACTUALIZAR,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_SEDE,
 				CatalogoMensajes.SedePostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_SEDE,
-				entidad.getCiudad().getId(), entidad.getNombre(), entidad.getNit(), entidad.getDireccion(),
-				entidad.getEsActiva(), id);
+				entidad.getNombre(), entidad.getNit(), entidad.getDireccion(), entidad.getEsActiva(), id);
 	}
 
 	private SedeEntidad mapear(final ResultSet resultados) throws SQLException {

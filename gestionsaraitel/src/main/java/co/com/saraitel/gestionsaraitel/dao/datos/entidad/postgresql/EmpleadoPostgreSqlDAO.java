@@ -69,7 +69,7 @@ public class EmpleadoPostgreSqlDAO extends SqlDAO implements EmpleadoDAO {
 		ejecutarActualizacion(CatalogoSentenciasSql.EmpleadoPostgreSqlDAO.SQL_ACTUALIZAR,
 				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_EMPLEADO,
 				CatalogoMensajes.EmpleadoPostgreSqlDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_EMPLEADO,
-				entidad.getSede().getId(), entidad.getPersona().getId(), entidad.getEsActivo(), id);
+				entidad.getSede().getId(), entidad.getEsActivo(), id);
 	}
 
 	private EmpleadoEntidad mapear(final ResultSet resultados) throws SQLException {

@@ -158,7 +158,7 @@ public final class CatalogoSentenciasSql {
 
 		public static final String SQL_CREAR = "INSERT INTO saraitel.\"Empleado\" (\"id\", \"Sede_id\", \"Persona_id\", \"EsActivo\") VALUES (?, ?, ?, ?)";
 		public static final String SQL_CONSULTAR = "SELECT * FROM (SELECT e.\"id\", e.\"Sede_id\", e.\"Persona_id\", e.\"EsActivo\", p.\"NumeroDocumento\", p.\"Nombre\", p.\"Apellido\", p.\"Correo\", s.\"Nombre\" AS \"NombreSede\" FROM saraitel.\"Empleado\" e JOIN saraitel.\"Persona\" p ON p.\"id\" = e.\"Persona_id\" JOIN saraitel.\"Sede\" s ON s.\"id\" = e.\"Sede_id\") AS empleados";
-		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Empleado\" SET \"Sede_id\" = ?, \"Persona_id\" = ?, \"EsActivo\" = ? WHERE \"id\" = ?";
+		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Empleado\" SET \"Sede_id\" = ?, \"EsActivo\" = ? WHERE \"id\" = ?";
 	}
 
 	public static final class EstadoCompraPostgreSqlDAO {
@@ -361,7 +361,7 @@ public final class CatalogoSentenciasSql {
 
 		public static final String SQL_CREAR = "INSERT INTO saraitel.\"Sede\" (\"id\", \"Ciudad_id\", \"Nombre\", \"Nit\", \"Direccion\", \"EsActiva\") VALUES (?, ?, ?, ?, ?, ?)";
 		public static final String SQL_CONSULTAR = "SELECT \"id\", \"Ciudad_id\", \"Nombre\", \"Nit\", \"Direccion\", \"EsActiva\" FROM saraitel.\"Sede\"";
-		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Sede\" SET \"Ciudad_id\" = ?, \"Nombre\" = ?, \"Nit\" = ?, \"Direccion\" = ?, \"EsActiva\" = ? WHERE \"id\" = ?";
+		public static final String SQL_ACTUALIZAR = "UPDATE saraitel.\"Sede\" SET \"Nombre\" = ?, \"Nit\" = ?, \"Direccion\" = ?, \"EsActiva\" = ? WHERE \"id\" = ?";
 	}
 
 	public static final class TipoDocumentoPostgreSqlDAO {

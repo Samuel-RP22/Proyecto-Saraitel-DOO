@@ -13,11 +13,10 @@ import co.com.saraitel.gestionsaraitel.transversal.utilitarios.UtilUUID;
 public class DepartamentoNegocioImpl implements DepartamentoNegocio {
 
 	private final DAOFactory daoFactory;
-	
+
 	public DepartamentoNegocioImpl(final DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
-
 
 	@Override
 	public List<DepartamentoDominio> consultarPorFiltro(final DepartamentoDominio filtro) {

@@ -57,26 +57,6 @@ public class EmpleadoFachadaImpl implements EmpleadoFachada {
 	}
 
 	@Override
-	public void darBajaInformacionEmpleadoExistente(UUID id) {
-		var daoFactory = DAOFactory.obtenerFactoria();
-		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
-		try {
-			daoFactory.iniciarTransaccion();
-			empleadoNegocio.darBajaInformacionEmpleadoExistente(id);
-			daoFactory.confirmarTransaccion();
-		} catch (GestionSaraitelExcepcion excepcion) {
-			daoFactory.cancelarTransaccion();
-			throw excepcion;
-		} catch (Exception excepcion) {
-			daoFactory.cancelarTransaccion();
-			var mensajeUsuario = CatalogoMensajes.EmpleadoFachadaImpl.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_DANDO_DE_BAJA_EMPLEADO;
-			throw GestionSaraitelFachadaExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
-		} finally {
-			daoFactory.cerrarConexion();
-		}
-	}
-
-	@Override
 	public List<EmpleadoDTO> consultarPorFiltro(EmpleadoDTO filtro) {
 		var daoFactory = DAOFactory.obtenerFactoria();
 		var empleadoNegocio = new EmpleadoNegocioImpl(daoFactory);
